@@ -7,15 +7,30 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath "se.transmode.gradle:gradle-docker:1.2"
 	}
 }
 
 apply plugin: 'idea'
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'docker'
 apply plugin: 'org.springframework.boot'
 
-version = '0.0.1-SNAPSHOT'
+task buildDocker(type: Docker) {
+	baseImage = 'develar/java:latest'
+	push = project.hasProperty('push')
+	tag = 'denisolek/table-booking'
+	addFile {
+		from jar
+		rename {'app.jar'}
+	}
+	entryPoint(['java', '-Djava.security.egd=file:/dev/./urandom', '-jar', '/app.jar'])
+}
+
+buildDocker.dependsOn(build)
+
+version = '0.1.0'
 sourceCompatibility = 1.8
 
 repositories {
