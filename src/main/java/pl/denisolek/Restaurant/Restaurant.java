@@ -4,9 +4,8 @@ import lombok.Data;
 import pl.denisolek.BaseEntity;
 import pl.denisolek.User.User;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -37,4 +36,10 @@ public class Restaurant extends BaseEntity{
     Float price_quality_rate;
 
     Integer nip;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "restaurant_kitchen", joinColumns = @JoinColumn(name = "restaurantId"))
+    @Column(name = "kitchen_type", nullable = false)
+    Set<KitchenType> kitchenTypes;
 }
