@@ -3,7 +3,6 @@ package pl.denisolek.Restaurant;
 import lombok.Data;
 import pl.denisolek.BaseEntity;
 import pl.denisolek.User.User;
-
 import javax.persistence.*;
 import java.util.Set;
 
