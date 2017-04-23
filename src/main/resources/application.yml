@@ -9,7 +9,7 @@ logging:
 spring:
     datasource:
         password: 1
-        url: jdbc:postgresql://postgres:5432/tablebooking
+        url: jdbc:postgresql://localhost:5432/tablebooking
         username: postgres
     jpa:
         hibernate:
