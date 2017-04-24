@@ -4,6 +4,7 @@ import lombok.Data;
 import pl.denisolek.BaseEntity;
 import pl.denisolek.User.User;
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -41,4 +42,8 @@ public class Restaurant extends BaseEntity{
     @CollectionTable(name = "restaurant_kitchen", joinColumns = @JoinColumn(name = "restaurantId"))
     @Column(name = "kitchen_type", nullable = false)
     Set<KitchenType> kitchenTypes;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "restaurant_business_hour", joinColumns = { @JoinColumn(name = "restaurant_id") }, inverseJoinColumns = { @JoinColumn(name = "business_hour_id") })
+    Set<BusinessHour> businessHours = new HashSet<>();
 }
