@@ -45,3 +45,10 @@ insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values 
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (2,12);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (2,13);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (2,14);
+
+-- add customers
+insert into "customer" (email, phone_number, name, surname) values ('test1@test.pl', '111 111 111', 'TestName 1', 'TestSurname 1');
+insert into "customer" (email, phone_number, name, surname) values ('test2@test.pl', '222 222 222', 'TestName 2', 'TestSurname 2');
+insert into "customer" (email, phone_number, name, surname) values ('test3@test.pl', '333 333 333', 'TestName 3', 'TestSurname 3');
+insert into "customer" (email, phone_number, name, surname) values ('test4@test.pl', '444 444 444', 'TestName 4', 'TestSurname 4');
+insert into "customer" (email, phone_number, name, surname) values ('test5@test.pl', '555 555 555', 'TestName 5', 'TestSurname 5');

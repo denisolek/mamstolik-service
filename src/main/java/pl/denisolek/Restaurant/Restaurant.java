@@ -1,6 +1,7 @@
 package pl.denisolek.Restaurant;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import pl.denisolek.BaseEntity;
 import pl.denisolek.User.User;
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@EqualsAndHashCode(callSuper = true)
 public class Restaurant extends BaseEntity{
 
     @ManyToOne
