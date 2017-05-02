@@ -52,3 +52,15 @@ insert into "customer" (email, phone_number, name, surname) values ('test2@test.
 insert into "customer" (email, phone_number, name, surname) values ('test3@test.pl', '333 333 333', 'TestName 3', 'TestSurname 3');
 insert into "customer" (email, phone_number, name, surname) values ('test4@test.pl', '444 444 444', 'TestName 4', 'TestSurname 4');
 insert into "customer" (email, phone_number, name, surname) values ('test5@test.pl', '555 555 555', 'TestName 5', 'TestSurname 5');
+
+-- add spots
+insert into "spot" (capacity, restaurant_id) values (4, 1);
+insert into "spot" (capacity, restaurant_id) values (4, 1);
+insert into "spot" (capacity, restaurant_id) values (5, 1);
+insert into "spot" (capacity, restaurant_id) values (5, 1);
+insert into "spot" (capacity, restaurant_id) values (2, 1);
+insert into "spot" (capacity, restaurant_id) values (6, 2);
+insert into "spot" (capacity, restaurant_id) values (7, 2);
+insert into "spot" (capacity, restaurant_id) values (8, 2);
+insert into "spot" (capacity, restaurant_id) values (3, 2);
+insert into "spot" (capacity, restaurant_id) values (1, 2);
