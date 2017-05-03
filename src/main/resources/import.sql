@@ -4,8 +4,8 @@ insert into "user" (email, name, surname) values ('emily.wong@gmail.com', 'Emily
 insert into "user" (email, name, surname) values ('judah.sanchez@gmail.com', 'Judah', 'Sanchez');
 
 -- add restaurants
-insert into "restaurant" (name, city) values ('Pastwisko', 'Poznań');
-insert into "restaurant" (name, city) values ('Michael Angelo & Gotham Pizza', 'Poznań');
+insert into "restaurant" (name, city, capacity) values ('Pastwisko', 'Poznań', 20);
+insert into "restaurant" (name, city, capacity) values ('Michael Angelo & Gotham Pizza', 'Poznań', 25);
 
 -- add kitchen types
 insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (1, 'BURGERS');

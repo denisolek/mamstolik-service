@@ -23,4 +23,12 @@ public class RestaurantService {
     public Restaurant addRestaurant(Restaurant restaurant) {
         return restaurantRepository.save(restaurant);
     }
+
+    public void increaseCapacity(Restaurant restaurant, Integer spotCount) {
+        restaurant.setCapacity(restaurant.getCapacity() + spotCount);
+    }
+
+    public void decreaseCapacity(Restaurant restaurant, Integer spotCount) {
+        restaurant.setCapacity(restaurant.getCapacity() - spotCount);
+    }
 }

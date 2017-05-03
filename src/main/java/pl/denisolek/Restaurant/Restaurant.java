@@ -39,6 +39,11 @@ public class Restaurant extends BaseEntity{
 
     Integer nip;
 
+    Integer capacity;
+
+    @Transient
+    Integer avaibleCapacity;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "restaurant_kitchen", joinColumns = @JoinColumn(name = "restaurantId"))
