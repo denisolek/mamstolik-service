@@ -64,3 +64,10 @@ insert into "spot" (capacity, restaurant_id) values (7, 2);
 insert into "spot" (capacity, restaurant_id) values (8, 2);
 insert into "spot" (capacity, restaurant_id) values (3, 2);
 insert into "spot" (capacity, restaurant_id) values (1, 2);
+
+-- add reservations
+INSERT INTO "reservation" (people_number, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (5, '2017-05-20 10:00:00.000', 1800, '2017-05-20 10:30:00.000', 1, 1, 1);
+INSERT INTO "reservation" (people_number, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (7, '2017-05-20 10:00:00.000', 1800, '2017-05-20 10:30:00.000', 1, 2, 1);
+INSERT INTO "reservation" (people_number, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (3, '2017-05-20 10:00:00.000', 1800, '2017-05-20 10:30:00.000', 1, 3, 1);
+INSERT INTO "reservation" (people_number, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (20, '2017-05-20 12:00:00.000', 1800, '2017-05-20 12:30:00.000', 1, 4, 1);
+INSERT INTO "reservation" (people_number, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (5, '2017-05-20 12:30:00.000', 1800, '2017-05-20 12:30:00.000', 1, 5, 1);

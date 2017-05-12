@@ -9,6 +9,7 @@ import pl.denisolek.Restaurant.Restaurant;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Data
@@ -25,6 +26,8 @@ public class Reservation extends BaseEntity {
 	Customer customer;
 
 	LocalDateTime reservationBegin;
+
+	Duration length;
 
 	LocalDateTime reservationEnd;
 
