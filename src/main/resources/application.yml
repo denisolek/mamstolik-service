@@ -8,12 +8,12 @@ logging:
                         sql: trace
 spring:
     datasource:
-        password: 1
-        url: jdbc:postgresql://localhost:5432/tablebooking
-        username: postgres
+        url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
+        username: ${DATABASE_USERNAME}
+        password: ${DATABASE_PASSWORD}
     jpa:
         hibernate:
-            ddl-auto: create-drop
+            ddl-auto: ${DATABASE_DDL}
         properties:
             hibernate:
                 format_sql: true

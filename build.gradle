@@ -30,7 +30,7 @@ task buildDocker(type: Docker) {
 
 buildDocker.dependsOn(build)
 
-version = '0.1.0'
+version = '0.2.1'
 sourceCompatibility = 1.8
 
 repositories {
