@@ -1,5 +1,6 @@
 package pl.denisolek.Spot;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import pl.denisolek.BaseEntity;
@@ -18,5 +19,6 @@ public class Spot extends BaseEntity{
 
 	@ManyToOne
 	@JoinColumn
+	@JsonIgnore
 	Restaurant restaurant;
 }
