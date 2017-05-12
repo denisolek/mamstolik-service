@@ -1,5 +1,6 @@
 package pl.denisolek.Reservation;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import pl.denisolek.BaseEntity;
@@ -19,6 +20,7 @@ public class Reservation extends BaseEntity {
 
 	@ManyToOne
 	@JoinColumn
+	@JsonIgnore
 	Restaurant restaurant;
 
 	@ManyToOne
