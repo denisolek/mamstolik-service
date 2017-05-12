@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import pl.denisolek.BaseEntity;
 import pl.denisolek.User.User;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;

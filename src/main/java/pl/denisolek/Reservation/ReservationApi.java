@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.denisolek.Restaurant.Restaurant;
-import pl.denisolek.Spot.Spot;
 
 import java.util.List;
 

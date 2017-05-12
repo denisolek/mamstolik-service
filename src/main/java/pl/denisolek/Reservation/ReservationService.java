@@ -4,8 +4,6 @@ import org.springframework.stereotype.Component;
 import pl.denisolek.Restaurant.Restaurant;
 
 import javax.persistence.EntityNotFoundException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
