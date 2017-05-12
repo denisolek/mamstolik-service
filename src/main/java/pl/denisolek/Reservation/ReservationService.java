@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component;
 import pl.denisolek.Restaurant.Restaurant;
 
 import javax.persistence.EntityNotFoundException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -31,7 +33,6 @@ public class ReservationService {
 			throw new EntityNotFoundException();
 
 		reservation.setRestaurant(restaurant);
-
 		return reservationRepository.save(reservation);
 	}
 }
