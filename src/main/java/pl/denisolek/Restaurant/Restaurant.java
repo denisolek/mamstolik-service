@@ -6,6 +6,7 @@ import pl.denisolek.BaseEntity;
 import pl.denisolek.User.User;
 
 import javax.persistence.*;
+import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,6 +30,8 @@ public class Restaurant extends BaseEntity{
     Integer longitude;
 
     String description;
+
+    Duration avgReservationTime;
 
     Float rate;
 
