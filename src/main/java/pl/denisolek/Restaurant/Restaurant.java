@@ -20,7 +20,7 @@ public class Restaurant extends BaseEntity{
 
     String city;
 
-    String address;
+    String street;
 
     Integer latitude;
 
