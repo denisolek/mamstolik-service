@@ -18,6 +18,7 @@ public class User extends BaseEntity {
 
     String surname;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "restaurant_id")
     Restaurant restaurant;
 }

@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import pl.denisolek.BaseEntity;
 import pl.denisolek.Reservation.Reservation;
-import pl.denisolek.User.User;
 
 import javax.persistence.*;
 import java.time.Duration;
@@ -20,10 +19,6 @@ public class Restaurant extends BaseEntity{
     String name;
 
     String city;
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    User user;
 
     String street;
 
