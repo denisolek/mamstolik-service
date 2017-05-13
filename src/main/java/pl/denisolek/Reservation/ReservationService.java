@@ -38,12 +38,7 @@ public class ReservationService {
 	}
 
 	public Reservation addReservation(Restaurant restaurant, Reservation reservation) {
-		if (restaurant == null)
-			throw new ServiceException(HttpStatus.NOT_FOUND, "Restaurant not found");
-
-		if (reservation.getReservationBegin() == null || reservation.getPeopleNumber() == null || reservation.getCustomer() == null)
-			throw new ServiceException(HttpStatus.BAD_REQUEST, "Reservation time, people number or customer not provided");
-
+		validateReservationRequest(restaurant, reservation);
 		Duration duration = restaurant.getAvgReservationTime();
 
 		reservation.setLength(duration);
@@ -61,6 +56,17 @@ public class ReservationService {
 		reservation.setRestaurant(restaurant);
 		reservation.setState(ReservationState.PENDING);
 		return reservationRepository.save(reservation);
+	}
+
+	private void validateReservationRequest(Restaurant restaurant, Reservation reservation) {
+		if (restaurant == null)
+			throw new ServiceException(HttpStatus.NOT_FOUND, "Restaurant not found");
+
+		if (reservation.getReservationBegin() == null || reservation.getPeopleNumber() == null || reservation.getCustomer() == null)
+			throw new ServiceException(HttpStatus.BAD_REQUEST, "Reservation time, people number or customer not provided");
+
+		if (reservation.getPeopleNumber() < 1)
+			throw new ServiceException(HttpStatus.BAD_REQUEST, "People number can't be lower than 1");
 	}
 
 	private void checkAvailableSpotsCount(Restaurant restaurant, Reservation reservation, Duration duration, List<LocalDateTime> checkIntervals, LocalDateTime startSearchDate, LocalDateTime endSearchDate) {
