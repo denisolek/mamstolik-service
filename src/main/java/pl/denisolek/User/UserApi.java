@@ -10,8 +10,6 @@ import pl.denisolek.Restaurant.Restaurant;
 import pl.denisolek.User.Requests.UserRegistrationRequest;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 
