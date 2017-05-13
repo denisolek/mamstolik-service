@@ -30,7 +30,7 @@ task buildDocker(type: Docker) {
 
 buildDocker.dependsOn(build)
 
-version = '0.1.0'
+version = '0.3.0'
 sourceCompatibility = 1.8
 
 repositories {
@@ -43,6 +43,8 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.6.1'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.6.1'
+	compile "com.fasterxml.jackson.core:jackson-databind:2.8.5"
+	runtime "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5"
 	runtime('org.springframework.boot:spring-boot-devtools')
 	runtime('org.postgresql:postgresql')
 	compileOnly('org.projectlombok:lombok')

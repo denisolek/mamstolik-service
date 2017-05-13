@@ -4,7 +4,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import pl.denisolek.BaseEntity;
 import pl.denisolek.User.User;
+
 import javax.persistence.*;
+import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,6 +31,8 @@ public class Restaurant extends BaseEntity{
 
     String description;
 
+    Duration avgReservationTime;
+
     Float rate;
 
     Float service_rate;
@@ -38,6 +42,8 @@ public class Restaurant extends BaseEntity{
     Float price_quality_rate;
 
     Integer nip;
+
+    Integer capacity;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
