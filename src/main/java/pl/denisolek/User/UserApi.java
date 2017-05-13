@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import pl.denisolek.Restaurant.Restaurant;
 
 
 @Api(value = "User", description = "Operations about user", tags = "user")
@@ -15,4 +16,9 @@ public interface UserApi {
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = BASE_PATH, method = RequestMethod.POST)
     User addUser(@RequestBody User user);
+
+    @ApiOperation(value = "Get user restaurant", response = Restaurant.class)
+    @ResponseBody
+    @RequestMapping(value = BASE_PATH + "/{userId}/restaurants", method = RequestMethod.GET)
+    Restaurant getUserRestaurant(@PathVariable("userId") User user);
 }

@@ -1,6 +1,9 @@
 package pl.denisolek.User;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import pl.denisolek.Exception.ServiceException;
+import pl.denisolek.Restaurant.Restaurant;
 
 @Component
 public class UserService {
@@ -13,5 +16,12 @@ public class UserService {
 
     public User addUser(User user) {
         return userRepository.save(user);
+    }
+
+    public Restaurant getUserRestaurant(User user) {
+        if (user == null)
+            throw new ServiceException(HttpStatus.NOT_FOUND, "User not found");
+
+        return user.getRestaurant();
     }
 }
