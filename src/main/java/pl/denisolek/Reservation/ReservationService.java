@@ -20,6 +20,7 @@ public class ReservationService {
 	CustomerService customerService;
 
 	private final ReservationRepository reservationRepository;
+	private final Integer CHECKING_INTERVAL = 15;
 
 	public ReservationService(ReservationRepository reservationRepository) {
 		this.reservationRepository = reservationRepository;
@@ -37,12 +38,7 @@ public class ReservationService {
 	}
 
 	public Reservation addReservation(Restaurant restaurant, Reservation reservation) {
-		if (restaurant == null)
-			throw new ServiceException(HttpStatus.NOT_FOUND, "Restaurant not found");
-
-		if (reservation.getReservationBegin() == null || reservation.getPeopleNumber() == null || reservation.getCustomer() == null)
-			throw new ServiceException(HttpStatus.BAD_REQUEST, "Reservation time, people number or customer not provided");
-
+		validateReservationRequest(restaurant, reservation);
 		Duration duration = restaurant.getAvgReservationTime();
 
 		reservation.setLength(duration);
@@ -62,8 +58,19 @@ public class ReservationService {
 		return reservationRepository.save(reservation);
 	}
 
+	private void validateReservationRequest(Restaurant restaurant, Reservation reservation) {
+		if (restaurant == null)
+			throw new ServiceException(HttpStatus.NOT_FOUND, "Restaurant not found");
+
+		if (reservation.getReservationBegin() == null || reservation.getPeopleNumber() == null || reservation.getCustomer() == null)
+			throw new ServiceException(HttpStatus.BAD_REQUEST, "Reservation time, people number or customer not provided");
+
+		if (reservation.getPeopleNumber() < 1)
+			throw new ServiceException(HttpStatus.BAD_REQUEST, "People number can't be lower than 1");
+	}
+
 	private void checkAvailableSpotsCount(Restaurant restaurant, Reservation reservation, Duration duration, List<LocalDateTime> checkIntervals, LocalDateTime startSearchDate, LocalDateTime endSearchDate) {
-		List<Reservation> reservationsOverlapping = getReservationsBetween(startSearchDate, endSearchDate);
+		List<Reservation> reservationsOverlapping = getReservationsBetween(startSearchDate, endSearchDate, restaurant.getId());
 		for (int i = 0; i < checkIntervals.size(); i++) {
 			Integer spotsTaken = 0;
 			for (int j = 0; j < reservationsOverlapping.size(); j++) {
@@ -82,10 +89,10 @@ public class ReservationService {
 		Long diff = reservation.getLength().toMinutes();
 		LocalDateTime interval = reservation.getReservationBegin();
 
-		while (diff > 5) {
-			checkIntervals.add(interval.plusMinutes(5));
-			interval = interval.plusMinutes(5);
-			diff -= 5;
+		while (diff > CHECKING_INTERVAL) {
+			checkIntervals.add(interval.plusMinutes(CHECKING_INTERVAL));
+			interval = interval.plusMinutes(CHECKING_INTERVAL);
+			diff -= CHECKING_INTERVAL;
 		}
 	}
 
@@ -94,7 +101,7 @@ public class ReservationService {
 		return ((checkingInterval.isAfter(interval) || checkingInterval.isEqual(interval)) && checkingInterval.isBefore(intervalEnd));
 	}
 
-	public List<Reservation> getReservationsBetween(LocalDateTime begin, LocalDateTime end) {
-		return reservationRepository.findByReservationBeginGreaterThanEqualAndReservationEndIsLessThan(begin, end);
+	public List<Reservation> getReservationsBetween(LocalDateTime begin, LocalDateTime end, Integer restaurantId) {
+		return reservationRepository.findByReservationBeginGreaterThanEqualAndReservationEndIsLessThanAndRestaurantId(begin, end, restaurantId);
 	}
 }
