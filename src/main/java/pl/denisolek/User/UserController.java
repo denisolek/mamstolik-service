@@ -33,6 +33,11 @@ public class UserController implements UserApi {
     }
 
     @Override
+    public User getUser(@PathVariable("userId") User user) {
+        return userService.getUser(user);
+    }
+
+    @Override
     public Restaurant getUserRestaurant(@PathVariable("userId") User user) {
         return userService.getUserRestaurant(user);
     }

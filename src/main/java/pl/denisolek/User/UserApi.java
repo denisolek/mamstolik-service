@@ -23,6 +23,11 @@ public interface UserApi {
     @RequestMapping(value = BASE_PATH, method = RequestMethod.POST)
     User addUser(@RequestBody @Valid UserRegistrationRequest UserRegistrationRequest, BindingResult result);
 
+    @ApiOperation(value = "Get user", response = User.class)
+    @ResponseBody
+    @RequestMapping(value = BASE_PATH + "/{userId}", method = RequestMethod.GET)
+    User getUser(@PathVariable("userId") User user);
+
     @ApiOperation(value = "Get user restaurant", response = Restaurant.class)
     @ResponseBody
     @RequestMapping(value = BASE_PATH + "/{userId}/restaurants", method = RequestMethod.GET)
