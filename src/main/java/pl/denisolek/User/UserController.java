@@ -45,7 +45,7 @@ public class UserController implements UserApi {
 
     @Override
     public List<Reservation> getUserRestaurantReservations(@PathVariable("userId") User user,
-                                                           @RequestParam("date") String date) {
+                                                           @RequestParam(value = "date", required = false) String date) {
         return userService.getUserRestaurantReservations(user, date);
     }
 }

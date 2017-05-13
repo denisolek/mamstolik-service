@@ -37,5 +37,5 @@ public interface UserApi {
     @ResponseBody
     @RequestMapping(value = BASE_PATH + "/{userId}/reservations", method = RequestMethod.GET)
     List<Reservation> getUserRestaurantReservations(@PathVariable("userId") User user,
-                                                    @RequestParam("date") String date);
+                                                    @RequestParam(value = "date", required = false) String date);
 }

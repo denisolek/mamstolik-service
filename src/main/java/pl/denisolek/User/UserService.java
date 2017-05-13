@@ -75,8 +75,14 @@ public class UserService {
         if (user == null)
             throw new ServiceException(HttpStatus.NOT_FOUND, "User not found");
 
-        LocalDate localDate = LocalDate.parse(date);
-        return reservationService.getReservationsAtDate(localDate, user.getRestaurant().getId());
+
+        if (date != null){
+            LocalDate localDate = LocalDate.parse(date);
+            return reservationService.getReservationsAtDate(localDate, user.getRestaurant().getId());
+        }
+        else {
+            return user.getRestaurant().getReservations();
+        }
     }
 
     public User getUser(User user) {
