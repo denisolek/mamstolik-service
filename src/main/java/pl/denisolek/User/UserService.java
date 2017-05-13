@@ -22,10 +22,22 @@ public class UserService {
         User newUser = new User();
         Restaurant newRestaurant = new Restaurant();
 
+        validateExistingUser(userRegistrationRequest.getEmail().toLowerCase());
+        validateAverageReservationDuration(userRegistrationRequest.getRestaurantAvgReservationTime().getSeconds());
         prepareRestaurant(userRegistrationRequest, newRestaurant);
         prepareUser(userRegistrationRequest, newUser, newRestaurant);
 
         return userRepository.save(newUser);
+    }
+
+    private void validateExistingUser(String email) {
+        if (userRepository.findByEmail(email) != null)
+            throw new ServiceException(HttpStatus.CONFLICT, "User with this email already exists");
+    }
+
+    private void validateAverageReservationDuration(Long duration) {
+        if (duration < 900 || duration > 18000)
+            throw new ServiceException(HttpStatus.BAD_REQUEST, "Average reservation time can't be less than 15min and higher than 4h");
     }
 
     private void prepareRestaurant(UserRegistrationRequest userRegistrationRequest, Restaurant newRestaurant) {
@@ -40,7 +52,7 @@ public class UserService {
     }
 
     private void prepareUser(UserRegistrationRequest userRegistrationRequest, User newUser, Restaurant newRestaurant) {
-        newUser.setEmail(userRegistrationRequest.getEmail());
+        newUser.setEmail(userRegistrationRequest.getEmail().toLowerCase());
         newUser.setName(userRegistrationRequest.getName());
         newUser.setSurname(userRegistrationRequest.getSurname());
         newUser.setRestaurant(newRestaurant);

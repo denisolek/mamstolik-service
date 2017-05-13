@@ -10,7 +10,10 @@ import java.time.DayOfWeek;
 @Data
 @Entity
 public class BusinessHour extends BaseEntity{
+
 	DayOfWeek dayOfWeek;
+
 	Time open;
+
 	Time close;
 }

@@ -12,6 +12,8 @@ import javax.persistence.*;
 @Table(name="[user]")
 @EqualsAndHashCode(callSuper = true)
 public class User extends BaseEntity {
+
+    @Column(unique = true)
     String email;
 
     String name;
