@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 public class Reservation extends BaseEntity {
 
 	@ManyToOne
-	@JoinColumn
 	@JsonIgnore
 	Restaurant restaurant;
 

@@ -4,7 +4,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import pl.denisolek.Reservation.Reservation;
 import pl.denisolek.Restaurant.Restaurant;
+
+import java.util.List;
 
 
 @Api(value = "User", description = "Operations about user", tags = "user")
@@ -21,4 +24,9 @@ public interface UserApi {
     @ResponseBody
     @RequestMapping(value = BASE_PATH + "/{userId}/restaurants", method = RequestMethod.GET)
     Restaurant getUserRestaurant(@PathVariable("userId") User user);
+
+    @ApiOperation(value = "Get user reservations", response = Reservation.class, responseContainer = "List")
+    @ResponseBody
+    @RequestMapping(value = BASE_PATH + "/{userId}/reservations", method = RequestMethod.GET)
+    List<Reservation> getUserRestaurantReservations(@PathVariable("userId") User user);
 }
