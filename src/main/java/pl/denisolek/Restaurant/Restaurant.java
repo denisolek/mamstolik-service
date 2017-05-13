@@ -15,10 +15,6 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class Restaurant extends BaseEntity{
 
-    @ManyToOne
-    @JoinColumn
-    User user;
-
     String name;
 
     String city;
