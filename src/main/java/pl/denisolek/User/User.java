@@ -5,10 +5,7 @@ import lombok.EqualsAndHashCode;
 import pl.denisolek.BaseEntity;
 import pl.denisolek.Restaurant.Restaurant;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -21,7 +18,6 @@ public class User extends BaseEntity {
 
     String surname;
 
-    @OneToOne
-    @JoinColumn(name = "restaurant_id")
+    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     Restaurant restaurant;
 }

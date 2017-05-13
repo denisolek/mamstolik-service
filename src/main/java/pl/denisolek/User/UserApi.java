@@ -3,10 +3,13 @@ package pl.denisolek.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.denisolek.Reservation.Reservation;
 import pl.denisolek.Restaurant.Restaurant;
+import pl.denisolek.User.Requests.UserRegistrationRequest;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -14,11 +17,11 @@ import java.util.List;
 public interface UserApi {
     String BASE_PATH = "/users";
 
-    @ApiOperation(value = "Add user", response = User.class)
+    @ApiOperation(value = "Add user with restaurant", response = User.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = BASE_PATH, method = RequestMethod.POST)
-    User addUser(@RequestBody User user);
+    User addUser(@RequestBody @Valid UserRegistrationRequest UserRegistrationRequest, BindingResult result);
 
     @ApiOperation(value = "Get user restaurant", response = Restaurant.class)
     @ResponseBody

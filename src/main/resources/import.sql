@@ -1,10 +1,10 @@
--- add restaurants
-insert into "restaurant" (name, city, capacity, avg_reservation_time) values ('Pastwisko', 'Poznań', 20, 1800);
-insert into "restaurant" (name, city, capacity, avg_reservation_time) values ('Michael Angelo & Gotham Pizza', 'Poznań', 25, 1800);
-
 -- add users
-insert into "user" (email, name, surname, restaurant_id) values ('john.diggle@gmail.com', 'John', 'Diggle',1);
-insert into "user" (email, name, surname, restaurant_id) values ('emily.wong@gmail.com', 'Emily', 'Wong', 2);
+insert into "user" (email, name, surname) values ('john.diggle@gmail.com', 'John', 'Diggle');
+insert into "user" (email, name, surname) values ('emily.wong@gmail.com', 'Emily', 'Wong');
+
+-- add restaurants
+insert into "restaurant" (name, city, capacity, avg_reservation_time, user_id) values ('Pastwisko', 'Poznań', 20, 1800,1);
+insert into "restaurant" (name, city, capacity, avg_reservation_time, user_id) values ('Michael Angelo & Gotham Pizza', 'Poznań', 25, 1800, 2);
 
 -- add kitchen types
 insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (1, 'BURGERS');

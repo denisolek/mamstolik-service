@@ -2,29 +2,41 @@ package pl.denisolek.User.Requests;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.time.Duration;
 
 @Data
 public class UserRegistrationRequest {
+    @NotNull
     String email;
 
+    @NotNull
     String name;
 
+    @NotNull
     String surname;
 
+    @NotNull
     String restaurantName;
 
+    @NotNull
     String restaurantCity;
 
+    @NotNull
     String restaurantStreet;
 
-    Integer restaurantLatitude;
+    @NotNull
+    Float restaurantLatitude;
 
-    Integer restaurantLongitude;
+    @NotNull
+    Float restaurantLongitude;
 
+    @NotNull
     Duration restaurantAvgReservationTime;
 
-    Integer restaurantNip;
+    @NotNull
+    String restaurantNip;
 
+    @NotNull
     Integer restaurantCapacity;
 }

@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import pl.denisolek.BaseEntity;
 import pl.denisolek.Reservation.Reservation;
+import pl.denisolek.User.User;
 
 import javax.persistence.*;
 import java.time.Duration;
@@ -20,11 +21,15 @@ public class Restaurant extends BaseEntity{
 
     String city;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    User user;
+
     String street;
 
-    Integer latitude;
+    Float latitude;
 
-    Integer longitude;
+    Float longitude;
 
     String description;
 
@@ -38,7 +43,7 @@ public class Restaurant extends BaseEntity{
 
     Float price_quality_rate;
 
-    Integer nip;
+    String nip;
 
     Integer capacity;
 
