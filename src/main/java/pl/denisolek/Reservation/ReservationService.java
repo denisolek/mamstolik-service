@@ -7,10 +7,12 @@ import pl.denisolek.Customer.Customer;
 import pl.denisolek.Customer.CustomerService;
 import pl.denisolek.Exception.ServiceException;
 import pl.denisolek.Restaurant.Restaurant;
+import pl.denisolek.User.AvailableCapacityAtDate;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,5 +111,26 @@ public class ReservationService {
 
 	public List<Reservation> getReservationsAtDate(LocalDate date, Integer restaurantId) {
 		return reservationRepository.findByDateAndRestaurantId(date, restaurantId);
+	}
+
+	public List<AvailableCapacityAtDate> getRestaurantCapacityAtDate(LocalDate date, Restaurant restaurant) {
+		List<Reservation> reservations = getReservationsAtDate(date, restaurant.getId());
+		List<AvailableCapacityAtDate> capacityList = new ArrayList<>();
+		LocalDateTime dayStart = LocalDateTime.of(date, LocalTime.MIN);
+		LocalDateTime dayEnd = LocalDateTime.of(date, LocalTime.MAX);
+		LocalDateTime checkingInterval = dayStart;
+
+		while (dayEnd.isAfter(checkingInterval)) {
+			Integer availableCapacity = restaurant.getCapacity();
+			for (int i = 0; i < reservations.size(); i++) {
+				if (isBetween(checkingInterval, reservations.get(i).getReservationBegin(), reservations.get(i).getLength())) {
+					availableCapacity -= reservations.get(i).getPeopleNumber();
+				}
+			}
+			capacityList.add(new AvailableCapacityAtDate(checkingInterval, availableCapacity));
+			checkingInterval = checkingInterval.plusMinutes(CHECKING_INTERVAL);
+		}
+
+		return capacityList;
 	}
 }

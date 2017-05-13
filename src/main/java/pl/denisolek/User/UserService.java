@@ -74,7 +74,7 @@ public class UserService {
     public List<Reservation> getUserRestaurantReservations(User user, String date) {
         if (user == null)
             throw new ServiceException(HttpStatus.NOT_FOUND, "User not found");
-        
+
         if (date != null){
             LocalDate localDate = LocalDate.parse(date);
             return reservationService.getReservationsAtDate(localDate, user.getRestaurant().getId());
@@ -88,5 +88,10 @@ public class UserService {
         if (user == null)
             throw new ServiceException(HttpStatus.NOT_FOUND, "User not found");
         return user;
+    }
+
+    public List<AvailableCapacityAtDate> getUserRestaurantAvailableCapacity(User user, String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        return reservationService.getRestaurantCapacityAtDate(localDate, user.getRestaurant());
     }
 }

@@ -48,4 +48,10 @@ public class UserController implements UserApi {
                                                            @RequestParam(value = "date", required = false) String date) {
         return userService.getUserRestaurantReservations(user, date);
     }
+
+    @Override
+    public List<AvailableCapacityAtDate> getUserRestaurantAvailableCapacity(@PathVariable("userId")User user,
+                                                                            @RequestParam(value = "date") String date) {
+        return userService.getUserRestaurantAvailableCapacity(user, date);
+    }
 }
