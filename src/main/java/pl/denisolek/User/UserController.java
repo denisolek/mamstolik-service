@@ -6,12 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.denisolek.Exception.ServiceException;
 import pl.denisolek.Reservation.Reservation;
 import pl.denisolek.Restaurant.Restaurant;
 import pl.denisolek.User.Requests.UserRegistrationRequest;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -43,7 +46,8 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public List<Reservation> getUserRestaurantReservations(@PathVariable("userId") User user) {
-        return userService.getUserRestaurantReservations(user);
+    public List<Reservation> getUserRestaurantReservations(@PathVariable("userId") User user,
+                                                           @RequestParam("date") String date) {
+        return userService.getUserRestaurantReservations(user, date);
     }
 }

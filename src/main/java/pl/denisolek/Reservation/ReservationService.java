@@ -9,6 +9,7 @@ import pl.denisolek.Exception.ServiceException;
 import pl.denisolek.Restaurant.Restaurant;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,7 @@ public class ReservationService {
 		checkAvailableSpotsCount(restaurant, reservation, duration, checkIntervals, startSearchDate, endSearchDate);
 
 		Customer currentCustomer = customerService.findOrCreate(reservation.getCustomer());
+		reservation.setDate(reservation.getReservationBegin().toLocalDate());
 		reservation.setCustomer(currentCustomer);
 		reservation.setRestaurant(restaurant);
 		reservation.setState(ReservationState.PENDING);
@@ -103,5 +105,9 @@ public class ReservationService {
 
 	public List<Reservation> getReservationsBetween(LocalDateTime begin, LocalDateTime end, Integer restaurantId) {
 		return reservationRepository.findByReservationBeginGreaterThanEqualAndReservationEndIsLessThanAndRestaurantId(begin, end, restaurantId);
+	}
+
+	public List<Reservation> getReservationsAtDate(LocalDate date, Integer restaurantId) {
+		return reservationRepository.findByDateAndRestaurantId(date, restaurantId);
 	}
 }

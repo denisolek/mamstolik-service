@@ -10,6 +10,8 @@ import pl.denisolek.Restaurant.Restaurant;
 import pl.denisolek.User.Requests.UserRegistrationRequest;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -36,5 +38,6 @@ public interface UserApi {
     @ApiOperation(value = "Get user reservations", response = Reservation.class, responseContainer = "List")
     @ResponseBody
     @RequestMapping(value = BASE_PATH + "/{userId}/reservations", method = RequestMethod.GET)
-    List<Reservation> getUserRestaurantReservations(@PathVariable("userId") User user);
+    List<Reservation> getUserRestaurantReservations(@PathVariable("userId") User user,
+                                                    @RequestParam("date") String date);
 }
