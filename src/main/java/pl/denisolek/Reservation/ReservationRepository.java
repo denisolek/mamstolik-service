@@ -8,5 +8,5 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Integer>{
 	List<Reservation> findByRestaurantId(Integer restaurantId);
 
-	List<Reservation> findByReservationBeginGreaterThanEqualAndReservationEndIsLessThan(LocalDateTime start, LocalDateTime end);
+	List<Reservation> findByReservationBeginGreaterThanEqualAndReservationEndIsLessThanAndRestaurantId(LocalDateTime start, LocalDateTime end, Integer restaurantId);
 }
