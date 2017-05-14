@@ -75,7 +75,7 @@ public class RestaurantService {
         for (int i = 0; i < checkIntervals.size(); i++) {
             Integer spotsTaken = 0;
             for (int j = 0; j < reservationsOverlapping.size(); j++) {
-                if (tools.isBetween(checkingInterval, reservationsOverlapping.get(j).getReservationBegin(), duration)) {
+                if (tools.isBetween(checkIntervals.get(i), reservationsOverlapping.get(j).getReservationBegin(), duration)) {
                     spotsTaken += reservationsOverlapping.get(j).getPeopleNumber();
                 }
             }
