@@ -25,12 +25,12 @@ task buildDocker(type: Docker) {
 		from jar
 		rename {'app.jar'}
 	}
-	entryPoint(['java', '-Djava.security.egd=file:/dev/./urandom', '-jar', '/app.jar'])
+	entryPoint(['java', '-Djava.security.egd=file:/dev/./urandom', '-Dfile.encoding=UTF-8', '-jar', '/app.jar'])
 }
 
 buildDocker.dependsOn(build)
 
-version = '0.8.1'
+version = '0.8.2'
 sourceCompatibility = 1.8
 
 repositories {
