@@ -6,15 +6,16 @@ import org.springframework.stereotype.Component;
 import pl.denisolek.Customer.Customer;
 import pl.denisolek.Customer.CustomerService;
 import pl.denisolek.Exception.ServiceException;
+import pl.denisolek.Restaurant.BusinessHour;
 import pl.denisolek.Restaurant.Restaurant;
 import pl.denisolek.User.AvailableCapacityAtDate;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class ReservationService {
@@ -105,7 +106,7 @@ public class ReservationService {
 		return ((checkingInterval.isAfter(interval) || checkingInterval.isEqual(interval)) && checkingInterval.isBefore(intervalEnd));
 	}
 
-	public List<Reservation> getReservationsBetween(LocalDateTime begin, LocalDateTime end, Integer restaurantId) {
+	private List<Reservation> getReservationsBetween(LocalDateTime begin, LocalDateTime end, Integer restaurantId) {
 		return reservationRepository.findByReservationBeginGreaterThanEqualAndReservationEndIsLessThanAndRestaurantId(begin, end, restaurantId);
 	}
 
@@ -116,10 +117,21 @@ public class ReservationService {
 	public List<AvailableCapacityAtDate> getRestaurantCapacityAtDate(LocalDate date, Restaurant restaurant) {
 		List<Reservation> reservations = getReservationsAtDate(date, restaurant.getId());
 		List<AvailableCapacityAtDate> capacityList = new ArrayList<>();
-		LocalDateTime dayStart = LocalDateTime.of(date, LocalTime.MIN);
-		LocalDateTime dayEnd = LocalDateTime.of(date, LocalTime.MAX);
+
+		BusinessHour businessHour = getDateBusinessHour(restaurant.getBusinessHours(), date);
+
+		if (businessHour == null)
+			throw new ServiceException(HttpStatus.BAD_REQUEST, "Restaurant is closed this day");
+
+		LocalDateTime dayStart = LocalDateTime.of(date, businessHour.getOpen());
+		LocalDateTime dayEnd = LocalDateTime.of(date, businessHour.getClose());
 		LocalDateTime checkingInterval = dayStart;
 
+		fillCapacityList(restaurant, reservations, capacityList, dayEnd, checkingInterval);
+		return capacityList;
+	}
+
+	private void fillCapacityList(Restaurant restaurant, List<Reservation> reservations, List<AvailableCapacityAtDate> capacityList, LocalDateTime dayEnd, LocalDateTime checkingInterval) {
 		while (dayEnd.isAfter(checkingInterval)) {
 			Integer availableCapacity = restaurant.getCapacity();
 			for (int i = 0; i < reservations.size(); i++) {
@@ -130,7 +142,13 @@ public class ReservationService {
 			capacityList.add(new AvailableCapacityAtDate(checkingInterval, availableCapacity));
 			checkingInterval = checkingInterval.plusMinutes(CHECKING_INTERVAL);
 		}
+	}
 
-		return capacityList;
+	private BusinessHour getDateBusinessHour(Set<BusinessHour> businessHours, LocalDate date) {
+		for (BusinessHour businessHour: businessHours) {
+			if (businessHour.getDayOfWeek() == date.getDayOfWeek())
+				return businessHour;
+		}
+		return null;
 	}
 }

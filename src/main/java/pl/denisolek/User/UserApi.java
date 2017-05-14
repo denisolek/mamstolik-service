@@ -41,7 +41,7 @@ public interface UserApi {
 
     @ApiOperation(value = "Get user restaurant available spots", response = AvailableCapacityAtDate.class, responseContainer = "List")
     @ResponseBody
-    @RequestMapping(value = BASE_PATH + "/{userId}/reservations/available", method = RequestMethod.GET)
+    @RequestMapping(value = BASE_PATH + "/{userId}/reservations/capacity", method = RequestMethod.GET)
     List<AvailableCapacityAtDate> getUserRestaurantAvailableCapacity(@PathVariable("userId") User user,
                                                                      @RequestParam(value = "date") String date);
 }
