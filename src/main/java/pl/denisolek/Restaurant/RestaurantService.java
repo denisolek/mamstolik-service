@@ -46,10 +46,6 @@ public class RestaurantService {
         restaurant.setCapacity(restaurant.getCapacity() + spotCount);
     }
 
-    public void decreaseCapacity(Restaurant restaurant, Integer spotCount) {
-        restaurant.setCapacity(restaurant.getCapacity() - spotCount);
-    }
-
     public List<Restaurant> searchRestaurants(String city, String date, Integer peopleNumber) {
         LocalDateTime searchDate = LocalDateTime.parse(date);
         List<Restaurant> cityRestaurants = restaurantRepository.findByCity(city);
@@ -58,33 +54,38 @@ public class RestaurantService {
 
         getOpenRestaurants(searchDate, cityRestaurants, openRestaurants);
         availableRestaurants.addAll(openRestaurants);
+        filterOpenRestaurants(peopleNumber, searchDate, availableRestaurants, openRestaurants);
 
+        return availableRestaurants;
+    }
+
+    private void filterOpenRestaurants(Integer peopleNumber, LocalDateTime searchDate, List<Restaurant> availableRestaurants, List<Restaurant> openRestaurants) {
         for (int i = 0; i < openRestaurants.size(); i++) {
             Restaurant restaurant = openRestaurants.get(i);
             Duration duration = restaurant.getAvgReservationTime();
             List<LocalDateTime> checkIntervals = new ArrayList<>();
-
-            tools.getDatesToCheck(checkIntervals, searchDate, duration, CHECKING_INTERVAL);
-
             LocalDateTime startSearchDate = searchDate.minus(restaurant.getAvgReservationTime());
             LocalDateTime endSearchDate = searchDate.plus(restaurant.getAvgReservationTime().multipliedBy(2));
-
             List<Reservation> reservationsOverlapping = reservationService.getReservationsBetween(startSearchDate, endSearchDate, restaurant.getId());
-            for (int j = 0; j < checkIntervals.size(); j++) {
-                Integer spotsTaken = 0;
-                for (int k = 0; k < reservationsOverlapping.size(); k++) {
-                    if (tools.isBetween(checkIntervals.get(i), reservationsOverlapping.get(k).getReservationBegin(), duration)) {
-                        spotsTaken += reservationsOverlapping.get(k).getPeopleNumber();
-                    }
-                }
-                if (spotsTaken + peopleNumber > restaurant.getCapacity()) {
-                    availableRestaurants.remove(restaurant);
-                    break;
+
+            tools.getDatesToCheck(checkIntervals, searchDate, duration, CHECKING_INTERVAL);
+            checkAvailableSpots(peopleNumber, availableRestaurants, checkIntervals.get(i), restaurant, duration, checkIntervals, reservationsOverlapping);
+        }
+    }
+
+    private void checkAvailableSpots(Integer peopleNumber, List<Restaurant> availableRestaurants, LocalDateTime checkingInterval, Restaurant restaurant, Duration duration, List<LocalDateTime> checkIntervals, List<Reservation> reservationsOverlapping) {
+        for (int i = 0; i < checkIntervals.size(); i++) {
+            Integer spotsTaken = 0;
+            for (int j = 0; j < reservationsOverlapping.size(); j++) {
+                if (tools.isBetween(checkingInterval, reservationsOverlapping.get(j).getReservationBegin(), duration)) {
+                    spotsTaken += reservationsOverlapping.get(j).getPeopleNumber();
                 }
             }
+            if (spotsTaken + peopleNumber > restaurant.getCapacity()) {
+                availableRestaurants.remove(restaurant);
+                break;
+            }
         }
-
-        return availableRestaurants;
     }
 
     private void getOpenRestaurants(LocalDateTime searchDate, List<Restaurant> cityRestaurants, List<Restaurant> openRestaurants) {
