@@ -9,14 +9,13 @@ import pl.denisolek.Exception.ServiceException;
 import pl.denisolek.Restaurant.BusinessHour;
 import pl.denisolek.Restaurant.Restaurant;
 import pl.denisolek.User.AvailableCapacityAtDate;
-import pl.denisolek.Utils.TimeOperations;
+import pl.denisolek.Utils.Tools;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class ReservationService {
@@ -25,7 +24,7 @@ public class ReservationService {
 	CustomerService customerService;
 
 	@Autowired
-	TimeOperations timeOperations;
+	Tools tools;
 
 	private final ReservationRepository reservationRepository;
 	private final Integer CHECKING_INTERVAL = 15;
@@ -52,8 +51,8 @@ public class ReservationService {
 		reservation.setLength(duration);
 		reservation.setReservationEnd(reservation.getReservationBegin().plus(reservation.getLength()));
 
-		BusinessHour businessHour = getDateBusinessHour(restaurant.getBusinessHours(), reservation.getReservationBegin().toLocalDate());
-		if (!timeOperations.isContaining(reservation.getReservationBegin().toLocalTime(), reservation.getReservationEnd().toLocalTime(), businessHour.getOpen(), businessHour.getClose()))
+		BusinessHour businessHour = tools.getDateBusinessHour(restaurant.getBusinessHours(), reservation.getReservationBegin().toLocalDate());
+		if (!tools.isContaining(reservation.getReservationBegin().toLocalTime(), reservation.getReservationEnd().toLocalTime(), businessHour.getOpen(), businessHour.getClose()))
 			throw new ServiceException(HttpStatus.BAD_REQUEST, "Can't make reservation if restaurant is closed");
 
 		List<LocalDateTime> checkIntervals = new ArrayList<>();
@@ -87,7 +86,7 @@ public class ReservationService {
 		for (int i = 0; i < checkIntervals.size(); i++) {
 			Integer spotsTaken = 0;
 			for (int j = 0; j < reservationsOverlapping.size(); j++) {
-				if (timeOperations.isBetween(checkIntervals.get(i), reservationsOverlapping.get(j).getReservationBegin(), duration)) {
+				if (tools.isBetween(checkIntervals.get(i), reservationsOverlapping.get(j).getReservationBegin(), duration)) {
 					spotsTaken += reservationsOverlapping.get(j).getPeopleNumber();
 				}
 			}
@@ -121,7 +120,7 @@ public class ReservationService {
 		List<Reservation> reservations = getReservationsAtDate(date, restaurant.getId());
 		List<AvailableCapacityAtDate> capacityList = new ArrayList<>();
 
-		BusinessHour businessHour = getDateBusinessHour(restaurant.getBusinessHours(), date);
+		BusinessHour businessHour = tools.getDateBusinessHour(restaurant.getBusinessHours(), date);
 
 		if (businessHour == null)
 			throw new ServiceException(HttpStatus.BAD_REQUEST, "Restaurant is closed this day");
@@ -138,20 +137,12 @@ public class ReservationService {
 		while (dayEnd.isAfter(checkingInterval)) {
 			Integer availableCapacity = restaurant.getCapacity();
 			for (int i = 0; i < reservations.size(); i++) {
-				if (timeOperations.isBetween(checkingInterval, reservations.get(i).getReservationBegin(), reservations.get(i).getLength())) {
+				if (tools.isBetween(checkingInterval, reservations.get(i).getReservationBegin(), reservations.get(i).getLength())) {
 					availableCapacity -= reservations.get(i).getPeopleNumber();
 				}
 			}
 			capacityList.add(new AvailableCapacityAtDate(checkingInterval, availableCapacity));
 			checkingInterval = checkingInterval.plusMinutes(CHECKING_INTERVAL);
 		}
-	}
-
-	public BusinessHour getDateBusinessHour(Set<BusinessHour> businessHours, LocalDate date) {
-		for (BusinessHour businessHour: businessHours) {
-			if (businessHour.getDayOfWeek() == date.getDayOfWeek())
-				return businessHour;
-		}
-		return null;
 	}
 }

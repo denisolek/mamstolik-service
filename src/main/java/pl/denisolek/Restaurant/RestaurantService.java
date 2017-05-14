@@ -2,8 +2,7 @@ package pl.denisolek.Restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.denisolek.Reservation.ReservationService;
-import pl.denisolek.Utils.TimeOperations;
+import pl.denisolek.Utils.Tools;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -14,10 +13,7 @@ import java.util.List;
 public class RestaurantService {
 
     @Autowired
-    ReservationService reservationService;
-
-    @Autowired
-    TimeOperations timeOperations;
+    Tools tools;
 
     private final RestaurantRepository restaurantRepository;
 
@@ -60,9 +56,9 @@ public class RestaurantService {
         for (int i = 0; i < cityRestaurants.size(); i++) {
             Restaurant restaurant = cityRestaurants.get(i);
             LocalTime searchDateEnd = searchDate.plus(restaurant.getAvgReservationTime()).toLocalTime();
-            BusinessHour businessHours = reservationService.getDateBusinessHour(restaurant.getBusinessHours(), searchDate.toLocalDate());
+            BusinessHour businessHours = tools.getDateBusinessHour(restaurant.getBusinessHours(), searchDate.toLocalDate());
 
-            if (timeOperations.isContaining(searchDate.toLocalTime(), searchDateEnd, businessHours.getOpen(), businessHours.getClose()))
+            if (tools.isContaining(searchDate.toLocalTime(), searchDateEnd, businessHours.getOpen(), businessHours.getClose()))
                 openRestaurants.add(restaurant);
         }
     }
