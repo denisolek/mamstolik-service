@@ -26,4 +26,11 @@ public interface RestaurantApi {
     @ResponseBody
     @RequestMapping(value = BASE_PATH, method = RequestMethod.POST)
     Restaurant addRestaurant(@RequestBody Restaurant restaurant);
+
+    @ApiOperation(value = "Get restaurant by reservations", response = Restaurant.class)
+    @ResponseBody
+    @RequestMapping(value = BASE_PATH + "/search", method = RequestMethod.GET)
+    List<Restaurant> searchRestaurants(@RequestParam(value = "city", required = false) String city,
+                                 @RequestParam(value = "date", required = false) String date,
+                                 @RequestParam(value = "peopleNumber", required = false) Integer peopleNumber);
 }

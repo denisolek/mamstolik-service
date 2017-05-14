@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -31,5 +32,12 @@ public class RestaurantController implements RestaurantApi {
     @Override
     public Restaurant addRestaurant(@RequestBody Restaurant restaurant) {
         return restaurantService.addRestaurant(restaurant);
+    }
+
+    @Override
+    public List<Restaurant> searchRestaurants(@RequestParam(value = "city", required = false) String city,
+                                        @RequestParam(value = "date", required = false) String date,
+                                        @RequestParam(value = "peopleNumber", required = false) Integer peopleNumber) {
+        return restaurantService.searchRestaurants(city, date, peopleNumber);
     }
 }
