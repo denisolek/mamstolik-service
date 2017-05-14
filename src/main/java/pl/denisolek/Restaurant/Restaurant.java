@@ -3,6 +3,7 @@ package pl.denisolek.Restaurant;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.validator.constraints.Length;
 import pl.denisolek.BaseEntity;
 import pl.denisolek.Reservation.Reservation;
 import pl.denisolek.Views;
@@ -31,6 +32,8 @@ public class Restaurant extends BaseEntity{
 
     Float longitude;
 
+    @JsonView(Views.RestaurantDetails.class)
+    @Length(max = 3000)
     String description;
 
     Duration avgReservationTime;
@@ -51,6 +54,9 @@ public class Restaurant extends BaseEntity{
 
     Integer capacity;
 
+    @JsonView(Views.Restaurant.class)
+    Integer opinionCount;
+
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Reservation> reservations;
 
@@ -61,6 +67,7 @@ public class Restaurant extends BaseEntity{
     @Column(name = "kitchen_type", nullable = false)
     Set<KitchenType> kitchenTypes;
 
+    @JsonView(Views.RestaurantDetails.class)
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "restaurant_business_hour", joinColumns = { @JoinColumn(name = "restaurant_id") }, inverseJoinColumns = { @JoinColumn(name = "business_hour_id") })
     Set<BusinessHour> businessHours = new HashSet<>();

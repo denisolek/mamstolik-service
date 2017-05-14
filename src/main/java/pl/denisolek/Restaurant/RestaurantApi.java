@@ -18,6 +18,7 @@ public interface RestaurantApi {
     @RequestMapping(value = BASE_PATH, method = RequestMethod.GET)
     List<Restaurant> getRestaurants();
 
+    @JsonView(Views.RestaurantDetails.class)
     @ApiOperation(value = "Get restaurant by id", response = Restaurant.class)
     @ResponseBody
     @RequestMapping(value = BASE_PATH + "/{restaurantId}", method = RequestMethod.GET)
