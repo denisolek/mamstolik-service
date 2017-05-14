@@ -14,7 +14,10 @@ public class Customer extends BaseEntity{
 
 	@Email
 	String email;
+
 	String phoneNumber;
+
 	String name;
+
 	String surname;
 }

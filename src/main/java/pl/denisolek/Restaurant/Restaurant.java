@@ -3,11 +3,12 @@ package pl.denisolek.Restaurant;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import pl.denisolek.BaseEntity;
-import pl.denisolek.User.User;
+import pl.denisolek.Reservation.Reservation;
 
 import javax.persistence.*;
 import java.time.Duration;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -15,19 +16,15 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class Restaurant extends BaseEntity{
 
-    @ManyToOne
-    @JoinColumn
-    User user;
-
     String name;
 
     String city;
 
-    String address;
+    String street;
 
-    Integer latitude;
+    Float latitude;
 
-    Integer longitude;
+    Float longitude;
 
     String description;
 
@@ -41,9 +38,12 @@ public class Restaurant extends BaseEntity{
 
     Float price_quality_rate;
 
-    Integer nip;
+    String nip;
 
     Integer capacity;
+
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Reservation> reservations;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)

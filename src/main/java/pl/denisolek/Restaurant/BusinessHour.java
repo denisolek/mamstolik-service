@@ -4,13 +4,16 @@ import lombok.Data;
 import pl.denisolek.BaseEntity;
 
 import javax.persistence.Entity;
-import java.sql.Time;
 import java.time.DayOfWeek;
+import java.time.LocalTime;
 
 @Data
 @Entity
 public class BusinessHour extends BaseEntity{
+
 	DayOfWeek dayOfWeek;
-	Time open;
-	Time close;
+
+	LocalTime open;
+
+	LocalTime close;
 }

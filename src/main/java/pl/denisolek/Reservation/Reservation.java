@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -19,13 +20,14 @@ import java.time.LocalDateTime;
 public class Reservation extends BaseEntity {
 
 	@ManyToOne
-	@JoinColumn
 	@JsonIgnore
 	Restaurant restaurant;
 
 	@ManyToOne
 	@JoinColumn
 	Customer customer;
+
+	LocalDate date;
 
 	LocalDateTime reservationBegin;
 

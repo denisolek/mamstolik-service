@@ -1,11 +1,10 @@
--- add users
-insert into "user" (email, name, surname) values ('john.diggle@gmail.com', 'John', 'Diggle');
-insert into "user" (email, name, surname) values ('emily.wong@gmail.com', 'Emily', 'Wong');
-insert into "user" (email, name, surname) values ('judah.sanchez@gmail.com', 'Judah', 'Sanchez');
-
 -- add restaurants
 insert into "restaurant" (name, city, capacity, avg_reservation_time) values ('Pastwisko', 'Poznań', 20, 1800);
 insert into "restaurant" (name, city, capacity, avg_reservation_time) values ('Michael Angelo & Gotham Pizza', 'Poznań', 25, 1800);
+
+-- add users
+insert into "user" (email, name, surname, restaurant_id) values ('john.diggle@gmail.com', 'John', 'Diggle', 1);
+insert into "user" (email, name, surname, restaurant_id) values ('emily.wong@gmail.com', 'Emily', 'Wong', 2);
 
 -- add kitchen types
 insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (1, 'BURGERS');
@@ -66,9 +65,10 @@ insert into "spot" (capacity, restaurant_id) values (3, 2);
 insert into "spot" (capacity, restaurant_id) values (1, 2);
 
 -- add reservations
-INSERT INTO "reservation" (people_number, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (5, '2017-05-20 09:50:00.000', 1800, '2017-05-20 10:20:00.000', 1, 1, 1);
-INSERT INTO "reservation" (people_number, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (15, '2017-05-20 09:50:00.000', 1800, '2017-05-20 10:20:00.000', 1, 2, 2);
-INSERT INTO "reservation" (people_number, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (7, '2017-05-20 10:00:00.000', 1800, '2017-05-20 10:30:00.000', 1, 2, 1);
-INSERT INTO "reservation" (people_number, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (3, '2017-05-20 10:10:00.000', 1800, '2017-05-20 10:40:00.000', 1, 3, 1);
-INSERT INTO "reservation" (people_number, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (5, '2017-05-20 10:30:00.000', 1800, '2017-05-20 11:00:00.000', 1, 4, 1);
-INSERT INTO "reservation" (people_number, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (20, '2017-05-20 12:30:00.000', 1800, '2017-05-20 12:30:00.000', 1, 5, 1);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (5, '2017-05-18', '2017-05-18 14:50:00.000', 1800, '2017-05-18 15:20:00.000', 1, 1, 1);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (15, '2017-05-18','2017-05-18 14:50:00.000', 1800, '2017-05-18 15:20:00.000', 1, 2, 2);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (7, '2017-05-18','2017-05-18 15:00:00.000', 1800, '2017-05-18 16:30:00.000', 1, 2, 1);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (3, '2017-05-18','2017-05-18 15:10:00.000', 1800, '2017-05-18 16:40:00.000', 1, 3, 1);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (5, '2017-05-18','2017-05-18 15:30:00.000', 1800, '2017-05-18 16:00:00.000', 1, 4, 1);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (20, '2017-05-18','2017-05-18 13:30:00.000', 1800, '2017-05-18 14:00:00.000', 1, 5, 1);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (5, '2017-05-19', '2017-05-19 14:50:00.000', 1800, '2017-05-19 15:20:00.000', 1, 1, 1);
