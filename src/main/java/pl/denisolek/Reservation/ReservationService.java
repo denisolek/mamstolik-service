@@ -13,6 +13,7 @@ import pl.denisolek.User.AvailableCapacityAtDate;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -47,6 +48,10 @@ public class ReservationService {
 
 		reservation.setLength(duration);
 		reservation.setReservationEnd(reservation.getReservationBegin().plus(reservation.getLength()));
+
+		BusinessHour businessHour = getDateBusinessHour(restaurant.getBusinessHours(), reservation.getReservationBegin().toLocalDate());
+		if (!isContaining(reservation.getReservationBegin().toLocalTime(), reservation.getReservationEnd().toLocalTime(), businessHour.getOpen(), businessHour.getClose()))
+			throw new ServiceException(HttpStatus.BAD_REQUEST, "Can't make reservation if restaurant is closed");
 
 		List<LocalDateTime> checkIntervals = new ArrayList<>();
 		LocalDateTime startSearchDate = reservation.getReservationBegin().minus(duration);
@@ -104,6 +109,10 @@ public class ReservationService {
 	private boolean isBetween(LocalDateTime checkingInterval, LocalDateTime interval, Duration duration) {
 		LocalDateTime intervalEnd = interval.plus(duration);
 		return ((checkingInterval.isAfter(interval) || checkingInterval.isEqual(interval)) && checkingInterval.isBefore(intervalEnd));
+	}
+
+	private boolean isContaining(LocalTime intervalStart, LocalTime intervalEnd, LocalTime businessHourStart, LocalTime businessHourEnd) {
+		return (intervalStart.isAfter(businessHourStart) && intervalEnd.isBefore(businessHourEnd));
 	}
 
 	private List<Reservation> getReservationsBetween(LocalDateTime begin, LocalDateTime end, Integer restaurantId) {
