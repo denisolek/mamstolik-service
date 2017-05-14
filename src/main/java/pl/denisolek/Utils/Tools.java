@@ -1,12 +1,14 @@
 package pl.denisolek.Utils;
 
 import org.springframework.stereotype.Component;
+import pl.denisolek.Reservation.Reservation;
 import pl.denisolek.Restaurant.BusinessHour;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -27,5 +29,17 @@ public class Tools {
 
     public boolean isContaining(LocalTime intervalStart, LocalTime intervalEnd, LocalTime businessHourStart, LocalTime businessHourEnd) {
         return (intervalStart.isAfter(businessHourStart) && intervalEnd.isBefore(businessHourEnd));
+    }
+
+    public void getDatesToCheck(List<LocalDateTime> checkIntervals, LocalDateTime reservationStart, Duration reservationLength, Integer checkingInterval) {
+        checkIntervals.add(reservationStart);
+
+        Long diff = reservationLength.toMinutes();
+
+        while (diff > checkingInterval) {
+            checkIntervals.add(reservationStart.plusMinutes(checkingInterval));
+            reservationStart = reservationStart.plusMinutes(checkingInterval);
+            diff -= checkingInterval;
+        }
     }
 }

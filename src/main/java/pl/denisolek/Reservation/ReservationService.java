@@ -59,7 +59,7 @@ public class ReservationService {
 		LocalDateTime startSearchDate = reservation.getReservationBegin().minus(duration);
 		LocalDateTime endSearchDate = reservation.getReservationEnd().plus(duration);
 
-		getDatesToCheck(checkIntervals, reservation);
+		tools.getDatesToCheck(checkIntervals, reservation.getReservationBegin(), reservation.getLength(), CHECKING_INTERVAL);
 		checkAvailableSpotsCount(restaurant, reservation, duration, checkIntervals, startSearchDate, endSearchDate);
 
 		Customer currentCustomer = customerService.findOrCreate(reservation.getCustomer());
@@ -96,19 +96,7 @@ public class ReservationService {
 		}
 	}
 
-	private void getDatesToCheck(List<LocalDateTime> checkIntervals, Reservation reservation) {
-		checkIntervals.add(reservation.getReservationBegin());
-		Long diff = reservation.getLength().toMinutes();
-		LocalDateTime interval = reservation.getReservationBegin();
-
-		while (diff > CHECKING_INTERVAL) {
-			checkIntervals.add(interval.plusMinutes(CHECKING_INTERVAL));
-			interval = interval.plusMinutes(CHECKING_INTERVAL);
-			diff -= CHECKING_INTERVAL;
-		}
-	}
-
-	private List<Reservation> getReservationsBetween(LocalDateTime begin, LocalDateTime end, Integer restaurantId) {
+	public List<Reservation> getReservationsBetween(LocalDateTime begin, LocalDateTime end, Integer restaurantId) {
 		return reservationRepository.findByReservationBeginGreaterThanEqualAndReservationEndIsLessThanAndRestaurantId(begin, end, restaurantId);
 	}
 
