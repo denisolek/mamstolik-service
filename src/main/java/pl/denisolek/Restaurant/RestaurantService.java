@@ -1,9 +1,7 @@
 package pl.denisolek.Restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import pl.denisolek.Exception.ServiceException;
 import pl.denisolek.Reservation.Reservation;
 import pl.denisolek.Reservation.ReservationService;
 import pl.denisolek.Utils.Tools;

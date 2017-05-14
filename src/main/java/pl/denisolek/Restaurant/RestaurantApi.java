@@ -1,9 +1,11 @@
 package pl.denisolek.Restaurant;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import pl.denisolek.Views;
 
 import java.util.List;
 
@@ -27,6 +29,7 @@ public interface RestaurantApi {
     @RequestMapping(value = BASE_PATH, method = RequestMethod.POST)
     Restaurant addRestaurant(@RequestBody Restaurant restaurant);
 
+    @JsonView(Views.Restaurant.class)
     @ApiOperation(value = "Get restaurant by reservations", response = Restaurant.class)
     @ResponseBody
     @RequestMapping(value = BASE_PATH + "/search", method = RequestMethod.GET)

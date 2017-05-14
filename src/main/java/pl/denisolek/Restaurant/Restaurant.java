@@ -1,9 +1,11 @@
 package pl.denisolek.Restaurant;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import pl.denisolek.BaseEntity;
 import pl.denisolek.Reservation.Reservation;
+import pl.denisolek.Views;
 
 import javax.persistence.*;
 import java.time.Duration;
@@ -16,10 +18,13 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class Restaurant extends BaseEntity{
 
+    @JsonView(Views.Restaurant.class)
     String name;
 
+    @JsonView(Views.Restaurant.class)
     String city;
 
+    @JsonView(Views.Restaurant.class)
     String street;
 
     Float latitude;
@@ -30,12 +35,16 @@ public class Restaurant extends BaseEntity{
 
     Duration avgReservationTime;
 
+    @JsonView(Views.Restaurant.class)
     Float rate;
 
+    @JsonView(Views.Restaurant.class)
     Float service_rate;
 
+    @JsonView(Views.Restaurant.class)
     Float place_rate;
 
+    @JsonView(Views.Restaurant.class)
     Float price_quality_rate;
 
     String nip;
@@ -45,6 +54,7 @@ public class Restaurant extends BaseEntity{
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Reservation> reservations;
 
+    @JsonView(Views.Restaurant.class)
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "restaurant_kitchen", joinColumns = @JoinColumn(name = "restaurantId"))
