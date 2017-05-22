@@ -1,5 +1,6 @@
 package pl.denisolek;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import javax.persistence.MappedSuperclass;
 public class BaseEntity {
 
     @Id
+    @JsonView(Views.Base.class)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 }

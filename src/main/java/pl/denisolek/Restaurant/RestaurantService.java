@@ -1,7 +1,9 @@
 package pl.denisolek.Restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import pl.denisolek.Exception.ServiceException;
 import pl.denisolek.Reservation.Reservation;
 import pl.denisolek.Reservation.ReservationService;
 import pl.denisolek.Utils.Tools;
@@ -9,6 +11,8 @@ import pl.denisolek.Utils.Tools;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +49,9 @@ public class RestaurantService {
     }
 
     public List<Restaurant> searchRestaurants(String city, String date, Integer peopleNumber) {
-        LocalDateTime searchDate = LocalDateTime.parse(date);
+        validateSearchParams(city, date, peopleNumber);
+        LocalDateTime searchDate = parseSearchDate(date);
+
         List<Restaurant> cityRestaurants = restaurantRepository.findByCity(city);
         List<Restaurant> availableRestaurants = new ArrayList<>();
         List<Restaurant> openRestaurants = new ArrayList<>();
@@ -55,6 +61,29 @@ public class RestaurantService {
         filterOpenRestaurants(peopleNumber, searchDate, availableRestaurants, openRestaurants);
 
         return availableRestaurants;
+    }
+
+    private LocalDateTime parseSearchDate(String date) {
+        LocalDateTime searchDate;
+        try {
+            searchDate = LocalDateTime.parse(date);
+        } catch (DateTimeParseException e) {
+            throw new ServiceException(HttpStatus.BAD_REQUEST, "Wrong date format");
+        }
+        if (LocalDateTime.now(ZoneId.of("Poland")).isAfter(searchDate))
+            throw new ServiceException(HttpStatus.BAD_REQUEST, "You cant make reservation in the past");
+
+        return searchDate;
+    }
+
+    private void validateSearchParams(String city, String date, Integer peopleNumber) {
+        if (city.isEmpty() || date.isEmpty() || peopleNumber == null) {
+            throw new ServiceException(HttpStatus.BAD_REQUEST, "Invalid request params");
+        }
+
+        if (peopleNumber < 1) {
+            throw new ServiceException(HttpStatus.BAD_REQUEST, "People number must be higher than 0");
+        }
     }
 
     private void filterOpenRestaurants(Integer peopleNumber, LocalDateTime searchDate, List<Restaurant> availableRestaurants, List<Restaurant> openRestaurants) {
