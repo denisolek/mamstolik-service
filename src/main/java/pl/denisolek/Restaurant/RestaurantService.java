@@ -96,11 +96,11 @@ public class RestaurantService {
             List<Reservation> reservationsOverlapping = reservationService.getReservationsBetween(startSearchDate, endSearchDate, restaurant.getId());
 
             tools.getDatesToCheck(checkIntervals, searchDate, duration, CHECKING_INTERVAL);
-            checkAvailableSpots(peopleNumber, availableRestaurants, checkIntervals.get(i), restaurant, duration, checkIntervals, reservationsOverlapping);
+            checkAvailableSpots(peopleNumber, availableRestaurants, restaurant, duration, checkIntervals, reservationsOverlapping);
         }
     }
 
-    private void checkAvailableSpots(Integer peopleNumber, List<Restaurant> availableRestaurants, LocalDateTime checkingInterval, Restaurant restaurant, Duration duration, List<LocalDateTime> checkIntervals, List<Reservation> reservationsOverlapping) {
+    private void checkAvailableSpots(Integer peopleNumber, List<Restaurant> availableRestaurants, Restaurant restaurant, Duration duration, List<LocalDateTime> checkIntervals, List<Reservation> reservationsOverlapping) {
         for (int i = 0; i < checkIntervals.size(); i++) {
             Integer spotsTaken = 0;
             for (int j = 0; j < reservationsOverlapping.size(); j++) {
