@@ -121,7 +121,7 @@ public class RestaurantService {
             LocalTime searchDateEnd = searchDate.plus(restaurant.getAvgReservationTime()).toLocalTime();
             BusinessHour businessHours = tools.getDateBusinessHour(restaurant.getBusinessHours(), searchDate.toLocalDate());
 
-            if (tools.isContaining(searchDate.toLocalTime(), searchDateEnd, businessHours.getOpen(), businessHours.getClose()))
+            if (restaurant.isOpen(searchDate.toLocalTime(), searchDateEnd, businessHours.getOpen(), businessHours.getClose()))
                 openRestaurants.add(restaurant);
         }
     }

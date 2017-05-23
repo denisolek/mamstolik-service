@@ -10,6 +10,8 @@ import pl.denisolek.Views;
 
 import javax.persistence.*;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -71,4 +73,11 @@ public class Restaurant extends BaseEntity{
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "restaurant_business_hour", joinColumns = { @JoinColumn(name = "restaurant_id") }, inverseJoinColumns = { @JoinColumn(name = "business_hour_id") })
     Set<BusinessHour> businessHours = new HashSet<>();
+
+    public Boolean isOpen(LocalTime searchDateStart, LocalTime searchDateEnd, LocalTime businessHourStart, LocalTime businessHourEnd) {
+        if ((searchDateStart.isAfter(businessHourStart) || searchDateStart.equals(businessHourStart)) &&
+                (searchDateEnd.isBefore(businessHourEnd) || searchDateEnd.equals(businessHourEnd)))
+            return true;
+        return false;
+    }
 }
