@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
-public class Customer extends BaseEntity{
+public class Customer extends BaseEntity {
 
 	@Email
 	String email;

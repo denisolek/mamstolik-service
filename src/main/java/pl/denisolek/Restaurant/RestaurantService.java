@@ -19,110 +19,110 @@ import java.util.List;
 @Component
 public class RestaurantService {
 
-    @Autowired
-    Tools tools;
+	@Autowired
+	Tools tools;
 
-    @Autowired
-    ReservationService reservationService;
+	@Autowired
+	ReservationService reservationService;
 
-    private final RestaurantRepository restaurantRepository;
-    private final Integer CHECKING_INTERVAL = 15;
+	private final RestaurantRepository restaurantRepository;
+	private final Integer CHECKING_INTERVAL = 15;
 
-    public RestaurantService(RestaurantRepository restaurantRepository) {
-        this.restaurantRepository = restaurantRepository;
-    }
+	public RestaurantService(RestaurantRepository restaurantRepository) {
+		this.restaurantRepository = restaurantRepository;
+	}
 
-    public List<Restaurant> getRestaurants() {
-        return restaurantRepository.findAll();
-    }
+	public List<Restaurant> getRestaurants() {
+		return restaurantRepository.findAll();
+	}
 
-    public Restaurant getRestaurant(Restaurant restaurant) {
-        return restaurant;
-    }
+	public Restaurant getRestaurant(Restaurant restaurant) {
+		return restaurant;
+	}
 
-    public Restaurant addRestaurant(Restaurant restaurant) {
-        return restaurantRepository.save(restaurant);
-    }
+	public Restaurant addRestaurant(Restaurant restaurant) {
+		return restaurantRepository.save(restaurant);
+	}
 
-    public void increaseCapacity(Restaurant restaurant, Integer spotCount) {
-        restaurant.setCapacity(restaurant.getCapacity() + spotCount);
-    }
+	public void increaseCapacity(Restaurant restaurant, Integer spotCount) {
+		restaurant.setCapacity(restaurant.getCapacity() + spotCount);
+	}
 
-    public List<Restaurant> searchRestaurants(String city, String date, Integer peopleNumber) {
-        validateSearchParams(city, date, peopleNumber);
-        LocalDateTime searchDate = parseSearchDate(date);
+	public List<Restaurant> searchRestaurants(String city, String date, Integer peopleNumber) {
+		validateSearchParams(city, date, peopleNumber);
+		LocalDateTime searchDate = parseSearchDate(date);
 
-        List<Restaurant> cityRestaurants = restaurantRepository.findByCity(city);
-        List<Restaurant> availableRestaurants = new ArrayList<>();
-        List<Restaurant> openRestaurants = new ArrayList<>();
+		List<Restaurant> cityRestaurants = restaurantRepository.findByCity(city);
+		List<Restaurant> availableRestaurants = new ArrayList<>();
+		List<Restaurant> openRestaurants = new ArrayList<>();
 
-        getOpenRestaurants(searchDate, cityRestaurants, openRestaurants);
-        availableRestaurants.addAll(openRestaurants);
-        filterOpenRestaurants(peopleNumber, searchDate, availableRestaurants, openRestaurants);
+		getOpenRestaurants(searchDate, cityRestaurants, openRestaurants);
+		availableRestaurants.addAll(openRestaurants);
+		filterOpenRestaurants(peopleNumber, searchDate, availableRestaurants, openRestaurants);
 
-        return availableRestaurants;
-    }
+		return availableRestaurants;
+	}
 
-    private LocalDateTime parseSearchDate(String date) {
-        LocalDateTime searchDate;
-        try {
-            searchDate = LocalDateTime.parse(date);
-        } catch (DateTimeParseException e) {
-            throw new ServiceException(HttpStatus.BAD_REQUEST, "Wrong date format");
-        }
-        if (LocalDateTime.now(ZoneId.of("Poland")).isAfter(searchDate))
-            throw new ServiceException(HttpStatus.BAD_REQUEST, "You cant make reservation in the past");
+	private LocalDateTime parseSearchDate(String date) {
+		LocalDateTime searchDate;
+		try {
+			searchDate = LocalDateTime.parse(date);
+		} catch (DateTimeParseException e) {
+			throw new ServiceException(HttpStatus.BAD_REQUEST, "Wrong date format");
+		}
+		if (LocalDateTime.now(ZoneId.of("Poland")).isAfter(searchDate))
+			throw new ServiceException(HttpStatus.BAD_REQUEST, "You cant make reservation in the past");
 
-        return searchDate;
-    }
+		return searchDate;
+	}
 
-    private void validateSearchParams(String city, String date, Integer peopleNumber) {
-        if (city.isEmpty() || date.isEmpty() || peopleNumber == null) {
-            throw new ServiceException(HttpStatus.BAD_REQUEST, "Invalid request params");
-        }
+	private void validateSearchParams(String city, String date, Integer peopleNumber) {
+		if (city.isEmpty() || date.isEmpty() || peopleNumber == null) {
+			throw new ServiceException(HttpStatus.BAD_REQUEST, "Invalid request params");
+		}
 
-        if (peopleNumber < 1) {
-            throw new ServiceException(HttpStatus.BAD_REQUEST, "People number must be higher than 0");
-        }
-    }
+		if (peopleNumber < 1) {
+			throw new ServiceException(HttpStatus.BAD_REQUEST, "People number must be higher than 0");
+		}
+	}
 
-    private void filterOpenRestaurants(Integer peopleNumber, LocalDateTime searchDate, List<Restaurant> availableRestaurants, List<Restaurant> openRestaurants) {
-        for (int i = 0; i < openRestaurants.size(); i++) {
-            Restaurant restaurant = openRestaurants.get(i);
-            Duration duration = restaurant.getAvgReservationTime();
-            List<LocalDateTime> checkIntervals = new ArrayList<>();
-            LocalDateTime startSearchDate = searchDate.minus(restaurant.getAvgReservationTime());
-            LocalDateTime endSearchDate = searchDate.plus(restaurant.getAvgReservationTime().multipliedBy(2));
-            List<Reservation> reservationsOverlapping = reservationService.getReservationsBetween(startSearchDate, endSearchDate, restaurant.getId());
+	private void filterOpenRestaurants(Integer peopleNumber, LocalDateTime searchDate, List<Restaurant> availableRestaurants, List<Restaurant> openRestaurants) {
+		for (int i = 0; i < openRestaurants.size(); i++) {
+			Restaurant restaurant = openRestaurants.get(i);
+			Duration duration = restaurant.getAvgReservationTime();
+			List<LocalDateTime> checkIntervals = new ArrayList<>();
+			LocalDateTime startSearchDate = searchDate.minus(restaurant.getAvgReservationTime());
+			LocalDateTime endSearchDate = searchDate.plus(restaurant.getAvgReservationTime().multipliedBy(2));
+			List<Reservation> reservationsOverlapping = reservationService.getReservationsBetween(startSearchDate, endSearchDate, restaurant.getId());
 
-            tools.getDatesToCheck(checkIntervals, searchDate, duration, CHECKING_INTERVAL);
-            checkAvailableSpots(peopleNumber, availableRestaurants, restaurant, duration, checkIntervals, reservationsOverlapping);
-        }
-    }
+			tools.getDatesToCheck(checkIntervals, searchDate, duration, CHECKING_INTERVAL);
+			checkAvailableSpots(peopleNumber, availableRestaurants, restaurant, duration, checkIntervals, reservationsOverlapping);
+		}
+	}
 
-    private void checkAvailableSpots(Integer peopleNumber, List<Restaurant> availableRestaurants, Restaurant restaurant, Duration duration, List<LocalDateTime> checkIntervals, List<Reservation> reservationsOverlapping) {
-        for (int i = 0; i < checkIntervals.size(); i++) {
-            Integer spotsTaken = 0;
-            for (int j = 0; j < reservationsOverlapping.size(); j++) {
-                if (tools.isBetween(checkIntervals.get(i), reservationsOverlapping.get(j).getReservationBegin(), duration)) {
-                    spotsTaken += reservationsOverlapping.get(j).getPeopleNumber();
-                }
-            }
-            if (spotsTaken + peopleNumber > restaurant.getCapacity()) {
-                availableRestaurants.remove(restaurant);
-                break;
-            }
-        }
-    }
+	private void checkAvailableSpots(Integer peopleNumber, List<Restaurant> availableRestaurants, Restaurant restaurant, Duration duration, List<LocalDateTime> checkIntervals, List<Reservation> reservationsOverlapping) {
+		for (int i = 0; i < checkIntervals.size(); i++) {
+			Integer spotsTaken = 0;
+			for (int j = 0; j < reservationsOverlapping.size(); j++) {
+				if (tools.isBetween(checkIntervals.get(i), reservationsOverlapping.get(j).getReservationBegin(), duration)) {
+					spotsTaken += reservationsOverlapping.get(j).getPeopleNumber();
+				}
+			}
+			if (spotsTaken + peopleNumber > restaurant.getCapacity()) {
+				availableRestaurants.remove(restaurant);
+				break;
+			}
+		}
+	}
 
-    private void getOpenRestaurants(LocalDateTime searchDate, List<Restaurant> cityRestaurants, List<Restaurant> openRestaurants) {
-        for (int i = 0; i < cityRestaurants.size(); i++) {
-            Restaurant restaurant = cityRestaurants.get(i);
-            LocalTime searchDateEnd = searchDate.plus(restaurant.getAvgReservationTime()).toLocalTime();
-            BusinessHour businessHours = tools.getDateBusinessHour(restaurant.getBusinessHours(), searchDate.toLocalDate());
+	private void getOpenRestaurants(LocalDateTime searchDate, List<Restaurant> cityRestaurants, List<Restaurant> openRestaurants) {
+		for (int i = 0; i < cityRestaurants.size(); i++) {
+			Restaurant restaurant = cityRestaurants.get(i);
+			LocalTime searchDateEnd = searchDate.plus(restaurant.getAvgReservationTime()).toLocalTime();
+			BusinessHour businessHours = tools.getDateBusinessHour(restaurant.getBusinessHours(), searchDate.toLocalDate());
 
-            if (restaurant.isOpen(searchDate.toLocalTime(), searchDateEnd, businessHours.getOpen(), businessHours.getClose()))
-                openRestaurants.add(restaurant);
-        }
-    }
+			if (restaurant.isOpen(searchDate.toLocalTime(), searchDateEnd, businessHours.getOpen(), businessHours.getClose()))
+				openRestaurants.add(restaurant);
+		}
+	}
 }

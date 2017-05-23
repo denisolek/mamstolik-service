@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
-public class Spot extends BaseEntity{
+public class Spot extends BaseEntity {
 
 	Integer capacity;
 

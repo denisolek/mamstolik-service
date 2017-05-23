@@ -1,14 +1,14 @@
 buildscript {
-	ext {
-		springBootVersion = '1.5.2.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-		classpath "se.transmode.gradle:gradle-docker:1.2"
-	}
+    ext {
+        springBootVersion = '1.5.2.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "se.transmode.gradle:gradle-docker:1.2"
+    }
 }
 
 apply plugin: 'idea'
@@ -18,35 +18,35 @@ apply plugin: 'docker'
 apply plugin: 'org.springframework.boot'
 
 task buildDocker(type: Docker) {
-	baseImage = 'develar/java:latest'
-	push = project.hasProperty('push')
-	tag = 'denisolek/table-booking'
-	addFile {
-		from jar
-		rename {'app.jar'}
-	}
-	entryPoint(['java', '-Djava.security.egd=file:/dev/./urandom', '-Dfile.encoding=UTF-8', '-jar', '/app.jar'])
+    baseImage = 'develar/java:latest'
+    push = project.hasProperty('push')
+    tag = 'denisolek/table-booking'
+    addFile {
+        from jar
+        rename { 'app.jar' }
+    }
+    entryPoint(['java', '-Djava.security.egd=file:/dev/./urandom', '-Dfile.encoding=UTF-8', '-jar', '/app.jar'])
 }
 
 buildDocker.dependsOn(build)
 
-version = '0.8.5'
+version = '0.8.6'
 sourceCompatibility = 1.8
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.6.1'
-	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.6.1'
-	compile "com.fasterxml.jackson.core:jackson-databind:2.8.5"
-	runtime "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5"
-	runtime('org.springframework.boot:spring-boot-devtools')
-	runtime('org.postgresql:postgresql')
-	compileOnly('org.projectlombok:lombok')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.6.1'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.6.1'
+    compile "com.fasterxml.jackson.core:jackson-databind:2.8.5"
+    runtime "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5"
+    runtime('org.springframework.boot:spring-boot-devtools')
+    runtime('org.postgresql:postgresql')
+    compileOnly('org.projectlombok:lombok')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }
