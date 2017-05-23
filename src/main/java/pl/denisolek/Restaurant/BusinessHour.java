@@ -11,7 +11,7 @@ import java.time.LocalTime;
 
 @Data
 @Entity
-public class BusinessHour extends BaseEntity{
+public class BusinessHour extends BaseEntity {
 
 	@JsonView(Views.RestaurantDetails.class)
 	DayOfWeek dayOfWeek;

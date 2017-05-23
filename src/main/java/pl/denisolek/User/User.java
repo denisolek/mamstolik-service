@@ -9,18 +9,18 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name="[user]")
+@Table(name = "[user]")
 @EqualsAndHashCode(callSuper = true)
 public class User extends BaseEntity {
 
-    @Column(unique = true)
-    String email;
+	@Column(unique = true)
+	String email;
 
-    String name;
+	String name;
 
-    String surname;
+	String surname;
 
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "restaurant_id")
-    Restaurant restaurant;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "restaurant_id")
+	Restaurant restaurant;
 }

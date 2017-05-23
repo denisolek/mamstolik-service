@@ -14,6 +14,7 @@ import pl.denisolek.Utils.Tools;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,6 +80,9 @@ public class ReservationService {
 
 		if (reservation.getPeopleNumber() < 1)
 			throw new ServiceException(HttpStatus.BAD_REQUEST, "People number can't be lower than 1");
+
+		if (LocalDateTime.now(ZoneId.of("Poland")).isAfter(reservation.getReservationBegin()))
+			throw new ServiceException(HttpStatus.BAD_REQUEST, "You cant make reservation in the past");
 	}
 
 	private void checkAvailableSpotsCount(Restaurant restaurant, Reservation reservation, Duration duration, List<LocalDateTime> checkIntervals, LocalDateTime startSearchDate, LocalDateTime endSearchDate) {

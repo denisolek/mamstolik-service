@@ -9,7 +9,7 @@ import pl.denisolek.Restaurant.Restaurant;
 import java.util.List;
 
 @Controller
-public class ReservationController implements ReservationApi{
+public class ReservationController implements ReservationApi {
 
 	@Autowired
 	ReservationService reservationService;

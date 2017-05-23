@@ -18,40 +18,40 @@ import java.util.List;
 @Controller
 public class UserController implements UserApi {
 
-    @Autowired
-    UserService userService;
+	@Autowired
+	UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
 
-    @Override
-    public User addUser(@RequestBody @Valid UserRegistrationRequest userRegistrationRequest, BindingResult result) {
-        if (result.hasErrors())
-            throw new ServiceException(HttpStatus.BAD_REQUEST, "Invalid request params");
+	@Override
+	public User addUser(@RequestBody @Valid UserRegistrationRequest userRegistrationRequest, BindingResult result) {
+		if (result.hasErrors())
+			throw new ServiceException(HttpStatus.BAD_REQUEST, "Invalid request params");
 
-        return userService.addUser(userRegistrationRequest);
-    }
+		return userService.addUser(userRegistrationRequest);
+	}
 
-    @Override
-    public User getUser(@PathVariable("userId") User user) {
-        return userService.getUser(user);
-    }
+	@Override
+	public User getUser(@PathVariable("userId") User user) {
+		return userService.getUser(user);
+	}
 
-    @Override
-    public Restaurant getUserRestaurant(@PathVariable("userId") User user) {
-        return userService.getUserRestaurant(user);
-    }
+	@Override
+	public Restaurant getUserRestaurant(@PathVariable("userId") User user) {
+		return userService.getUserRestaurant(user);
+	}
 
-    @Override
-    public List<Reservation> getUserRestaurantReservations(@PathVariable("userId") User user,
-                                                           @RequestParam(value = "date", required = false) String date) {
-        return userService.getUserRestaurantReservations(user, date);
-    }
+	@Override
+	public List<Reservation> getUserRestaurantReservations(@PathVariable("userId") User user,
+	                                                       @RequestParam(value = "date", required = false) String date) {
+		return userService.getUserRestaurantReservations(user, date);
+	}
 
-    @Override
-    public List<AvailableCapacityAtDate> getUserRestaurantAvailableCapacity(@PathVariable("userId")User user,
-                                                                            @RequestParam(value = "date") String date) {
-        return userService.getUserRestaurantAvailableCapacity(user, date);
-    }
+	@Override
+	public List<AvailableCapacityAtDate> getUserRestaurantAvailableCapacity(@PathVariable("userId") User user,
+	                                                                        @RequestParam(value = "date") String date) {
+		return userService.getUserRestaurantAvailableCapacity(user, date);
+	}
 }
