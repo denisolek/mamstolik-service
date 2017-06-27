@@ -1,16 +1,22 @@
+-- add authorities
+insert into "authority" (name) VALUES ('ROLE_OWNER');
+insert into "authority" (name) VALUES ('ROLE_ADMIN');
+
 -- add restaurants
 insert into "restaurant" (name, city, street, description, rate, service_rate, place_rate, price_quality_rate, capacity, avg_reservation_time, opinion_count) values ('Piano Bar Restauant & Cafe', 'poznań', 'Półwiejska 42', 'Piano Bar jest urokliwym, stylowym miejscem, które znajduje się w Centrum Sztuki i Biznesu w Starym Browarze. Jest niepowtarzalne i przepełnione niezwykłym klimatem. Piano Bar to restauracja, którą wyróżnia profesjonalna obsługa sprawiająca, że nasi Goście czują się naprawdę niezwykle. Dodatkowy, elegancki a zarazem ciepły wystrój wnętrza zapewnia uczucie wyjątkowości. Nasze smaki to kuchnia włoska, śródziemnomorska i potrawy kuchni polskiej. Szef Kuchni Krystian Szopka z zespołem kucharzy sprawia, że jej smak na długo pozostaje w pamięci naszych Gości. Zapraszamy na lunche, rodzinne obiady, spotkania biznesowe.', 4.5, 5.0, 5.0, 5.0, 20, 1800, 72);
 insert into "restaurant" (name, city, street, description, rate, service_rate, place_rate, price_quality_rate, capacity, avg_reservation_time, opinion_count) values ('Restauracja Ratuszova', 'poznań', 'Stary Rynek 55', 'Restauracja Ratuszova serdecznie zaprasza w swoje progi wszystkich, którzy lubią lub pragną zasmakować tradycyjne potrawy kuchni polskiej! W naszym menu na szczególną uwagę zasługuje czernina z domowym makaronem, kaczka pieczona z jabłkami oraz dania z dziczyzny. Miłośników Slow Food, pasjonatów zdrowego odżywiania oraz wszystkich smakoszy w szczególności zachęcamy do spróbowania dań gotowanych innowacyjną metodą sous-vide. Dla jeszcze większego urozmaicenia nasze menu uzupełniliśmy smakami kuchni międzynarodowej. W naszej restauracji dbamy o to by sezonowo zmieniać potrawy oraz wystrój sal. ', 4.5, 5.0, 5.0, 5.0, 25, 1800, 34);
 insert into "restaurant" (name, city, street, description, rate, service_rate, place_rate, price_quality_rate, capacity, avg_reservation_time, opinion_count) values ('Manekin', 'poznań', 'Kwiatowa 3', 'Znana i ceniona sieć lokali podająca przepyszne naleśniki. Restauracja serwuje wiele rodzajów naleśników na słodko jak i na wytrawnie ale nie tylko. Tu można zjeść również sałatki, zupy, desery, spaghetti. Ogromnym atutem jest stylizowane wnętrze, nawiązujące do krainy baśniowej. W tym surrealistycznym otoczeniu można nie tylko zjeść, lecz również zrelaksować się przy kieliszku wina czy kuflu piwa.', 4.7, 4.0, 3.0, 3.5, 30, 1800, 12);
 insert into "restaurant" (name, city, street, description, rate, service_rate, place_rate, price_quality_rate, capacity, avg_reservation_time, opinion_count) values ('Whiskey in the Jar', 'poznań', 'Stary Rynek 100', 'Whiskey in the Jar to steakhouse, wzorowany na najlepszych amerykańskich lokalach tego typu. W menu znajdują się głównie dania mięsne – specjalnością są steki, przyrządzane z najwyższej jakości wołowiny, a także burgery i dania grillowane, dostępne pod nazwą Grill Rockersa. Wszystkie potrawy przygotowywane są na najdłuższym w Poznaniu grillu lawowym. Ogromnym powodzeniem cieszą się również autorskie drinki na bazie Jacka Daniels’a, zgodnie z nazwą lokalu podawane w designerskich słojach – jarach.', 4.5, 5.0, 5.0, 5.0, 25, 1800, 34);
 insert into "restaurant" (name, city, street, description, rate, service_rate, place_rate, price_quality_rate, capacity, avg_reservation_time, opinion_count) values ('Chmielnik Pub', 'poznań', 'Żydowska 27', 'Ambasador polskiego piwa w Poznaniu. Największy wybór piw z polskich browarów rzemieślniczych w samym sercu Poznania.  Zapewniamy wyjątkowy wystrój, profesjonalną obsługę, niepowtarzalny klimat. W sezonie letnim zapraszamy do magicznego ogrodu piwnego dla 200 osób, w którym główną atrakcją jest rosnący chmiel w odmianie SYBILLA oraz działająca kuchnia oferująca dania dopasowane do piwa.',4.5, 5.0, 5.0, 5.0, 20, 1800,72);
+insert into "restaurant" (name, city, street, description, rate, service_rate, place_rate, price_quality_rate, capacity, avg_reservation_time, opinion_count) values ('Denis Restaurant', 'poznań', 'Żydowska 27', 'Ambasador polskiego piwa w Poznaniu. Największy wybór piw z polskich browarów rzemieślniczych w samym sercu Poznania.  Zapewniamy wyjątkowy wystrój, profesjonalną obsługę, niepowtarzalny klimat. W sezonie letnim zapraszamy do magicznego ogrodu piwnego dla 200 osób, w którym główną atrakcją jest rosnący chmiel w odmianie SYBILLA oraz działająca kuchnia oferująca dania dopasowane do piwa.',4.5, 5.0, 5.0, 5.0, 20, 1800,72);
 
 -- add users
-insert into "user" (email, name, surname, restaurant_id) values ('przemyslaw.pawlicki@gmail.com', 'Przemysław', 'Pawlicki', 1);
-insert into "user" (email, name, surname, restaurant_id) values ('bartosz.zmarzlik@gmail.com', 'Bartosz', 'Zmarzlik', 2);
-insert into "user" (email, name, surname, restaurant_id) values ('janusz.kolodziej@gmail.com', 'Janusz', 'Kołodziej', 3);
-insert into "user" (email, name, surname, restaurant_id) values ('bartosz.smektala@gmail.com', 'Bartosz', 'Smektała', 4);
-insert into "user" (email, name, surname, restaurant_id) values ('martyna.wierzbicka@gmail.com', 'Martyna', 'Wierzbicka', 5);
+insert into "user" (email, name, surname, restaurant_id, password) values ('przemyslaw.pawlicki@gmail.com', 'Przemysław', 'Pawlicki', 1, 'password');
+insert into "user" (email, name, surname, restaurant_id, password) values ('bartosz.zmarzlik@gmail.com', 'Bartosz', 'Zmarzlik', 2, 'password');
+insert into "user" (email, name, surname, restaurant_id, password) values ('janusz.kolodziej@gmail.com', 'Janusz', 'Kołodziej', 3, 'password');
+insert into "user" (email, name, surname, restaurant_id, password) values ('bartosz.smektala@gmail.com', 'Bartosz', 'Smektała', 4, 'password');
+insert into "user" (email, name, surname, restaurant_id, password) values ('martyna.wierzbicka@gmail.com', 'Martyna', 'Wierzbicka', 5, 'password');
+insert into "user" (email, name, surname, restaurant_id, password) values ('denis.olek@gmail.com', 'Denis', 'Olek', 6, 'denis123');
 
 -- add kitchen types
 insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (1, 'POLISH');
@@ -24,8 +30,6 @@ insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (3, 'VIET_
 insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (4, 'BURGERS');
 insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (4, 'MEXICAN');
 insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (5, 'POLISH');
-
-
 
 -- add business hours
 insert into "business_hour" (day_of_week, open, close) values (0, '12:00:00', '21:00:00');
