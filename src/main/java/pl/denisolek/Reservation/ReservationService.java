@@ -34,7 +34,7 @@ public class ReservationService {
 		this.reservationRepository = reservationRepository;
 	}
 
-	public List<Reservation> getReservations(Integer restaurantId) {
+	public List<Reservation> getRestaurantReservations(Integer restaurantId) {
 		return reservationRepository.findByRestaurantId(restaurantId);
 	}
 
@@ -136,5 +136,9 @@ public class ReservationService {
 			capacityList.add(new AvailableCapacityAtDate(checkingInterval, availableCapacity));
 			checkingInterval = checkingInterval.plusMinutes(CHECKING_INTERVAL);
 		}
+	}
+
+	public List<Reservation> getReservations() {
+		return reservationRepository.findAll();
 	}
 }
