@@ -33,7 +33,7 @@ public class RestaurantService {
 	}
 
 	public List<Restaurant> getRestaurants() {
-		return restaurantRepository.findAll();
+		return restaurantRepository.findByIsActive(true);
 	}
 
 	public Restaurant getRestaurant(Restaurant restaurant) {
@@ -52,7 +52,7 @@ public class RestaurantService {
 		validateSearchParams(city, date, peopleNumber);
 		LocalDateTime searchDate = parseSearchDate(date);
 
-		List<Restaurant> cityRestaurants = restaurantRepository.findByCity(city);
+		List<Restaurant> cityRestaurants = restaurantRepository.findByCityAndIsActive(city, true);
 		List<Restaurant> availableRestaurants = new ArrayList<>();
 		List<Restaurant> openRestaurants = new ArrayList<>();
 
