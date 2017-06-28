@@ -73,6 +73,9 @@ public class Restaurant extends BaseEntity {
 	@JoinTable(name = "restaurant_business_hour", joinColumns = {@JoinColumn(name = "restaurant_id")}, inverseJoinColumns = {@JoinColumn(name = "business_hour_id")})
 	Set<BusinessHour> businessHours = new HashSet<>();
 
+	@JsonView(Views.Restaurant.class)
+	Boolean isActive;
+
 	public Boolean isOpen(LocalTime searchDateStart, LocalTime searchDateEnd, LocalTime businessHourStart, LocalTime businessHourEnd) {
 		if ((searchDateStart.isAfter(businessHourStart) || searchDateStart.equals(businessHourStart)) &&
 				(searchDateEnd.isBefore(businessHourEnd) || searchDateEnd.equals(businessHourEnd)))

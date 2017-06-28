@@ -7,4 +7,5 @@ public class Views {
 	public static interface Reservation extends Base, Customer {}
 	public static interface ReservationDetails extends Reservation, Restaurant {}
 	public static interface Customer extends Base {}
+	public static interface User extends Base, Restaurant {}
 }
