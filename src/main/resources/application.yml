@@ -21,6 +21,18 @@ spring:
     jackson:
         serialization:
             write_dates_as_timestamps: false
+    mail:
+        host: smtp.webio.pl
+        password: 43:-_/deYwNC
+        port: 587
+        properties:
+            mail:
+                smtp:
+                    auth: true;
+                    starttls:
+                        enable: true
+                        required: true
+        username: no-reply@mamstolik.pl
 
 # Swagger
 springfox:
