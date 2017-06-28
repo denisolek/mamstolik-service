@@ -142,12 +142,6 @@ public class ReservationService {
 		return reservationRepository.findAll();
 	}
 
-	public void removeReservation(Reservation reservation) {
-		if (reservation == null)
-			throw new ServiceException(HttpStatus.NOT_FOUND, "Reservation not found");
-		reservationRepository.delete(reservation);
-	}
-
 	public Reservation changeReservationState(Reservation reservation, Reservation updatedReservation) {
 		if (reservation == null)
 			throw new ServiceException(HttpStatus.NOT_FOUND, "Reservation not found");

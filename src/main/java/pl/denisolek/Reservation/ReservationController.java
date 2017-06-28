@@ -42,9 +42,4 @@ public class ReservationController implements ReservationApi {
 	public Reservation addReservation(@PathVariable("restaurantId") Restaurant restaurant, @RequestBody Reservation reservation) {
 		return reservationService.addReservation(restaurant, reservation);
 	}
-
-	@Override
-	public void removeReservation(@PathVariable("reservationId") Reservation reservation) {
-		reservationService.removeReservation(reservation);
-	}
 }

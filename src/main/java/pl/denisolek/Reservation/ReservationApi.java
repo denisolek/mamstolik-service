@@ -47,9 +47,4 @@ public interface ReservationApi {
 	@ResponseBody
 	@RequestMapping(value = RESTAURANT_RESERVATIONS_PATH, method = RequestMethod.POST)
 	Reservation addReservation(@PathVariable("restaurantId") Restaurant restaurant, @RequestBody Reservation reservation);
-
-	@ApiOperation(value = "Remove reservation")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@RequestMapping(value = SINGLE_RESERVATION_PATH, method = RequestMethod.DELETE)
-	void removeReservation(@PathVariable("reservationId") Reservation reservation);
 }
