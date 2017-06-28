@@ -33,7 +33,7 @@ public class RestaurantService {
 	}
 
 	public List<Restaurant> getRestaurants() {
-		return restaurantRepository.findAll();
+		return restaurantRepository.findByIsActive(true);
 	}
 
 	public Restaurant getRestaurant(Restaurant restaurant) {
@@ -52,7 +52,7 @@ public class RestaurantService {
 		validateSearchParams(city, date, peopleNumber);
 		LocalDateTime searchDate = parseSearchDate(date);
 
-		List<Restaurant> cityRestaurants = restaurantRepository.findByCity(city);
+		List<Restaurant> cityRestaurants = restaurantRepository.findByCityAndIsActive(city, true);
 		List<Restaurant> availableRestaurants = new ArrayList<>();
 		List<Restaurant> openRestaurants = new ArrayList<>();
 
@@ -124,5 +124,13 @@ public class RestaurantService {
 			if (restaurant.isOpen(searchDate.toLocalTime(), searchDateEnd, businessHours.getOpen(), businessHours.getClose()))
 				openRestaurants.add(restaurant);
 		}
+	}
+
+	public Restaurant changeActiveState(Restaurant restaurant) {
+		if (restaurant == null)
+			throw new ServiceException(HttpStatus.NOT_FOUND, "Restaurant not found");
+
+		restaurant.setIsActive(!restaurant.getIsActive());
+		return restaurantRepository.save(restaurant);
 	}
 }

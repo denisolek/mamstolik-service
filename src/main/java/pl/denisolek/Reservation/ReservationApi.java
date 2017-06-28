@@ -35,6 +35,13 @@ public interface ReservationApi {
 	@RequestMapping(value = SINGLE_RESERVATION_PATH, method = RequestMethod.GET)
 	Reservation getReservation(@PathVariable("reservationId") Reservation reservation);
 
+	@JsonView(Views.ReservationDetails.class)
+	@ApiOperation(value = "Change reservation state", response = Reservation.class)
+	@ResponseBody
+	@RequestMapping(value = SINGLE_RESERVATION_PATH, method = RequestMethod.PUT)
+	Reservation changeReservationState(@PathVariable("reservationId") Reservation reservation, @RequestBody Reservation updatedReservation);
+
+	@JsonView(Views.ReservationDetails.class)
 	@ApiOperation(value = "Add reservation", response = Reservation.class)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody

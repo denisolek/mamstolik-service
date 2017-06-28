@@ -34,6 +34,11 @@ public class ReservationController implements ReservationApi {
 	}
 
 	@Override
+	public Reservation changeReservationState(@PathVariable("reservationId") Reservation reservation, @RequestBody Reservation updatedReservation) {
+		return reservationService.changeReservationState(reservation, updatedReservation);
+	}
+
+	@Override
 	public Reservation addReservation(@PathVariable("restaurantId") Restaurant restaurant, @RequestBody Reservation reservation) {
 		return reservationService.addReservation(restaurant, reservation);
 	}

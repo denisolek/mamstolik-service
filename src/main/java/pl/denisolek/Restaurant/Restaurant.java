@@ -29,14 +29,17 @@ public class Restaurant extends BaseEntity {
 	@JsonView(Views.Restaurant.class)
 	String street;
 
+	@JsonView(Views.Restaurant.class)
 	Float latitude;
 
+	@JsonView(Views.Restaurant.class)
 	Float longitude;
 
 	@JsonView(Views.RestaurantDetails.class)
 	@Length(max = 3000)
 	String description;
 
+	@JsonView(Views.Restaurant.class)
 	Duration avgReservationTime;
 
 	@JsonView(Views.Restaurant.class)
@@ -51,8 +54,10 @@ public class Restaurant extends BaseEntity {
 	@JsonView(Views.Restaurant.class)
 	Float price_quality_rate;
 
+	@JsonView(Views.Restaurant.class)
 	String nip;
 
+	@JsonView(Views.Restaurant.class)
 	Integer capacity;
 
 	@JsonView(Views.Restaurant.class)
@@ -72,6 +77,9 @@ public class Restaurant extends BaseEntity {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "restaurant_business_hour", joinColumns = {@JoinColumn(name = "restaurant_id")}, inverseJoinColumns = {@JoinColumn(name = "business_hour_id")})
 	Set<BusinessHour> businessHours = new HashSet<>();
+
+	@JsonView(Views.Restaurant.class)
+	Boolean isActive;
 
 	public Boolean isOpen(LocalTime searchDateStart, LocalTime searchDateEnd, LocalTime businessHourStart, LocalTime businessHourEnd) {
 		if ((searchDateStart.isAfter(businessHourStart) || searchDateStart.equals(businessHourStart)) &&

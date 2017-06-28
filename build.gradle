@@ -20,7 +20,7 @@ apply plugin: 'org.springframework.boot'
 task buildDocker(type: Docker) {
     baseImage = 'develar/java:latest'
     push = project.hasProperty('push')
-    tag = 'denisolek/table-booking'
+    tag = 'mamstolik/service'
     addFile {
         from jar
         rename { 'app.jar' }
@@ -30,7 +30,7 @@ task buildDocker(type: Docker) {
 
 buildDocker.dependsOn(build)
 
-version = '0.8.6'
+version = '0.11.0'
 sourceCompatibility = 1.8
 
 repositories {

@@ -141,4 +141,15 @@ public class ReservationService {
 	public List<Reservation> getReservations() {
 		return reservationRepository.findAll();
 	}
+
+	public Reservation changeReservationState(Reservation reservation, Reservation updatedReservation) {
+		if (reservation == null)
+			throw new ServiceException(HttpStatus.NOT_FOUND, "Reservation not found");
+
+		if (updatedReservation.getState() == null)
+			throw new ServiceException(HttpStatus.BAD_REQUEST, "Incorrect state format");
+
+		reservation.setState(updatedReservation.getState());
+		return reservationRepository.save(reservation);
+	}
 }

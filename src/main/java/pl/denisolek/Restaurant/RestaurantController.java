@@ -40,4 +40,9 @@ public class RestaurantController implements RestaurantApi {
 	                                          @RequestParam(value = "peopleNumber", required = false) Integer peopleNumber) {
 		return restaurantService.searchRestaurants(city, date, peopleNumber);
 	}
+
+	@Override
+	public Restaurant changeActiveState(@PathVariable("restaurantId") Restaurant restaurant) {
+		return restaurantService.changeActiveState(restaurant);
+	}
 }
