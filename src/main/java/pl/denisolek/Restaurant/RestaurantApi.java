@@ -13,6 +13,7 @@ import java.util.List;
 public interface RestaurantApi {
 	String BASE_PATH = "/restaurants";
 
+	@JsonView(Views.Restaurant.class)
 	@ApiOperation(value = "Get all restaurants", response = Restaurant.class, responseContainer = "List")
 	@ResponseBody
 	@RequestMapping(value = BASE_PATH, method = RequestMethod.GET)

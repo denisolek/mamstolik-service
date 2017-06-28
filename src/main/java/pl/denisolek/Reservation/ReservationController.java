@@ -19,8 +19,13 @@ public class ReservationController implements ReservationApi {
 	}
 
 	@Override
-	public List<Reservation> getReservations(@PathVariable("restaurantId") Integer restaurantId) {
-		return reservationService.getReservations(restaurantId);
+	public List<Reservation> getReservations() {
+		return reservationService.getReservations();
+	}
+
+	@Override
+	public List<Reservation> getRestaurantReservations(@PathVariable("restaurantId") Integer restaurantId) {
+		return reservationService.getRestaurantReservations(restaurantId);
 	}
 
 	@Override
