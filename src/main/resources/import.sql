@@ -124,10 +124,10 @@ insert into "spot" (capacity, restaurant_id) values (3, 2);
 insert into "spot" (capacity, restaurant_id) values (1, 2);
 
 -- add reservations
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (5, '2017-05-18', '2017-05-18 14:50:00.000', 1800, '2017-05-18 15:20:00.000', 1, 1, 1);
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (15, '2017-05-18','2017-05-18 14:50:00.000', 1800, '2017-05-18 15:20:00.000', 1, 2, 2);
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (7, '2017-05-18','2017-05-18 15:00:00.000', 1800, '2017-05-18 15:30:00.000', 1, 2, 1);
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (3, '2017-05-18','2017-05-18 15:10:00.000', 1800, '2017-05-18 15:40:00.000', 1, 3, 1);
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (5, '2017-05-18','2017-05-18 15:30:00.000', 1800, '2017-05-18 16:00:00.000', 1, 4, 1);
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (20, '2017-05-18','2017-05-18 13:30:00.000', 1800, '2017-05-18 14:00:00.000', 1, 5, 1);
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (5, '2017-05-19', '2017-05-19 14:50:00.000', 1800, '2017-05-19 15:20:00.000', 1, 1, 1);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (5, '2017-07-18', '2017-07-18 14:50:00.000', 1800, '2017-07-18 15:20:00.000', 0, 1, 1);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (15, '2017-07-18','2017-07-18 14:50:00.000', 1800, '2017-07-18 15:20:00.000', 0, 2, 2);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (7, '2017-07-18','2017-07-18 15:00:00.000', 1800, '2017-07-18 15:30:00.000', 0, 2, 1);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (3, '2017-07-18','2017-07-18 15:10:00.000', 1800, '2017-07-18 15:40:00.000', 0, 3, 1);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (5, '2017-07-18','2017-07-18 15:30:00.000', 1800, '2017-07-18 16:00:00.000', 0, 4, 1);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (20, '2017-07-18','2017-07-18 13:30:00.000', 1800, '2017-07-18 14:00:00.000', 0, 5, 1);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (5, '2017-07-19', '2017-07-19 14:50:00.000', 1800, '2017-07-19 15:20:00.000', 0, 1, 1);
