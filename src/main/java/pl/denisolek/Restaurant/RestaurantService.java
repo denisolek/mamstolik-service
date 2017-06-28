@@ -125,4 +125,12 @@ public class RestaurantService {
 				openRestaurants.add(restaurant);
 		}
 	}
+
+	public Restaurant changeActiveState(Restaurant restaurant) {
+		if (restaurant == null)
+			throw new ServiceException(HttpStatus.NOT_FOUND, "Restaurant not found");
+
+		restaurant.setIsActive(!restaurant.getIsActive());
+		return restaurantRepository.save(restaurant);
+	}
 }
