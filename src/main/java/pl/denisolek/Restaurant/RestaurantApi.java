@@ -17,7 +17,7 @@ public interface RestaurantApi {
 	String RESTAURANTS_SEARCH_PATH = "/restaurants/search";
 
 
-	@JsonView(Views.Restaurant.class)
+	@JsonView(Views.RestaurantDetails.class)
 	@ApiOperation(value = "Get all restaurants", response = Restaurant.class, responseContainer = "List")
 	@ResponseBody
 	@RequestMapping(value = RESTAURANTS_PATH, method = RequestMethod.GET)
@@ -43,7 +43,7 @@ public interface RestaurantApi {
 	                                   @RequestParam(value = "date", required = false) String date,
 	                                   @RequestParam(value = "peopleNumber", required = false) Integer peopleNumber);
 
-	@JsonView(Views.Restaurant.class)
+	@JsonView(Views.RestaurantDetails.class)
 	@ApiOperation(value = "Change restaurant active state", response = Restaurant.class)
 	@ResponseBody
 	@RequestMapping(value = RESTAURANT_ACTIVE_PATH, method = RequestMethod.PUT)
