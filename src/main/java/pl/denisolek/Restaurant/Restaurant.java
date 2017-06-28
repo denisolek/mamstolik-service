@@ -29,14 +29,17 @@ public class Restaurant extends BaseEntity {
 	@JsonView(Views.Restaurant.class)
 	String street;
 
+	@JsonView(Views.Restaurant.class)
 	Float latitude;
 
+	@JsonView(Views.Restaurant.class)
 	Float longitude;
 
 	@JsonView(Views.RestaurantDetails.class)
 	@Length(max = 3000)
 	String description;
 
+	@JsonView(Views.Restaurant.class)
 	Duration avgReservationTime;
 
 	@JsonView(Views.Restaurant.class)
@@ -51,8 +54,10 @@ public class Restaurant extends BaseEntity {
 	@JsonView(Views.Restaurant.class)
 	Float price_quality_rate;
 
+	@JsonView(Views.Restaurant.class)
 	String nip;
 
+	@JsonView(Views.Restaurant.class)
 	Integer capacity;
 
 	@JsonView(Views.Restaurant.class)
