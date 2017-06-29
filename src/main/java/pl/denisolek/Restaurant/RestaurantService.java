@@ -32,8 +32,11 @@ public class RestaurantService {
 		this.restaurantRepository = restaurantRepository;
 	}
 
-	public List<Restaurant> getRestaurants() {
-		return restaurantRepository.findByIsActive(true);
+	public List<Restaurant> getRestaurants(Boolean showAll) {
+		if (showAll)
+			return restaurantRepository.findAll();
+		else
+			return restaurantRepository.findByIsActive(true);
 	}
 
 	public Restaurant getRestaurant(Restaurant restaurant) {

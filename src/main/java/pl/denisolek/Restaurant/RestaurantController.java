@@ -20,8 +20,8 @@ public class RestaurantController implements RestaurantApi {
 	}
 
 	@Override
-	public List<Restaurant> getRestaurants() {
-		return restaurantService.getRestaurants();
+	public List<Restaurant> getRestaurants(@RequestParam(value = "showAll", required = false, defaultValue = "false") Boolean showAll) {
+		return restaurantService.getRestaurants(showAll);
 	}
 
 	@Override
