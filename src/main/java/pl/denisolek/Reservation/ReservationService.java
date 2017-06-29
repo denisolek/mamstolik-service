@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import pl.denisolek.Customer.Customer;
 import pl.denisolek.Customer.CustomerService;
+import pl.denisolek.Email.EmailService;
 import pl.denisolek.Exception.ServiceException;
 import pl.denisolek.Restaurant.BusinessHour;
 import pl.denisolek.Restaurant.Restaurant;
@@ -26,6 +27,9 @@ public class ReservationService {
 
 	@Autowired
 	Tools tools;
+
+	@Autowired
+	EmailService emailService;
 
 	private final ReservationRepository reservationRepository;
 	private final Integer CHECKING_INTERVAL = 15;
@@ -150,6 +154,19 @@ public class ReservationService {
 			throw new ServiceException(HttpStatus.BAD_REQUEST, "Incorrect state format");
 
 		reservation.setState(updatedReservation.getState());
+
+		switch (reservation.getState()) {
+			case ACCEPTED:
+				new Thread(()->{
+					emailService.reservationAccepted(reservation);
+				}).start();
+				break;
+			case CANCELED:
+				new Thread(()->{
+					emailService.reservationCanceled(reservation);
+				}).start();
+				break;
+		}
 		return reservationRepository.save(reservation);
 	}
 }

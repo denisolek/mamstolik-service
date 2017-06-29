@@ -55,7 +55,7 @@ public class UserService {
 		newRestaurant.setAvgReservationTime(userRegistrationRequest.getRestaurantAvgReservationTime());
 		newRestaurant.setNip(userRegistrationRequest.getRestaurantNip());
 		newRestaurant.setCapacity(userRegistrationRequest.getRestaurantCapacity());
-		newRestaurant.setIsActive(true);
+		newRestaurant.setIsActive(false);
 	}
 
 	private void prepareUser(UserRegistrationRequest userRegistrationRequest, User newUser, Restaurant newRestaurant) {

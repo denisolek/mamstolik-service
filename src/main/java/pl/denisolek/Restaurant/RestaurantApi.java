@@ -21,7 +21,7 @@ public interface RestaurantApi {
 	@ApiOperation(value = "Get all restaurants", response = Restaurant.class, responseContainer = "List")
 	@ResponseBody
 	@RequestMapping(value = RESTAURANTS_PATH, method = RequestMethod.GET)
-	List<Restaurant> getRestaurants();
+	List<Restaurant> getRestaurants(@RequestParam(value = "showAll", required = false, defaultValue = "false") Boolean showAll);
 
 	@JsonView(Views.RestaurantDetails.class)
 	@ApiOperation(value = "Get restaurant by id", response = Restaurant.class)
