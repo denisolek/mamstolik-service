@@ -162,9 +162,9 @@ public class ReservationService {
 				}).start();
 				break;
 			case CANCELED:
-//				new Thread(()->{
-//					emailService.reservationAccepted(reservation);
-//				}).start();
+				new Thread(()->{
+					emailService.reservationCanceled(reservation);
+				}).start();
 				break;
 		}
 		return reservationRepository.save(reservation);

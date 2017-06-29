@@ -15,12 +15,6 @@ public class EmailService {
 		this.templateEngine = templateEngine;
 	}
 
-//	public void welcomeEmail(String targetEmail) throws UnsupportedEncodingException, MessagingException {
-//		Context context = new Context();
-//		String body = templateEngine.process("welcome", context);
-//		emailSender.sendEmail(targetEmail, "Dziękujemy za subskrypcję!", body);
-//	}
-
 	public void reservationAccepted(Reservation reservation) {
 		Context context = new Context();
 		context.setVariable("name", reservation.getCustomer().getName());
@@ -31,5 +25,14 @@ public class EmailService {
 
 		String body = templateEngine.process("reservation-accepted", context);
 		emailSender.sendEmail(reservation.getCustomer().getEmail(), "Potwierdzenie rezerwacji.", body);
+	}
+
+	public void reservationCanceled(Reservation reservation) {
+		Context context = new Context();
+		context.setVariable("name", reservation.getCustomer().getName());
+		context.setVariable("restaurantName", reservation.getRestaurant().getName());
+
+		String body = templateEngine.process("reservation-canceled", context);
+		emailSender.sendEmail(reservation.getCustomer().getEmail(), "Rezerwacja odwołana.", body);
 	}
 }
