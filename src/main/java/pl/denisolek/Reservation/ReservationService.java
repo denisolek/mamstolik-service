@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Component
 public class ReservationService {
@@ -41,6 +42,8 @@ public class ReservationService {
 
 	private final ReservationRepository reservationRepository;
 	private final Integer CHECKING_INTERVAL = 15;
+	private final Integer CODE_MIN = 100000;
+	private final Integer CODE_MAX = 999999;
 
 	public ReservationService(ReservationRepository reservationRepository) {
 		this.reservationRepository = reservationRepository;
@@ -80,13 +83,19 @@ public class ReservationService {
 		reservation.setCustomer(currentCustomer);
 		reservation.setRestaurant(restaurant);
 		reservation.setState(ReservationState.PENDING);
+		reservation.setVerificationCode(generateCode());
 
 		sendSmsCode(reservation);
 		return reservationRepository.save(reservation);
 	}
 
+	private Integer generateCode() {
+		Random random = new Random();
+		return random.nextInt((CODE_MAX - CODE_MIN) + 1) + CODE_MIN;
+	}
+
 	private void sendSmsCode(Reservation reservation) {
-		SmsMessage message = new SmsMessage("test", reservation.getCustomer().getPhoneNumber());
+		SmsMessage message = new SmsMessage(reservation.getVerificationCode(), reservation.getCustomer().getPhoneNumber());
 		this.template.convertAndSend(smsQueue.getName(), message);
 		System.out.println(" [RabbitMQ] Sent '" + message + "'");
 	}

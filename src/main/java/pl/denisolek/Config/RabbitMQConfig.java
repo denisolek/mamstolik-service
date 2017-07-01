@@ -12,7 +12,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue smsQueue() {
-        return new Queue("sms-service");
+        return new Queue("sms-service", false);
     }
 
     @Bean
