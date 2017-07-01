@@ -50,7 +50,7 @@ public class ReservationService {
 	}
 
 	public List<Reservation> getRestaurantReservations(Integer restaurantId) {
-		return reservationRepository.findByRestaurantId(restaurantId);
+		return reservationRepository.findByRestaurantIdAndIsVerified(restaurantId, true);
 	}
 
 	public Reservation getReservation(Reservation reservation) {
