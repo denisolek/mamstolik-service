@@ -1,5 +1,7 @@
 package pl.denisolek.Reservation;
 
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -30,6 +32,12 @@ public class ReservationService {
 
 	@Autowired
 	EmailService emailService;
+
+	@Autowired
+	private RabbitTemplate template;
+
+	@Autowired
+	private Queue smsQueue;
 
 	private final ReservationRepository reservationRepository;
 	private final Integer CHECKING_INTERVAL = 15;
@@ -72,7 +80,15 @@ public class ReservationService {
 		reservation.setCustomer(currentCustomer);
 		reservation.setRestaurant(restaurant);
 		reservation.setState(ReservationState.PENDING);
+
+		sendSmsCode(reservation);
 		return reservationRepository.save(reservation);
+	}
+
+	private void sendSmsCode(Reservation reservation) {
+		SmsMessage message = new SmsMessage("test", reservation.getCustomer().getPhoneNumber());
+		this.template.convertAndSend(smsQueue.getName(), message);
+		System.out.println(" [RabbitMQ] Sent '" + message + "'");
 	}
 
 	private void validateReservationRequest(Restaurant restaurant, Reservation reservation) {
