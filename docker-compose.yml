@@ -6,3 +6,9 @@ tablebookingDb:
     POSTGRES_PASSWORD: 1
     POSTGRES_USER: postgres
     POSTGRES_DB: tablebooking
+
+rabbitmq:
+  image: rabbitmq:management
+  ports:
+    - "5672:5672"
+    - "15672:15672"
