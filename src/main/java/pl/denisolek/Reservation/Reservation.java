@@ -48,4 +48,6 @@ public class Reservation extends BaseEntity {
 	ReservationState state;
 
 	Integer verificationCode;
+
+	Boolean isVerified = false;
 }

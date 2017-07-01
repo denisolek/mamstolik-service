@@ -194,4 +194,19 @@ public class ReservationService {
 		}
 		return reservationRepository.save(reservation);
 	}
+
+	public void checkVerificationCode(Reservation reservation, String code) {
+		if (reservation == null)
+			throw new ServiceException(HttpStatus.NOT_FOUND, "Reservation not found.");
+
+		if (reservation.getIsVerified())
+			throw new ServiceException(HttpStatus.CONFLICT, "Already verified.");
+
+		if (!reservation.getVerificationCode().equals(Integer.parseInt(code)))
+			throw new ServiceException(HttpStatus.BAD_REQUEST, "Invalid authorization code.");
+
+		reservation.setIsVerified(true);
+		reservationRepository.save(reservation);
+
+	}
 }
