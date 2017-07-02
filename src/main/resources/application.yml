@@ -22,7 +22,7 @@ spring:
         serialization:
             write_dates_as_timestamps: false
     mail:
-        host: smtp.webio.pl
+        host: ${MAIL_HOST}
         password: 43:-_/deYwNC
         port: 587
         properties:
@@ -32,7 +32,7 @@ spring:
                     starttls:
                         enable: true
                         required: true
-        username: no-reply@mamstolik.pl
+        username: ${MAIL_USERNAME}
     rabbitmq:
         host: rabbitmq
 
