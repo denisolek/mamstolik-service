@@ -25,8 +25,6 @@ insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (4, 'BURGE
 insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (4, 'MEXICAN');
 insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (5, 'POLISH');
 
-
-
 -- add business hours
 insert into "business_hour" (day_of_week, open, close) values (0, '12:00:00', '21:00:00');
 insert into "business_hour" (day_of_week, open, close) values (1, '12:00:00', '21:00:00');
@@ -102,7 +100,6 @@ insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values 
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (5,33);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (5,34);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (5,35);
-
 
 -- add customers
 insert into "customer" (email, phone_number, name, surname) values ('karola.szafranska@gmail.pl', '666894323', 'Karola', 'Szafrańska');

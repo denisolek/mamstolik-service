@@ -134,7 +134,7 @@ public class ReservationService {
 	}
 
 	public List<Reservation> getReservationsAtDate(LocalDate date, Integer restaurantId) {
-		return reservationRepository.findByDateAndRestaurantId(date, restaurantId);
+		return reservationRepository.findByDateAndRestaurantIdAndIsVerified(date, restaurantId, true);
 	}
 
 	public List<AvailableCapacityAtDate> getRestaurantCapacityAtDate(LocalDate date, Restaurant restaurant) {
@@ -168,7 +168,7 @@ public class ReservationService {
 	}
 
 	public List<Reservation> getReservations() {
-		return reservationRepository.findAll();
+		return reservationRepository.findByIsVerified(true);
 	}
 
 	public Reservation changeReservationState(Reservation reservation, Reservation updatedReservation) {

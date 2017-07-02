@@ -11,5 +11,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
 	List<Reservation> findByReservationBeginGreaterThanEqualAndReservationEndIsLessThanAndRestaurantId(LocalDateTime start, LocalDateTime end, Integer restaurantId);
 
-	List<Reservation> findByDateAndRestaurantId(LocalDate date, Integer restaurantId);
+	List<Reservation> findByDateAndRestaurantIdAndIsVerified(LocalDate date, Integer restaurantId, Boolean isVerified);
+
+	List<Reservation> findByIsVerified(Boolean isVerified);
 }
