@@ -33,6 +33,8 @@ spring:
                         enable: true
                         required: true
         username: no-reply@mamstolik.pl
+    rabbitmq:
+        host: rabbitmq
 
 # Swagger
 springfox:
