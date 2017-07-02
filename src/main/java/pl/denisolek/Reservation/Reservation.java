@@ -49,5 +49,6 @@ public class Reservation extends BaseEntity {
 
 	Integer verificationCode;
 
+	@JsonView(Views.Reservation.class)
 	Boolean isVerified = false;
 }
