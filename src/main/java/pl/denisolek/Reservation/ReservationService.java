@@ -130,7 +130,7 @@ public class ReservationService {
 	}
 
 	public List<Reservation> getReservationsBetween(LocalDateTime begin, LocalDateTime end, Integer restaurantId) {
-		return reservationRepository.findByReservationBeginGreaterThanEqualAndReservationEndIsLessThanAndRestaurantId(begin, end, restaurantId);
+		return reservationRepository.findByReservationBeginGreaterThanEqualAndReservationEndIsLessThanAndRestaurantIdAndIsVerified(begin, end, restaurantId, true);
 	}
 
 	public List<Reservation> getReservationsAtDate(LocalDate date, Integer restaurantId) {
