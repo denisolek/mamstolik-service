@@ -68,7 +68,7 @@ public class ReservationService {
 		reservation.setReservationEnd(reservation.getReservationBegin().plus(reservation.getLength()));
 
 		BusinessHour businessHour = tools.getDateBusinessHour(restaurant.getBusinessHours(), reservation.getReservationBegin().toLocalDate());
-		if (!tools.isContaining(reservation.getReservationBegin().toLocalTime(), reservation.getReservationEnd().toLocalTime(), businessHour.getOpen(), businessHour.getClose()))
+		if (!reservation.fitBusinessHours(businessHour.getOpen(), businessHour.getClose()))
 			throw new ServiceException(HttpStatus.BAD_REQUEST, "Can't make reservation if restaurant is closed");
 
 		List<LocalDateTime> checkIntervals = new ArrayList<>();
