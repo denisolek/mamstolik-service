@@ -25,12 +25,16 @@ task buildDocker(type: Docker) {
         from jar
         rename { 'app.jar' }
     }
-    entryPoint(['java', '-Djava.security.egd=file:/dev/./urandom', '-Dfile.encoding=UTF-8', '-jar', '/app.jar'])
+    setEnvironment ('DOCKERIZE_VERSION', 'v0.5.0')
+    runCommand "apk update && apk add ca-certificates && update-ca-certificates && apk add openssl"
+    runCommand "wget https://github.com/jwilder/dockerize/releases/download/v0.5.0/dockerize-alpine-linux-amd64-v0.5.0.tar.gz"
+    runCommand "tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-v0.5.0.tar.gz"
+    runCommand "rm dockerize-alpine-linux-amd64-v0.5.0.tar.gz"
 }
 
 buildDocker.dependsOn(build)
 
-version = '0.13.0'
+version = '0.14.4'
 sourceCompatibility = 1.8
 
 repositories {
@@ -41,6 +45,7 @@ repositories {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile("org.springframework.boot:spring-boot-starter-amqp")
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.6.1'
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.6.1'
     compile "com.fasterxml.jackson.core:jackson-databind:2.8.5"

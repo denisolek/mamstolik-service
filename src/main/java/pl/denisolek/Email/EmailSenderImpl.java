@@ -2,6 +2,7 @@ package pl.denisolek.Email;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -16,14 +17,17 @@ public class EmailSenderImpl implements EmailSender {
 	@Autowired
 	private JavaMailSender javaMailSender;
 
+	@Value("${spring.mail.username}")
+	String MAIL_USERNAME;
+
 	@Override
 	public void sendEmail(String target, String subject, String content) {
 		MimeMessage mail = javaMailSender.createMimeMessage();
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(mail, true);
 			helper.setTo(target);
-			helper.setReplyTo("no-reply@mamstolik.pl");
-			helper.setFrom("no-reply@mamstolik.pl", "MamStolik.pl");
+			helper.setReplyTo(MAIL_USERNAME);
+			helper.setFrom(MAIL_USERNAME, "MamStolik.pl");
 			helper.setSubject(subject);
 			helper.setText(content, true);
 		} catch (MessagingException e) {

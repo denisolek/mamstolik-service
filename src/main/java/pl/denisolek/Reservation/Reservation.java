@@ -46,4 +46,9 @@ public class Reservation extends BaseEntity {
 
 	@JsonView(Views.Reservation.class)
 	ReservationState state;
+
+	Integer verificationCode;
+
+	@JsonView(Views.Reservation.class)
+	Boolean isVerified = false;
 }

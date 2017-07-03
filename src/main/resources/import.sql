@@ -25,8 +25,6 @@ insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (4, 'BURGE
 insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (4, 'MEXICAN');
 insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (5, 'POLISH');
 
-
-
 -- add business hours
 insert into "business_hour" (day_of_week, open, close) values (0, '12:00:00', '21:00:00');
 insert into "business_hour" (day_of_week, open, close) values (1, '12:00:00', '21:00:00');
@@ -103,7 +101,6 @@ insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values 
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (5,34);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (5,35);
 
-
 -- add customers
 insert into "customer" (email, phone_number, name, surname) values ('karola.szafranska@gmail.pl', '666894323', 'Karola', 'Szafrańska');
 insert into "customer" (email, phone_number, name, surname) values ('maciej.wlodarczyk@gmail.pl', '883991105', 'Maciej', 'Włodarczyk');
@@ -124,10 +121,10 @@ insert into "spot" (capacity, restaurant_id) values (3, 2);
 insert into "spot" (capacity, restaurant_id) values (1, 2);
 
 -- add reservations
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (5, '2017-07-18', '2017-07-18 14:50:00.000', 1800, '2017-07-18 15:20:00.000', 0, 1, 1);
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (15, '2017-07-18','2017-07-18 14:50:00.000', 1800, '2017-07-18 15:20:00.000', 0, 2, 2);
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (7, '2017-07-18','2017-07-18 15:00:00.000', 1800, '2017-07-18 15:30:00.000', 0, 2, 1);
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (3, '2017-07-18','2017-07-18 15:10:00.000', 1800, '2017-07-18 15:40:00.000', 0, 3, 1);
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (5, '2017-07-18','2017-07-18 15:30:00.000', 1800, '2017-07-18 16:00:00.000', 0, 4, 1);
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (20, '2017-07-18','2017-07-18 13:30:00.000', 1800, '2017-07-18 14:00:00.000', 0, 5, 1);
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id) VALUES (5, '2017-07-19', '2017-07-19 14:50:00.000', 1800, '2017-07-19 15:20:00.000', 0, 1, 1);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-07-18', '2017-07-18 14:50:00.000', 1800, '2017-07-18 15:20:00.000', 0, 1, 1, 314251, true);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (15, '2017-07-18','2017-07-18 14:50:00.000', 1800, '2017-07-18 15:20:00.000', 0, 2, 2, 142512, true);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (7, '2017-07-18','2017-07-18 15:00:00.000', 1800, '2017-07-18 15:30:00.000', 0, 2, 1, 572456, true);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (3, '2017-07-18','2017-07-18 15:10:00.000', 1800, '2017-07-18 15:40:00.000', 0, 3, 1, 123683, true);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-07-18','2017-07-18 15:30:00.000', 1800, '2017-07-18 16:00:00.000', 0, 4, 1, 946784, true);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (20, '2017-07-18','2017-07-18 13:30:00.000', 1800, '2017-07-18 14:00:00.000', 0, 5, 1, 136578, false);
+INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-07-19', '2017-07-19 14:50:00.000', 1800, '2017-07-19 15:20:00.000', 0, 1, 1, 846789, true);

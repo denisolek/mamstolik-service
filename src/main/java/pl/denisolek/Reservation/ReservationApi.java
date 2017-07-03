@@ -16,6 +16,7 @@ public interface ReservationApi {
 	String RESTAURANT_RESERVATIONS_PATH = "/restaurants/{restaurantId}/reservations";
 	String ALL_RESERVATIONS_PATH = "/reservations";
 	String SINGLE_RESERVATION_PATH =  "/reservations/{reservationId}";
+	String SINGLE_RESERVATION_VERIFY_PATH =  "/reservations/{reservationId}/verify";
 
 	@JsonView(Views.ReservationDetails.class)
 	@ApiOperation(value = "Get all reservations", response = Reservation.class, responseContainer = "List")
@@ -39,12 +40,20 @@ public interface ReservationApi {
 	@ApiOperation(value = "Change reservation state", response = Reservation.class)
 	@ResponseBody
 	@RequestMapping(value = SINGLE_RESERVATION_PATH, method = RequestMethod.PUT)
-	Reservation changeReservationState(@PathVariable("reservationId") Reservation reservation, @RequestBody Reservation updatedReservation);
+	Reservation changeReservationState(@PathVariable("reservationId") Reservation reservation,
+									   @RequestBody Reservation updatedReservation);
 
 	@JsonView(Views.ReservationDetails.class)
 	@ApiOperation(value = "Add reservation", response = Reservation.class)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	@RequestMapping(value = RESTAURANT_RESERVATIONS_PATH, method = RequestMethod.POST)
-	Reservation addReservation(@PathVariable("restaurantId") Restaurant restaurant, @RequestBody Reservation reservation);
+	Reservation addReservation(@PathVariable("restaurantId") Restaurant restaurant,
+							   @RequestBody Reservation reservation);
+
+	@ApiOperation(value = "Check verification code")
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = SINGLE_RESERVATION_VERIFY_PATH, method = RequestMethod.POST)
+	void checkVerificationCode(@PathVariable("reservationId") Reservation reservation,
+							   @RequestParam(value = "code", defaultValue = "1") String code);
 }

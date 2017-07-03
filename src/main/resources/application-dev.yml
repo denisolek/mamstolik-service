@@ -10,3 +10,17 @@ spring:
             hibernate:
                 format_sql: true
         show-sql: true
+    mail:
+        host: smtp.gmail.com
+        password: 43:-_/deYwNC
+        port: 587
+        properties:
+            mail:
+                smtp:
+                    auth: true;
+                    starttls:
+                        enable: true
+                        required: true
+        username: test.mamstolik@gmail.com
+    rabbitmq:
+        host: localhost

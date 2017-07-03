@@ -1,8 +1,27 @@
-tablebookingDb:
-  image: postgres
-  ports:
-    - "5432:5432"
-  environment:
-    POSTGRES_PASSWORD: 1
-    POSTGRES_USER: postgres
-    POSTGRES_DB: tablebooking
+version: "2"
+
+services:
+  tablebookingDb:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: 1
+      POSTGRES_USER: postgres
+      POSTGRES_DB: tablebooking
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  sms-api:
+    image: mamstolik/sms-api
+    depends_on:
+      - "rabbitmq"
+    links:
+      - rabbitmq
+    environment:
+      SEND_SMS: "false"
+    entrypoint: dockerize -wait tcp://rabbitmq:5672 node receive.js

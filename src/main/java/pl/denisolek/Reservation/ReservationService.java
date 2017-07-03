@@ -1,5 +1,7 @@
 package pl.denisolek.Reservation;
 
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -18,6 +20,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Component
 public class ReservationService {
@@ -31,15 +34,23 @@ public class ReservationService {
 	@Autowired
 	EmailService emailService;
 
+	@Autowired
+	private RabbitTemplate template;
+
+	@Autowired
+	private Queue smsQueue;
+
 	private final ReservationRepository reservationRepository;
 	private final Integer CHECKING_INTERVAL = 15;
+	private final Integer CODE_MIN = 100000;
+	private final Integer CODE_MAX = 999999;
 
 	public ReservationService(ReservationRepository reservationRepository) {
 		this.reservationRepository = reservationRepository;
 	}
 
 	public List<Reservation> getRestaurantReservations(Integer restaurantId) {
-		return reservationRepository.findByRestaurantId(restaurantId);
+		return reservationRepository.findByRestaurantIdAndIsVerified(restaurantId, true);
 	}
 
 	public Reservation getReservation(Reservation reservation) {
@@ -72,7 +83,21 @@ public class ReservationService {
 		reservation.setCustomer(currentCustomer);
 		reservation.setRestaurant(restaurant);
 		reservation.setState(ReservationState.PENDING);
+		reservation.setVerificationCode(generateCode());
+
+		sendSmsCode(reservation);
 		return reservationRepository.save(reservation);
+	}
+
+	private Integer generateCode() {
+		Random random = new Random();
+		return random.nextInt((CODE_MAX - CODE_MIN) + 1) + CODE_MIN;
+	}
+
+	private void sendSmsCode(Reservation reservation) {
+		SmsMessage message = new SmsMessage(reservation.getVerificationCode(), reservation.getCustomer().getPhoneNumber());
+		this.template.convertAndSend(smsQueue.getName(), message);
+		System.out.println(" [RabbitMQ] Sent '" + message + "'");
 	}
 
 	private void validateReservationRequest(Restaurant restaurant, Reservation reservation) {
@@ -109,7 +134,7 @@ public class ReservationService {
 	}
 
 	public List<Reservation> getReservationsAtDate(LocalDate date, Integer restaurantId) {
-		return reservationRepository.findByDateAndRestaurantId(date, restaurantId);
+		return reservationRepository.findByDateAndRestaurantIdAndIsVerified(date, restaurantId, true);
 	}
 
 	public List<AvailableCapacityAtDate> getRestaurantCapacityAtDate(LocalDate date, Restaurant restaurant) {
@@ -143,7 +168,7 @@ public class ReservationService {
 	}
 
 	public List<Reservation> getReservations() {
-		return reservationRepository.findAll();
+		return reservationRepository.findByIsVerified(true);
 	}
 
 	public Reservation changeReservationState(Reservation reservation, Reservation updatedReservation) {
@@ -168,5 +193,20 @@ public class ReservationService {
 				break;
 		}
 		return reservationRepository.save(reservation);
+	}
+
+	public void checkVerificationCode(Reservation reservation, String code) {
+		if (reservation == null)
+			throw new ServiceException(HttpStatus.NOT_FOUND, "Reservation not found.");
+
+		if (reservation.getIsVerified())
+			throw new ServiceException(HttpStatus.CONFLICT, "Already verified.");
+
+		if (!reservation.getVerificationCode().equals(Integer.parseInt(code)))
+			throw new ServiceException(HttpStatus.BAD_REQUEST, "Invalid authorization code.");
+
+		reservation.setIsVerified(true);
+		reservationRepository.save(reservation);
+
 	}
 }
