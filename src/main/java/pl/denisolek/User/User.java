@@ -1,11 +1,13 @@
 package pl.denisolek.User;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Email;
 import pl.denisolek.BaseEntity;
 import pl.denisolek.Restaurant.Restaurant;
 import pl.denisolek.Security.Authority;
+import pl.denisolek.Views;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -27,8 +29,10 @@ public class User extends BaseEntity {
 
 	String name;
 
+	@JsonView(Views.User.class)
 	String surname;
 
+	@JsonView(Views.User.class)
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "restaurant_id")
 	Restaurant restaurant;
@@ -40,4 +44,7 @@ public class User extends BaseEntity {
 			inverseJoinColumns = @JoinColumn(name = "authority")
 	)
 	private Set<Authority> authorities;
+
+	@JsonView(Views.User.class)
+	AccountState accountState;
 }

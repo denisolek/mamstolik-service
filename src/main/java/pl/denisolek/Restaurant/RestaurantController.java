@@ -20,8 +20,8 @@ public class RestaurantController implements RestaurantApi {
 	}
 
 	@Override
-	public List<Restaurant> getRestaurants() {
-		return restaurantService.getRestaurants();
+	public List<Restaurant> getRestaurants(@RequestParam(value = "showAll", required = false, defaultValue = "false") Boolean showAll) {
+		return restaurantService.getRestaurants(showAll);
 	}
 
 	@Override
@@ -39,5 +39,10 @@ public class RestaurantController implements RestaurantApi {
 	                                          @RequestParam(value = "date", required = false) String date,
 	                                          @RequestParam(value = "peopleNumber", required = false) Integer peopleNumber) {
 		return restaurantService.searchRestaurants(city, date, peopleNumber);
+	}
+
+	@Override
+	public Restaurant changeActiveState(@PathVariable("restaurantId") Restaurant restaurant) {
+		return restaurantService.changeActiveState(restaurant);
 	}
 }

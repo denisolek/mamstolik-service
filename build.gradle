@@ -20,17 +20,21 @@ apply plugin: 'org.springframework.boot'
 task buildDocker(type: Docker) {
     baseImage = 'develar/java:latest'
     push = project.hasProperty('push')
-    tag = 'denisolek/table-booking'
+    tag = 'mamstolik/service'
     addFile {
         from jar
         rename { 'app.jar' }
     }
-    entryPoint(['java', '-Djava.security.egd=file:/dev/./urandom', '-Dfile.encoding=UTF-8', '-jar', '/app.jar'])
+    setEnvironment ('DOCKERIZE_VERSION', 'v0.5.0')
+    runCommand "apk update && apk add ca-certificates && update-ca-certificates && apk add openssl"
+    runCommand "wget https://github.com/jwilder/dockerize/releases/download/v0.5.0/dockerize-alpine-linux-amd64-v0.5.0.tar.gz"
+    runCommand "tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-v0.5.0.tar.gz"
+    runCommand "rm dockerize-alpine-linux-amd64-v0.5.0.tar.gz"
 }
 
 buildDocker.dependsOn(build)
 
-version = '0.8.6'
+version = '0.14.6_oauth2'
 sourceCompatibility = 1.8
 
 repositories {
@@ -42,6 +46,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile("org.springframework.boot:spring-boot-starter-amqp")
     compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.1.1.RELEASE'
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.6.1'
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.6.1'
@@ -51,4 +56,6 @@ dependencies {
     runtime('org.postgresql:postgresql')
     compileOnly('org.projectlombok:lombok')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '1.5.4.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '1.5.4.RELEASE'
 }
