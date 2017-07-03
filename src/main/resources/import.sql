@@ -18,6 +18,11 @@ insert into "user" (email, name, surname, restaurant_id, password) values ('bart
 insert into "user" (email, name, surname, restaurant_id, password) values ('martyna.wierzbicka@gmail.com', 'Martyna', 'Wierzbicka', 5, 'password');
 insert into "user" (email, name, surname, restaurant_id, password) values ('denis.olek@gmail.com', 'Denis', 'Olek', 6, 'denis123');
 
+-- add authorities
+insert into "user_authority" (username, authority) VALUES (1, 'ROLE_OWNER');
+insert into "user_authority" (username, authority) VALUES (6, 'ROLE_OWNER');
+insert into "user_authority" (username, authority) VALUES (6, 'ROLE_ADMIN');
+
 -- add kitchen types
 insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (1, 'POLISH');
 insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (1, 'GREEK');
