@@ -4,6 +4,8 @@ insert into "restaurant" (name, city, street, latitude, longitude, description, 
 insert into "restaurant" (name, city, street, latitude, longitude, description, rate, service_rate, place_rate, price_quality_rate, capacity, avg_reservation_time, opinion_count, is_active) values ('Manekin', 'poznań', 'Kwiatowa 3', 52.407640, 16.932010,'Znana i ceniona sieć lokali podająca przepyszne naleśniki. Restauracja serwuje wiele rodzajów naleśników na słodko jak i na wytrawnie ale nie tylko. Tu można zjeść również sałatki, zupy, desery, spaghetti. Ogromnym atutem jest stylizowane wnętrze, nawiązujące do krainy baśniowej. W tym surrealistycznym otoczeniu można nie tylko zjeść, lecz również zrelaksować się przy kieliszku wina czy kuflu piwa.', 4.7, 4.0, 3.0, 3.5, 30, 1800, 12, true);
 insert into "restaurant" (name, city, street, latitude, longitude, description, rate, service_rate, place_rate, price_quality_rate, capacity, avg_reservation_time, opinion_count, is_active) values ('Whiskey in the Jar', 'poznań', 'Stary Rynek 100', 52.312312, 16.932010,'Whiskey in the Jar to steakhouse, wzorowany na najlepszych amerykańskich lokalach tego typu. W menu znajdują się głównie dania mięsne – specjalnością są steki, przyrządzane z najwyższej jakości wołowiny, a także burgery i dania grillowane, dostępne pod nazwą Grill Rockersa. Wszystkie potrawy przygotowywane są na najdłuższym w Poznaniu grillu lawowym. Ogromnym powodzeniem cieszą się również autorskie drinki na bazie Jacka Daniels’a, zgodnie z nazwą lokalu podawane w designerskich słojach – jarach.', 4.5, 5.0, 5.0, 5.0, 25, 1800, 34, true);
 insert into "restaurant" (name, city, street, latitude, longitude, description, rate, service_rate, place_rate, price_quality_rate, capacity, avg_reservation_time, opinion_count, is_active) values ('Chmielnik Pub', 'poznań', 'Żydowska 27', 52.938471, 16.203918,'Ambasador polskiego piwa w Poznaniu. Największy wybór piw z polskich browarów rzemieślniczych w samym sercu Poznania.  Zapewniamy wyjątkowy wystrój, profesjonalną obsługę, niepowtarzalny klimat. W sezonie letnim zapraszamy do magicznego ogrodu piwnego dla 200 osób, w którym główną atrakcją jest rosnący chmiel w odmianie SYBILLA oraz działająca kuchnia oferująca dania dopasowane do piwa.',4.5, 5.0, 5.0, 5.0, 20, 1800,72, true);
+insert into "restaurant" (name, city, street, latitude, longitude, description, rate, service_rate, place_rate, price_quality_rate, capacity, avg_reservation_time, opinion_count, is_active) values ('Shipudei Berek', 'warszawa', 'Jasna 24', 53.391746, 16.293816,'Berek to rodzaj pocztówki z wakacji. Radość śródziemnomorskiego jedzenia i gorący klimat telawiwskich ulic, którego wspomnienie przeniesione zostało do Warszawy. Tworząc menu w Berku starałem się poznać lokalnych producentów i wykorzystywać jak najświeższe składniki. Wychowałem się w końcu w miejscu, gdzie owoce zjada się prosto z drzewa. Nasza pita jest wypiekana na miejscu i podawana na gorąco, hummus robimy taki, jaki sami jemy, korzystamy przede wszystkim z sezonowych warzyw. W Berku dzielę się moimi ulubionymi smakami domu, we wdzięcznym, współczesnym wydaniu.',4.8, 4.0, 4.4, 4.7, 30, 1800,13, true);
+
 
 -- add users
 insert into "user" (email, name, surname, restaurant_id, account_state) values ('przemyslaw.pawlicki@gmail.com', 'Przemysław', 'Pawlicki', 1, 0);
@@ -11,6 +13,8 @@ insert into "user" (email, name, surname, restaurant_id, account_state) values (
 insert into "user" (email, name, surname, restaurant_id, account_state) values ('janusz.kolodziej@gmail.com', 'Janusz', 'Kołodziej', 3, 0);
 insert into "user" (email, name, surname, restaurant_id, account_state) values ('bartosz.smektala@gmail.com', 'Bartosz', 'Smektała', 4, 0);
 insert into "user" (email, name, surname, restaurant_id, account_state) values ('martyna.wierzbicka@gmail.com', 'Martyna', 'Wierzbicka', 5, 0);
+insert into "user" (email, name, surname, restaurant_id, account_state) values ('ofir.vidavsky@gmail.com', 'Ofir', 'Vidavsky', 6, 0);
+
 
 -- add kitchen types
 insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (1, 'POLISH');
@@ -24,6 +28,7 @@ insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (3, 'VIET_
 insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (4, 'BURGERS');
 insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (4, 'MEXICAN');
 insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (5, 'POLISH');
+insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (6, 'VIET_THAI');
 
 -- add business hours
 insert into "business_hour" (day_of_week, open, close) values (0, '12:00:00', '21:00:00');
@@ -100,6 +105,21 @@ insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values 
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (5,33);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (5,34);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (5,35);
+
+insert into "business_hour" (day_of_week, open, close) values (0, '10:00:00', '21:00:00');
+insert into "business_hour" (day_of_week, open, close) values (1, '10:00:00', '21:00:00');
+insert into "business_hour" (day_of_week, open, close) values (2, '10:00:00', '21:00:00');
+insert into "business_hour" (day_of_week, open, close) values (3, '10:00:00', '21:00:00');
+insert into "business_hour" (day_of_week, open, close) values (4, '10:00:00', '23:00:00');
+insert into "business_hour" (day_of_week, open, close) values (5, '10:00:00', '23:00:00');
+insert into "business_hour" (day_of_week, open, close) values (6, '10:00:00', '23:00:00');
+insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (6,36);
+insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (6,37);
+insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (6,38);
+insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (6,39);
+insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (6,40);
+insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (6,41);
+insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (6,42);
 
 -- add customers
 insert into "customer" (email, phone_number, name, surname) values ('karola.szafranska@gmail.pl', '666894323', 'Karola', 'Szafrańska');

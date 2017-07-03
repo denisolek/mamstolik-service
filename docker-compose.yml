@@ -24,4 +24,4 @@ services:
       - rabbitmq
     environment:
       SEND_SMS: "false"
-    entrypoint: dockerize -wait tcp://rabbitmq:5672 node receive.js
+    entrypoint: dockerize -wait tcp://rabbitmq:5672 -timeout 40s node receive.js
