@@ -137,8 +137,12 @@ public class ReservationService {
 		return reservationRepository.findByDateAndRestaurantIdAndIsVerified(date, restaurantId, true);
 	}
 
+	public List<Reservation> getAcceptedReservationsAtDate(LocalDate date, Integer restaurantId) {
+		return reservationRepository.findByDateAndRestaurantIdAndIsVerifiedAndState(date, restaurantId, true, ReservationState.ACCEPTED);
+	}
+
 	public List<AvailableCapacityAtDate> getRestaurantCapacityAtDate(LocalDate date, Restaurant restaurant) {
-		List<Reservation> reservations = getReservationsAtDate(date, restaurant.getId());
+		List<Reservation> reservations = getAcceptedReservationsAtDate(date, restaurant.getId());
 		List<AvailableCapacityAtDate> capacityList = new ArrayList<>();
 
 		BusinessHour businessHour = tools.getDateBusinessHour(restaurant.getBusinessHours(), date);
