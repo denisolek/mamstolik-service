@@ -13,5 +13,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
 	List<Reservation> findByDateAndRestaurantIdAndIsVerified(LocalDate date, Integer restaurantId, Boolean isVerified);
 
+	List<Reservation> findByDateAndRestaurantIdAndIsVerifiedAndState(LocalDate date, Integer restaurantId, Boolean isVerified, ReservationState state);
+
 	List<Reservation> findByIsVerified(Boolean isVerified);
 }

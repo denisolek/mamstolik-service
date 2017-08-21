@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @Entity
@@ -51,4 +52,9 @@ public class Reservation extends BaseEntity {
 
 	@JsonView(Views.Reservation.class)
 	Boolean isVerified = false;
+
+	public boolean fitBusinessHours(LocalTime businessHourStart, LocalTime businessHourEnd) {
+		return ((this.reservationBegin.toLocalTime().isAfter(businessHourStart) || this.reservationBegin.toLocalTime().equals(businessHourStart)) &&
+				(this.reservationEnd.toLocalTime().isBefore(businessHourEnd) || this.reservationEnd.toLocalTime().equals(businessHourEnd)));
+	}
 }

@@ -6,7 +6,6 @@ import pl.denisolek.Restaurant.BusinessHour;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 
@@ -24,10 +23,6 @@ public class Tools {
 	public boolean isBetween(LocalDateTime checkingInterval, LocalDateTime interval, Duration duration) {
 		LocalDateTime intervalEnd = interval.plus(duration);
 		return ((checkingInterval.isAfter(interval) || checkingInterval.isEqual(interval)) && checkingInterval.isBefore(intervalEnd));
-	}
-
-	public boolean isContaining(LocalTime intervalStart, LocalTime intervalEnd, LocalTime businessHourStart, LocalTime businessHourEnd) {
-		return (intervalStart.isAfter(businessHourStart) && intervalEnd.isBefore(businessHourEnd));
 	}
 
 	public void getDatesToCheck(List<LocalDateTime> checkIntervals, LocalDateTime reservationStart, Duration reservationLength, Integer checkingInterval) {

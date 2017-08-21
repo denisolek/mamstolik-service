@@ -68,7 +68,7 @@ public class ReservationService {
 		reservation.setReservationEnd(reservation.getReservationBegin().plus(reservation.getLength()));
 
 		BusinessHour businessHour = tools.getDateBusinessHour(restaurant.getBusinessHours(), reservation.getReservationBegin().toLocalDate());
-		if (!tools.isContaining(reservation.getReservationBegin().toLocalTime(), reservation.getReservationEnd().toLocalTime(), businessHour.getOpen(), businessHour.getClose()))
+		if (!reservation.fitBusinessHours(businessHour.getOpen(), businessHour.getClose()))
 			throw new ServiceException(HttpStatus.BAD_REQUEST, "Can't make reservation if restaurant is closed");
 
 		List<LocalDateTime> checkIntervals = new ArrayList<>();
@@ -137,8 +137,12 @@ public class ReservationService {
 		return reservationRepository.findByDateAndRestaurantIdAndIsVerified(date, restaurantId, true);
 	}
 
+	public List<Reservation> getAcceptedReservationsAtDate(LocalDate date, Integer restaurantId) {
+		return reservationRepository.findByDateAndRestaurantIdAndIsVerifiedAndState(date, restaurantId, true, ReservationState.ACCEPTED);
+	}
+
 	public List<AvailableCapacityAtDate> getRestaurantCapacityAtDate(LocalDate date, Restaurant restaurant) {
-		List<Reservation> reservations = getReservationsAtDate(date, restaurant.getId());
+		List<Reservation> reservations = getAcceptedReservationsAtDate(date, restaurant.getId());
 		List<AvailableCapacityAtDate> capacityList = new ArrayList<>();
 
 		BusinessHour businessHour = tools.getDateBusinessHour(restaurant.getBusinessHours(), date);
