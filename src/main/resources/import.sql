@@ -1,3 +1,4 @@
+/* @formatter:off */
 -- add authorities
 insert into "authority" (name) VALUES ('ROLE_OWNER');
 insert into "authority" (name) VALUES ('ROLE_ADMIN');
@@ -174,3 +175,4 @@ INSERT INTO "reservation" (people_number, date, reservation_begin, length, reser
 INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-07-18','2017-07-18 15:30:00.000', 1800, '2017-07-18 16:00:00.000', 0, 4, 1, 946784, true);
 INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (20, '2017-07-18','2017-07-18 13:30:00.000', 1800, '2017-07-18 14:00:00.000', 0, 5, 1, 136578, false);
 INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-07-19', '2017-07-19 14:50:00.000', 1800, '2017-07-19 15:20:00.000', 0, 1, 1, 846789, true);
+/* @formatter:on */
