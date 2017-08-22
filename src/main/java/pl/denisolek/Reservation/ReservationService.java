@@ -25,25 +25,20 @@ import java.util.Random;
 @Component
 public class ReservationService {
 
-	@Autowired
-	CustomerService customerService;
-
-	@Autowired
-	Tools tools;
-
-	@Autowired
-	EmailService emailService;
-
-	@Autowired
-	private RabbitTemplate template;
-
-	@Autowired
-	private Queue smsQueue;
-
 	private final ReservationRepository reservationRepository;
 	private final Integer CHECKING_INTERVAL = 15;
 	private final Integer CODE_MIN = 100000;
 	private final Integer CODE_MAX = 999999;
+	@Autowired
+	CustomerService customerService;
+	@Autowired
+	Tools tools;
+	@Autowired
+	EmailService emailService;
+	@Autowired
+	private RabbitTemplate template;
+	@Autowired
+	private Queue smsQueue;
 
 	public ReservationService(ReservationRepository reservationRepository) {
 		this.reservationRepository = reservationRepository;
@@ -186,12 +181,12 @@ public class ReservationService {
 
 		switch (reservation.getState()) {
 			case ACCEPTED:
-				new Thread(()->{
+				new Thread(() -> {
 					emailService.reservationAccepted(reservation);
 				}).start();
 				break;
 			case CANCELED:
-				new Thread(()->{
+				new Thread(() -> {
 					emailService.reservationCanceled(reservation);
 				}).start();
 				break;

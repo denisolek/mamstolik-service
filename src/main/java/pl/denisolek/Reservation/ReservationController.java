@@ -45,7 +45,7 @@ public class ReservationController implements ReservationApi {
 	}
 
 	@Override
-	public void checkVerificationCode(@PathVariable("reservationId")Reservation reservation, @RequestParam(value = "code") String code) {
+	public void checkVerificationCode(@PathVariable("reservationId") Reservation reservation, @RequestParam(value = "code") String code) {
 		reservationService.checkVerificationCode(reservation, code);
 	}
 }

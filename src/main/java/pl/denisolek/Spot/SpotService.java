@@ -12,10 +12,9 @@ import java.util.List;
 @Component
 public class SpotService {
 
+	private final SpotRepository spotRepository;
 	@Autowired
 	RestaurantService restaurantService;
-
-	private final SpotRepository spotRepository;
 
 	public SpotService(SpotRepository spotRepository) {
 		this.spotRepository = spotRepository;
