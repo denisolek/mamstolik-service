@@ -19,14 +19,12 @@ import java.util.List;
 @Component
 public class RestaurantService {
 
-	@Autowired
-	Tools tools;
-
-	@Autowired
-	ReservationService reservationService;
-
 	private final RestaurantRepository restaurantRepository;
 	private final Integer CHECKING_INTERVAL = 15;
+	@Autowired
+	Tools tools;
+	@Autowired
+	ReservationService reservationService;
 
 	public RestaurantService(RestaurantRepository restaurantRepository) {
 		this.restaurantRepository = restaurantRepository;

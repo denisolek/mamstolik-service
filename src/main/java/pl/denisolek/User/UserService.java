@@ -15,10 +15,9 @@ import java.util.List;
 @Component
 public class UserService {
 
+	private final UserRepository userRepository;
 	@Autowired
 	ReservationService reservationService;
-
-	private final UserRepository userRepository;
 
 	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;

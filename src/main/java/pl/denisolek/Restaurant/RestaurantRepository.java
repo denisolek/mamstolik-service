@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
 	List<Restaurant> findByCityAndIsActive(String city, Boolean isActive);
+
 	List<Restaurant> findByIsActive(Boolean isActive);
 }

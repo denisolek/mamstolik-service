@@ -14,11 +14,10 @@ import java.io.UnsupportedEncodingException;
 @Service
 public class EmailSenderImpl implements EmailSender {
 
-	@Autowired
-	private JavaMailSender javaMailSender;
-
 	@Value("${spring.mail.username}")
 	String MAIL_USERNAME;
+	@Autowired
+	private JavaMailSender javaMailSender;
 
 	@Override
 	public void sendEmail(String target, String subject, String content) {

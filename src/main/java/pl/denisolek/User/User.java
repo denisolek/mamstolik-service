@@ -23,20 +23,17 @@ public class User extends BaseEntity {
 	@Size(max = 50)
 	@Email
 	String email;
-
-	@Size(min = 8, max = 80)
-	private String password;
-
 	String name;
-
 	@JsonView(Views.User.class)
 	String surname;
-
 	@JsonView(Views.User.class)
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "restaurant_id")
 	Restaurant restaurant;
-
+	@JsonView(Views.User.class)
+	AccountState accountState;
+	@Size(min = 8, max = 80)
+	private String password;
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "user_authority",
@@ -44,7 +41,4 @@ public class User extends BaseEntity {
 			inverseJoinColumns = @JoinColumn(name = "authority")
 	)
 	private Set<Authority> authorities;
-
-	@JsonView(Views.User.class)
-	AccountState accountState;
 }
