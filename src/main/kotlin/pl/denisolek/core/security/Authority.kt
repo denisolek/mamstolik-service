@@ -5,4 +5,4 @@ import javax.persistence.Id
 
 @Entity
 class Authority(@Id
-                private val name: String)
+                val name: String)

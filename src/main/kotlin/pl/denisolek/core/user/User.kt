@@ -6,6 +6,7 @@ import pl.denisolek.core.security.Authority
 import javax.persistence.*
 
 @Entity
+@Table(name = "[user]")
 class User(
 
         var name: String,
@@ -18,7 +19,7 @@ class User(
 
         @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(name = "user_authority", joinColumns = arrayOf(JoinColumn(name = "username")), inverseJoinColumns = arrayOf(JoinColumn(name = "authority")))
-        private val authorities: Set<Authority>,
+        val authorities: Set<Authority>,
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
         @JoinColumn(name = "restaurant_id")
