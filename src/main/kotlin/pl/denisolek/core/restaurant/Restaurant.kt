@@ -12,7 +12,6 @@ class Restaurant(
         var street: String,
         var latitude: Float,
         var longitude: Float,
-        var description: String,
         var avgReservationTime: Duration,
         var rate: Float,
         var service_rate: Float,
@@ -22,6 +21,7 @@ class Restaurant(
         var capacity: Int,
         var opinionCount: Int,
         var isActive: Boolean,
+        var description: String,
 
         @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         var reservations: MutableList<Reservation>,

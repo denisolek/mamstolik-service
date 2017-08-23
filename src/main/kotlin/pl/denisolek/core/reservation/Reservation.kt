@@ -13,8 +13,8 @@ import javax.persistence.ManyToOne
 @Entity
 class Reservation(
         var date: LocalDate,
-        var reservationBegin: LocalDateTime,
-        var reservationEnd: LocalDateTime,
+        var startDateTime: LocalDateTime,
+        var endDateTime: LocalDateTime,
         var length: Duration,
         var peopleNumber: Int,
         var state: ReservationState,

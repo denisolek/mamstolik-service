@@ -1,4 +1,6 @@
 /* @formatter:off */
+ALTER TABLE "restaurant" ALTER COLUMN "description" TYPE VARCHAR(3000);
+
 -- add authorities
 insert into "authority" (name) VALUES ('ROLE_OWNER');
 insert into "authority" (name) VALUES ('ROLE_ADMIN');
@@ -43,13 +45,13 @@ insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (5, 'POLIS
 insert into "restaurant_kitchen" (restaurant_id, kitchen_type) values (6, 'VIET_THAI');
 
 -- add business hours
-insert into "business_hour" (day_of_week, open, close) values (0, '12:00:00', '21:00:00');
-insert into "business_hour" (day_of_week, open, close) values (1, '12:00:00', '21:00:00');
-insert into "business_hour" (day_of_week, open, close) values (2, '12:00:00', '21:00:00');
-insert into "business_hour" (day_of_week, open, close) values (3, '12:00:00', '21:00:00');
-insert into "business_hour" (day_of_week, open, close) values (4, '13:00:00', '23:00:00');
-insert into "business_hour" (day_of_week, open, close) values (5, '13:00:00', '23:00:00');
-insert into "business_hour" (day_of_week, open, close) values (6, '13:00:00', '20:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (0, '12:00:00', '21:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (1, '12:00:00', '21:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (2, '12:00:00', '21:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (3, '12:00:00', '21:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (4, '13:00:00', '23:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (5, '13:00:00', '23:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (6, '13:00:00', '20:00:00');
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (1,1);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (1,2);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (1,3);
@@ -58,13 +60,13 @@ insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values 
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (1,6);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (1,7);
 
-insert into "business_hour" (day_of_week, open, close) values (0, '10:00:00', '19:00:00');
-insert into "business_hour" (day_of_week, open, close) values (1, '10:00:00', '19:00:00');
-insert into "business_hour" (day_of_week, open, close) values (2, '10:00:00', '19:00:00');
-insert into "business_hour" (day_of_week, open, close) values (3, '10:00:00', '19:00:00');
-insert into "business_hour" (day_of_week, open, close) values (4, '10:00:00', '22:00:00');
-insert into "business_hour" (day_of_week, open, close) values (5, '13:00:00', '22:00:00');
-insert into "business_hour" (day_of_week, open, close) values (6, '13:00:00', '22:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (0, '10:00:00', '19:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (1, '10:00:00', '19:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (2, '10:00:00', '19:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (3, '10:00:00', '19:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (4, '10:00:00', '22:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (5, '13:00:00', '22:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (6, '13:00:00', '22:00:00');
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (2,8);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (2,9);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (2,10);
@@ -73,13 +75,13 @@ insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values 
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (2,13);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (2,14);
 
-insert into "business_hour" (day_of_week, open, close) values (0, '10:00:00', '19:00:00');
-insert into "business_hour" (day_of_week, open, close) values (1, '10:00:00', '19:00:00');
-insert into "business_hour" (day_of_week, open, close) values (2, '10:00:00', '19:00:00');
-insert into "business_hour" (day_of_week, open, close) values (3, '10:00:00', '19:00:00');
-insert into "business_hour" (day_of_week, open, close) values (4, '10:00:00', '22:00:00');
-insert into "business_hour" (day_of_week, open, close) values (5, '13:00:00', '22:00:00');
-insert into "business_hour" (day_of_week, open, close) values (6, '13:00:00', '22:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (0, '10:00:00', '19:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (1, '10:00:00', '19:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (2, '10:00:00', '19:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (3, '10:00:00', '19:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (4, '10:00:00', '22:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (5, '13:00:00', '22:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (6, '13:00:00', '22:00:00');
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (3,15);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (3,16);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (3,17);
@@ -88,13 +90,13 @@ insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values 
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (3,20);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (3,21);
 
-insert into "business_hour" (day_of_week, open, close) values (0, '10:00:00', '19:00:00');
-insert into "business_hour" (day_of_week, open, close) values (1, '10:00:00', '19:00:00');
-insert into "business_hour" (day_of_week, open, close) values (2, '10:00:00', '19:00:00');
-insert into "business_hour" (day_of_week, open, close) values (3, '10:00:00', '19:00:00');
-insert into "business_hour" (day_of_week, open, close) values (4, '10:00:00', '22:00:00');
-insert into "business_hour" (day_of_week, open, close) values (5, '13:00:00', '22:00:00');
-insert into "business_hour" (day_of_week, open, close) values (6, '13:00:00', '22:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (0, '10:00:00', '19:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (1, '10:00:00', '19:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (2, '10:00:00', '19:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (3, '10:00:00', '19:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (4, '10:00:00', '22:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (5, '13:00:00', '22:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (6, '13:00:00', '22:00:00');
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (4,22);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (4,23);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (4,24);
@@ -103,13 +105,13 @@ insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values 
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (4,27);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (4,28);
 
-insert into "business_hour" (day_of_week, open, close) values (0, '10:00:00', '19:00:00');
-insert into "business_hour" (day_of_week, open, close) values (1, '10:00:00', '19:00:00');
-insert into "business_hour" (day_of_week, open, close) values (2, '10:00:00', '19:00:00');
-insert into "business_hour" (day_of_week, open, close) values (3, '10:00:00', '19:00:00');
-insert into "business_hour" (day_of_week, open, close) values (4, '10:00:00', '22:00:00');
-insert into "business_hour" (day_of_week, open, close) values (5, '13:00:00', '22:00:00');
-insert into "business_hour" (day_of_week, open, close) values (6, '13:00:00', '22:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (0, '10:00:00', '19:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (1, '10:00:00', '19:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (2, '10:00:00', '19:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (3, '10:00:00', '19:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (4, '10:00:00', '22:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (5, '13:00:00', '22:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (6, '13:00:00', '22:00:00');
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (5,29);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (5,30);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (5,31);
@@ -118,13 +120,13 @@ insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values 
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (5,34);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (5,35);
 
-insert into "business_hour" (day_of_week, open, close) values (0, '10:00:00', '21:00:00');
-insert into "business_hour" (day_of_week, open, close) values (1, '10:00:00', '21:00:00');
-insert into "business_hour" (day_of_week, open, close) values (2, '10:00:00', '21:00:00');
-insert into "business_hour" (day_of_week, open, close) values (3, '10:00:00', '21:00:00');
-insert into "business_hour" (day_of_week, open, close) values (4, '10:00:00', '23:00:00');
-insert into "business_hour" (day_of_week, open, close) values (5, '10:00:00', '23:00:00');
-insert into "business_hour" (day_of_week, open, close) values (6, '10:00:00', '23:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (0, '10:00:00', '21:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (1, '10:00:00', '21:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (2, '10:00:00', '21:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (3, '10:00:00', '21:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (4, '10:00:00', '23:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (5, '10:00:00', '23:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (6, '10:00:00', '23:00:00');
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (6,36);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (6,37);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (6,38);
@@ -133,13 +135,13 @@ insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values 
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (6,41);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (6,42);
 
-insert into "business_hour" (day_of_week, open, close) values (0, '10:00:00', '21:00:00');
-insert into "business_hour" (day_of_week, open, close) values (1, '10:00:00', '21:00:00');
-insert into "business_hour" (day_of_week, open, close) values (2, '10:00:00', '21:00:00');
-insert into "business_hour" (day_of_week, open, close) values (3, '10:00:00', '21:00:00');
-insert into "business_hour" (day_of_week, open, close) values (4, '10:00:00', '23:00:00');
-insert into "business_hour" (day_of_week, open, close) values (5, '10:00:00', '23:00:00');
-insert into "business_hour" (day_of_week, open, close) values (6, '10:00:00', '23:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (0, '10:00:00', '21:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (1, '10:00:00', '21:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (2, '10:00:00', '21:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (3, '10:00:00', '21:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (4, '10:00:00', '23:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (5, '10:00:00', '23:00:00');
+insert into "business_hour" (day_of_week, open_time, close_time) values (6, '10:00:00', '23:00:00');
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (7,43);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (7,44);
 insert into "restaurant_business_hour" (restaurant_id, business_hour_id) values (7,45);
@@ -168,11 +170,11 @@ insert into "spot" (capacity, restaurant_id) values (3, 2);
 insert into "spot" (capacity, restaurant_id) values (1, 2);
 
 -- add reservations
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-07-18', '2017-07-18 14:50:00.000', 1800, '2017-07-18 15:20:00.000', 0, 1, 1, 314251, true);
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (15, '2017-07-18','2017-07-18 14:50:00.000', 1800, '2017-07-18 15:20:00.000', 0, 2, 2, 142512, true);
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (7, '2017-07-18','2017-07-18 15:00:00.000', 1800, '2017-07-18 15:30:00.000', 0, 2, 1, 572456, true);
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (3, '2017-07-18','2017-07-18 15:10:00.000', 1800, '2017-07-18 15:40:00.000', 0, 3, 1, 123683, true);
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-07-18','2017-07-18 15:30:00.000', 1800, '2017-07-18 16:00:00.000', 0, 4, 1, 946784, true);
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (20, '2017-07-18','2017-07-18 13:30:00.000', 1800, '2017-07-18 14:00:00.000', 0, 5, 1, 136578, false);
-INSERT INTO "reservation" (people_number, date, reservation_begin, length, reservation_end, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-07-19', '2017-07-19 14:50:00.000', 1800, '2017-07-19 15:20:00.000', 0, 1, 1, 846789, true);
+INSERT INTO "reservation" (people_number, date, start_date_time, length, end_date_time, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-07-18', '2017-07-18 14:50:00.000', 1800, '2017-07-18 15:20:00.000', 0, 1, 1, 314251, true);
+INSERT INTO "reservation" (people_number, date, start_date_time, length, end_date_time, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (15, '2017-07-18','2017-07-18 14:50:00.000', 1800, '2017-07-18 15:20:00.000', 0, 2, 2, 142512, true);
+INSERT INTO "reservation" (people_number, date, start_date_time, length, end_date_time, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (7, '2017-07-18','2017-07-18 15:00:00.000', 1800, '2017-07-18 15:30:00.000', 0, 2, 1, 572456, true);
+INSERT INTO "reservation" (people_number, date, start_date_time, length, end_date_time, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (3, '2017-07-18','2017-07-18 15:10:00.000', 1800, '2017-07-18 15:40:00.000', 0, 3, 1, 123683, true);
+INSERT INTO "reservation" (people_number, date, start_date_time, length, end_date_time, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-07-18','2017-07-18 15:30:00.000', 1800, '2017-07-18 16:00:00.000', 0, 4, 1, 946784, true);
+INSERT INTO "reservation" (people_number, date, start_date_time, length, end_date_time, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (20, '2017-07-18','2017-07-18 13:30:00.000', 1800, '2017-07-18 14:00:00.000', 0, 5, 1, 136578, false);
+INSERT INTO "reservation" (people_number, date, start_date_time, length, end_date_time, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-07-19', '2017-07-19 14:50:00.000', 1800, '2017-07-19 15:20:00.000', 0, 1, 1, 846789, true);
 /* @formatter:on */
