@@ -3,7 +3,7 @@ package pl.denisolek.Email;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import pl.denisolek.Reservation.Reservation;
+import pl.denisolek.core.reservation.Reservation;
 
 @Component
 public class EmailService {

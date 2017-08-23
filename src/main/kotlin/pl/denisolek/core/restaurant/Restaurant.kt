@@ -3,7 +3,6 @@ package pl.denisolek.core.restaurant
 import pl.denisolek.core.BaseEntity
 import pl.denisolek.core.reservation.Reservation
 import java.time.Duration
-import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -31,11 +30,11 @@ class Restaurant(
         @Enumerated(EnumType.STRING)
         @CollectionTable(name = "restaurant_kitchen", joinColumns = arrayOf(JoinColumn(name = "restaurantId")))
         @Column(name = "kitchen_type", nullable = false)
-        var kitchenTypes: Set<KitchenType>,
+        var kitchenTypes: MutableSet<KitchenType>,
 
         @OneToMany(cascade = arrayOf(CascadeType.ALL))
         @JoinTable(name = "restaurant_business_hour", joinColumns = arrayOf(JoinColumn(name = "restaurant_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "business_hour_id")))
-        var businessHours: Set<BusinessHour> = HashSet()
+        var businessHours: MutableSet<BusinessHour> = mutableSetOf()
 
 ) : BaseEntity() {
     enum class KitchenType {

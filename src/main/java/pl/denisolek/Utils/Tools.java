@@ -1,7 +1,7 @@
 package pl.denisolek.Utils;
 
 import org.springframework.stereotype.Component;
-import pl.denisolek.Restaurant.BusinessHour;
+import pl.denisolek.core.restaurant.BusinessHour;
 
 import java.time.Duration;
 import java.time.LocalDate;

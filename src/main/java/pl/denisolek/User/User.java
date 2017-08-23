@@ -5,9 +5,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Email;
 import pl.denisolek.BaseEntity;
-import pl.denisolek.Restaurant.Restaurant;
 import pl.denisolek.Security.Authority;
 import pl.denisolek.Views;
+import pl.denisolek.core.restaurant.Restaurant;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
