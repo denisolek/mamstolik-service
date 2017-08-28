@@ -1,4 +1,4 @@
 package pl.denisolek.guest.restaurant
 
-class GuestRestaurantService {
+class RestaurantGuestService {
 }

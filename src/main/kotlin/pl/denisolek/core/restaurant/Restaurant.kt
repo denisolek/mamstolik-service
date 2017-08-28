@@ -1,6 +1,7 @@
 package pl.denisolek.core.restaurant
 
 import pl.denisolek.core.BaseEntity
+import pl.denisolek.core.address.Address
 import pl.denisolek.core.reservation.Reservation
 import java.time.Duration
 import javax.persistence.*
@@ -8,20 +9,16 @@ import javax.persistence.*
 @Entity
 class Restaurant(
         var name: String,
-        var city: String,
-        var street: String,
-        var latitude: Float,
-        var longitude: Float,
+        var description: String,
         var avgReservationTime: Duration,
         var rate: Float,
         var service_rate: Float,
-        var place_rate: Float,
+        var food_rate: Float,
         var price_quality_rate: Float,
-        var nip: String,
-        var capacity: Int,
-        var opinionCount: Int,
         var isActive: Boolean,
-        var description: String,
+
+        @OneToOne(cascade = arrayOf(CascadeType.ALL))
+        var address: Address,
 
         @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         var reservations: MutableList<Reservation>,
