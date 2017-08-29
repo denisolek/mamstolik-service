@@ -11,18 +11,18 @@ import org.springframework.web.filter.CorsFilter;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CORSConfig extends CorsFilter {
 
-	public CORSConfig() {
-		super(configurationSource());
-	}
+    public CORSConfig() {
+        super(configurationSource());
+    }
 
-	private static UrlBasedCorsConfigurationSource configurationSource() {
-		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowCredentials(true);
-		config.addAllowedOrigin("*");
-		config.addAllowedHeader("*");
-		config.addAllowedMethod("*");
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", config);
-		return source;
-	}
+    private static UrlBasedCorsConfigurationSource configurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
 }

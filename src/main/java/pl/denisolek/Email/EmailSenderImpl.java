@@ -14,26 +14,26 @@ import java.io.UnsupportedEncodingException;
 @Service
 public class EmailSenderImpl implements EmailSender {
 
-	@Value("${spring.mail.username}")
-	String MAIL_USERNAME;
-	@Autowired
-	private JavaMailSender javaMailSender;
+    @Value("${spring.mail.username}")
+    String MAIL_USERNAME;
+    @Autowired
+    private JavaMailSender javaMailSender;
 
-	@Override
-	public void sendEmail(String target, String subject, String content) {
-		MimeMessage mail = javaMailSender.createMimeMessage();
-		try {
-			MimeMessageHelper helper = new MimeMessageHelper(mail, true);
-			helper.setTo(target);
-			helper.setReplyTo(MAIL_USERNAME);
-			helper.setFrom(MAIL_USERNAME, "MamStolik.pl");
-			helper.setSubject(subject);
-			helper.setText(content, true);
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		javaMailSender.send(mail);
-	}
+    @Override
+    public void sendEmail(String target, String subject, String content) {
+        MimeMessage mail = javaMailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(mail, true);
+            helper.setTo(target);
+            helper.setReplyTo(MAIL_USERNAME);
+            helper.setFrom(MAIL_USERNAME, "MamStolik.pl");
+            helper.setSubject(subject);
+            helper.setText(content, true);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        javaMailSender.send(mail);
+    }
 }
