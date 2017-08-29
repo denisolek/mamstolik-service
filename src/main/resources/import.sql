@@ -47,19 +47,33 @@ INSERT INTO public.user_authority (username, authority) VALUES (2, 'ROLE_OWNER')
 INSERT INTO public.user_authority (username, authority) VALUES (1, 'ROLE_OWNER');
 INSERT INTO public.user_authority (username, authority) VALUES (1, 'ROLE_ADMIN');
 
--- add kitchen types
+-- restaurant
 INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (1, 'POLISH');
-INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (1, 'GREEK');
+INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (1, 'ITALIAN');
 INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (2, 'ITALIAN');
-INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (2, 'INDIAN');
-INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (2, 'VIET_THAI');
+INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (2, 'SPANISH');
+INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (2, 'PORTUGUESE');
+INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (3, 'GREEK');
+INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (3, 'FRENCH');
 INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (3, 'ASIAN');
-INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (3, 'JAPANESE');
-INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (3, 'VIET_THAI');
-INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (4, 'BURGERS');
-INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (4, 'MEXICAN');
-INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (5, 'POLISH');
-INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (6, 'VIET_THAI');
+INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (4, 'VIETNAMESE');
+INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (4, 'CHINESE');
+INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (5, 'JAPANESE');
+INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (6, 'EUROPEAN');
+
+-- restaurant
+INSERT INTO public.restaurant_facility (restaurant_id, facility) VALUES (1, 'AIR_CONDITIONING');
+INSERT INTO public.restaurant_facility (restaurant_id, facility) VALUES (1, 'SMOKING_ROOM');
+INSERT INTO public.restaurant_facility (restaurant_id, facility) VALUES (2, 'NON_SMOKING_ROOM');
+INSERT INTO public.restaurant_facility (restaurant_id, facility) VALUES (2, 'TERRACE');
+INSERT INTO public.restaurant_facility (restaurant_id, facility) VALUES (2, 'GARDEN');
+INSERT INTO public.restaurant_facility (restaurant_id, facility) VALUES (3, 'PARKING');
+INSERT INTO public.restaurant_facility (restaurant_id, facility) VALUES (3, 'FREE_WIFI');
+INSERT INTO public.restaurant_facility (restaurant_id, facility) VALUES (3, 'TOILET_FOR_DISABLED');
+INSERT INTO public.restaurant_facility (restaurant_id, facility) VALUES (4, 'DISABLED_PEOPLE_IMPROVEMENTS');
+INSERT INTO public.restaurant_facility (restaurant_id, facility) VALUES (4, 'CHILDREN_MENU');
+INSERT INTO public.restaurant_facility (restaurant_id, facility) VALUES (5, 'CHILD_SEATS');
+INSERT INTO public.restaurant_facility (restaurant_id, facility) VALUES (6, 'PLAYGROUND');
 
 -- add business hours
 INSERT INTO public.business_hour (day_of_week, open_time, close_time) VALUES (0, '12:00:00', '21:00:00');

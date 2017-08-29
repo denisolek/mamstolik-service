@@ -105,7 +105,7 @@ class Restaurant(
         FREE_WIFI,
         TOILET_FOR_DISABLED,
         DISABLED_PEOPLE_IMPROVEMENTS,
-        CHILDRENS_MENU,
+        CHILDREN_MENU,
         CHILD_SEATS,
         PLAYGROUND,
         MONITORED_PARKING,
