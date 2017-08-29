@@ -3,6 +3,7 @@ package pl.denisolek.core.restaurant
 import pl.denisolek.core.BaseEntity
 import pl.denisolek.core.address.Address
 import pl.denisolek.core.reservation.Reservation
+import pl.denisolek.core.spot.Spot
 import java.time.Duration
 import javax.persistence.*
 
@@ -21,7 +22,10 @@ class Restaurant(
         var address: Address,
 
         @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var reservations: MutableList<Reservation>,
+        var reservations: MutableList<Reservation> = mutableListOf(),
+
+        @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+        var spots: MutableList<Spot> = mutableListOf(),
 
         @ElementCollection(fetch = FetchType.EAGER)
         @Enumerated(EnumType.STRING)

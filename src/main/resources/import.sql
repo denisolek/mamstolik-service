@@ -175,16 +175,16 @@ INSERT INTO public.customer (email, phone_number, name, surname) VALUES ('jagoda
 INSERT INTO public.customer (email, phone_number, name, surname) VALUES ('maurycy.lisowski@gmail.pl', '729712835', 'Maurycy', 'Lisowski');
 
 -- add spots
-INSERT INTO public.spot (restaurant_id) VALUES (4, 1);
-INSERT INTO public.spot (restaurant_id) VALUES (4, 1);
-INSERT INTO public.spot (restaurant_id) VALUES (5, 1);
-INSERT INTO public.spot (restaurant_id) VALUES (5, 1);
-INSERT INTO public.spot (restaurant_id) VALUES (2, 1);
-INSERT INTO public.spot (restaurant_id) VALUES (6, 2);
-INSERT INTO public.spot (restaurant_id) VALUES (7, 2);
-INSERT INTO public.spot (restaurant_id) VALUES (8, 2);
-INSERT INTO public.spot (restaurant_id) VALUES (3, 2);
-INSERT INTO public.spot (restaurant_id) VALUES (1, 2);
+INSERT INTO public.spot (capacity, restaurant_id) VALUES (4, 1);
+INSERT INTO public.spot (capacity, restaurant_id) VALUES (4, 1);
+INSERT INTO public.spot (capacity, restaurant_id) VALUES (5, 1);
+INSERT INTO public.spot (capacity, restaurant_id) VALUES (5, 1);
+INSERT INTO public.spot (capacity, restaurant_id) VALUES (2, 1);
+INSERT INTO public.spot (capacity, restaurant_id) VALUES (6, 2);
+INSERT INTO public.spot (capacity, restaurant_id) VALUES (7, 2);
+INSERT INTO public.spot (capacity, restaurant_id) VALUES (8, 2);
+INSERT INTO public.spot (capacity, restaurant_id) VALUES (3, 2);
+INSERT INTO public.spot (capacity, restaurant_id) VALUES (1, 2);
 
 -- add reservations
 INSERT INTO public.reservation (people_number, date, start_date_time, length, end_date_time, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-07-18', '2017-07-18 14:50:00.000', 1800, '2017-07-18 15:20:00.000', 0, 1, 1, 314251, true);
