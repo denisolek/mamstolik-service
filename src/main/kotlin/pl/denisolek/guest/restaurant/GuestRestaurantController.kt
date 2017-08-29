@@ -12,6 +12,6 @@ class GuestRestaurantController(val restaurantService: RestaurantService) : Gues
     override fun searchRestaurants(@RequestParam city: String,
                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam date: LocalDateTime,
                                    @RequestParam peopleNumber: Int): List<RestaurantDTO> {
-        return RestaurantDTO.fromRestaurantList(restaurantService.getAllRestaurants())
+        return RestaurantDTO.fromRestaurantList(restaurantService.getRestaurantByCity(city))
     }
 }

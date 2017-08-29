@@ -7,4 +7,7 @@ class RestaurantService(private val restaurantRepository: RestaurantRepository) 
 
     fun getAllRestaurants(): List<Restaurant> =
             restaurantRepository.findAll()
+
+    fun getRestaurantByCity(name: String): List<Restaurant> =
+            restaurantRepository.findByCityAndAliasesAndIsActive(name)
 }
