@@ -43,9 +43,9 @@ INSERT INTO public.user (email, name, surname, restaurant_id, password, account_
 INSERT INTO public.user (email, name, surname, restaurant_id, password, account_state) VALUES ('ofir.vidavsky@gmail.com', 'Ofir', 'Vidavsky', 7, 'password', 0);
 
 -- add authorities
+INSERT INTO public.user_authority (username, authority) VALUES (2, 'ROLE_OWNER');
 INSERT INTO public.user_authority (username, authority) VALUES (1, 'ROLE_OWNER');
-INSERT INTO public.user_authority (username, authority) VALUES (7, 'ROLE_OWNER');
-INSERT INTO public.user_authority (username, authority) VALUES (7, 'ROLE_ADMIN');
+INSERT INTO public.user_authority (username, authority) VALUES (1, 'ROLE_ADMIN');
 
 -- add kitchen types
 INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (1, 'POLISH');
