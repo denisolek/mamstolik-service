@@ -6,6 +6,8 @@ import org.springframework.data.repository.query.Param
 
 interface RestaurantRepository : JpaRepository<Restaurant, Int> {
     @Query("select distinct r from Restaurant as r left join r.address as a left join a.city as c " +
-            "where (lower(c.name) = :name)")
-    fun findByCityAndAliasesAndIsActive(@Param(value = "name") name: String): List<Restaurant>
+            "where (c.id = :cityId) " +
+            "and (r.isActive = :isActive)")
+    fun findByCityAndIsActive(@Param("cityId") cityId: Int?,
+                              @Param("isActive") isActive: Boolean = true): List<Restaurant>
 }
