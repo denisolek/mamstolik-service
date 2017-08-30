@@ -7,12 +7,25 @@ INSERT INTO public.authority (name) VALUES ('ROLE_ADMIN');
 INSERT INTO public.city (name) VALUES ('Poznań');
 INSERT INTO public.city (name) VALUES ('Warszawa');
 INSERT INTO public.city (name) VALUES ('Gorzów Wielkopolski');
+INSERT INTO public.city (name) VALUES ('Gorzów Śląski');
+INSERT INTO public.city (name) VALUES ('Gostyń');
+INSERT INTO public.city (name) VALUES ('Gostynin');
+INSERT INTO public.city (name) VALUES ('Pogorzela');
+INSERT INTO public.city (name) VALUES ('Poręba');
+INSERT INTO public.city (name) VALUES ('Płock');
+INSERT INTO public.city (name) VALUES ('Wałcz');
+INSERT INTO public.city (name) VALUES ('Włocławek');
 
 -- city
-INSERT INTO public.city_alias (name, city_id) VALUES ('Pzn', 1);
-INSERT INTO public.city_alias (name, city_id) VALUES ('Gorzów Wlkp', 3);
-INSERT INTO public.city_alias (name, city_id) VALUES ('Gorzów Wlkp.', 3);
-INSERT INTO public.city_alias (name, city_id) VALUES ('GW', 3);
+INSERT INTO public.city_alias (name, city_id) VALUES ('pzn', 1);
+INSERT INTO public.city_alias (name, city_id) VALUES ('wwa', 2);
+INSERT INTO public.city_alias (name, city_id) VALUES ('gorzow', 3);
+INSERT INTO public.city_alias (name, city_id) VALUES ('gorzow wlkp', 3);
+INSERT INTO public.city_alias (name, city_id) VALUES ('gorzów wlkp', 3);
+INSERT INTO public.city_alias (name, city_id) VALUES ('gorzów wlkp.', 3);
+INSERT INTO public.city_alias (name, city_id) VALUES ('gw', 3);
+INSERT INTO public.city_alias (name, city_id) VALUES ('gorzow', 4);
+INSERT INTO public.city_alias (name, city_id) VALUES ('gorzow slaski', 4);
 
 -- city
 INSERT INTO public.address (building_number, latitude, longitude, postal_code, street_name, city_id) VALUES ('1A', 52.407640, 16.932010, '60-681', 'Półwiejska 42', 1);
