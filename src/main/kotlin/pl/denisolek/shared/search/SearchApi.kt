@@ -3,15 +3,15 @@ package pl.denisolek.shared.search
 import io.swagger.annotations.Api
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
-import pl.denisolek.core.address.City
 import pl.denisolek.core.config.API_BASE_PATH
+import pl.denisolek.shared.search.dto.CitiesRestaurantsDTO
 
 @Api("SearchApi")
 interface SearchApi {
     companion object {
-        const val CITY_PATH = "$API_BASE_PATH/cities"
+        const val SEARCH_PATH = "$API_BASE_PATH/search"
     }
 
-    @GetMapping(CITY_PATH)
-    fun getCities(@RequestParam name: String): List<City>
+    @GetMapping(SEARCH_PATH)
+    fun findCitiesAndRestaurants(@RequestParam name: String): CitiesRestaurantsDTO
 }

@@ -10,4 +10,8 @@ interface RestaurantRepository : JpaRepository<Restaurant, Int> {
             "and (r.isActive = :isActive)")
     fun findByCityAndIsActive(@Param("cityId") cityId: Int?,
                               @Param("isActive") isActive: Boolean = true): List<Restaurant>
+
+    @Query("select distinct r from Restaurant as r " +
+            "where (lower(r.name) like lower(CONCAT(:name, '%')))")
+    fun findPartlyByName(@Param(value = "name") name: String): List<Restaurant>
 }

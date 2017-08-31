@@ -2,11 +2,10 @@ package pl.denisolek.shared.search
 
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import pl.denisolek.core.address.City
-import pl.denisolek.core.address.CityService
+import pl.denisolek.shared.search.dto.CitiesRestaurantsDTO
 
 @RestController
-class SearchController(val cityService: CityService) : SearchApi {
-    override fun getCities(@RequestParam name: String): List<City> =
-            cityService.getCities(name)
+class SearchController(val searchService: SearchService) : SearchApi {
+    override fun findCitiesAndRestaurants(@RequestParam name: String): CitiesRestaurantsDTO =
+            searchService.findCitiesAndRestaurants(name)
 }

@@ -7,4 +7,7 @@ import pl.denisolek.core.address.City
 class RestaurantService(private val restaurantRepository: RestaurantRepository) {
     fun getActiveRestaurantsByCity(city: City): List<Restaurant> =
             restaurantRepository.findByCityAndIsActive(city.id)
+
+    fun findPartlyByName(name: String): List<Restaurant> =
+            restaurantRepository.findPartlyByName(name)
 }

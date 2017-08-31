@@ -4,6 +4,6 @@ import org.springframework.stereotype.Service
 
 @Service
 class CityService(private val cityRepository: CityRepository) {
-    fun getCities(name: String): List<City> =
+    fun findPartlyByNameOrAlias(name: String): List<City> =
             cityRepository.findPartlyByNameOrAlias(name)
 }
