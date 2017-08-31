@@ -1,4 +1,4 @@
-package pl.denisolek
+package pl.denisolek.repository
 
 import org.junit.Assert
 import org.junit.Test
@@ -14,7 +14,7 @@ import pl.denisolek.core.address.CityRepository
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @Transactional
-class GetCitiesTest {
+class FindPartlyCities {
 
     @Autowired
     lateinit var cityRepository: CityRepository
