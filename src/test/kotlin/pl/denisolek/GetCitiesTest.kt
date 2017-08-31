@@ -25,4 +25,22 @@ class GetCitiesTest {
         Assert.assertEquals(1, result.size)
         Assert.assertEquals("Poznań", result[0].name)
     }
+
+    @Test
+    fun `find by alias, name = gw`() {
+        val result = cityRepository.findPartlyByNameOrAlias("gw")
+        Assert.assertEquals(1, result.size)
+        Assert.assertEquals("Gorzów Wielkopolski", result[0].name)
+    }
+
+    @Test
+    fun `find by name, name = go`() {
+        val expectedCities = listOf("Gorzów Wielkopolski", "Gorzów Śląski", "Gostyń", "Gostynin")
+        val result = cityRepository.findPartlyByNameOrAlias("go")
+        Assert.assertEquals(4, result.size)
+        Assert.assertEquals(true, expectedCities.contains(result[0].name))
+        Assert.assertEquals(true, expectedCities.contains(result[1].name))
+        Assert.assertEquals(true, expectedCities.contains(result[2].name))
+        Assert.assertEquals(true, expectedCities.contains(result[3].name))
+    }
 }
