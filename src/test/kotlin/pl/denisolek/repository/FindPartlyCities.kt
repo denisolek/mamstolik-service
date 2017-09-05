@@ -35,7 +35,7 @@ class FindPartlyCities {
 
     @Test
     fun `find by name, name = go`() {
-        val expectedCities = listOf("Gorzów Wielkopolski", "Gorzów Śląski", "Gostyń", "Gostynin")
+        val expectedCities = listOf("Gorzów Śląski", "Gorzów Wielkopolski", "Gostyń", "Gostynin")
         val result = cityRepository.findPartlyByNameOrAlias("go")
         Assert.assertEquals(4, result.size)
         Assert.assertEquals(true, expectedCities.contains(result[0].name))

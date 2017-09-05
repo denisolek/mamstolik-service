@@ -7,10 +7,10 @@ import javax.persistence.Entity
 import javax.persistence.OneToMany
 
 @Entity
-class City(
+data class City(
         var name: String,
 
         @OneToMany(mappedBy = "city", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         @JsonIgnore
-        var aliases: MutableList<CityAlias> = mutableListOf()
+        var aliases: MutableList<CityAlias>? = mutableListOf()
 ) : BaseEntity()

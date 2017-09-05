@@ -12,6 +12,7 @@ interface RestaurantRepository : JpaRepository<Restaurant, Int> {
                               @Param("isActive") isActive: Boolean = true): List<Restaurant>
 
     @Query("select distinct r from Restaurant as r " +
-            "where (lower(r.name) like lower(CONCAT(:name, '%')))")
+            "where (lower(r.name) like lower(CONCAT(:name, '%'))) " +
+            "order by r.name asc")
     fun findPartlyByName(@Param(value = "name") name: String): List<Restaurant>
 }
