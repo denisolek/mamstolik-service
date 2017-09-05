@@ -4,11 +4,14 @@ import pl.denisolek.core.BaseEntity
 import pl.denisolek.core.address.Address
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.spot.Spot
+import pl.denisolek.infrastructure.isAfterOrEqual
+import pl.denisolek.infrastructure.isBeforeOrEqual
 import java.time.Duration
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-class Restaurant(
+data class Restaurant(
         var name: String,
         var description: String,
         var avgReservationTime: Duration,
@@ -44,6 +47,17 @@ class Restaurant(
         var businessHours: MutableSet<BusinessHour> = mutableSetOf()
 
 ) : BaseEntity() {
+
+    fun isOpenAt(date: LocalDateTime): Boolean {
+        this.businessHours
+                .find { it.dayOfWeek == date.dayOfWeek }
+                .let {
+                    date.toLocalTime().isAfterOrEqual(it!!.openTime) && date.toLocalTime().isBeforeOrEqual(it!!.closeTime.minusMinutes(this.avgReservationTime.toMinutes()))
+                    true
+                }
+        return true
+    }
+
     enum class KitchenType {
         POLISH,
         ITALIAN,

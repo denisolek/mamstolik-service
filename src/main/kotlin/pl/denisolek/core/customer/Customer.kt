@@ -4,7 +4,7 @@ import pl.denisolek.core.BaseEntity
 import javax.persistence.Entity
 
 @Entity
-class Customer(
+data class Customer(
         var email: String,
         var phoneNumber: String,
         var name: String,

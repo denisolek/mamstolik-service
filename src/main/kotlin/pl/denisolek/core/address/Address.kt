@@ -6,7 +6,7 @@ import javax.persistence.JoinColumn
 import javax.persistence.OneToOne
 
 @Entity
-class Address(
+data class Address(
         var streetName: String,
         var buildingNumber: String,
         var postalCode: String,

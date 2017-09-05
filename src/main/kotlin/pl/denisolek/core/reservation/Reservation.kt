@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 
 @Entity
-class Reservation(
+data class Reservation(
         var date: LocalDate,
         var startDateTime: LocalDateTime,
         var endDateTime: LocalDateTime,

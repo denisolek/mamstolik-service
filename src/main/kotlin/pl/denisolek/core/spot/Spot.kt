@@ -6,7 +6,7 @@ import javax.persistence.Entity
 import javax.persistence.ManyToOne
 
 @Entity
-class Spot(
+data class Spot(
         var capacity: Int,
 
         @ManyToOne
