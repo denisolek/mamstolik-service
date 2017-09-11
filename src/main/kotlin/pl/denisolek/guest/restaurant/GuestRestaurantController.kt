@@ -13,6 +13,12 @@ class GuestRestaurantController(val restaurantService: RestaurantService) : Gues
     override fun searchRestaurants(@RequestParam city: City,
                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam date: LocalDateTime,
                                    @RequestParam peopleNumber: Int): List<RestaurantDTO> {
-        return RestaurantDTO.fromRestaurantList(restaurantService.getActiveRestaurantsByCity(city))
+
+        val restaurants = restaurantService.getActiveRestaurantsByCity(city)
+                .filter { restaurant ->
+                    restaurant.isOpenAt(date)
+                }
+
+        return RestaurantDTO.fromRestaurantList(restaurants)
     }
 }
