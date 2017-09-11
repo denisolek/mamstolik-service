@@ -19,8 +19,8 @@ public class EmailService {
         Context context = new Context();
         context.setVariable("name", reservation.getCustomer().getName());
         context.setVariable("restaurantName", reservation.getRestaurant().getName());
-        context.setVariable("day", reservation.getStartDateTime().toLocalDate().toString());
-        context.setVariable("hour", reservation.getStartDateTime().toLocalTime().toString());
+        context.setVariable("day", reservation.getDate().toString());
+        context.setVariable("hour", reservation.getStartTime().toString());
         context.setVariable("peopleCount", reservation.getPeopleNumber());
 
         String body = templateEngine.process("reservation-accepted", context);
