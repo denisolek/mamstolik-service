@@ -4,10 +4,8 @@ import pl.denisolek.core.BaseEntity
 import pl.denisolek.core.address.Address
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.spot.Spot
-import pl.denisolek.infrastructure.isAfterOrEqual
-import pl.denisolek.infrastructure.isBeforeOrEqual
+import java.time.DayOfWeek
 import java.time.Duration
-import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -25,38 +23,39 @@ data class Restaurant(
         var address: Address,
 
         @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var reservations: MutableList<Reservation> = mutableListOf(),
+        var reservations: MutableList<Reservation>? = mutableListOf(),
 
         @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var spots: MutableList<Spot> = mutableListOf(),
+        var spots: MutableList<Spot>? = mutableListOf(),
 
         @ElementCollection(fetch = FetchType.EAGER)
         @Enumerated(EnumType.STRING)
         @CollectionTable(name = "restaurant_kitchen", joinColumns = arrayOf(JoinColumn(name = "restaurantId")))
         @Column(name = "kitchen_type", nullable = false)
-        var kitchenTypes: MutableSet<KitchenType>,
+        var kitchenTypes: MutableSet<KitchenType>? = mutableSetOf(),
 
         @ElementCollection(fetch = FetchType.EAGER)
         @Enumerated(EnumType.STRING)
         @CollectionTable(name = "restaurant_facility", joinColumns = arrayOf(JoinColumn(name = "restaurantId")))
         @Column(name = "facility", nullable = false)
-        var facilities: MutableSet<Facilities>,
+        var facilities: MutableSet<Facilities>? = mutableSetOf(),
 
         @OneToMany(cascade = arrayOf(CascadeType.ALL))
         @JoinTable(name = "restaurant_business_hour", joinColumns = arrayOf(JoinColumn(name = "restaurant_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "business_hour_id")))
-        var businessHours: MutableSet<BusinessHour> = mutableSetOf()
+        @MapKeyEnumerated(EnumType.STRING)
+        var businessHours: MutableMap<DayOfWeek, BusinessHour>? = mutableMapOf()
 
 ) : BaseEntity() {
 
-    fun isOpenAt(date: LocalDateTime): Boolean {
-        this.businessHours
-                .find { it.dayOfWeek == date.dayOfWeek }
-                .let {
-                    date.toLocalTime().isAfterOrEqual(it!!.openTime) && date.toLocalTime().isBeforeOrEqual(it!!.closeTime.minusMinutes(this.avgReservationTime.toMinutes()))
-                    true
-                }
-        return true
-    }
+//    fun isOpenAt(date: LocalDateTime): Boolean {
+//        this.businessHours
+//                .filter { it.dayOfWeek == date.dayOfWeek }
+//                .map {
+//                    date.toLocalTime().isAfterOrEqual(it.openTime) && date.toLocalTime().isBeforeOrEqual(it.closeTime.minusMinutes(this.avgReservationTime.toMinutes()))
+//                    true
+//                }
+//        return false
+//    }
 
     enum class KitchenType {
         POLISH,

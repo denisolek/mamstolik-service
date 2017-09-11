@@ -1,6 +1,7 @@
 package pl.denisolek.core.address
 
 import pl.denisolek.core.BaseEntity
+import javax.persistence.CascadeType
 import javax.persistence.Entity
 import javax.persistence.JoinColumn
 import javax.persistence.OneToOne
@@ -13,7 +14,7 @@ data class Address(
         var latitude: Float,
         var longitude: Float,
 
-        @OneToOne
+        @OneToOne(cascade = arrayOf(CascadeType.ALL))
         @JoinColumn
         var city: City
 ) : BaseEntity()

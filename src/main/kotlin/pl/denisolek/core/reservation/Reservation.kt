@@ -5,7 +5,7 @@ import pl.denisolek.core.customer.Customer
 import pl.denisolek.core.restaurant.Restaurant
 import java.time.Duration
 import java.time.LocalDate
-import java.time.LocalDateTime
+import java.time.LocalTime
 import javax.persistence.Entity
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
@@ -13,12 +13,12 @@ import javax.persistence.ManyToOne
 @Entity
 data class Reservation(
         var date: LocalDate,
-        var startDateTime: LocalDateTime,
-        var endDateTime: LocalDateTime,
-        var length: Duration,
+        var startTime: LocalTime,
+        var endTime: LocalTime,
         var peopleNumber: Int,
         var state: ReservationState,
         var verificationCode: Int,
+        var duration: Duration,
         var isVerified: Boolean? = false,
 
         @ManyToOne
