@@ -96,13 +96,13 @@ INSERT INTO public.business_hour (open_time, close_time) VALUES ('12:00:00', '21
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('13:00:00', '23:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('13:00:00', '23:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('13:00:00', '20:00:00');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (1,1, 'MONDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (1,2, 'TUESDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (1,3, 'WEDNESDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (1,4, 'THURSDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (1,5, 'FRIDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (1,6, 'SATURDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (1,7, 'SUNDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (1,1, 'MONDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (1,2, 'TUESDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (1,3, 'WEDNESDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (1,4, 'THURSDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (1,5, 'FRIDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (1,6, 'SATURDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (1,7, 'SUNDAY');
 
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '19:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '19:00:00');
@@ -111,13 +111,13 @@ INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '19
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '22:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('13:00:00', '22:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('13:00:00', '22:00:00');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (2,8, 'MONDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (2,9, 'TUESDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (2,10, 'WEDNESDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (2,11, 'THURSDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (2,12, 'FRIDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (2,13, 'SATURDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (2,14, 'SUNDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (2,8, 'MONDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (2,9, 'TUESDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (2,10, 'WEDNESDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (2,11, 'THURSDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (2,12, 'FRIDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (2,13, 'SATURDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (2,14, 'SUNDAY');
 
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '19:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '19:00:00');
@@ -126,13 +126,13 @@ INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '19
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '22:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('13:00:00', '22:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('13:00:00', '22:00:00');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (3,15, 'MONDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (3,16, 'TUESDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (3,17, 'WEDNESDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (3,18, 'THURSDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (3,19, 'FRIDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (3,20, 'SATURDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (3,21, 'SUNDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (3,15, 'MONDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (3,16, 'TUESDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (3,17, 'WEDNESDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (3,18, 'THURSDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (3,19, 'FRIDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (3,20, 'SATURDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (3,21, 'SUNDAY');
 
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '19:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '19:00:00');
@@ -141,13 +141,13 @@ INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '19
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '22:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('13:00:00', '22:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('13:00:00', '22:00:00');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (4,22, 'MONDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (4,23, 'TUESDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (4,24, 'WEDNESDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (4,25, 'THURSDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (4,26, 'FRIDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (4,27, 'SATURDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (4,28, 'SUNDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (4,22, 'MONDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (4,23, 'TUESDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (4,24, 'WEDNESDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (4,25, 'THURSDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (4,26, 'FRIDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (4,27, 'SATURDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (4,28, 'SUNDAY');
 
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '19:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '19:00:00');
@@ -156,13 +156,13 @@ INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '19
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '22:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('13:00:00', '22:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('13:00:00', '22:00:00');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (5,29, 'MONDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (5,30, 'TUESDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (5,31, 'WEDNESDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (5,32, 'THURSDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (5,33, 'FRIDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (5,34, 'SATURDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (5,35, 'SUNDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (5,29, 'MONDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (5,30, 'TUESDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (5,31, 'WEDNESDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (5,32, 'THURSDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (5,33, 'FRIDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (5,34, 'SATURDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (5,35, 'SUNDAY');
 
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '21:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '21:00:00');
@@ -171,13 +171,13 @@ INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '21
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '23:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '23:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '23:00:00');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (6,36, 'MONDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (6,37, 'TUESDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (6,38, 'WEDNESDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (6,39, 'THURSDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (6,40, 'FRIDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (6,41, 'SATURDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (6,42, 'SUNDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (6,36, 'MONDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (6,37, 'TUESDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (6,38, 'WEDNESDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (6,39, 'THURSDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (6,40, 'FRIDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (6,41, 'SATURDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (6,42, 'SUNDAY');
 
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '21:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '21:00:00');
@@ -186,13 +186,13 @@ INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '21
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '23:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '23:00:00');
 INSERT INTO public.business_hour (open_time, close_time) VALUES ('10:00:00', '23:00:00');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (7, 43, 'MONDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (7, 44, 'TUESDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (7, 45, 'WEDNESDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (7, 46, 'THURSDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (7, 47, 'FRIDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (7, 48, 'SATURDAY');
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, business_hours_key) VALUES (7, 49, 'SUNDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (7, 43, 'MONDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (7, 44, 'TUESDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (7, 45, 'WEDNESDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (7, 46, 'THURSDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (7, 47, 'FRIDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (7, 48, 'SATURDAY');
+INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week) VALUES (7, 49, 'SUNDAY');
 
 -- add customers
 INSERT INTO public.customer (email, phone_number, name, surname) VALUES ('karola.szafranska@gmail.pl', '666894323', 'Karola', 'Szafrańska');
