@@ -15,3 +15,6 @@ fun LocalTime.isBeforeOrEqual(localTime: LocalTime)
 
 fun LocalTime.isAfterOrEqual(localTime: LocalTime)
         = !this.isBefore(localTime)
+
+fun LocalTime.isInsideInclusive(startTime: LocalTime, endTime: LocalTime)
+        = this.isAfterOrEqual(startTime) && this.isBeforeOrEqual(endTime)
