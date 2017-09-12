@@ -3,9 +3,11 @@ package pl.denisolek.core.reservation
 import pl.denisolek.core.BaseEntity
 import pl.denisolek.core.customer.Customer
 import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.spot.Spot
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalTime
+import javax.persistence.ElementCollection
 import javax.persistence.Entity
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
@@ -26,7 +28,10 @@ data class Reservation(
 
         @ManyToOne
         @JoinColumn
-        var customer: Customer
+        var customer: Customer,
+
+        @ElementCollection
+        var spots: List<Spot>
 ) : BaseEntity() {
     enum class ReservationState {
         PENDING,

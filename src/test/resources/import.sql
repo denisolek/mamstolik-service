@@ -215,10 +215,9 @@ INSERT INTO public.spot (capacity, restaurant_id) VALUES (1, 2);
 
 -- add reservations
 INSERT INTO public.reservation (people_number, date, start_time, duration, end_time, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-10-18', '14:50:00.000', 1800, '15:20:00.000', 0, 1, 1, 314251, true);
-INSERT INTO public.reservation (people_number, date, start_time, duration, end_time, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (15, '2017-10-18','14:50:00.000', 1800, '15:20:00.000', 0, 2, 2, 142512, true);
-INSERT INTO public.reservation (people_number, date, start_time, duration, end_time, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (7, '2017-10-18','15:00:00.000', 1800, '15:30:00.000', 0, 2, 1, 572456, true);
-INSERT INTO public.reservation (people_number, date, start_time, duration, end_time, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (3, '2017-10-18','15:10:00.000', 1800, '15:40:00.000', 0, 3, 1, 123683, true);
-INSERT INTO public.reservation (people_number, date, start_time, duration, end_time, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-10-18','15:30:00.000', 1800, '16:00:00.000', 0, 4, 1, 946784, true);
-INSERT INTO public.reservation (people_number, date, start_time, duration, end_time, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (20, '2017-10-18', '13:30:00.000', 1800, '14:00:00.000', 0, 5, 1, 136578, false);
-INSERT INTO public.reservation (people_number, date, start_time, duration, end_time, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-10-19', '14:50:00.000', 1800, '15:20:00.000', 0, 1, 1, 846789, true);
+INSERT INTO public.reservation (people_number, date, start_time, duration, end_time, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (2, '2017-10-18', '15:30:00.000', 3600, '16:30:00.000', 0, 2, 1, 314251, true);
+
+-- reservation spots
+INSERT INTO public.reservation_spots (reservation_id, spots_id) VALUES (1, 3);
+INSERT INTO public.reservation_spots (reservation_id, spots_id) VALUES (2, 4);
 /* @formatter:on */
