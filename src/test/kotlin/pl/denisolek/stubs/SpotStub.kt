@@ -6,12 +6,12 @@ class SpotStub {
     companion object {
         fun getSpots(): MutableList<Spot> =
                 mutableListOf(
-                        Spot(5, RestaurantStub.getRestaurantForStubs()),
-                        Spot(5, RestaurantStub.getRestaurantForStubs()),
-                        Spot(5, RestaurantStub.getRestaurantForStubs()),
-                        Spot(5, RestaurantStub.getRestaurantForStubs()),
-                        Spot(2, RestaurantStub.getRestaurantForStubs()),
-                        Spot(2, RestaurantStub.getRestaurantForStubs())
+                        Spot(capacity = 5, restaurant = RestaurantStub.getRestaurantForStubs()),
+                        Spot(capacity = 5, restaurant = RestaurantStub.getRestaurantForStubs()),
+                        Spot(capacity = 5, restaurant = RestaurantStub.getRestaurantForStubs()),
+                        Spot(capacity = 5, restaurant = RestaurantStub.getRestaurantForStubs()),
+                        Spot(capacity = 2, restaurant = RestaurantStub.getRestaurantForStubs()),
+                        Spot(capacity = 2, restaurant = RestaurantStub.getRestaurantForStubs())
                 )
     }
 }

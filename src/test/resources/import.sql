@@ -207,15 +207,16 @@ INSERT INTO public.spot (capacity, restaurant_id) VALUES (4, 1);
 INSERT INTO public.spot (capacity, restaurant_id) VALUES (5, 1);
 INSERT INTO public.spot (capacity, restaurant_id) VALUES (5, 1);
 INSERT INTO public.spot (capacity, restaurant_id) VALUES (2, 1);
-INSERT INTO public.spot (capacity, restaurant_id) VALUES (6, 2);
-INSERT INTO public.spot (capacity, restaurant_id) VALUES (7, 2);
-INSERT INTO public.spot (capacity, restaurant_id) VALUES (8, 2);
+INSERT INTO public.spot (capacity, restaurant_id, min_people_number) VALUES (6, 2, 3);
+INSERT INTO public.spot (capacity, restaurant_id, min_people_number) VALUES (7, 2, 3);
+INSERT INTO public.spot (capacity, restaurant_id, min_people_number) VALUES (8, 2, 4);
 INSERT INTO public.spot (capacity, restaurant_id) VALUES (3, 2);
 INSERT INTO public.spot (capacity, restaurant_id) VALUES (1, 2);
 
+
 -- add reservations
-INSERT INTO public.reservation (people_number, date, start_time, duration, end_time, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-10-18', '14:50:00.000', 1800, '15:20:00.000', 0, 1, 1, 314251, true);
-INSERT INTO public.reservation (people_number, date, start_time, duration, end_time, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (2, '2017-10-18', '15:30:00.000', 3600, '16:30:00.000', 0, 2, 1, 314251, true);
+INSERT INTO public.reservation (people_number, start_date_time, end_date_time, duration, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-10-18 14:50:00.000', '2017-10-18 15:20:00.000', 1800, 0, 1, 1, 314251, true);
+INSERT INTO public.reservation (people_number, start_date_time, end_date_time, duration, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (2, '2017-10-18 15:30:00.000', '2017-10-18 16:30:00.000', 3600, 0, 2, 1, 314251, true);
 
 -- reservation spots
 INSERT INTO public.reservation_spots (reservation_id, spots_id) VALUES (1, 3);

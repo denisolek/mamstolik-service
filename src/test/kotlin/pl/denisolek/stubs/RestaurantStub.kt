@@ -6,9 +6,7 @@ import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.spot.Spot
-import java.time.DayOfWeek
-import java.time.Duration
-import java.time.LocalTime
+import java.time.*
 
 class RestaurantStub {
     companion object {
@@ -84,19 +82,25 @@ class RestaurantStub {
 
         private fun getSpots(): MutableList<Spot> =
                 mutableListOf(
-                        Spot(5, getRestaurantForStubs()),
-                        Spot(5, getRestaurantForStubs()),
-                        Spot(5, getRestaurantForStubs()),
-                        Spot(5, getRestaurantForStubs()),
-                        Spot(2, getRestaurantForStubs()),
-                        Spot(2, getRestaurantForStubs())
+                        Spot(capacity = 5, restaurant = getRestaurantForStubs()),
+                        Spot(capacity = 5, restaurant = getRestaurantForStubs()),
+                        Spot(capacity = 5, restaurant = getRestaurantForStubs()),
+                        Spot(capacity = 5, restaurant = getRestaurantForStubs()),
+                        Spot(capacity = 2, restaurant = getRestaurantForStubs()),
+                        Spot(capacity = 2, restaurant = getRestaurantForStubs())
                 )
 
         private fun getReservations(): MutableList<Reservation> =
                 mutableListOf(
                         ReservationStub.createReservation().copy(),
-                        ReservationStub.createReservation().copy(startTime = LocalTime.of(15, 0), endTime = LocalTime.of(15, 30), verificationCode = 222222),
-                        ReservationStub.createReservation().copy(startTime = LocalTime.of(16, 0), endTime = LocalTime.of(16, 30), verificationCode = 333333)
+                        ReservationStub.createReservation().copy(
+                                startDateTime = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(15, 0)),
+                                endDateTime = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(15, 30)),
+                                verificationCode = 222222),
+                        ReservationStub.createReservation().copy(
+                                startDateTime = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(16, 0)),
+                                endDateTime = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(16, 30)),
+                                verificationCode = 333333)
                 )
     }
 }
