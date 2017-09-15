@@ -14,5 +14,11 @@ data class RestaurantDTO(
                             name = it.name
                     )
                 }
+
+        fun fromRestaurant(restaurant: Restaurant): RestaurantDTO =
+                RestaurantDTO(
+                        id = restaurant.id,
+                        name = restaurant.name
+                )
     }
 }

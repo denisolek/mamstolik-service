@@ -24,7 +24,7 @@ class RestaurantStub {
                         price_quality_rate = 4.0f,
                         service_rate = 4.0f,
                         facilities = getFacilities(),
-                        kitchenTypes = getKitchenTypes(),
+                        cuisineTypes = getKitchenTypes(),
                         businessHours = getBusinessHours(),
                         spots = mutableListOf(),
                         reservations = mutableListOf()
@@ -42,7 +42,7 @@ class RestaurantStub {
                         price_quality_rate = 4.0f,
                         service_rate = 4.0f,
                         facilities = getFacilities(),
-                        kitchenTypes = getKitchenTypes(),
+                        cuisineTypes = getKitchenTypes(),
                         businessHours = getBusinessHours(),
                         spots = getSpots(),
                         reservations = getReservations()
@@ -57,13 +57,13 @@ class RestaurantStub {
                         Restaurant.Facilities.ALCOHOL
                 )
 
-        private fun getKitchenTypes(): MutableSet<Restaurant.KitchenType> =
+        private fun getKitchenTypes(): MutableSet<Restaurant.CuisineType> =
                 mutableSetOf(
-                        Restaurant.KitchenType.POLISH,
-                        Restaurant.KitchenType.AMERICAN,
-                        Restaurant.KitchenType.CAFE,
-                        Restaurant.KitchenType.BURGERS,
-                        Restaurant.KitchenType.ASIAN
+                        Restaurant.CuisineType.POLISH,
+                        Restaurant.CuisineType.AMERICAN,
+                        Restaurant.CuisineType.CAFE,
+                        Restaurant.CuisineType.BURGERS,
+                        Restaurant.CuisineType.ASIAN
                 )
 
         private fun getBusinessHours(): MutableMap<DayOfWeek, BusinessHour> {
