@@ -14,27 +14,27 @@ import pl.denisolek.core.address.CityRepository
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @Transactional
-class FindPartlyCities {
+class CityRepositoryTests {
 
     @Autowired
     lateinit var cityRepository: CityRepository
 
     @Test
-    fun `find by alias, name = pzn`() {
+    fun `findPartlyByNameOrAlias_ find by alias, name = pzn`() {
         val result = cityRepository.findPartlyByNameOrAlias("pzn")
         Assert.assertEquals(1, result.size)
         Assert.assertEquals("Poznań", result[0].name)
     }
 
     @Test
-    fun `find by alias, name = gw`() {
+    fun `findPartlyByNameOrAlias_ find by alias, name = gw`() {
         val result = cityRepository.findPartlyByNameOrAlias("gw")
         Assert.assertEquals(1, result.size)
         Assert.assertEquals("Gorzów Wielkopolski", result[0].name)
     }
 
     @Test
-    fun `find by name, name = go`() {
+    fun `findPartlyByNameOrAlias_ find by name, name = go`() {
         val expectedCities = listOf("Gorzów Śląski", "Gorzów Wielkopolski", "Gostyń", "Gostynin")
         val result = cityRepository.findPartlyByNameOrAlias("go")
         Assert.assertEquals(4, result.size)

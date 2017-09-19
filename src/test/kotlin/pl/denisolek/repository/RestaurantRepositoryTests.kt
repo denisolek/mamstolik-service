@@ -14,23 +14,37 @@ import pl.denisolek.core.restaurant.RestaurantRepository
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @Transactional
-class FindPartlyRestaurants {
+class RestaurantRepositoryTests {
 
     @Autowired
     lateinit var restaurantRepository: RestaurantRepository
 
     @Test
-    fun `name = man`() {
+    fun `findPartlyByName_ name = man`() {
         val result = restaurantRepository.findPartlyByName("man")
         Assert.assertEquals(1, result.size)
     }
 
     @Test
-    fun `name = ra`() {
+    fun `findPartlyByName_ name = ra`() {
         val expectedRestaurants = listOf("Ratuszova", "Rapudei Berek")
         val result = restaurantRepository.findPartlyByName("ra")
         Assert.assertEquals(2, result.size)
-        Assert.assertEquals(true, expectedRestaurants.contains(result[0].name))
-        Assert.assertEquals(true, expectedRestaurants.contains(result[1].name))
+        Assert.assertTrue(expectedRestaurants.contains(result[0].name))
+        Assert.assertTrue(expectedRestaurants.contains(result[1].name))
+    }
+
+    @Test
+    fun `findByCityAndIsActive_ active = true`() {
+        val result = restaurantRepository.findByCityAndIsActive(3, true)
+        Assert.assertEquals(1, result.size)
+        Assert.assertEquals("Pasja",result[0].name)
+    }
+
+    @Test
+    fun `findByCityAndIsActive_ active = false`() {
+        val result = restaurantRepository.findByCityAndIsActive(3, false)
+        Assert.assertEquals(1, result.size)
+        Assert.assertEquals("Cien",result[0].name)
     }
 }
