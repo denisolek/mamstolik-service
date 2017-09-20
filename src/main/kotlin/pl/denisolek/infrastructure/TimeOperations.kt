@@ -13,8 +13,11 @@ interface DateTimeInterval {
     fun isBetweenLocalDateTimes(startDateTime: LocalDateTime, endDateTime: LocalDateTime): Boolean =
             this.startDateTime.isAfterOrEqual(startDateTime) && this.endDateTime.isBeforeOrEqual(endDateTime)
 
+    fun overlapsInclusive(interval: DateTimeInterval)
+            = startDateTime <= interval.endDateTime && endDateTime >= interval.startDateTime
+
     fun overlaps(interval: DateTimeInterval)
-            = startDateTime <= interval.endDateTime && endDateTime <= interval.startDateTime
+            = startDateTime < interval.endDateTime && endDateTime > interval.startDateTime
 
     fun overlaps(startDateTime: LocalDateTime, endDateTime: LocalDateTime)
             = this.startDateTime <= endDateTime && this.endDateTime <= startDateTime

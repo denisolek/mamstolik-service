@@ -53,7 +53,7 @@ data class Restaurant(
 ) : BaseEntity() {
 
     fun isOpenAt(date: LocalDateTime): Boolean {
-        val businessHour = this.businessHours!![date.dayOfWeek] ?: return false
+        val businessHour = this.businessHours[date.dayOfWeek] ?: return false
 
         if (date.toLocalTime().isAfterOrEqual(businessHour.openTime) && date.toLocalTime().isBeforeOrEqual(businessHour.closeTime.minusMinutes(this.avgReservationTime.toMinutes())))
             return true
@@ -78,11 +78,11 @@ data class Restaurant(
 
         val searchDateInterval = object : DateTimeInterval {
             override var startDateTime: LocalDateTime = searchDate
-            override var endDateTime: LocalDateTime = searchDate
+            override var endDateTime: LocalDateTime = searchDate.plus(avgReservationTime)
         }
 
         val takenSpots = this.reservations
-                .filter { it.overlaps(searchDateInterval) }
+                .filter { searchDateInterval.overlaps(it) }
                 .flatMap { it.spots }
 
         return this.spots.filterNot { takenSpots.contains(it) }

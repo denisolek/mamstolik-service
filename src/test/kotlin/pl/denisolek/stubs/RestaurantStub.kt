@@ -82,22 +82,29 @@ class RestaurantStub {
 
         private fun getSpots(): MutableList<Spot> =
                 mutableListOf(
-                        Spot(capacity = 5, restaurant = getRestaurantForStubs()),
-                        Spot(capacity = 5, restaurant = getRestaurantForStubs()),
-                        Spot(capacity = 5, restaurant = getRestaurantForStubs()),
-                        Spot(capacity = 5, restaurant = getRestaurantForStubs()),
-                        Spot(capacity = 2, restaurant = getRestaurantForStubs()),
-                        Spot(capacity = 2, restaurant = getRestaurantForStubs())
+                        Spot(id = 1, capacity = 5, restaurant = getRestaurantForStubs()),
+                        Spot(id = 2, capacity = 5, restaurant = getRestaurantForStubs()),
+                        Spot(id = 3, capacity = 5, restaurant = getRestaurantForStubs()),
+                        Spot(id = 4, capacity = 5, restaurant = getRestaurantForStubs()),
+                        Spot(id = 5, capacity = 2, restaurant = getRestaurantForStubs()),
+                        Spot(id = 6, capacity = 2, restaurant = getRestaurantForStubs())
                 )
 
         private fun getReservations(): MutableList<Reservation> =
                 mutableListOf(
-                        ReservationStub.createReservation().copy(),
                         ReservationStub.createReservation().copy(
+                                peopleNumber = 5,
+                                spots = mutableListOf(Spot(id = 1, capacity = 5, restaurant = getRestaurantForStubs()))
+                        ),
+                        ReservationStub.createReservation().copy(
+                                peopleNumber = 3,
+                                spots = mutableListOf(Spot(id = 2, capacity = 5, restaurant = getRestaurantForStubs())),
                                 startDateTime = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(15, 0)),
                                 endDateTime = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(15, 30)),
                                 verificationCode = 222222),
                         ReservationStub.createReservation().copy(
+                                peopleNumber = 2,
+                                spots = mutableListOf(Spot(id = 5, capacity = 2, restaurant = getRestaurantForStubs())),
                                 startDateTime = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(16, 0)),
                                 endDateTime = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(16, 30)),
                                 verificationCode = 333333)

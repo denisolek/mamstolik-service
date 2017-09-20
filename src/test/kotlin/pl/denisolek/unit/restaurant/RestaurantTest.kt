@@ -67,4 +67,52 @@ class RestaurantTest {
 
         Assert.assertFalse(actual)
     }
+
+    @Test
+    fun `getAvailableSpotsAt_ before reservation`() {
+        val restaurant = RestaurantStub.getRestaurant()
+        val actual = restaurant.getAvailableSpotsAt(LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(13, 0)))
+
+        Assert.assertEquals(6, actual.size)
+    }
+
+    @Test
+    fun `getAvailableSpotsAt_ start before reservation, end equal reservationStart`() {
+        val restaurant = RestaurantStub.getRestaurant()
+        val actual = restaurant.getAvailableSpotsAt(LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(13, 30)))
+
+        Assert.assertEquals(6, actual.size)
+    }
+
+    @Test
+    fun `getAvailableSpotsAt_ start before reservation, end inside reservation`() {
+        val restaurant = RestaurantStub.getRestaurant()
+        val actual = restaurant.getAvailableSpotsAt(LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(13, 40)))
+
+        Assert.assertEquals(5, actual.size)
+    }
+
+    @Test
+    fun `getAvailableSpotsAt_ equal reservation`() {
+        val restaurant = RestaurantStub.getRestaurant()
+        val actual = restaurant.getAvailableSpotsAt(LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(14, 0)))
+
+        Assert.assertEquals(5, actual.size)
+    }
+
+    @Test
+    fun `getAvailableSpotsAt_ start inside reservation, end after reservation`() {
+        val restaurant = RestaurantStub.getRestaurant()
+        val actual = restaurant.getAvailableSpotsAt(LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(14, 10)))
+
+        Assert.assertEquals(5, actual.size)
+    }
+
+    @Test
+    fun `getAvailableSpotsAt_ start equal reservationEnd, end after reservation`() {
+        val restaurant = RestaurantStub.getRestaurant()
+        val actual = restaurant.getAvailableSpotsAt(LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(14, 30)))
+
+        Assert.assertEquals(6, actual.size)
+    }
 }
