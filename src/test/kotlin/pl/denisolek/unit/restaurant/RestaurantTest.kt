@@ -4,6 +4,7 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.runners.MockitoJUnitRunner
+import pl.denisolek.core.spot.Spot
 import pl.denisolek.stubs.RestaurantStub
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -90,6 +91,7 @@ class RestaurantTest {
         val actual = restaurant.getAvailableSpotsAt(LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(13, 40)))
 
         Assert.assertEquals(5, actual.size)
+        Assert.assertTrue(!actual.contains(Spot(id = 1, capacity = 5, restaurant = RestaurantStub.getRestaurantForStubs())))
     }
 
     @Test
@@ -98,6 +100,7 @@ class RestaurantTest {
         val actual = restaurant.getAvailableSpotsAt(LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(14, 0)))
 
         Assert.assertEquals(5, actual.size)
+        Assert.assertTrue(!actual.contains(Spot(id = 1, capacity = 5, restaurant = RestaurantStub.getRestaurantForStubs())))
     }
 
     @Test
@@ -106,6 +109,7 @@ class RestaurantTest {
         val actual = restaurant.getAvailableSpotsAt(LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(14, 10)))
 
         Assert.assertEquals(5, actual.size)
+        Assert.assertTrue(!actual.contains(Spot(id = 1, capacity = 5, restaurant = RestaurantStub.getRestaurantForStubs())))
     }
 
     @Test
@@ -114,5 +118,14 @@ class RestaurantTest {
         val actual = restaurant.getAvailableSpotsAt(LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(14, 30)))
 
         Assert.assertEquals(6, actual.size)
+    }
+
+    @Test
+    fun `getAvailableSpotsAt_ different spot`() {
+        val restaurant = RestaurantStub.getRestaurant()
+        val actual = restaurant.getAvailableSpotsAt(LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(16, 10)))
+
+        Assert.assertEquals(5, actual.size)
+        Assert.assertTrue(!actual.contains(Spot(id = 5, capacity = 2, restaurant = RestaurantStub.getRestaurantForStubs())))
     }
 }
