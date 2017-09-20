@@ -1,14 +1,17 @@
 package pl.denisolek.unit.restaurant
 
+import org.hamcrest.Matchers.`is`
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.runners.MockitoJUnitRunner
+import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.stubs.RestaurantStub
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+
 
 @RunWith(MockitoJUnitRunner::class)
 class RestaurantTest {
@@ -127,5 +130,55 @@ class RestaurantTest {
 
         Assert.assertEquals(5, actual.size)
         Assert.assertTrue(!actual.contains(Spot(id = 5, capacity = 2, restaurant = RestaurantStub.getRestaurantForStubs())))
+    }
+
+    @Test
+    fun `getAvailability_ CLOSED`() {
+        val restaurant = RestaurantStub.getRestaurant()
+        val actual = restaurant.getAvailability(
+                date = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(4, 0)),
+                peopleNumber = 4
+        )
+
+        Assert.assertThat(actual, `is`(Restaurant.AvailabilityType.CLOSED))
+    }
+
+    @Test
+    fun `getAvailability_ AVAILABLE`() {
+        val restaurant = RestaurantStub.getRestaurant()
+        restaurant.spots = mutableListOf(
+                Spot(id = 1, capacity = 5, minPeopleNumber = 3, restaurant = RestaurantStub.getRestaurantForStubs())
+        )
+        val actual = restaurant.getAvailability(
+                date = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(11, 0)),
+                peopleNumber = 3
+        )
+
+        Assert.assertThat(actual, `is`(Restaurant.AvailabilityType.AVAILABLE))
+    }
+
+    @Test
+    fun `getAvailability_ POSSIBLE`() {
+        val restaurant = RestaurantStub.getRestaurant()
+        restaurant.spots = mutableListOf(
+                Spot(id = 1, capacity = 5, minPeopleNumber = 3, restaurant = RestaurantStub.getRestaurantForStubs())
+        )
+        val actual = restaurant.getAvailability(
+                date = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(11, 0)),
+                peopleNumber = 2
+        )
+
+        Assert.assertThat(actual, `is`(Restaurant.AvailabilityType.POSSIBLE))
+    }
+
+    @Test
+    fun `getAvailability_ NOT_AVAILABLE`() {
+        val restaurant = RestaurantStub.getRestaurant()
+        val actual = restaurant.getAvailability(
+                date = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(11, 0)),
+                peopleNumber = 9
+        )
+
+        Assert.assertThat(actual, `is`(Restaurant.AvailabilityType.NOT_AVAILABLE))
     }
 }
