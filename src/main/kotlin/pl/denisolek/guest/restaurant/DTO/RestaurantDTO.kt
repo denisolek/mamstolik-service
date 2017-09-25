@@ -1,24 +1,31 @@
 package pl.denisolek.guest.restaurant.DTO
 
+import pl.denisolek.core.address.Address
 import pl.denisolek.core.restaurant.Restaurant
 
 data class RestaurantDTO(
         val id: Int?,
-        val name: String) {
+        val name: String,
+        val rate: Float,
+        val service_rate: Float,
+        val food_rate: Float,
+        val price_quality_rate: Float,
+        val address: Address,
+        val cuisineTypes: MutableSet<Restaurant.CuisineType>,
+        val facilities: MutableSet<Restaurant.Facilities>) {
 
     companion object {
-        fun fromRestaurantList(restaurants: List<Restaurant>): List<RestaurantDTO> =
-                restaurants.map {
-                    RestaurantDTO(
-                            id = it.id,
-                            name = it.name
-                    )
-                }
-
         fun fromRestaurant(restaurant: Restaurant): RestaurantDTO =
                 RestaurantDTO(
                         id = restaurant.id,
-                        name = restaurant.name
+                        name = restaurant.name,
+                        rate = restaurant.rate,
+                        service_rate = restaurant.service_rate,
+                        food_rate = restaurant.food_rate,
+                        price_quality_rate = restaurant.price_quality_rate,
+                        address = restaurant.address,
+                        cuisineTypes = restaurant.cuisineTypes,
+                        facilities = restaurant.facilities
                 )
     }
 }

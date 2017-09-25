@@ -1,6 +1,5 @@
 package pl.denisolek.core.restaurant
 
-import pl.denisolek.core.BaseEntity
 import pl.denisolek.core.address.Address
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.spot.Spot
@@ -14,6 +13,9 @@ import javax.persistence.*
 
 @Entity
 data class Restaurant(
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        var id: Int? = null,
         var name: String,
         var description: String,
         var avgReservationTime: Duration,
@@ -50,7 +52,7 @@ data class Restaurant(
         @MapKeyColumn(name = "day_of_week")
         var businessHours: MutableMap<DayOfWeek, BusinessHour> = mutableMapOf()
 
-) : BaseEntity() {
+) {
 
     fun isOpenAt(date: LocalDateTime): Boolean {
         val businessHour = this.businessHours[date.dayOfWeek] ?: return false
