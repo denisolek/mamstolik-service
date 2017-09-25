@@ -3,7 +3,7 @@ package pl.denisolek.guest.restaurant.DTO
 import pl.denisolek.core.address.Address
 import pl.denisolek.core.restaurant.Restaurant
 
-data class RestaurantDTO(
+data class RestaurantSearchDTO(
         val id: Int?,
         val name: String,
         val rate: Float,
@@ -15,8 +15,8 @@ data class RestaurantDTO(
         val facilities: MutableSet<Restaurant.Facilities>) {
 
     companion object {
-        fun fromRestaurant(restaurant: Restaurant): RestaurantDTO =
-                RestaurantDTO(
+        fun fromRestaurant(restaurant: Restaurant): RestaurantSearchDTO =
+                RestaurantSearchDTO(
                         id = restaurant.id,
                         name = restaurant.name,
                         rate = restaurant.rate,
