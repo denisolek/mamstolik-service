@@ -6,7 +6,7 @@ import javax.persistence.Entity
 import javax.persistence.ManyToOne
 
 @Entity
-class CityAlias(
+data class CityAlias(
         var name: String,
 
         @ManyToOne

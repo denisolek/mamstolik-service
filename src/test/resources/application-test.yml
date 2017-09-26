@@ -1,0 +1,33 @@
+spring:
+    datasource:
+        password: 1
+        url: jdbc:postgresql://localhost:5432/mamstolik
+        username: postgres
+    jpa:
+        hibernate:
+            ddl-auto: create-drop
+        properties:
+            hibernate:
+                format_sql: true
+        show-sql: true
+    mail:
+        host: smtp.gmail.com
+        password: 43:-_/deYwNC
+        port: 587
+        properties:
+            mail:
+                smtp:
+                    auth: true;
+                    starttls:
+                        enable: true
+                        required: true
+        username: test.mamstolik@gmail.com
+    rabbitmq:
+        host: localhost
+
+security:
+  basic:
+    enabled: false
+management:
+  security:
+    enabled: false

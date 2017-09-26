@@ -1,14 +1,21 @@
 package pl.denisolek.core.restaurant
 
-import pl.denisolek.core.BaseEntity
 import pl.denisolek.core.address.Address
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.spot.Spot
+import pl.denisolek.infrastructure.DateTimeInterval
+import pl.denisolek.infrastructure.isAfterOrEqual
+import pl.denisolek.infrastructure.isBeforeOrEqual
+import java.time.DayOfWeek
 import java.time.Duration
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-class Restaurant(
+data class Restaurant(
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        var id: Int? = null,
         var name: String,
         var description: String,
         var avgReservationTime: Duration,
@@ -31,20 +38,66 @@ class Restaurant(
         @Enumerated(EnumType.STRING)
         @CollectionTable(name = "restaurant_kitchen", joinColumns = arrayOf(JoinColumn(name = "restaurantId")))
         @Column(name = "kitchen_type", nullable = false)
-        var kitchenTypes: MutableSet<KitchenType>,
+        var cuisineTypes: MutableSet<CuisineType> = mutableSetOf(),
 
         @ElementCollection(fetch = FetchType.EAGER)
         @Enumerated(EnumType.STRING)
         @CollectionTable(name = "restaurant_facility", joinColumns = arrayOf(JoinColumn(name = "restaurantId")))
         @Column(name = "facility", nullable = false)
-        var facilities: MutableSet<Facilities>,
+        var facilities: MutableSet<Facilities> = mutableSetOf(),
 
         @OneToMany(cascade = arrayOf(CascadeType.ALL))
         @JoinTable(name = "restaurant_business_hour", joinColumns = arrayOf(JoinColumn(name = "restaurant_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "business_hour_id")))
-        var businessHours: MutableSet<BusinessHour> = mutableSetOf()
+        @MapKeyEnumerated(EnumType.STRING)
+        @MapKeyColumn(name = "day_of_week")
+        var businessHours: MutableMap<DayOfWeek, BusinessHour> = mutableMapOf()
 
-) : BaseEntity() {
-    enum class KitchenType {
+) {
+
+    fun isOpenAt(date: LocalDateTime): Boolean {
+        val businessHour = this.businessHours[date.dayOfWeek] ?: return false
+
+        if (date.toLocalTime().isAfterOrEqual(businessHour.openTime) && date.toLocalTime().isBeforeOrEqual(businessHour.closeTime.minusMinutes(this.avgReservationTime.toMinutes())))
+            return true
+        return false
+    }
+
+    fun getAvailability(date: LocalDateTime, peopleNumber: Int): AvailabilityType {
+        if (!isOpenAt(date))
+            return AvailabilityType.CLOSED
+
+        val spots = getAvailableSpotsAt(date)
+        spots.forEach {
+            when {
+                it.capacity >= peopleNumber && it.minPeopleNumber <= peopleNumber -> return AvailabilityType.AVAILABLE
+                it.capacity >= peopleNumber && it.minPeopleNumber > peopleNumber -> return AvailabilityType.POSSIBLE
+            }
+        }
+        return AvailabilityType.NOT_AVAILABLE
+    }
+
+    fun getAvailableSpotsAt(searchDate: LocalDateTime): List<Spot> {
+
+        val searchDateInterval = object : DateTimeInterval {
+            override var startDateTime: LocalDateTime = searchDate
+            override var endDateTime: LocalDateTime = searchDate.plus(avgReservationTime)
+        }
+
+        val takenSpots = this.reservations
+                .filter { searchDateInterval.overlaps(it) }
+                .flatMap { it.spots }
+
+        return this.spots.filterNot { takenSpots.contains(it) }
+    }
+
+    enum class AvailabilityType {
+        AVAILABLE,
+        POSSIBLE,
+        NOT_AVAILABLE,
+        CLOSED
+    }
+
+    enum class CuisineType {
         POLISH,
         ITALIAN,
         SPANISH,
@@ -105,7 +158,7 @@ class Restaurant(
         FREE_WIFI,
         TOILET_FOR_DISABLED,
         DISABLED_PEOPLE_IMPROVEMENTS,
-        CHILDRENS_MENU,
+        CHILDREN_MENU,
         CHILD_SEATS,
         PLAYGROUND,
         MONITORED_PARKING,
