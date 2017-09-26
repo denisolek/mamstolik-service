@@ -1,6 +1,7 @@
 package pl.denisolek.core.restaurant
 
 import pl.denisolek.core.address.Address
+import pl.denisolek.core.menu.MenuCategory
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.infrastructure.DateTimeInterval
@@ -33,6 +34,9 @@ data class Restaurant(
 
         @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         var spots: MutableList<Spot> = mutableListOf(),
+
+        @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+        var menu: MutableSet<MenuCategory> = mutableSetOf(),
 
         @ElementCollection(fetch = FetchType.EAGER)
         @Enumerated(EnumType.STRING)
