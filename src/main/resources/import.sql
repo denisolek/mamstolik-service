@@ -214,7 +214,6 @@ INSERT INTO public.spot (capacity, restaurant_id, min_people_number) VALUES (8, 
 INSERT INTO public.spot (capacity, restaurant_id) VALUES (3, 2);
 INSERT INTO public.spot (capacity, restaurant_id) VALUES (1, 2);
 
-
 -- add reservations
 INSERT INTO public.reservation (people_number, start_date_time, end_date_time, duration, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-10-18 14:50:00.000', '2017-10-18 15:20:00.000', 1800, 0, 1, 1, 314251, true);
 INSERT INTO public.reservation (people_number, start_date_time, end_date_time, duration, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (2, '2017-10-18 15:30:00.000', '2017-10-18 16:30:00.000', 3600, 0, 2, 1, 314251, true);
@@ -222,4 +221,33 @@ INSERT INTO public.reservation (people_number, start_date_time, end_date_time, d
 -- reservation spots
 INSERT INTO public.reservation_spots (reservation_id, spots_id) VALUES (1, 3);
 INSERT INTO public.reservation_spots (reservation_id, spots_id) VALUES (2, 4);
+
+-- add menu category
+INSERT INTO public.menu_category (restaurant_id, position, description, name) VALUES (1, 0, 'Tylko do godziny 12.00', 'Śniadania'); -- 1
+INSERT INTO public.menu_category (restaurant_id, position, name) VALUES (1, 1, 'Przystawki'); -- 2
+INSERT INTO public.menu_category (restaurant_id, position, name) VALUES (1, 2, 'Zupy'); -- 3
+INSERT INTO public.menu_category (restaurant_id, position, name) VALUES (1, 3, 'Makarony'); -- 4
+INSERT INTO public.menu_category (restaurant_id, position, name) VALUES (1, 4, 'Desery'); -- 5
+
+-- add menu items
+INSERT INTO public.menu_item (category_id, position, price, name, description) VALUES (1, 0, 9, 'Jajecznica z trzech jaj', 'Z chlebem wiejskim + boczek');
+INSERT INTO public.menu_item (category_id, position, price, name, description) VALUES (1, 1, 11, 'Chałka z musem z koziego sera', 'Z miodem, orzechami laskowymi oraz rukolą');
+INSERT INTO public.menu_item (category_id, position, price, name, description) VALUES (1, 2, 14, 'Jajko sadzone w chlebie', 'Z boczkiem, pieczarkami, pomidorem, serem oraz szpinakiem');
+INSERT INTO public.menu_item (category_id, position, price, name, description) VALUES (1, 3, 12, 'Ser koryciński i hummus', 'Ze świeżymi warzywami, oliwkami i pieczywem');
+
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (2, 0, 5, 'Zapiekany chlebek ze słonym masłem');
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (2, 1, 10, 'Talrze serów');
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (2, 2, 13, 'Melon zawijany szynką parmeńską');
+
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (3, 0, 10, 'Krem z brokuł z grzankami');
+INSERT INTO public.menu_item (category_id, position, price, name, description) VALUES (3, 1, 7, 'Pomidorowa', 'Z ryżem lub makaronem');
+INSERT INTO public.menu_item (category_id, position, price, name, description) VALUES (3, 2, 9, 'Pieczarkowa', 'Z makaronem');
+
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (4, 0, 14, 'Spaghetti bolognese');
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (4, 1, 16, 'Spaghetti carbonara');
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (4, 2, 18, 'Tagliatelle ze szpinakiem');
+
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (5, 0, 10, 'Lody czekoladowe z owocami i bitą śmietaną');
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (5, 1, 7, 'Suflet czekoladowy z malinami');
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (5, 2, 9, 'Sernik z brzoskwinią');
 /* @formatter:on */

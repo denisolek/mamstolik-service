@@ -8,6 +8,7 @@ data class MenuItem(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Int? = null,
         var name: String,
+        var description: String? = "",
         var price: Float,
         var position: Int,
 
