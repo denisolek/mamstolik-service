@@ -36,9 +36,11 @@ INSERT INTO public.address (building_number, latitude, longitude, postal_code, s
 INSERT INTO public.address (building_number, latitude, longitude, postal_code, street_name, city_id) VALUES ('6F', 52.407640, 16.932010, '60-681', 'Jasna 24', 2);
 INSERT INTO public.address (building_number, latitude, longitude, postal_code, street_name, city_id) VALUES ('7G', 52.407640, 16.932010, '60-681', 'Batorego 82', 3);
 
+-- add menu
+INSERT INTO public.menu DEFAULT VALUES;
 
 -- address
-INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Piano Bar Restaurant & Cafe', 1, 4.5, 5.0, 5.0, 5.0, 1800, true, 'Piano Bar jest urokliwym, stylowym miejscem, które znajduje się w Centrum Sztuki i Biznesu w Starym Browarze. Jest niepowtarzalne i przepełnione niezwykłym klimatem. Piano Bar to restauracja, którą wyróżnia profesjonalna obsługa sprawiająca, że nasi Goście czują się naprawdę niezwykle. Dodatkowy, elegancki a zarazem ciepły wystrój wnętrza zapewnia uczucie wyjątkowości. Nasze smaki to kuchnia włoska, śródziemnomorska i potrawy kuchni polskiej. Szef Kuchni Krystian Szopka z zespołem kucharzy sprawia, że jej smak na długo pozostaje w pamięci naszych Gości. Zapraszamy na lunche, rodzinne obiady, spotkania biznesowe.');
+INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, menu_id, description) VALUES ('Piano Bar Restaurant & Cafe', 1, 4.5, 5.0, 5.0, 5.0, 1800, true, 1, 'Piano Bar jest urokliwym, stylowym miejscem, które znajduje się w Centrum Sztuki i Biznesu w Starym Browarze. Jest niepowtarzalne i przepełnione niezwykłym klimatem. Piano Bar to restauracja, którą wyróżnia profesjonalna obsługa sprawiająca, że nasi Goście czują się naprawdę niezwykle. Dodatkowy, elegancki a zarazem ciepły wystrój wnętrza zapewnia uczucie wyjątkowości. Nasze smaki to kuchnia włoska, śródziemnomorska i potrawy kuchni polskiej. Szef Kuchni Krystian Szopka z zespołem kucharzy sprawia, że jej smak na długo pozostaje w pamięci naszych Gości. Zapraszamy na lunche, rodzinne obiady, spotkania biznesowe.');
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Ratuszova', 2, 4.5, 5.0, 5.0, 5.0, 1800, true, 'Restauracja Ratuszova serdecznie zaprasza w swoje progi wszystkich, którzy lubią lub pragną zasmakować tradycyjne potrawy kuchni polskiej! W naszym menu na szczególną uwagę zasługuje czernina z domowym makaronem, kaczka pieczona z jabłkami oraz dania z dziczyzny. Miłośników Slow Food, pasjonatów zdrowego odżywiania oraz wszystkich smakoszy w szczególności zachęcamy do spróbowania dań gotowanych innowacyjną metodą sous-vide. Dla jeszcze większego urozmaicenia nasze menu uzupełniliśmy smakami kuchni międzynarodowej. W naszej restauracji dbamy o to by sezonowo zmieniać potrawy oraz wystrój sal. ');
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Manekin', 3, 4.7, 4.0, 3.0, 3.5, 1800, true, 'Znana i ceniona sieć lokali podająca przepyszne naleśniki. Restauracja serwuje wiele rodzajów naleśników na słodko jak i na wytrawnie ale nie tylko. Tu można zjeść również sałatki, zupy, desery, spaghetti. Ogromnym atutem jest stylizowane wnętrze, nawiązujące do krainy baśniowej. W tym surrealistycznym otoczeniu można nie tylko zjeść, lecz również zrelaksować się przy kieliszku wina czy kuflu piwa.');
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Whiskey in the Jar', 4, 4.5, 5.0, 5.0, 5.0, 1800, true, 'Whiskey in the Jar to steakhouse, wzorowany na najlepszych amerykańskich lokalach tego typu. W menu znajdują się głównie dania mięsne – specjalnością są steki, przyrządzane z najwyższej jakości wołowiny, a także burgery i dania grillowane, dostępne pod nazwą Grill Rockersa. Wszystkie potrawy przygotowywane są na najdłuższym w Poznaniu grillu lawowym. Ogromnym powodzeniem cieszą się również autorskie drinki na bazie Jacka Daniels’a, zgodnie z nazwą lokalu podawane w designerskich słojach – jarach.');
@@ -223,11 +225,11 @@ INSERT INTO public.reservation_spots (reservation_id, spots_id) VALUES (1, 3);
 INSERT INTO public.reservation_spots (reservation_id, spots_id) VALUES (2, 4);
 
 -- add menu category
-INSERT INTO public.menu_category (restaurant_id, position, description, name) VALUES (1, 0, 'Tylko do godziny 12.00', 'Śniadania'); -- 1
-INSERT INTO public.menu_category (restaurant_id, position, name) VALUES (1, 1, 'Przystawki'); -- 2
-INSERT INTO public.menu_category (restaurant_id, position, name) VALUES (1, 2, 'Zupy'); -- 3
-INSERT INTO public.menu_category (restaurant_id, position, name) VALUES (1, 3, 'Makarony'); -- 4
-INSERT INTO public.menu_category (restaurant_id, position, name) VALUES (1, 4, 'Desery'); -- 5
+INSERT INTO public.menu_category (menu_id, position, description, name) VALUES (1, 0, 'Tylko do godziny 12.00', 'Śniadania'); -- 1
+INSERT INTO public.menu_category (menu_id, position, name) VALUES (1, 1, 'Przystawki'); -- 2
+INSERT INTO public.menu_category (menu_id, position, name) VALUES (1, 2, 'Zupy'); -- 3
+INSERT INTO public.menu_category (menu_id, position, name) VALUES (1, 3, 'Makarony'); -- 4
+INSERT INTO public.menu_category (menu_id, position, name) VALUES (1, 4, 'Desery'); -- 5
 
 -- add menu items
 INSERT INTO public.menu_item (category_id, position, price, name, description) VALUES (1, 0, 9, 'Jajecznica z trzech jaj', 'Z chlebem wiejskim + boczek');

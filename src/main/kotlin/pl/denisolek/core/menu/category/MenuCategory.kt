@@ -1,6 +1,7 @@
-package pl.denisolek.core.menu
+package pl.denisolek.core.menu.category
 
-import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.menu.Menu
+import pl.denisolek.core.menu.item.MenuItem
 import javax.persistence.*
 
 @Entity
@@ -16,5 +17,5 @@ data class MenuCategory(
         var items: MutableSet<MenuItem> = mutableSetOf(),
 
         @ManyToOne
-        var restaurant: Restaurant
+        var menu: Menu
 )

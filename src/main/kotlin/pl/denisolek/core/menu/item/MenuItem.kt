@@ -1,5 +1,6 @@
-package pl.denisolek.core.menu
+package pl.denisolek.core.menu.item
 
+import pl.denisolek.core.menu.category.MenuCategory
 import javax.persistence.*
 
 @Entity
