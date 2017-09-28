@@ -1,7 +1,6 @@
 package pl.denisolek.guest.restaurant.DTO
 
 import pl.denisolek.core.address.Address
-import pl.denisolek.core.menu.category.MenuCategory
 import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
 import java.time.DayOfWeek
@@ -12,7 +11,7 @@ data class RestaurantDetailsDTO(
         var description: String,
         var rate: RestaurantRateDTO,
         var address: Address,
-        var menu: List<MenuCategory>,
+        var menu: List<MenuCategoryDTO>,
         var tags: List<Any>,
         var businessHours: MutableMap<DayOfWeek, BusinessHour>
 ) {
@@ -29,7 +28,7 @@ data class RestaurantDetailsDTO(
                                 service_rate = restaurant.service_rate
                         ),
                         address = restaurant.address,
-                        menu = restaurant.menu.categories.toList().sortedBy { it.position },
+                        menu = restaurant.menu.categories.map { MenuCategoryDTO.fromMenuCategory(it) }.sortedBy { it.position },
                         businessHours = restaurant.businessHours,
                         tags = listOf(restaurant.cuisineTypes, restaurant.facilities)
                 )
