@@ -3,6 +3,9 @@ ALTER TABLE public.restaurant ALTER COLUMN "description" TYPE VARCHAR(3000);
 
 INSERT INTO public.authority (name) VALUES ('ROLE_OWNER');
 INSERT INTO public.authority (name) VALUES ('ROLE_ADMIN');
+INSERT INTO public.authority (name) VALUES ('ROLE_EMPLOYEE');
+INSERT INTO public.authority (name) VALUES ('ROLE_RESTAURANT');
+
 
 INSERT INTO public.city (name) VALUES ('Poznań');
 INSERT INTO public.city (name) VALUES ('Warszawa');
@@ -39,8 +42,19 @@ INSERT INTO public.address (building_number, latitude, longitude, postal_code, s
 -- add menu
 INSERT INTO public.menu DEFAULT VALUES;
 
+-- add users
+INSERT INTO public.user (username, email, name, surname, password, company_name, account_state) VALUES ('ms100000', 'test@test.pl', 'Właściciel', 'Właścicielowy', 'Test12345', 'MamStolik', 0);
+INSERT INTO public.user (username, email, name, surname, password, company_name, account_state) VALUES ('ms200000', 'przemyslaw.pawlicki@gmail.com', 'Przemysław', 'Pawlicki', 'password', 'Firmowa firma', 0);
+INSERT INTO public.user (username, email, name, surname, password, company_name, account_state) VALUES ('ms300000', 'bartosz.zmarzlik@gmail.com', 'Bartosz', 'Zmarzlik', 'password', 'Firmowa firma', 0);
+INSERT INTO public.user (username, email, name, surname, password, company_name, account_state) VALUES ('ms400000', 'janusz.kolodziej@gmail.com', 'Janusz', 'Kołodziej', 'password', 'Firmowa firma', 0);
+INSERT INTO public.user (username, email, name, surname, password, company_name, account_state) VALUES ('ms500000', 'bartosz.smektala@gmail.com', 'Bartosz', 'Smektała', 'password', 'Firmowa firma', 0);
+INSERT INTO public.user (username, email, name, surname, password, company_name, account_state) VALUES ('ms600000', 'martyna.wierzbicka@gmail.com', 'Martyna', 'Wierzbicka', 'password', 'Firmowa firma', 0);
+INSERT INTO public.user (username, email, name, surname, password, company_name, account_state) VALUES ('ms700000', 'ofir.vidavsky@gmail.com', 'Ofir', 'Vidavsky', 'password', 'Firmowa firma', 0);
+
+INSERT INTO public.user (username, email, name, surname, password, account_state) VALUES ('ms999999', 'admin@admin.pl', 'Admin', 'Adminujący', 'Test12345', 0);
+
 -- address
-INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, menu_id, description) VALUES ('Piano Bar Restaurant & Cafe', 1, 4.5, 5.0, 5.0, 5.0, 1800, true, 1, 'Piano Bar jest urokliwym, stylowym miejscem, które znajduje się w Centrum Sztuki i Biznesu w Starym Browarze. Jest niepowtarzalne i przepełnione niezwykłym klimatem. Piano Bar to restauracja, którą wyróżnia profesjonalna obsługa sprawiająca, że nasi Goście czują się naprawdę niezwykle. Dodatkowy, elegancki a zarazem ciepły wystrój wnętrza zapewnia uczucie wyjątkowości. Nasze smaki to kuchnia włoska, śródziemnomorska i potrawy kuchni polskiej. Szef Kuchni Krystian Szopka z zespołem kucharzy sprawia, że jej smak na długo pozostaje w pamięci naszych Gości. Zapraszamy na lunche, rodzinne obiady, spotkania biznesowe.');
+INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, menu_id, owner_id, description) VALUES ('Piano Bar Restaurant & Cafe', 1, 4.5, 5.0, 5.0, 5.0, 1800, true, 1, 1, 'Piano Bar jest urokliwym, stylowym miejscem, które znajduje się w Centrum Sztuki i Biznesu w Starym Browarze. Jest niepowtarzalne i przepełnione niezwykłym klimatem. Piano Bar to restauracja, którą wyróżnia profesjonalna obsługa sprawiająca, że nasi Goście czują się naprawdę niezwykle. Dodatkowy, elegancki a zarazem ciepły wystrój wnętrza zapewnia uczucie wyjątkowości. Nasze smaki to kuchnia włoska, śródziemnomorska i potrawy kuchni polskiej. Szef Kuchni Krystian Szopka z zespołem kucharzy sprawia, że jej smak na długo pozostaje w pamięci naszych Gości. Zapraszamy na lunche, rodzinne obiady, spotkania biznesowe.');
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Ratuszova', 2, 4.5, 5.0, 5.0, 5.0, 1800, true, 'Restauracja Ratuszova serdecznie zaprasza w swoje progi wszystkich, którzy lubią lub pragną zasmakować tradycyjne potrawy kuchni polskiej! W naszym menu na szczególną uwagę zasługuje czernina z domowym makaronem, kaczka pieczona z jabłkami oraz dania z dziczyzny. Miłośników Slow Food, pasjonatów zdrowego odżywiania oraz wszystkich smakoszy w szczególności zachęcamy do spróbowania dań gotowanych innowacyjną metodą sous-vide. Dla jeszcze większego urozmaicenia nasze menu uzupełniliśmy smakami kuchni międzynarodowej. W naszej restauracji dbamy o to by sezonowo zmieniać potrawy oraz wystrój sal. ');
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Manekin', 3, 4.7, 4.0, 3.0, 3.5, 1800, true, 'Znana i ceniona sieć lokali podająca przepyszne naleśniki. Restauracja serwuje wiele rodzajów naleśników na słodko jak i na wytrawnie ale nie tylko. Tu można zjeść również sałatki, zupy, desery, spaghetti. Ogromnym atutem jest stylizowane wnętrze, nawiązujące do krainy baśniowej. W tym surrealistycznym otoczeniu można nie tylko zjeść, lecz również zrelaksować się przy kieliszku wina czy kuflu piwa.');
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Whiskey in the Jar', 4, 4.5, 5.0, 5.0, 5.0, 1800, true, 'Whiskey in the Jar to steakhouse, wzorowany na najlepszych amerykańskich lokalach tego typu. W menu znajdują się głównie dania mięsne – specjalnością są steki, przyrządzane z najwyższej jakości wołowiny, a także burgery i dania grillowane, dostępne pod nazwą Grill Rockersa. Wszystkie potrawy przygotowywane są na najdłuższym w Poznaniu grillu lawowym. Ogromnym powodzeniem cieszą się również autorskie drinki na bazie Jacka Daniels’a, zgodnie z nazwą lokalu podawane w designerskich słojach – jarach.');
@@ -49,19 +63,17 @@ INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, 
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Pasja', 7, 4.5, 5.0, 5.0, 5.0, 1800, true, 'Zapewniamy wyjątkowy wystrój, profesjonalną obsługę, niepowtarzalny klimat. W sezonie letnim zapraszamy do magicznego ogrodu piwnego dla 200 osób, w którym główną atrakcją jest rosnący chmiel w odmianie SYBILLA oraz działająca kuchnia oferująca dania dopasowane do piwa.');
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Cien', 7, 4.5, 5.0, 5.0, 5.0, 1800, false, 'Nie aktywna, bez miejsc, bez niczego');
 
--- add users
-INSERT INTO public.user (email, name, surname, password, account_state) VALUES ('test@test.pl', 'Test', 'Testowy', 1, 'Test12345', 0);
-INSERT INTO public.user (email, name, surname, password, account_state) VALUES ('przemyslaw.pawlicki@gmail.com', 'Przemysław', 'Pawlicki', 2, 'password', 0);
-INSERT INTO public.user (email, name, surname, password, account_state) VALUES ('bartosz.zmarzlik@gmail.com', 'Bartosz', 'Zmarzlik', 3, 'password', 0);
-INSERT INTO public.user (email, name, surname, password, account_state) VALUES ('janusz.kolodziej@gmail.com', 'Janusz', 'Kołodziej', 4, 'password', 0);
-INSERT INTO public.user (email, name, surname, password, account_state) VALUES ('bartosz.smektala@gmail.com', 'Bartosz', 'Smektała', 5, 'password', 0);
-INSERT INTO public.user (email, name, surname, password, account_state) VALUES ('martyna.wierzbicka@gmail.com', 'Martyna', 'Wierzbicka', 6, 'password', 0);
-INSERT INTO public.user (email, name, surname, password, account_state) VALUES ('ofir.vidavsky@gmail.com', 'Ofir', 'Vidavsky', 7, 'password', 0);
+
+INSERT INTO public.user (username, name, surname, password, phone_number, account_state, work_place_id) VALUES ('ms100001', 'Pracownik', 'Pracujący', 'Test12345', '507946148', 0, 1);
+INSERT INTO public.user (username, name, surname, password, phone_number, account_state, work_place_id) VALUES ('ms100002', 'Pracowniczka', 'Pracująca', 'Test12345', '603201114', 0, 1);
+
 
 -- add authorities
 INSERT INTO public.user_authority (username, authority) VALUES (2, 'ROLE_OWNER');
 INSERT INTO public.user_authority (username, authority) VALUES (1, 'ROLE_OWNER');
 INSERT INTO public.user_authority (username, authority) VALUES (1, 'ROLE_ADMIN');
+INSERT INTO public.user_authority (username, authority) VALUES (9, 'ROLE_EMPLOYEE');
+INSERT INTO public.user_authority (username, authority) VALUES (10, 'ROLE_EMPLOYEE');
 
 -- restaurant
 INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type) VALUES (1, 'POLISH');

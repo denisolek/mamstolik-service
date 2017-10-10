@@ -12,14 +12,13 @@ data class User(
         @Column(updatable = false, nullable = false)
         var username: String,
 
-        @Column(updatable = false, nullable = false)
         var email: String,
-
         var password: String,
         var name: String,
         var surname: String,
         var companyName: String,
         var accountState: AccountState,
+        var phoneNumber: String,
 
         @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(name = "user_authority", joinColumns = arrayOf(JoinColumn(name = "username")), inverseJoinColumns = arrayOf(JoinColumn(name = "authority")))
