@@ -36,15 +36,18 @@ INSERT INTO public.address (building_number, latitude, longitude, postal_code, s
 INSERT INTO public.address (building_number, latitude, longitude, postal_code, street_name, city_id) VALUES ('6F', 52.407640, 16.932010, '60-681', 'Jasna 24', 2);
 INSERT INTO public.address (building_number, latitude, longitude, postal_code, street_name, city_id) VALUES ('7G', 52.407640, 16.932010, '60-681', 'Batorego 82', 3);
 
+-- add menu
+INSERT INTO public.menu DEFAULT VALUES;
 
 -- address
-INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Piano Bar Restauant & Cafe', 1, 4.5, 5.0, 5.0, 5.0, 1800, true, 'Piano Bar jest urokliwym, stylowym miejscem, które znajduje się w Centrum Sztuki i Biznesu w Starym Browarze. Jest niepowtarzalne i przepełnione niezwykłym klimatem. Piano Bar to restauracja, którą wyróżnia profesjonalna obsługa sprawiająca, że nasi Goście czują się naprawdę niezwykle. Dodatkowy, elegancki a zarazem ciepły wystrój wnętrza zapewnia uczucie wyjątkowości. Nasze smaki to kuchnia włoska, śródziemnomorska i potrawy kuchni polskiej. Szef Kuchni Krystian Szopka z zespołem kucharzy sprawia, że jej smak na długo pozostaje w pamięci naszych Gości. Zapraszamy na lunche, rodzinne obiady, spotkania biznesowe.');
+INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, menu_id, description) VALUES ('Piano Bar Restaurant & Cafe', 1, 4.5, 5.0, 5.0, 5.0, 1800, true, 1, 'Piano Bar jest urokliwym, stylowym miejscem, które znajduje się w Centrum Sztuki i Biznesu w Starym Browarze. Jest niepowtarzalne i przepełnione niezwykłym klimatem. Piano Bar to restauracja, którą wyróżnia profesjonalna obsługa sprawiająca, że nasi Goście czują się naprawdę niezwykle. Dodatkowy, elegancki a zarazem ciepły wystrój wnętrza zapewnia uczucie wyjątkowości. Nasze smaki to kuchnia włoska, śródziemnomorska i potrawy kuchni polskiej. Szef Kuchni Krystian Szopka z zespołem kucharzy sprawia, że jej smak na długo pozostaje w pamięci naszych Gości. Zapraszamy na lunche, rodzinne obiady, spotkania biznesowe.');
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Ratuszova', 2, 4.5, 5.0, 5.0, 5.0, 1800, true, 'Restauracja Ratuszova serdecznie zaprasza w swoje progi wszystkich, którzy lubią lub pragną zasmakować tradycyjne potrawy kuchni polskiej! W naszym menu na szczególną uwagę zasługuje czernina z domowym makaronem, kaczka pieczona z jabłkami oraz dania z dziczyzny. Miłośników Slow Food, pasjonatów zdrowego odżywiania oraz wszystkich smakoszy w szczególności zachęcamy do spróbowania dań gotowanych innowacyjną metodą sous-vide. Dla jeszcze większego urozmaicenia nasze menu uzupełniliśmy smakami kuchni międzynarodowej. W naszej restauracji dbamy o to by sezonowo zmieniać potrawy oraz wystrój sal. ');
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Manekin', 3, 4.7, 4.0, 3.0, 3.5, 1800, true, 'Znana i ceniona sieć lokali podająca przepyszne naleśniki. Restauracja serwuje wiele rodzajów naleśników na słodko jak i na wytrawnie ale nie tylko. Tu można zjeść również sałatki, zupy, desery, spaghetti. Ogromnym atutem jest stylizowane wnętrze, nawiązujące do krainy baśniowej. W tym surrealistycznym otoczeniu można nie tylko zjeść, lecz również zrelaksować się przy kieliszku wina czy kuflu piwa.');
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Whiskey in the Jar', 4, 4.5, 5.0, 5.0, 5.0, 1800, true, 'Whiskey in the Jar to steakhouse, wzorowany na najlepszych amerykańskich lokalach tego typu. W menu znajdują się głównie dania mięsne – specjalnością są steki, przyrządzane z najwyższej jakości wołowiny, a także burgery i dania grillowane, dostępne pod nazwą Grill Rockersa. Wszystkie potrawy przygotowywane są na najdłuższym w Poznaniu grillu lawowym. Ogromnym powodzeniem cieszą się również autorskie drinki na bazie Jacka Daniels’a, zgodnie z nazwą lokalu podawane w designerskich słojach – jarach.');
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Chmielnik Pub', 5, 4.5, 5.0, 5.0, 5.0, 1800, true, 'Ambasador polskiego piwa w Poznaniu. Największy wybór piw z polskich browarów rzemieślniczych w samym sercu Poznania.  Zapewniamy wyjątkowy wystrój, profesjonalną obsługę, niepowtarzalny klimat. W sezonie letnim zapraszamy do magicznego ogrodu piwnego dla 200 osób, w którym główną atrakcją jest rosnący chmiel w odmianie SYBILLA oraz działająca kuchnia oferująca dania dopasowane do piwa.');
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Rapudei Berek', 6, 4.8, 4.0, 4.4, 4.7, 1800, true, 'Berek to rodzaj pocztówki z wakacji. Radość śródziemnomorskiego jedzenia i gorący klimat telawiwskich ulic, którego wspomnienie przeniesione zostało do Warszawy. Tworząc menu w Berku starałem się poznać lokalnych producentów i wykorzystywać jak najświeższe składniki. Wychowałem się w końcu w miejscu, gdzie owoce zjada się prosto z drzewa. Nasza pita jest wypiekana na miejscu i podawana na gorąco, hummus robimy taki, jaki sami jemy, korzystamy przede wszystkim z sezonowych warzyw. W Berku dzielę się moimi ulubionymi smakami domu, we wdzięcznym, współczesnym wydaniu.');
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Pasja', 7, 4.5, 5.0, 5.0, 5.0, 1800, true, 'Zapewniamy wyjątkowy wystrój, profesjonalną obsługę, niepowtarzalny klimat. W sezonie letnim zapraszamy do magicznego ogrodu piwnego dla 200 osób, w którym główną atrakcją jest rosnący chmiel w odmianie SYBILLA oraz działająca kuchnia oferująca dania dopasowane do piwa.');
+INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Cien', 7, 4.5, 5.0, 5.0, 5.0, 1800, false, 'Nie aktywna, bez miejsc, bez niczego');
 
 -- add users
 INSERT INTO public.user (email, name, surname, restaurant_id, password, account_state) VALUES ('test@test.pl', 'Test', 'Testowy', 1, 'Test12345', 0);
@@ -220,4 +223,33 @@ INSERT INTO public.reservation (people_number, start_date_time, end_date_time, d
 -- reservation spots
 INSERT INTO public.reservation_spots (reservation_id, spots_id) VALUES (1, 3);
 INSERT INTO public.reservation_spots (reservation_id, spots_id) VALUES (2, 4);
+
+-- add menu category
+INSERT INTO public.menu_category (menu_id, position, description, name) VALUES (1, 0, 'Tylko do godziny 12.00', 'Śniadania'); -- 1
+INSERT INTO public.menu_category (menu_id, position, name) VALUES (1, 1, 'Przystawki'); -- 2
+INSERT INTO public.menu_category (menu_id, position, name) VALUES (1, 2, 'Zupy'); -- 3
+INSERT INTO public.menu_category (menu_id, position, name) VALUES (1, 3, 'Makarony'); -- 4
+INSERT INTO public.menu_category (menu_id, position, name) VALUES (1, 4, 'Desery'); -- 5
+
+-- add menu items
+INSERT INTO public.menu_item (category_id, position, price, name, description) VALUES (1, 0, 9, 'Jajecznica z trzech jaj', 'Z chlebem wiejskim + boczek');
+INSERT INTO public.menu_item (category_id, position, price, name, description) VALUES (1, 1, 11, 'Chałka z musem z koziego sera', 'Z miodem, orzechami laskowymi oraz rukolą');
+INSERT INTO public.menu_item (category_id, position, price, name, description) VALUES (1, 2, 14, 'Jajko sadzone w chlebie', 'Z boczkiem, pieczarkami, pomidorem, serem oraz szpinakiem');
+INSERT INTO public.menu_item (category_id, position, price, name, description) VALUES (1, 3, 12, 'Ser koryciński i hummus', 'Ze świeżymi warzywami, oliwkami i pieczywem');
+
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (2, 0, 5, 'Zapiekany chlebek ze słonym masłem');
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (2, 1, 10, 'Talrze serów');
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (2, 2, 13, 'Melon zawijany szynką parmeńską');
+
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (3, 0, 10, 'Krem z brokuł z grzankami');
+INSERT INTO public.menu_item (category_id, position, price, name, description) VALUES (3, 1, 7, 'Pomidorowa', 'Z ryżem lub makaronem');
+INSERT INTO public.menu_item (category_id, position, price, name, description) VALUES (3, 2, 9, 'Pieczarkowa', 'Z makaronem');
+
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (4, 0, 14, 'Spaghetti bolognese');
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (4, 1, 16, 'Spaghetti carbonara');
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (4, 2, 18, 'Tagliatelle ze szpinakiem');
+
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (5, 0, 10, 'Lody czekoladowe z owocami i bitą śmietaną');
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (5, 1, 7, 'Suflet czekoladowy z malinami');
+INSERT INTO public.menu_item (category_id, position, price, name) VALUES (5, 2, 9, 'Sernik z brzoskwinią');
 /* @formatter:on */

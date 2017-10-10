@@ -2,6 +2,7 @@ package pl.denisolek.stubs
 
 import pl.denisolek.core.address.Address
 import pl.denisolek.core.address.City
+import pl.denisolek.core.menu.Menu
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
@@ -25,7 +26,8 @@ class RestaurantStub {
                         cuisineTypes = getKitchenTypes(),
                         businessHours = getBusinessHours(),
                         spots = mutableListOf(),
-                        reservations = mutableListOf()
+                        reservations = mutableListOf(),
+                        menu = Menu()
                 )
 
         fun getRestaurant(): Restaurant =
@@ -43,7 +45,8 @@ class RestaurantStub {
                         cuisineTypes = getKitchenTypes(),
                         businessHours = getBusinessHours(),
                         spots = getSpots(),
-                        reservations = getReservations()
+                        reservations = getReservations(),
+                        menu = Menu()
                 )
 
         private fun getFacilities(): MutableSet<Restaurant.Facilities> =

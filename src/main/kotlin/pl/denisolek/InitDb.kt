@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import pl.denisolek.core.address.Address
 import pl.denisolek.core.address.City
+import pl.denisolek.core.menu.Menu
 import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantRepository
@@ -42,6 +43,7 @@ class InitDb(val restaurantRepository: RestaurantRepository) {
             businessHours = mutableMapOf(
                     Pair(DayOfWeek.MONDAY, BusinessHour(LocalTime.of(10, 0), LocalTime.of(18, 0))),
                     Pair(DayOfWeek.TUESDAY, BusinessHour(LocalTime.of(10, 0), LocalTime.of(14, 0)))
-            )
+            ),
+            menu = Menu()
     )
 }
