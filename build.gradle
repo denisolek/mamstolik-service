@@ -72,6 +72,7 @@ dependencies {
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
     compile 'org.apache.commons:commons-lang3:3.5'
 
+    compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.0.2.Final'
     compile group: 'org.hibernate', name: 'hibernate-java8', version: '5.2.10.Final'
     runtime('org.postgresql:postgresql')
 
