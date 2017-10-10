@@ -23,27 +23,27 @@ class InitDb(val restaurantRepository: RestaurantRepository) {
 //        restaurantRepository.save(restaurant)
     }
 
-    private fun createRestaurant() = Restaurant(
-            name = "Test restaurant",
-            address = Address(
-                    streetName = "Test street name",
-                    buildingNumber = "1A",
-                    latitude = 34.669252f,
-                    longitude = -41.105359f,
-                    postalCode = "66-800",
-                    city = City(name = "RestaurantStab city")
-            ),
-            avgReservationTime = Duration.ofMinutes(30),
-            description = "Test description",
-            isActive = true,
-            rate = 4.0f,
-            food_rate = 4.0f,
-            price_quality_rate = 4.0f,
-            service_rate = 4.0f,
-            businessHours = mutableMapOf(
-                    Pair(DayOfWeek.MONDAY, BusinessHour(LocalTime.of(10, 0), LocalTime.of(18, 0))),
-                    Pair(DayOfWeek.TUESDAY, BusinessHour(LocalTime.of(10, 0), LocalTime.of(14, 0)))
-            ),
-            menu = Menu()
-    )
+//    private fun createRestaurant() = Restaurant(
+//            name = "Test restaurant",
+//            address = Address(
+//                    streetName = "Test street name",
+//                    buildingNumber = "1A",
+//                    latitude = 34.669252f,
+//                    longitude = -41.105359f,
+//                    postalCode = "66-800",
+//                    city = City(name = "RestaurantStab city")
+//            ),
+//            avgReservationTime = Duration.ofMinutes(30),
+//            description = "Test description",
+//            isActive = true,
+//            rate = 4.0f,
+//            food_rate = 4.0f,
+//            price_quality_rate = 4.0f,
+//            service_rate = 4.0f,
+//            businessHours = mutableMapOf(
+//                    Pair(DayOfWeek.MONDAY, BusinessHour(LocalTime.of(10, 0), LocalTime.of(18, 0))),
+//                    Pair(DayOfWeek.TUESDAY, BusinessHour(LocalTime.of(10, 0), LocalTime.of(14, 0)))
+//            ),
+//            menu = Menu()
+//    )
 }

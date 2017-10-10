@@ -10,6 +10,7 @@ import pl.denisolek.core.config.API_BASE_PATH
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.guest.restaurant.DTO.RestaurantDetailsDTO
 import pl.denisolek.guest.restaurant.DTO.SearchDTO
+import springfox.documentation.annotations.ApiIgnore
 import java.time.LocalDateTime
 
 @Api(value = "GuestRestaurantApi")
@@ -27,5 +28,5 @@ interface GuestRestaurantApi {
                           @RequestParam peopleNumber: Int): SearchDTO
 
     @GetMapping(GET_RESTAURANT_PATH)
-    fun getRestaurant(@PathVariable(RESTAURANT_ID) restaurant: Restaurant): RestaurantDetailsDTO
+    fun getRestaurant(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurant: Restaurant): RestaurantDetailsDTO
 }

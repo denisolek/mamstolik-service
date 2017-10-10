@@ -50,13 +50,13 @@ INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, 
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Cien', 7, 4.5, 5.0, 5.0, 5.0, 1800, false, 'Nie aktywna, bez miejsc, bez niczego');
 
 -- add users
-INSERT INTO public.user (email, name, surname, restaurant_id, password, account_state) VALUES ('test@test.pl', 'Test', 'Testowy', 1, 'Test12345', 0);
-INSERT INTO public.user (email, name, surname, restaurant_id, password, account_state) VALUES ('przemyslaw.pawlicki@gmail.com', 'Przemysław', 'Pawlicki', 2, 'password', 0);
-INSERT INTO public.user (email, name, surname, restaurant_id, password, account_state) VALUES ('bartosz.zmarzlik@gmail.com', 'Bartosz', 'Zmarzlik', 3, 'password', 0);
-INSERT INTO public.user (email, name, surname, restaurant_id, password, account_state) VALUES ('janusz.kolodziej@gmail.com', 'Janusz', 'Kołodziej', 4, 'password', 0);
-INSERT INTO public.user (email, name, surname, restaurant_id, password, account_state) VALUES ('bartosz.smektala@gmail.com', 'Bartosz', 'Smektała', 5, 'password', 0);
-INSERT INTO public.user (email, name, surname, restaurant_id, password, account_state) VALUES ('martyna.wierzbicka@gmail.com', 'Martyna', 'Wierzbicka', 6, 'password', 0);
-INSERT INTO public.user (email, name, surname, restaurant_id, password, account_state) VALUES ('ofir.vidavsky@gmail.com', 'Ofir', 'Vidavsky', 7, 'password', 0);
+INSERT INTO public.user (email, name, surname, password, account_state) VALUES ('test@test.pl', 'Test', 'Testowy', 1, 'Test12345', 0);
+INSERT INTO public.user (email, name, surname, password, account_state) VALUES ('przemyslaw.pawlicki@gmail.com', 'Przemysław', 'Pawlicki', 2, 'password', 0);
+INSERT INTO public.user (email, name, surname, password, account_state) VALUES ('bartosz.zmarzlik@gmail.com', 'Bartosz', 'Zmarzlik', 3, 'password', 0);
+INSERT INTO public.user (email, name, surname, password, account_state) VALUES ('janusz.kolodziej@gmail.com', 'Janusz', 'Kołodziej', 4, 'password', 0);
+INSERT INTO public.user (email, name, surname, password, account_state) VALUES ('bartosz.smektala@gmail.com', 'Bartosz', 'Smektała', 5, 'password', 0);
+INSERT INTO public.user (email, name, surname, password, account_state) VALUES ('martyna.wierzbicka@gmail.com', 'Martyna', 'Wierzbicka', 6, 'password', 0);
+INSERT INTO public.user (email, name, surname, password, account_state) VALUES ('ofir.vidavsky@gmail.com', 'Ofir', 'Vidavsky', 7, 'password', 0);
 
 -- add authorities
 INSERT INTO public.user_authority (username, authority) VALUES (2, 'ROLE_OWNER');

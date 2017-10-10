@@ -4,6 +4,7 @@ import pl.denisolek.core.address.Address
 import pl.denisolek.core.menu.Menu
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.spot.Spot
+import pl.denisolek.core.user.User
 import pl.denisolek.infrastructure.DateTimeInterval
 import pl.denisolek.infrastructure.isAfterOrEqual
 import pl.denisolek.infrastructure.isBeforeOrEqual
@@ -25,6 +26,12 @@ data class Restaurant(
         var food_rate: Float,
         var price_quality_rate: Float,
         var isActive: Boolean,
+
+        @ManyToOne
+        var owner: User,
+
+        @OneToMany(mappedBy = "workPlace", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+        var employees: List<User>,
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
         var address: Address,

@@ -9,26 +9,32 @@ import javax.persistence.*
 @Table(name = "[user]")
 data class User(
 
-        var name: String,
-        var surname: String,
-        var accountState: AccountState,
-        var password: String,
+        @Column(updatable = false, nullable = false)
+        var username: String,
 
         @Column(updatable = false, nullable = false)
         var email: String,
+
+        var password: String,
+        var name: String,
+        var surname: String,
+        var companyName: String,
+        var accountState: AccountState,
 
         @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(name = "user_authority", joinColumns = arrayOf(JoinColumn(name = "username")), inverseJoinColumns = arrayOf(JoinColumn(name = "authority")))
         val authorities: Set<Authority>,
 
-        @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        @JoinColumn(name = "restaurant_id")
-        var restaurant: Restaurant
+        @ManyToOne
+        var workPlace: Restaurant,
 
+        @OneToMany(mappedBy = "owner", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+        var ownedRestaurants: List<Restaurant>
 ) : BaseEntity() {
     enum class AccountState {
         ACTIVE,
         DISABLED,
+        WAITING,
         BANNED
     }
 }
