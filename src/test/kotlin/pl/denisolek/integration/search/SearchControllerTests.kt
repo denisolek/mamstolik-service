@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.context.WebApplicationContext
 import pl.denisolek.core.address.City
-import pl.denisolek.infrastructure.convertJsonBytesToObject
+import pl.denisolek.infrastructure.util.convertJsonBytesToObject
 import pl.denisolek.shared.search.SearchController
 import pl.denisolek.shared.search.dto.CitiesRestaurantsDTO
 import pl.denisolek.shared.search.dto.RestaurantSearchDTO

@@ -5,9 +5,9 @@ import pl.denisolek.core.menu.Menu
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.core.user.User
-import pl.denisolek.infrastructure.DateTimeInterval
-import pl.denisolek.infrastructure.isAfterOrEqual
-import pl.denisolek.infrastructure.isBeforeOrEqual
+import pl.denisolek.infrastructure.util.DateTimeInterval
+import pl.denisolek.infrastructure.util.isAfterOrEqual
+import pl.denisolek.infrastructure.util.isBeforeOrEqual
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalDateTime
