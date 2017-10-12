@@ -2,7 +2,10 @@ package pl.denisolek.identity.user
 
 import io.swagger.annotations.Api
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
 import pl.denisolek.identity.user.DTO.RegisterDTO
 import pl.denisolek.infrastructure.IDENTITY_BASE_PATH
 import javax.validation.Valid

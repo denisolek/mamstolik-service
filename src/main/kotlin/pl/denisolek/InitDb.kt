@@ -2,15 +2,7 @@ package pl.denisolek
 
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
-import pl.denisolek.core.address.Address
-import pl.denisolek.core.address.City
-import pl.denisolek.core.menu.Menu
-import pl.denisolek.core.restaurant.BusinessHour
-import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantRepository
-import java.time.DayOfWeek
-import java.time.Duration
-import java.time.LocalTime
 import javax.annotation.PostConstruct
 
 @Component
