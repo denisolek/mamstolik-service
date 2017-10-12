@@ -10,13 +10,18 @@ import javax.persistence.*
 data class User(
 
         @Column(updatable = false, nullable = false)
-        var username: String,
+        var username: String? = null,
 
-        var email: String,
-        var password: String,
-        var name: String? = null,
-        var surname: String? = null,
+        @Column(nullable = false)
+        var email: String? = null,
+
+        @Column(nullable = false)
+        var password: String? = null,
+
+        var firstName: String? = null,
+        var lastName: String? = null,
         var companyName: String? = null,
+        var nip: String? = null,
         var accountState: AccountState,
         var phoneNumber: String? = null,
 
@@ -34,6 +39,7 @@ data class User(
         var restaurant: Restaurant? = null
 ) : BaseEntity() {
     enum class AccountState {
+        NOT_ACTIVE,
         ACTIVE,
         DISABLED,
         WAITING,
