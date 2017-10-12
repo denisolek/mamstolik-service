@@ -9,15 +9,13 @@ import javax.persistence.*
 @Table(name = "[user]")
 data class User(
 
-        @Column(updatable = false, nullable = false)
+        @Column(updatable = false, nullable = false, unique = true)
         var username: String? = null,
 
-        @Column(nullable = false)
+        @Column(nullable = false, unique = true)
         var email: String? = null,
 
-        @Column(nullable = false)
         var password: String? = null,
-
         var firstName: String? = null,
         var lastName: String? = null,
         var companyName: String? = null,
@@ -39,8 +37,8 @@ data class User(
         var restaurant: Restaurant? = null
 ) : BaseEntity() {
     enum class AccountState {
-        NOT_ACTIVE,
         ACTIVE,
+        NOT_ACTIVE,
         DISABLED,
         WAITING,
         BANNED

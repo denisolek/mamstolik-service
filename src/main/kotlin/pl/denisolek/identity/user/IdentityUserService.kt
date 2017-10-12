@@ -8,10 +8,8 @@ import pl.denisolek.identity.user.DTO.RegisterDTO
 class IdentityUserService(private val userService: UserService) {
     fun registerOwner(registerDTO: RegisterDTO) {
         val username = userService.generateUsername()
-
         userService.save(registerDTO.toUser().copy(
-                username = username,
-                email = "$username@mamstolik.pl"
+                username = username
         ))
     }
 }
