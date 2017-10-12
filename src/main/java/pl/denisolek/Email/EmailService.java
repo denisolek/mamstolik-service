@@ -17,7 +17,7 @@ public class EmailService {
 
     public void reservationAccepted(Reservation reservation) {
         Context context = new Context();
-        context.setVariable("name", reservation.getCustomer().getName());
+        context.setVariable("name", reservation.getCustomer().getFirstName());
         context.setVariable("restaurantName", reservation.getRestaurant().getName());
         context.setVariable("day", reservation.getStartDateTime().toLocalDate().toString());
         context.setVariable("hour", reservation.getStartDateTime().toLocalTime().toString());
@@ -29,7 +29,7 @@ public class EmailService {
 
     public void reservationCanceled(Reservation reservation) {
         Context context = new Context();
-        context.setVariable("name", reservation.getCustomer().getName());
+        context.setVariable("name", reservation.getCustomer().getFirstName());
         context.setVariable("restaurantName", reservation.getRestaurant().getName());
 
         String body = templateEngine.process("reservation-canceled", context);
