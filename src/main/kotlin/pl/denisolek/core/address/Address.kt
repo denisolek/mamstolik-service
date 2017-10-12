@@ -15,6 +15,5 @@ data class Address(
         var longitude: Float,
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        @JoinColumn
         var city: City
 ) : BaseEntity()

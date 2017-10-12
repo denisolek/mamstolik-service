@@ -64,8 +64,9 @@ INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, 
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Cien', 7, 4.5, 5.0, 5.0, 5.0, 1800, false, 'Nie aktywna, bez miejsc, bez niczego');
 
 
-INSERT INTO public.user (username, name, surname, password, phone_number, account_state, work_place_id) VALUES ('ms100001', 'Pracownik', 'Pracujący', 'Test12345', '507946148', 0, 1);
-INSERT INTO public.user (username, name, surname, password, phone_number, account_state, work_place_id) VALUES ('ms100002', 'Pracowniczka', 'Pracująca', 'Test12345', '603201114', 0, 1);
+INSERT INTO public.user (username, email, password, account_state, restaurant_id) VALUES ('ms100001', 'ms100001@mamstolik.pl', 'Test12345', 0, 1);
+INSERT INTO public.user (username, email, name, surname, password, phone_number, account_state, work_place_id) VALUES ('ms100002', 'ms100002@mamstolik.pl', 'Pracownik', 'Pracujący', 'Test12345', '507946148', 0, 1);
+INSERT INTO public.user (username, email, name, surname, password, phone_number, account_state, work_place_id) VALUES ('ms100003', 'ms100003@mamstolik.pl', 'Pracowniczka', 'Pracująca', 'Test12345', '603201114', 0, 1);
 
 
 -- add authorities

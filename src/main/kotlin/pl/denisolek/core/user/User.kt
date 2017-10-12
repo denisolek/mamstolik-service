@@ -14,21 +14,24 @@ data class User(
 
         var email: String,
         var password: String,
-        var name: String,
-        var surname: String,
-        var companyName: String,
+        var name: String? = null,
+        var surname: String? = null,
+        var companyName: String? = null,
         var accountState: AccountState,
-        var phoneNumber: String,
+        var phoneNumber: String? = null,
 
         @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(name = "user_authority", joinColumns = arrayOf(JoinColumn(name = "username")), inverseJoinColumns = arrayOf(JoinColumn(name = "authority")))
         val authorities: Set<Authority>,
 
         @ManyToOne
-        var workPlace: Restaurant,
+        var workPlace: Restaurant? = null,
 
         @OneToMany(mappedBy = "owner", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var ownedRestaurants: List<Restaurant>
+        var ownedRestaurants: List<Restaurant>? = listOf(),
+
+        @OneToOne(cascade = arrayOf(CascadeType.ALL))
+        var restaurant: Restaurant? = null
 ) : BaseEntity() {
     enum class AccountState {
         ACTIVE,
