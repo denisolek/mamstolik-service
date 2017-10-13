@@ -36,6 +36,28 @@ data class User(
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
         var restaurant: Restaurant? = null
 ) : BaseEntity() {
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other?.javaClass != javaClass) return false
+        if (!super.equals(other)) return false
+
+        other as User
+
+        if (username != other.username) return false
+        if (email != other.email) return false
+        if (password != other.password) return false
+        if (firstName != other.firstName) return false
+        if (lastName != other.lastName) return false
+        if (companyName != other.companyName) return false
+        if (nip != other.nip) return false
+        if (accountState != other.accountState) return false
+        if (phoneNumber != other.phoneNumber) return false
+        if (workPlace != other.workPlace) return false
+        if (ownedRestaurants != other.ownedRestaurants) return false
+        return true
+    }
+
     enum class AccountState {
         ACTIVE,
         NOT_ACTIVE,
