@@ -17,6 +17,7 @@ import org.springframework.web.context.WebApplicationContext
 import pl.denisolek.core.address.City
 import pl.denisolek.infrastructure.API_BASE_PATH
 import pl.denisolek.infrastructure.util.convertJsonBytesToObject
+import pl.denisolek.shared.search.SearchApi
 import pl.denisolek.shared.search.SearchController
 import pl.denisolek.shared.search.dto.CitiesRestaurantsDTO
 import pl.denisolek.shared.search.dto.RestaurantSearchDTO
@@ -32,7 +33,7 @@ class SearchControllerTests {
 
     lateinit var mvc: MockMvc
 
-    val SEARCH_PATH = "$API_BASE_PATH/${SearchController.API.SEARCH_PATH}"
+    val SEARCH_PATH = "$API_BASE_PATH/${SearchApi.SEARCH_PATH}"
 
     @Before
     fun setup() {

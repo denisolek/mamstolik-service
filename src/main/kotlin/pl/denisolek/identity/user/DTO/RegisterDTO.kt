@@ -11,25 +11,25 @@ import javax.validation.constraints.Size
 
 data class RegisterDTO(
         @Email
-        val email: String,
+        var email: String,
 
         @NotBlank
         @Pattern(regexp = "^[\\p{L}\\s'.-]+$", message = "First name is not valid")
-        private var firstName: String,
+        var firstName: String,
 
         @NotBlank
         @Pattern(regexp = "^[\\p{L}\\s'.-]+$", message = "Last name is not valid")
-        private var lastName: String,
+        var lastName: String,
 
         @NotBlank
-        private var companyName: String,
+        var companyName: String,
 
-        private var nip: String,
+        var nip: String,
 
         @NotBlank
         @Size(min = 5)
         @Pattern(regexp = PHONE_MATCHER)
-        private var phoneNumber: String
+        var phoneNumber: String
 ) {
     companion object {
         internal const val PHONE_MATCHER = "(\\(?\\+[\\d]{2}\\(?)?([ .-]?)([0-9]{3})([ .-]?)([0-9]{3})\\4([0-9]{3})"
