@@ -4,7 +4,6 @@ package pl.denisolek.identity.user.DTO
 
 import org.hibernate.validator.constraints.Email
 import org.hibernate.validator.constraints.NotBlank
-import pl.denisolek.core.security.Authorities
 import pl.denisolek.core.security.Authority
 import pl.denisolek.core.user.User
 import javax.validation.constraints.Pattern
@@ -45,6 +44,6 @@ data class RegisterDTO(
                     nip = this.nip,
                     phoneNumber = this.phoneNumber,
                     accountState = User.AccountState.NOT_ACTIVE,
-                    authorities = setOf(Authority(Authorities.ROLE_OWNER.toString()))
-            )
+                    authorities = setOf(Authority(Authority.Role.ROLE_OWNER))
+    )
 }

@@ -6,7 +6,6 @@ import pl.denisolek.core.menu.Menu
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
-import pl.denisolek.core.security.Authorities
 import pl.denisolek.core.security.Authority
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.core.user.User
@@ -59,7 +58,7 @@ class RestaurantStub {
                         username = "msOwner",
                         email = "owner@mamstolik.pl",
                         accountState = User.AccountState.ACTIVE,
-                        authorities = setOf(Authority(Authorities.ROLE_OWNER.toString())),
+                        authorities = setOf(Authority(Authority.Role.ROLE_OWNER)),
                         password = "password"
                 )
 

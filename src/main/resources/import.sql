@@ -1,10 +1,10 @@
 /* @formatter:off */
 ALTER TABLE public.restaurant ALTER COLUMN "description" TYPE VARCHAR(3000);
 
-INSERT INTO public.authority (name) VALUES ('ROLE_OWNER');
-INSERT INTO public.authority (name) VALUES ('ROLE_ADMIN');
-INSERT INTO public.authority (name) VALUES ('ROLE_EMPLOYEE');
-INSERT INTO public.authority (name) VALUES ('ROLE_RESTAURANT');
+INSERT INTO public.authority (role) VALUES ('ROLE_OWNER');
+INSERT INTO public.authority (role) VALUES ('ROLE_ADMIN');
+INSERT INTO public.authority (role) VALUES ('ROLE_EMPLOYEE');
+INSERT INTO public.authority (role) VALUES ('ROLE_RESTAURANT');
 
 
 INSERT INTO public.city (name) VALUES ('Poznań');

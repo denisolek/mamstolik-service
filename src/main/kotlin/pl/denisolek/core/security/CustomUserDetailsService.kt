@@ -27,7 +27,7 @@ class CustomUserDetailsService(private val userRepository: UserRepository) : org
         val grantedAuthorities = ArrayList<GrantedAuthority>()
 
         for (authority in userFromDatabase.authorities) {
-            val grantedAuthority = SimpleGrantedAuthority(authority.name)
+            val grantedAuthority = SimpleGrantedAuthority(authority.role.toString())
             grantedAuthorities.add(grantedAuthority)
         }
 
