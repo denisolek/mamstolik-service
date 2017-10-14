@@ -1,5 +1,6 @@
 package pl.denisolek.integration.identity
 
+import org.apache.commons.lang3.RandomStringUtils
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,7 +27,6 @@ import javax.transaction.Transactional
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 class IdentityUserControllerTests {
-
 
     @Autowired
     lateinit var applicationContext: WebApplicationContext
@@ -55,5 +55,47 @@ class IdentityUserControllerTests {
                 .content(body))
 
         result.andExpect(status().isConflict)
+    }
+
+    @Test
+    fun `registerOwner_ email is empty`() {
+        var registerDTO = RegisterDTOStub.getRegisterDTO()
+        registerDTO.email = ""
+
+        val body = convertObjectToJsonBytes(registerDTO)
+
+        val result = mvc.perform(post(USERS_BASE_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `registerOwner_ email wrong format`() {
+        var registerDTO = RegisterDTOStub.getRegisterDTO()
+        registerDTO.email = "teast.pl"
+
+        val body = convertObjectToJsonBytes(registerDTO)
+
+        val result = mvc.perform(post(USERS_BASE_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `registerOwner_ email too long`() {
+        var registerDTO = RegisterDTOStub.getRegisterDTO()
+        registerDTO.email = "${RandomStringUtils.random(100)}@test.pl"
+
+        val body = convertObjectToJsonBytes(registerDTO)
+
+        val result = mvc.perform(post(USERS_BASE_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
     }
 }

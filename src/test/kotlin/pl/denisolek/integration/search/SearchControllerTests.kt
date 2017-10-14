@@ -18,7 +18,6 @@ import pl.denisolek.core.address.City
 import pl.denisolek.infrastructure.API_BASE_PATH
 import pl.denisolek.infrastructure.util.convertJsonBytesToObject
 import pl.denisolek.shared.search.SearchApi
-import pl.denisolek.shared.search.SearchController
 import pl.denisolek.shared.search.dto.CitiesRestaurantsDTO
 import pl.denisolek.shared.search.dto.RestaurantSearchDTO
 

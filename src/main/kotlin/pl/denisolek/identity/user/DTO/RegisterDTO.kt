@@ -10,25 +10,28 @@ import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
 
 data class RegisterDTO(
-        @Email
+
+        @field:Size(max = 100, message = "Email too long.")
+        @field:NotBlank
+        @field:Email
         var email: String,
 
-        @NotBlank
-        @Pattern(regexp = "^[\\p{L}\\s'.-]+$", message = "First name is not valid")
+        @field:NotBlank
+        @field:Pattern(regexp = "^[\\p{L}\\s'.-]+$", message = "First name is not valid")
         var firstName: String,
 
-        @NotBlank
-        @Pattern(regexp = "^[\\p{L}\\s'.-]+$", message = "Last name is not valid")
+        @field:NotBlank
+        @field:Pattern(regexp = "^[\\p{L}\\s'.-]+$", message = "Last name is not valid")
         var lastName: String,
 
-        @NotBlank
+        @field:NotBlank
         var companyName: String,
 
         var nip: String,
 
-        @NotBlank
-        @Size(min = 5)
-        @Pattern(regexp = PHONE_MATCHER)
+        @field:NotBlank
+        @field:Size(min = 5)
+        @field:Pattern(regexp = PHONE_MATCHER)
         var phoneNumber: String
 ) {
     companion object {
@@ -45,5 +48,5 @@ data class RegisterDTO(
                     phoneNumber = this.phoneNumber,
                     accountState = User.AccountState.NOT_ACTIVE,
                     authorities = setOf(Authority(Authority.Role.ROLE_OWNER))
-    )
+            )
 }
