@@ -22,6 +22,8 @@ data class User(
         var nip: String? = null,
         var accountState: AccountState,
         var phoneNumber: String? = null,
+        var activationKey: String? = null,
+        var resetPasswordKey: String? = null,
 
         @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(name = "user_authority", joinColumns = arrayOf(JoinColumn(name = "username")), inverseJoinColumns = arrayOf(JoinColumn(name = "authority")))

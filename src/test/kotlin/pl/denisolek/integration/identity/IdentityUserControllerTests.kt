@@ -1,6 +1,7 @@
 package pl.denisolek.integration.identity
 
 import org.apache.commons.lang3.RandomStringUtils
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -16,6 +17,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
+import pl.denisolek.core.security.Authority
+import pl.denisolek.core.user.UserRepository
+import pl.denisolek.identity.user.DTO.RegisterDTO
 import pl.denisolek.identity.user.IdentityUserApi
 import pl.denisolek.infrastructure.IDENTITY_BASE_PATH
 import pl.denisolek.infrastructure.util.convertObjectToJsonBytes
@@ -27,6 +31,9 @@ import javax.transaction.Transactional
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 class IdentityUserControllerTests {
+
+    @Autowired
+    lateinit var userRepository: UserRepository
 
     @Autowired
     lateinit var applicationContext: WebApplicationContext
@@ -74,7 +81,7 @@ class IdentityUserControllerTests {
     @Test
     fun `registerOwner_ email wrong format`() {
         var registerDTO = RegisterDTOStub.getRegisterDTO()
-        registerDTO.email = "teast.pl"
+        registerDTO.email = "test.test.pl"
 
         val body = convertObjectToJsonBytes(registerDTO)
 
@@ -88,7 +95,7 @@ class IdentityUserControllerTests {
     @Test
     fun `registerOwner_ email too long`() {
         var registerDTO = RegisterDTOStub.getRegisterDTO()
-        registerDTO.email = "${RandomStringUtils.random(100)}@test.pl"
+        registerDTO.email = "${RandomStringUtils.randomAlphanumeric(100)}@test.pl"
 
         val body = convertObjectToJsonBytes(registerDTO)
 
@@ -97,5 +104,178 @@ class IdentityUserControllerTests {
                 .content(body))
 
         result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `registerOwner_ firstName is empty`() {
+        var registerDTO = RegisterDTOStub.getRegisterDTO()
+        registerDTO.firstName = ""
+
+        val body = convertObjectToJsonBytes(registerDTO)
+
+        val result = mvc.perform(post(USERS_BASE_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `registerOwner_ firstName is not valid`() {
+        var registerDTO = RegisterDTOStub.getRegisterDTO()
+        registerDTO.firstName = "123Test"
+
+        val body = convertObjectToJsonBytes(registerDTO)
+
+        val result = mvc.perform(post(USERS_BASE_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `registerOwner_ lastName is empty`() {
+        var registerDTO = RegisterDTOStub.getRegisterDTO()
+        registerDTO.lastName = ""
+
+        val body = convertObjectToJsonBytes(registerDTO)
+
+        val result = mvc.perform(post(USERS_BASE_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `registerOwner_ lastName is not valid`() {
+        var registerDTO = RegisterDTOStub.getRegisterDTO()
+        registerDTO.lastName = "123Test"
+
+        val body = convertObjectToJsonBytes(registerDTO)
+
+        val result = mvc.perform(post(USERS_BASE_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `registerOwner_ companyName is empty`() {
+        var registerDTO = RegisterDTOStub.getRegisterDTO()
+        registerDTO.companyName = ""
+
+        val body = convertObjectToJsonBytes(registerDTO)
+
+        val result = mvc.perform(post(USERS_BASE_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `registerOwner_ nip is empty`() {
+        var registerDTO = RegisterDTOStub.getRegisterDTO()
+        registerDTO.nip = ""
+
+        val body = convertObjectToJsonBytes(registerDTO)
+
+        val result = mvc.perform(post(USERS_BASE_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `registerOwner_ phoneNumber is empty`() {
+        var registerDTO = RegisterDTOStub.getRegisterDTO()
+        registerDTO.phoneNumber = ""
+
+        val body = convertObjectToJsonBytes(registerDTO)
+
+        val result = mvc.perform(post(USERS_BASE_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `registerOwner_ phoneNumber with letters`() {
+        var registerDTO = RegisterDTOStub.getRegisterDTO()
+        registerDTO.phoneNumber = "111222ccc"
+
+        val body = convertObjectToJsonBytes(registerDTO)
+
+        val result = mvc.perform(post(USERS_BASE_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `registerOwner_ phoneNumber wrong length`() {
+        var registerDTO = RegisterDTOStub.getRegisterDTO()
+        registerDTO.phoneNumber = "111 222 33"
+
+        val body = convertObjectToJsonBytes(registerDTO)
+
+        val result = mvc.perform(post(USERS_BASE_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `registerOwner_ phoneNumber with not allowed chars`() {
+        var registerDTO = RegisterDTOStub.getRegisterDTO()
+        registerDTO.phoneNumber = "+48 111*222*333"
+
+        val body = convertObjectToJsonBytes(registerDTO)
+
+        val result = mvc.perform(post(USERS_BASE_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `registerOwner_ correct data`() {
+        var registerDTO = RegisterDTO(
+                email = "test2@test.pl",
+                firstName = "Test",
+                lastName = "Testowy",
+                companyName = "TestowyCompanyName",
+                nip = "5756226338",
+                phoneNumber = "111222333"
+        )
+
+        val body = convertObjectToJsonBytes(registerDTO)
+
+        val result = mvc.perform(post(USERS_BASE_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isCreated)
+
+        val createdUser = userRepository.findByEmail("test2@test.pl")
+
+        Assert.assertEquals(8, createdUser.username!!.length)
+        Assert.assertEquals("test2@test.pl", createdUser.email)
+        Assert.assertEquals("Test", createdUser.firstName)
+        Assert.assertEquals("Testowy", createdUser.lastName)
+        Assert.assertEquals("TestowyCompanyName", createdUser.companyName)
+        Assert.assertEquals("5756226338", createdUser.nip)
+        Assert.assertEquals("111222333", createdUser.phoneNumber)
+        Assert.assertEquals(30, createdUser.activationKey!!.length)
+        Assert.assertEquals(1, createdUser.authorities.size)
+        Assert.assertTrue(createdUser.authorities.contains(Authority(Authority.Role.ROLE_OWNER)))
     }
 }
