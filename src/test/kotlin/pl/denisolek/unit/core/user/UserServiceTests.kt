@@ -12,7 +12,7 @@ import pl.denisolek.core.user.UserRepository
 import pl.denisolek.core.user.UserService
 
 @RunWith(MockitoJUnitRunner::class)
-class UserServiceTest {
+class UserServiceTests {
 
     @InjectMocks
     lateinit var userService: UserService
