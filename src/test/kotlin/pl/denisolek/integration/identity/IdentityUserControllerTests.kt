@@ -274,7 +274,7 @@ class IdentityUserControllerTests {
         Assert.assertEquals("TestowyCompanyName", createdUser.companyName)
         Assert.assertEquals("5756226338", createdUser.nip)
         Assert.assertEquals("111222333", createdUser.phoneNumber)
-        Assert.assertEquals(30, createdUser.registrationKey!!.length)
+        Assert.assertEquals(30, createdUser.activationKey!!.length)
         Assert.assertEquals(1, createdUser.authorities.size)
         Assert.assertTrue(createdUser.authorities.contains(Authority(Authority.Role.ROLE_OWNER)))
     }

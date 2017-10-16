@@ -33,7 +33,7 @@ class EmailService(private val emailSender: EmailSender, private val templateEng
     fun registerOwner(user: User) {
         val context = Context()
         context.setVariable("name", user.firstName)
-        context.setVariable("registrationKey", user.registrationKey)
+        context.setVariable("activationKey", user.activationKey)
 
         val body = templateEngine.process("register-owner", context)
         emailSender.sendEmail(user.email!!, "Rejestracja", body)

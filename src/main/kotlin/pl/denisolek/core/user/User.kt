@@ -22,7 +22,7 @@ data class User(
         var nip: String? = null,
         var accountState: AccountState,
         var phoneNumber: String? = null,
-        var registrationKey: String? = null,
+        var activationKey: String? = null,
         var resetPasswordKey: String? = null,
 
         @ManyToMany(fetch = FetchType.EAGER)
