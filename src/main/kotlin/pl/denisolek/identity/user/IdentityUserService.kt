@@ -2,6 +2,7 @@ package pl.denisolek.identity.user
 
 import org.springframework.stereotype.Service
 import pl.denisolek.core.email.EmailService
+import pl.denisolek.core.user.User
 import pl.denisolek.core.user.UserService
 import pl.denisolek.identity.user.DTO.RegisterDTO
 
@@ -14,5 +15,11 @@ class IdentityUserService(private val userService: UserService,
                 username = username
         ))
         Thread { emailService.registerOwner(newUser) }.start()
+    }
+
+    fun resendActivationKey(email: String) {
+        val user: User? = userService.findByEmail(email)
+
+        if (user?.activationKey != null) Thread { emailService.registerOwner(user) }.start()
     }
 }

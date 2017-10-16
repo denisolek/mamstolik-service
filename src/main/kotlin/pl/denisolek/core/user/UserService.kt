@@ -8,6 +8,9 @@ class UserService(val userRepository: UserRepository) {
     fun save(user: User) =
             userRepository.save(user)
 
+    fun findByEmail(email: String) =
+            userRepository.findByEmail(email)
+
     fun generateUsername(): String {
         var exists: Boolean = true
         var username: String = "username"
