@@ -50,6 +50,6 @@ data class RegisterDTO(
                     phoneNumber = this.phoneNumber,
                     accountState = User.AccountState.NOT_ACTIVE,
                     authorities = setOf(Authority(Authority.Role.ROLE_OWNER)),
-                    activationKey = RandomStringUtils.randomAlphanumeric(30)
+                    registrationKey = RandomStringUtils.randomAlphanumeric(30)
             )
 }
