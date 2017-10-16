@@ -4,6 +4,7 @@ import io.swagger.annotations.Api
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import pl.denisolek.identity.user.DTO.RegisterDTO
+import pl.denisolek.identity.user.DTO.SetPasswordDTO
 import pl.denisolek.infrastructure.IDENTITY_BASE_PATH
 import javax.validation.Valid
 
@@ -26,4 +27,7 @@ interface IdentityUserApi {
 
     @PostMapping(USERS_RESEND_ACTIVATION_KEY_PATH)
     fun resendActivationKey(@RequestParam(required = true) email: String)
+
+    @PostMapping(USERS_PASSWORD_PATH)
+    fun setPassword(@RequestBody @Valid setPasswordDTO: SetPasswordDTO)
 }

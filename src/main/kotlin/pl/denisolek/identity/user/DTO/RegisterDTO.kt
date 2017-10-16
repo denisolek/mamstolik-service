@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package pl.denisolek.identity.user.DTO
 
 import org.apache.commons.lang3.RandomStringUtils

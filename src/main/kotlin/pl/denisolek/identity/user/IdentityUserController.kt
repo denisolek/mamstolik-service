@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import pl.denisolek.identity.user.DTO.RegisterDTO
+import pl.denisolek.identity.user.DTO.SetPasswordDTO
 import javax.validation.Valid
 
 @RestController
@@ -16,4 +17,7 @@ class IdentityUserController(val identityUserService: IdentityUserService) : Ide
         identityUserService.resendActivationKey(email)
     }
 
+    override fun setPassword(@RequestBody @Valid setPasswordDTO: SetPasswordDTO) {
+        identityUserService.setPassword(setPasswordDTO)
+    }
 }
