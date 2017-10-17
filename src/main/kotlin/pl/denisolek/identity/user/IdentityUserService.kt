@@ -27,7 +27,7 @@ class IdentityUserService(private val userService: UserService,
     }
 
     fun setPassword(setPasswordDTO: SetPasswordDTO) {
-        val user = userService.findByUsername(setPasswordDTO.username) ?: throw ServiceException(HttpStatus.NOT_FOUND, "User not found")
+        val user = userService.findByUsername(setPasswordDTO.username) ?: throw ServiceException(HttpStatus.NOT_FOUND, "User not found.")
 
         when {
             user.activationKey == setPasswordDTO.activationKey -> {
@@ -36,7 +36,7 @@ class IdentityUserService(private val userService: UserService,
                 user.accountState = User.AccountState.ACTIVE
                 userService.save(user)
             }
-            else -> throw ServiceException(HttpStatus.BAD_REQUEST, "Activation key doesn't match or password is already set")
+            else -> throw ServiceException(HttpStatus.BAD_REQUEST, "Activation key doesn't match or password is already set.")
         }
     }
 }

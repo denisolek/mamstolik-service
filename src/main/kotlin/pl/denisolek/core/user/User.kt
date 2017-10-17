@@ -20,10 +20,12 @@ data class User(
         var lastName: String? = null,
         var companyName: String? = null,
         var nip: String? = null,
-        var accountState: AccountState,
         var phoneNumber: String? = null,
         var activationKey: String? = null,
         var resetPasswordKey: String? = null,
+
+        @Enumerated(EnumType.STRING)
+        var accountState: AccountState,
 
         @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(name = "user_authority", joinColumns = arrayOf(JoinColumn(name = "username")), inverseJoinColumns = arrayOf(JoinColumn(name = "authority")))

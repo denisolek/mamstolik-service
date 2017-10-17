@@ -1,6 +1,7 @@
 package pl.denisolek.integration.identity
 
-import org.apache.commons.lang3.RandomStringUtils
+import org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric
+import org.hamcrest.Matchers
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -13,9 +14,11 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.context.WebApplicationContext
 import pl.denisolek.core.security.Authority
 import pl.denisolek.core.user.UserRepository
@@ -24,6 +27,7 @@ import pl.denisolek.identity.user.IdentityUserApi
 import pl.denisolek.infrastructure.IDENTITY_BASE_PATH
 import pl.denisolek.infrastructure.util.convertObjectToJsonBytes
 import pl.denisolek.stubs.dto.RegisterDTOStub
+import pl.denisolek.stubs.dto.SetPasswordDTOStub
 import javax.transaction.Transactional
 
 @RunWith(SpringRunner::class)
@@ -41,6 +45,7 @@ class IdentityUserControllerTests {
     lateinit var mvc: MockMvc
 
     val USERS_BASE_PATH = "$IDENTITY_BASE_PATH${IdentityUserApi.USERS_BASE_PATH}"
+    val USERS_PASSWORD_PATH = "$IDENTITY_BASE_PATH${IdentityUserApi.USERS_PASSWORD_PATH}"
 
     @Before
     fun setup() {
@@ -95,7 +100,7 @@ class IdentityUserControllerTests {
     @Test
     fun `registerOwner_ email too long`() {
         var registerDTO = RegisterDTOStub.getRegisterDTO()
-        registerDTO.email = "${RandomStringUtils.randomAlphanumeric(100)}@test.pl"
+        registerDTO.email = "${randomAlphanumeric(100)}@test.pl"
 
         val body = convertObjectToJsonBytes(registerDTO)
 
@@ -278,4 +283,140 @@ class IdentityUserControllerTests {
         Assert.assertEquals(1, createdUser.authorities.size)
         Assert.assertTrue(createdUser.authorities.contains(Authority(Authority.Role.ROLE_OWNER)))
     }
+
+    @Test
+    fun `setPassword_ wrong username`() {
+        var setPasswordDTO = SetPasswordDTOStub.getSetPasswordDTO().copy(
+                username = "wrongUsername"
+        )
+
+        val body = convertObjectToJsonBytes(setPasswordDTO)
+
+        val result = mvc.perform(post(USERS_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isNotFound)
+                .andExpect(jsonPath("$.message", Matchers.`is`("User not found.")))
+    }
+
+    @Test
+    fun `setPassword_ wrong activationKey`() {
+        var setPasswordDTO = SetPasswordDTOStub.getSetPasswordDTO().copy(
+                activationKey = "wrongActivationKey"
+        )
+
+        val body = convertObjectToJsonBytes(setPasswordDTO)
+
+        val result = mvc.perform(post(USERS_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andExpect(jsonPath("$.message", Matchers.`is`("Activation key doesn't match or password is already set.")))
+
+        print(1)
+    }
+
+    @Test
+    fun `setPassword_ password too short`() {
+        var setPasswordDTO = SetPasswordDTOStub.getSetPasswordDTO().copy(
+                password = "aA1"
+        )
+
+        val body = convertObjectToJsonBytes(setPasswordDTO)
+
+        val result = mvc.perform(post(USERS_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        Assert.assertThat(result.andReturn().resolvedException, Matchers.instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `setPassword_ password too long`() {
+        var setPasswordDTO = SetPasswordDTOStub.getSetPasswordDTO().copy(
+                password = "aA1${randomAlphanumeric(78)}"
+        )
+
+        val body = convertObjectToJsonBytes(setPasswordDTO)
+
+        val result = mvc.perform(post(USERS_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        Assert.assertThat(result.andReturn().resolvedException, Matchers.instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `setPassword_ password without any a-z`() {
+        var setPasswordDTO = SetPasswordDTOStub.getSetPasswordDTO().copy(
+                password = "TEST123456"
+        )
+
+        val body = convertObjectToJsonBytes(setPasswordDTO)
+
+        val result = mvc.perform(post(USERS_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        Assert.assertThat(result.andReturn().resolvedException, Matchers.instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `setPassword_ password without any A-Z`() {
+        var setPasswordDTO = SetPasswordDTOStub.getSetPasswordDTO().copy(
+                password = "test123456"
+        )
+
+        val body = convertObjectToJsonBytes(setPasswordDTO)
+
+        val result = mvc.perform(post(USERS_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        Assert.assertThat(result.andReturn().resolvedException, Matchers.instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `setPassword_ password without any 1-9`() {
+        var setPasswordDTO = SetPasswordDTOStub.getSetPasswordDTO().copy(
+                password = "testTESTOWY"
+        )
+
+        val body = convertObjectToJsonBytes(setPasswordDTO)
+
+        val result = mvc.perform(post(USERS_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        Assert.assertThat(result.andReturn().resolvedException, Matchers.instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+//    @Test
+//    fun `setPassword_ correct data`() {
+//
+//    }
 }

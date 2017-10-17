@@ -43,15 +43,17 @@ INSERT INTO public.address (building_number, latitude, longitude, postal_code, s
 INSERT INTO public.menu DEFAULT VALUES;
 
 -- add users
-INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms100000', 'test@test.pl', 'Właściciel', 'Właścicielowy', 'Test12345', 'MamStolik', 0);
-INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms200000', 'przemyslaw.pawlicki@gmail.com', 'Przemysław', 'Pawlicki', 'password', 'Firmowa firma', 0);
-INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms300000', 'bartosz.zmarzlik@gmail.com', 'Bartosz', 'Zmarzlik', 'password', 'Firmowa firma', 0);
-INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms400000', 'janusz.kolodziej@gmail.com', 'Janusz', 'Kołodziej', 'password', 'Firmowa firma', 0);
-INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms500000', 'bartosz.smektala@gmail.com', 'Bartosz', 'Smektała', 'password', 'Firmowa firma', 0);
-INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms600000', 'martyna.wierzbicka@gmail.com', 'Martyna', 'Wierzbicka', 'password', 'Firmowa firma', 0);
-INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms700000', 'ofir.vidavsky@gmail.com', 'Ofir', 'Vidavsky', 'password', 'Firmowa firma', 0);
+INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms100000', 'test@test.pl', 'Właściciel', 'Właścicielowy', 'Test12345', 'MamStolik', 'ACTIVE');
+INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms200000', 'przemyslaw.pawlicki@gmail.com', 'Przemysław', 'Pawlicki', 'password', 'Firmowa firma', 'ACTIVE');
+INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms300000', 'bartosz.zmarzlik@gmail.com', 'Bartosz', 'Zmarzlik', 'password', 'Firmowa firma', 'ACTIVE');
+INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms400000', 'janusz.kolodziej@gmail.com', 'Janusz', 'Kołodziej', 'password', 'Firmowa firma', 'ACTIVE');
+INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms500000', 'bartosz.smektala@gmail.com', 'Bartosz', 'Smektała', 'password', 'Firmowa firma', 'ACTIVE');
+INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms600000', 'martyna.wierzbicka@gmail.com', 'Martyna', 'Wierzbicka', 'password', 'Firmowa firma', 'ACTIVE');
+INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms700000', 'ofir.vidavsky@gmail.com', 'Ofir', 'Vidavsky', 'password', 'Firmowa firma', 'ACTIVE');
 
-INSERT INTO public.user (username, email, first_name, last_name, password, account_state) VALUES ('ms999999', 'admin@admin.pl', 'Admin', 'Adminujący', 'Test12345', 0);
+INSERT INTO public.user (username, email, first_name, last_name, password, account_state) VALUES ('ms999999', 'admin@admin.pl', 'Admin', 'Adminujący', 'Test12345', 'ACTIVE');
+
+INSERT INTO public.user (username, email, first_name, last_name, activation_key, account_state) VALUES ('ms800000', 'ms800000@admin.pl', 'Test', 'Testowy', 'activationKeyTest', 'NOT_ACTIVE');
 
 -- address
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, menu_id, owner_id, description) VALUES ('Piano Bar Restaurant & Cafe', 1, 4.5, 5.0, 5.0, 5.0, 1800, true, 1, 1, 'Piano Bar jest urokliwym, stylowym miejscem, które znajduje się w Centrum Sztuki i Biznesu w Starym Browarze. Jest niepowtarzalne i przepełnione niezwykłym klimatem. Piano Bar to restauracja, którą wyróżnia profesjonalna obsługa sprawiająca, że nasi Goście czują się naprawdę niezwykle. Dodatkowy, elegancki a zarazem ciepły wystrój wnętrza zapewnia uczucie wyjątkowości. Nasze smaki to kuchnia włoska, śródziemnomorska i potrawy kuchni polskiej. Szef Kuchni Krystian Szopka z zespołem kucharzy sprawia, że jej smak na długo pozostaje w pamięci naszych Gości. Zapraszamy na lunche, rodzinne obiady, spotkania biznesowe.');
