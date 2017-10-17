@@ -43,15 +43,15 @@ INSERT INTO public.address (building_number, latitude, longitude, postal_code, s
 INSERT INTO public.menu DEFAULT VALUES;
 
 -- add users
-INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms100000', 'test@test.pl', 'Właściciel', 'Właścicielowy', 'Test12345', 'MamStolik', 'ACTIVE');
-INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms200000', 'przemyslaw.pawlicki@gmail.com', 'Przemysław', 'Pawlicki', 'password', 'Firmowa firma', 'ACTIVE');
-INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms300000', 'bartosz.zmarzlik@gmail.com', 'Bartosz', 'Zmarzlik', 'password', 'Firmowa firma', 'ACTIVE');
-INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms400000', 'janusz.kolodziej@gmail.com', 'Janusz', 'Kołodziej', 'password', 'Firmowa firma', 'ACTIVE');
-INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms500000', 'bartosz.smektala@gmail.com', 'Bartosz', 'Smektała', 'password', 'Firmowa firma', 'ACTIVE');
-INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms600000', 'martyna.wierzbicka@gmail.com', 'Martyna', 'Wierzbicka', 'password', 'Firmowa firma', 'ACTIVE');
-INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms700000', 'ofir.vidavsky@gmail.com', 'Ofir', 'Vidavsky', 'password', 'Firmowa firma', 'ACTIVE');
+INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms100000', 'test@test.pl', 'Właściciel', 'Właścicielowy', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'MamStolik', 'ACTIVE');
+INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms200000', 'przemyslaw.pawlicki@gmail.com', 'Przemysław', 'Pawlicki', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE');
+INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms300000', 'bartosz.zmarzlik@gmail.com', 'Bartosz', 'Zmarzlik', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE');
+INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms400000', 'janusz.kolodziej@gmail.com', 'Janusz', 'Kołodziej', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE');
+INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms500000', 'bartosz.smektala@gmail.com', 'Bartosz', 'Smektała', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE');
+INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms600000', 'martyna.wierzbicka@gmail.com', 'Martyna', 'Wierzbicka', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE');
+INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state) VALUES ('ms700000', 'ofir.vidavsky@gmail.com', 'Ofir', 'Vidavsky', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE');
 
-INSERT INTO public.user (username, email, first_name, last_name, password, account_state) VALUES ('ms999999', 'admin@admin.pl', 'Admin', 'Adminujący', 'Test12345', 'ACTIVE');
+INSERT INTO public.user (username, email, first_name, last_name, password, account_state) VALUES ('ms999999', 'admin@admin.pl', 'Admin', 'Adminujący', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'ACTIVE');
 
 INSERT INTO public.user (username, email, first_name, last_name, activation_key, account_state) VALUES ('ms800000', 'ms800000@test.pl', 'Test', 'Testowy', 'activationKeyTest', 'NOT_ACTIVE');
 
@@ -66,9 +66,9 @@ INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, 
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, description) VALUES ('Cien', 7, 4.5, 5.0, 5.0, 5.0, 1800, false, 'Nie aktywna, bez miejsc, bez niczego');
 
 
-INSERT INTO public.user (username, email, password, account_state, restaurant_id) VALUES ('ms100001', 'ms100001@mamstolik.pl', 'Test12345', 0, 1);
-INSERT INTO public.user (username, email, first_name, last_name, password, phone_number, account_state, work_place_id) VALUES ('ms100002', 'ms100002@mamstolik.pl', 'Pracownik', 'Pracujący', 'Test12345', '507946148', 0, 1);
-INSERT INTO public.user (username, email, first_name, last_name, password, phone_number, account_state, work_place_id) VALUES ('ms100003', 'ms100003@mamstolik.pl', 'Pracowniczka', 'Pracująca', 'Test12345', '603201114', 0, 1);
+INSERT INTO public.user (username, email, password, account_state, restaurant_id) VALUES ('ms100001', 'ms100001@mamstolik.pl', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 0, 1);
+INSERT INTO public.user (username, email, first_name, last_name, password, phone_number, account_state, work_place_id) VALUES ('ms100002', 'ms100002@mamstolik.pl', 'Pracownik', 'Pracujący', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', '507946148', 0, 1);
+INSERT INTO public.user (username, email, first_name, last_name, password, phone_number, account_state, work_place_id) VALUES ('ms100003', 'ms100003@mamstolik.pl', 'Pracowniczka', 'Pracująca', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', '603201114', 0, 1);
 
 
 -- add authorities
