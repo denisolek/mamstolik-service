@@ -1,6 +1,7 @@
 package pl.denisolek.identity.user
 
 import org.springframework.http.HttpStatus
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.email.EmailService
@@ -11,7 +12,8 @@ import pl.denisolek.identity.user.DTO.SetPasswordDTO
 
 @Service
 class IdentityUserService(private val userService: UserService,
-                          private val emailService: EmailService) {
+                          private val emailService: EmailService,
+                          private val passwordEncoder: PasswordEncoder) {
     fun registerOwner(registerDTO: RegisterDTO) {
         val username = userService.generateUsername()
         val newUser = userService.save(registerDTO.toUser().copy(
@@ -31,7 +33,7 @@ class IdentityUserService(private val userService: UserService,
 
         when {
             user.activationKey == setPasswordDTO.activationKey -> {
-                user.password = setPasswordDTO.password
+                user.password = passwordEncoder.encode(setPasswordDTO.password)
                 user.activationKey = null
                 user.accountState = User.AccountState.ACTIVE
                 userService.save(user)
