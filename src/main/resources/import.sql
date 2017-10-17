@@ -53,7 +53,7 @@ INSERT INTO public.user (username, email, first_name, last_name, password, compa
 
 INSERT INTO public.user (username, email, first_name, last_name, password, account_state) VALUES ('ms999999', 'admin@admin.pl', 'Admin', 'Adminujący', 'Test12345', 'ACTIVE');
 
-INSERT INTO public.user (username, email, first_name, last_name, activation_key, account_state) VALUES ('ms800000', 'ms800000@admin.pl', 'Test', 'Testowy', 'activationKeyTest', 'NOT_ACTIVE');
+INSERT INTO public.user (username, email, first_name, last_name, activation_key, account_state) VALUES ('ms800000', 'ms800000@test.pl', 'Test', 'Testowy', 'activationKeyTest', 'NOT_ACTIVE');
 
 -- address
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, menu_id, owner_id, description) VALUES ('Piano Bar Restaurant & Cafe', 1, 4.5, 5.0, 5.0, 5.0, 1800, true, 1, 1, 'Piano Bar jest urokliwym, stylowym miejscem, które znajduje się w Centrum Sztuki i Biznesu w Starym Browarze. Jest niepowtarzalne i przepełnione niezwykłym klimatem. Piano Bar to restauracja, którą wyróżnia profesjonalna obsługa sprawiająca, że nasi Goście czują się naprawdę niezwykle. Dodatkowy, elegancki a zarazem ciepły wystrój wnętrza zapewnia uczucie wyjątkowości. Nasze smaki to kuchnia włoska, śródziemnomorska i potrawy kuchni polskiej. Szef Kuchni Krystian Szopka z zespołem kucharzy sprawia, że jej smak na długo pozostaje w pamięci naszych Gości. Zapraszamy na lunche, rodzinne obiady, spotkania biznesowe.');

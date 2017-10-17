@@ -1,8 +1,9 @@
 package pl.denisolek.integration.identity
 
 import org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric
-import org.hamcrest.Matchers
-import org.junit.Assert
+import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.instanceOf
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,6 +22,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.context.WebApplicationContext
 import pl.denisolek.core.security.Authority
+import pl.denisolek.core.user.User.AccountState
 import pl.denisolek.core.user.UserRepository
 import pl.denisolek.identity.user.DTO.RegisterDTO
 import pl.denisolek.identity.user.IdentityUserApi
@@ -272,16 +274,16 @@ class IdentityUserControllerTests {
 
         val createdUser = userRepository.findByEmail("test2@test.pl")
 
-        Assert.assertEquals(8, createdUser.username!!.length)
-        Assert.assertEquals("test2@test.pl", createdUser.email)
-        Assert.assertEquals("Test", createdUser.firstName)
-        Assert.assertEquals("Testowy", createdUser.lastName)
-        Assert.assertEquals("TestowyCompanyName", createdUser.companyName)
-        Assert.assertEquals("5756226338", createdUser.nip)
-        Assert.assertEquals("111222333", createdUser.phoneNumber)
-        Assert.assertEquals(30, createdUser.activationKey!!.length)
-        Assert.assertEquals(1, createdUser.authorities.size)
-        Assert.assertTrue(createdUser.authorities.contains(Authority(Authority.Role.ROLE_OWNER)))
+        assertEquals(8, createdUser.username!!.length)
+        assertEquals("test2@test.pl", createdUser.email)
+        assertEquals("Test", createdUser.firstName)
+        assertEquals("Testowy", createdUser.lastName)
+        assertEquals("TestowyCompanyName", createdUser.companyName)
+        assertEquals("5756226338", createdUser.nip)
+        assertEquals("111222333", createdUser.phoneNumber)
+        assertEquals(30, createdUser.activationKey!!.length)
+        assertEquals(1, createdUser.authorities.size)
+        assertTrue(createdUser.authorities.contains(Authority(Authority.Role.ROLE_OWNER)))
     }
 
     @Test
@@ -298,7 +300,7 @@ class IdentityUserControllerTests {
 
         result
                 .andExpect(status().isNotFound)
-                .andExpect(jsonPath("$.message", Matchers.`is`("User not found.")))
+                .andExpect(jsonPath("$.message", `is`("User not found.")))
     }
 
     @Test
@@ -315,7 +317,7 @@ class IdentityUserControllerTests {
 
         result
                 .andExpect(status().isBadRequest)
-                .andExpect(jsonPath("$.message", Matchers.`is`("Activation key doesn't match or password is already set.")))
+                .andExpect(jsonPath("$.message", `is`("Activation key doesn't match or password is already set.")))
 
         print(1)
     }
@@ -336,7 +338,7 @@ class IdentityUserControllerTests {
                 .andExpect(status().isBadRequest)
                 .andReturn()
 
-        Assert.assertThat(result.andReturn().resolvedException, Matchers.instanceOf(MethodArgumentNotValidException::class.java))
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
 
     @Test
@@ -355,7 +357,7 @@ class IdentityUserControllerTests {
                 .andExpect(status().isBadRequest)
                 .andReturn()
 
-        Assert.assertThat(result.andReturn().resolvedException, Matchers.instanceOf(MethodArgumentNotValidException::class.java))
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
 
     @Test
@@ -374,7 +376,7 @@ class IdentityUserControllerTests {
                 .andExpect(status().isBadRequest)
                 .andReturn()
 
-        Assert.assertThat(result.andReturn().resolvedException, Matchers.instanceOf(MethodArgumentNotValidException::class.java))
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
 
     @Test
@@ -393,7 +395,7 @@ class IdentityUserControllerTests {
                 .andExpect(status().isBadRequest)
                 .andReturn()
 
-        Assert.assertThat(result.andReturn().resolvedException, Matchers.instanceOf(MethodArgumentNotValidException::class.java))
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
 
     @Test
@@ -412,11 +414,29 @@ class IdentityUserControllerTests {
                 .andExpect(status().isBadRequest)
                 .andReturn()
 
-        Assert.assertThat(result.andReturn().resolvedException, Matchers.instanceOf(MethodArgumentNotValidException::class.java))
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
 
-//    @Test
-//    fun `setPassword_ correct data`() {
-//
-//    }
+    @Test
+    fun `setPassword_ correct data`() {
+        var setPasswordDTO = SetPasswordDTOStub.getSetPasswordDTO()
+
+        val body = convertObjectToJsonBytes(setPasswordDTO)
+
+        val result = mvc.perform(post(USERS_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isOk)
+
+        val updatedUser = userRepository.findByUsername("ms800000")
+
+        assertEquals("ms800000@test.pl", updatedUser.email)
+        assertEquals("Test", updatedUser.firstName)
+        assertEquals("Testowy", updatedUser.lastName)
+        assertEquals(null, updatedUser.activationKey)
+        assertEquals(AccountState.ACTIVE, updatedUser.accountState)
+        assertNotNull(updatedUser.password)
+    }
 }
