@@ -7,7 +7,7 @@ class SetPasswordDTOStub {
         fun getSetPasswordDTO(): SetPasswordDTO =
                 SetPasswordDTO(
                         username = "ms800000",
-                        password =  "TestPassword123",
+                        password = "TestPassword123",
                         activationKey = "activationKeyTest"
                 )
     }
