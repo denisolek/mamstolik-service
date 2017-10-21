@@ -12,7 +12,7 @@ import pl.denisolek.core.user.UserRepository
 @Service("authorizationService")
 @Profile("fakeAuthorization")
 @Order(Ordered.HIGHEST_PRECEDENCE)
-class FakeAuthorizationService(val userRepository: UserRepository): AuthorizationService {
+class FakeAuthorizationService(val userRepository: UserRepository) : AuthorizationService {
     override fun getCurrentUser(): User {
         return userRepository.findOne(1) ?: throw ServiceException(HttpStatus.NOT_FOUND, "Couldn't find user")
     }

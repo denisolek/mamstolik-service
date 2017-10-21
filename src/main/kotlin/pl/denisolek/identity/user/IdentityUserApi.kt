@@ -3,6 +3,7 @@ package pl.denisolek.identity.user
 import io.swagger.annotations.Api
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import pl.denisolek.identity.user.DTO.ChangePasswordDTO
 import pl.denisolek.identity.user.DTO.RegisterDTO
 import pl.denisolek.identity.user.DTO.SetPasswordDTO
 import pl.denisolek.infrastructure.IDENTITY_BASE_PATH
@@ -30,4 +31,7 @@ interface IdentityUserApi {
 
     @PostMapping(USERS_PASSWORD_PATH)
     fun setPassword(@RequestBody @Valid setPasswordDTO: SetPasswordDTO)
+
+    @PutMapping(USERS_PASSWORD_PATH)
+    fun changePassword(@RequestBody @Valid changePasswordDTO: ChangePasswordDTO)
 }
