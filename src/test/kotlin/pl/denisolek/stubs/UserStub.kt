@@ -32,5 +32,15 @@ class UserStub {
                         authorities = setOf(Authority(Authority.Role.ROLE_OWNER)),
                         accountState = User.AccountState.ACTIVE
                 )
+
+        fun getUserOwner(): User =
+                User(
+                        username = "usernameStub",
+                        email = "emailStub@test.pl",
+                        password = "\$2a\$10\$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG",
+                        activationKey = null,
+                        authorities = setOf(Authority(Authority.Role.ROLE_OWNER)),
+                        accountState = User.AccountState.ACTIVE
+                )
     }
 }

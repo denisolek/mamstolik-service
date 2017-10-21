@@ -1,5 +1,7 @@
 package pl.denisolek.integration.identity
 
+import com.nhaarman.mockito_kotlin.doReturn
+import com.nhaarman.mockito_kotlin.whenever
 import org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.instanceOf
@@ -9,12 +11,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.mock.mockito.SpyBean
 import org.springframework.http.MediaType
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
@@ -27,16 +31,21 @@ import pl.denisolek.core.user.UserRepository
 import pl.denisolek.identity.user.DTO.RegisterDTO
 import pl.denisolek.identity.user.IdentityUserApi
 import pl.denisolek.infrastructure.IDENTITY_BASE_PATH
+import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.infrastructure.util.convertObjectToJsonBytes
+import pl.denisolek.stubs.UserStub
+import pl.denisolek.stubs.dto.ChangePasswordDTOStub
 import pl.denisolek.stubs.dto.RegisterDTOStub
 import pl.denisolek.stubs.dto.SetPasswordDTOStub
 import javax.transaction.Transactional
 
 @RunWith(SpringRunner::class)
-@ActiveProfiles("test")
+@ActiveProfiles("test", "fakeAuthorization")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 class IdentityUserControllerTests {
+    @SpyBean
+    lateinit var authorizationService: AuthorizationService
 
     @Autowired
     lateinit var userRepository: UserRepository
@@ -438,5 +447,115 @@ class IdentityUserControllerTests {
         assertEquals(null, updatedUser.activationKey)
         assertEquals(AccountState.ACTIVE, updatedUser.accountState)
         assertNotNull(updatedUser.password)
+    }
+
+    @Test
+    fun `changePassword_ password too short`() {
+        val user = UserStub.getUserOwner()
+        var changePasswordDTO = ChangePasswordDTOStub.getChangePasswordDTO().copy(
+                newPassword = "aA1"
+        )
+
+        val body = convertObjectToJsonBytes(changePasswordDTO)
+
+        doReturn(user).whenever(authorizationService).getCurrentUser()
+
+        val result = mvc.perform(put(USERS_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `changePassword_ password too long`() {
+        val user = UserStub.getUserOwner()
+        var changePasswordDTO = ChangePasswordDTOStub.getChangePasswordDTO().copy(
+                newPassword = "aA1${randomAlphanumeric(78)}"
+        )
+
+        val body = convertObjectToJsonBytes(changePasswordDTO)
+
+        doReturn(user).whenever(authorizationService).getCurrentUser()
+
+        val result = mvc.perform(put(USERS_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `changePassword_ password without any a-z`() {
+        val user = UserStub.getUserOwner()
+        var changePasswordDTO = ChangePasswordDTOStub.getChangePasswordDTO().copy(
+                newPassword = "TEST123456"
+        )
+
+        val body = convertObjectToJsonBytes(changePasswordDTO)
+
+        doReturn(user).whenever(authorizationService).getCurrentUser()
+
+        val result = mvc.perform(put(USERS_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `changePassword_ password without any A-Z`() {
+        val user = UserStub.getUserOwner()
+        var changePasswordDTO = ChangePasswordDTOStub.getChangePasswordDTO().copy(
+                newPassword = "test123456"
+        )
+
+        val body = convertObjectToJsonBytes(changePasswordDTO)
+
+        doReturn(user).whenever(authorizationService).getCurrentUser()
+
+        val result = mvc.perform(put(USERS_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `changePassword_ password without any 1-9`() {
+        val user = UserStub.getUserOwner()
+        var changePasswordDTO = ChangePasswordDTOStub.getChangePasswordDTO().copy(
+                newPassword = "testTESTOWY"
+        )
+
+        val body = convertObjectToJsonBytes(changePasswordDTO)
+
+        doReturn(user).whenever(authorizationService).getCurrentUser()
+
+        val result = mvc.perform(put(USERS_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
 }

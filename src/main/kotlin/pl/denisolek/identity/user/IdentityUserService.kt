@@ -41,7 +41,7 @@ class IdentityUserService(private val userService: UserService,
                 user.accountState = User.AccountState.ACTIVE
                 userService.save(user)
             }
-            else -> throw ServiceException(HttpStatus.BAD_REQUEST, "Activation key doesn't match or newPassword is already set.")
+            else -> throw ServiceException(HttpStatus.BAD_REQUEST, "Activation key doesn't match or password is already set.")
         }
     }
 
