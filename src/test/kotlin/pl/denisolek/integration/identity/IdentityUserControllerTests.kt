@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.SpyBean
 import org.springframework.http.MediaType
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
@@ -49,6 +50,9 @@ class IdentityUserControllerTests {
 
     @Autowired
     lateinit var userRepository: UserRepository
+
+    @Autowired
+    lateinit var passwordEncoder: PasswordEncoder
 
     @Autowired
     lateinit var applicationContext: WebApplicationContext
@@ -557,5 +561,28 @@ class IdentityUserControllerTests {
                 .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    @Transactional
+    fun `changePassword_ correct data`() {
+        val user = userRepository.findOne(1)
+        var changePasswordDTO = ChangePasswordDTOStub.getChangePasswordDTO()
+
+        val body = convertObjectToJsonBytes(changePasswordDTO)
+
+        doReturn(user).whenever(authorizationService).getCurrentUser()
+
+        val result = mvc.perform(put(USERS_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isOk)
+
+        val updatedUser = userRepository.findByEmail("test@test.pl")
+
+        assertEquals("test@test.pl", updatedUser.email)
+        assertTrue(passwordEncoder.matches(changePasswordDTO.newPassword, updatedUser.password))
     }
 }
