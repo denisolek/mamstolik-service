@@ -47,10 +47,10 @@ class IdentityUserService(private val userService: UserService,
 
     fun changePassword(changePasswordDTO: ChangePasswordDTO) {
         val user = authorizationService.getCurrentUser()
-        if (passwordEncoder.matches( changePasswordDTO.oldPassword, user.password))
+        if (passwordEncoder.matches(changePasswordDTO.oldPassword, user.password))
             user.password = passwordEncoder.encode(changePasswordDTO.newPassword)
         else
-            throw ServiceException(HttpStatus.BAD_REQUEST, "Old newPassword doesn't match")
+            throw ServiceException(HttpStatus.BAD_REQUEST, "Old password doesn't match")
         userService.save(user)
     }
 }

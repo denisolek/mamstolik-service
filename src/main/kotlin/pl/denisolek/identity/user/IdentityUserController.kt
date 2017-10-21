@@ -10,7 +10,7 @@ import javax.validation.Valid
 
 @RestController
 class IdentityUserController(val identityUserService: IdentityUserService) : IdentityUserApi {
-        override fun registerOwner(@RequestBody @Valid registerDTO: RegisterDTO) {
+    override fun registerOwner(@RequestBody @Valid registerDTO: RegisterDTO) {
         identityUserService.registerOwner(registerDTO)
     }
 

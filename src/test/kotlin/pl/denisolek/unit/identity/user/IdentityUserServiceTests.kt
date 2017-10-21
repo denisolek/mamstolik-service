@@ -14,7 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import pl.denisolek.core.email.EmailService
 import pl.denisolek.core.user.UserService
 import pl.denisolek.identity.user.IdentityUserService
+import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.stubs.UserStub
+import pl.denisolek.stubs.dto.ChangePasswordDTOStub
 import pl.denisolek.stubs.dto.SetPasswordDTOStub
 
 @RunWith(MockitoJUnitRunner::class)
@@ -30,6 +32,9 @@ class IdentityUserServiceTests {
 
     @Mock
     private val passwordEncoderMock = mock<PasswordEncoder>()
+
+    @Mock
+    private val authorizationService = mock<AuthorizationService>()
 
     @Test
     fun `resendActivationKey_ wrong email`() {
@@ -47,6 +52,18 @@ class IdentityUserServiceTests {
         Mockito.`when`(userServiceMock.findByUsername(setPasswordDTO.username)).thenReturn(expectedUser)
         identityUserService.setPassword(setPasswordDTO)
         verify(passwordEncoderMock, times(1)).encode("TestPassword123")
+        verify(userServiceMock, times(1)).save(any())
+    }
+
+    @Test
+    fun `changePassword_ correct data`() {
+        val changePasswordDTO = ChangePasswordDTOStub.getChangePasswordDTO()
+        val expectedUser = UserStub.getChangePasswordUser()
+        Mockito.`when`(authorizationService.getCurrentUser()).thenReturn(expectedUser)
+        Mockito.`when`(passwordEncoderMock.matches(any(), any())).thenReturn(true)
+        identityUserService.changePassword(changePasswordDTO)
+        verify(passwordEncoderMock, times(1)).matches(changePasswordDTO.oldPassword, "\$2a\$10\$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG")
+        verify(passwordEncoderMock, times(1)).encode(changePasswordDTO.newPassword)
         verify(userServiceMock, times(1)).save(any())
     }
 }
