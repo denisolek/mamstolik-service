@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController
 import pl.denisolek.identity.user.DTO.ChangePasswordDTO
 import pl.denisolek.identity.user.DTO.RegisterDTO
 import pl.denisolek.identity.user.DTO.SetPasswordDTO
+import pl.denisolek.identity.user.DTO.UserRestaurantDTO
 import javax.validation.Valid
 
 @RestController
@@ -24,5 +25,9 @@ class IdentityUserController(val identityUserService: IdentityUserService) : Ide
 
     override fun changePassword(@RequestBody @Valid changePasswordDTO: ChangePasswordDTO) {
         identityUserService.changePassword(changePasswordDTO)
+    }
+
+    override fun getRestaurants(): List<UserRestaurantDTO> {
+      return identityUserService.getRestaurants()
     }
 }

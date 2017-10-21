@@ -10,6 +10,7 @@ import pl.denisolek.core.user.UserService
 import pl.denisolek.identity.user.DTO.ChangePasswordDTO
 import pl.denisolek.identity.user.DTO.RegisterDTO
 import pl.denisolek.identity.user.DTO.SetPasswordDTO
+import pl.denisolek.identity.user.DTO.UserRestaurantDTO
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 
 @Service
@@ -52,5 +53,12 @@ class IdentityUserService(private val userService: UserService,
         else
             throw ServiceException(HttpStatus.BAD_REQUEST, "Old password doesn't match")
         userService.save(user)
+    }
+
+    fun getRestaurants(): List<UserRestaurantDTO> {
+        val user = authorizationService.getCurrentUser()
+        return user.ownedRestaurants?.map {
+            UserRestaurantDTO.fromRestaurant(it)
+        } ?: mutableListOf()
     }
 }

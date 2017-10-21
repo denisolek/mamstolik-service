@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*
 import pl.denisolek.identity.user.DTO.ChangePasswordDTO
 import pl.denisolek.identity.user.DTO.RegisterDTO
 import pl.denisolek.identity.user.DTO.SetPasswordDTO
+import pl.denisolek.identity.user.DTO.UserRestaurantDTO
 import pl.denisolek.infrastructure.IDENTITY_BASE_PATH
 import javax.validation.Valid
 
@@ -34,4 +35,7 @@ interface IdentityUserApi {
 
     @PutMapping(USERS_PASSWORD_PATH)
     fun changePassword(@RequestBody @Valid changePasswordDTO: ChangePasswordDTO)
+
+    @GetMapping(RESTAURANTS_BASE_PATH)
+    fun getRestaurants(): List<UserRestaurantDTO>
 }

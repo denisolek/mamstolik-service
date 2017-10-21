@@ -15,4 +15,7 @@ data class Address(
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
         var city: City
-) : BaseEntity()
+) : BaseEntity() {
+    fun getAddressString() =
+            "${this.streetName} ${this.buildingNumber}, ${city.name}".toUpperCase()
+}
