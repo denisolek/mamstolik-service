@@ -28,6 +28,6 @@ class IdentityUserController(val identityUserService: IdentityUserService) : Ide
     }
 
     override fun getRestaurants(): List<UserRestaurantDTO> {
-      return identityUserService.getRestaurants()
+        return identityUserService.getRestaurants()
     }
 }
