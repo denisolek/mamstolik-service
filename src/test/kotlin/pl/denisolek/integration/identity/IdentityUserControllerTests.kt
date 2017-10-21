@@ -18,8 +18,7 @@ import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfig
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
@@ -61,6 +60,7 @@ class IdentityUserControllerTests {
 
     val USERS_BASE_PATH = "$IDENTITY_BASE_PATH${IdentityUserApi.USERS_BASE_PATH}"
     val USERS_PASSWORD_PATH = "$IDENTITY_BASE_PATH${IdentityUserApi.USERS_PASSWORD_PATH}"
+    val RESTAURANTS_PATH = "$IDENTITY_BASE_PATH${IdentityUserApi.RESTAURANTS_BASE_PATH}"
 
     @Before
     fun setup() {
@@ -584,5 +584,16 @@ class IdentityUserControllerTests {
 
         assertEquals("test@test.pl", updatedUser.email)
         assertTrue(passwordEncoder.matches(changePasswordDTO.newPassword, updatedUser.password))
+    }
+
+    @Test
+    fun `getRestaurants_ `() {
+        val user = userRepository.findOne(1)
+        doReturn(user).whenever(authorizationService).getCurrentUser()
+        mvc.perform(get(RESTAURANTS_PATH))
+                .andExpect(status().isOk)
+                .andExpect(jsonPath("$[0].id", `is`(1)))
+                .andExpect(jsonPath("$[0].name", `is`("Piano Bar Restaurant & Cafe")))
+                .andExpect(jsonPath("$[0].address", `is`("PÓŁWIEJSKA 42 1A, POZNAŃ")))
     }
 }
