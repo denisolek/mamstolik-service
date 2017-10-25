@@ -29,10 +29,10 @@ import pl.denisolek.core.security.Authority
 import pl.denisolek.core.user.User.AccountState
 import pl.denisolek.core.user.UserRepository
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
-import pl.denisolek.panel.user.DTO.RegisterDTO
-import pl.denisolek.panel.user.PanelUserApi
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.infrastructure.util.convertObjectToJsonBytes
+import pl.denisolek.panel.user.DTO.RegisterDTO
+import pl.denisolek.panel.user.PanelUserApi
 import pl.denisolek.stubs.UserStub
 import pl.denisolek.stubs.dto.ChangePasswordDTOStub
 import pl.denisolek.stubs.dto.RegisterDTOStub

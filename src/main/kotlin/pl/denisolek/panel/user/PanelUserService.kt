@@ -7,11 +7,11 @@ import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.email.EmailService
 import pl.denisolek.core.user.User
 import pl.denisolek.core.user.UserService
+import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.panel.user.DTO.ChangePasswordDTO
 import pl.denisolek.panel.user.DTO.RegisterDTO
 import pl.denisolek.panel.user.DTO.SetPasswordDTO
 import pl.denisolek.panel.user.DTO.UserRestaurantDTO
-import pl.denisolek.infrastructure.config.security.AuthorizationService
 
 @Service
 class PanelUserService(private val userService: UserService,
