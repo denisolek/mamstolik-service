@@ -1,4 +1,4 @@
-package pl.denisolek.panel.user
+package pl.denisolek.panel.identity
 
 import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -8,16 +8,16 @@ import pl.denisolek.core.email.EmailService
 import pl.denisolek.core.user.User
 import pl.denisolek.core.user.UserService
 import pl.denisolek.infrastructure.config.security.AuthorizationService
-import pl.denisolek.panel.user.DTO.ChangePasswordDTO
-import pl.denisolek.panel.user.DTO.RegisterDTO
-import pl.denisolek.panel.user.DTO.SetPasswordDTO
-import pl.denisolek.panel.user.DTO.UserRestaurantDTO
+import pl.denisolek.panel.identity.DTO.ChangePasswordDTO
+import pl.denisolek.panel.identity.DTO.RegisterDTO
+import pl.denisolek.panel.identity.DTO.SetPasswordDTO
+import pl.denisolek.panel.identity.DTO.UserRestaurantDTO
 
 @Service
-class PanelUserService(private val userService: UserService,
-                       private val emailService: EmailService,
-                       private val authorizationService: AuthorizationService,
-                       private val passwordEncoder: PasswordEncoder) {
+class IdentityService(private val userService: UserService,
+                      private val emailService: EmailService,
+                      private val authorizationService: AuthorizationService,
+                      private val passwordEncoder: PasswordEncoder) {
     fun registerOwner(registerDTO: RegisterDTO) {
         val username = userService.generateUsername()
         val newUser = userService.save(registerDTO.toUser().copy(

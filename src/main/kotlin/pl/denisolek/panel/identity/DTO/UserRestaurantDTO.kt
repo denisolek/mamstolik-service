@@ -1,4 +1,4 @@
-package pl.denisolek.panel.user.DTO
+package pl.denisolek.panel.identity.DTO
 
 import pl.denisolek.core.restaurant.Restaurant
 

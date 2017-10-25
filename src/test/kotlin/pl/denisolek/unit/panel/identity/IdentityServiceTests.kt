@@ -1,4 +1,4 @@
-package pl.denisolek.unit.panel.user
+package pl.denisolek.unit.panel.identity
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
@@ -15,16 +15,16 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import pl.denisolek.core.email.EmailService
 import pl.denisolek.core.user.UserService
 import pl.denisolek.infrastructure.config.security.AuthorizationService
-import pl.denisolek.panel.user.PanelUserService
+import pl.denisolek.panel.identity.IdentityService
 import pl.denisolek.stubs.RestaurantStub
 import pl.denisolek.stubs.UserStub
 import pl.denisolek.stubs.dto.ChangePasswordDTOStub
 import pl.denisolek.stubs.dto.SetPasswordDTOStub
 
 @RunWith(MockitoJUnitRunner::class)
-class PanelUserServiceTests {
+class IdentityServiceTests {
     @InjectMocks
-    lateinit var panelUserService: PanelUserService
+    lateinit var identityService: IdentityService
 
     @Mock
     private val userServiceMock = mock<UserService>()
@@ -41,7 +41,7 @@ class PanelUserServiceTests {
     @Test
     fun `resendActivationKey_ wrong email`() {
         Mockito.`when`(userServiceMock.findByEmail("test@test.pl")).thenReturn(null)
-        panelUserService.resendActivationKey("test@test.pl")
+        identityService.resendActivationKey("test@test.pl")
         verify(emailServiceMock, times(0)).registerOwner(any())
     }
 
@@ -52,7 +52,7 @@ class PanelUserServiceTests {
         )
         val expectedUser = UserStub.getSetPasswordUser()
         Mockito.`when`(userServiceMock.findByUsername(setPasswordDTO.username)).thenReturn(expectedUser)
-        panelUserService.setPassword(setPasswordDTO)
+        identityService.setPassword(setPasswordDTO)
         verify(passwordEncoderMock, times(1)).encode("TestPassword123")
         verify(userServiceMock, times(1)).save(any())
     }
@@ -63,7 +63,7 @@ class PanelUserServiceTests {
         val expectedUser = UserStub.getChangePasswordUser()
         Mockito.`when`(authorizationService.getCurrentUser()).thenReturn(expectedUser)
         Mockito.`when`(passwordEncoderMock.matches(any(), any())).thenReturn(true)
-        panelUserService.changePassword(changePasswordDTO)
+        identityService.changePassword(changePasswordDTO)
         verify(passwordEncoderMock, times(1)).matches(changePasswordDTO.oldPassword, "\$2a\$10\$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG")
         verify(passwordEncoderMock, times(1)).encode(changePasswordDTO.newPassword)
         verify(userServiceMock, times(1)).save(any())
@@ -74,7 +74,7 @@ class PanelUserServiceTests {
         val expectedUser = UserStub.getUserOwner()
         Mockito.`when`(authorizationService.getCurrentUser()).thenReturn(expectedUser)
 
-        val restaurants = panelUserService.getRestaurants()
+        val restaurants = identityService.getRestaurants()
         Assert.assertEquals(0, restaurants.size)
     }
 
@@ -84,7 +84,7 @@ class PanelUserServiceTests {
         expectedUser.ownedRestaurants?.add(RestaurantStub.getRestaurant().copy(id = 1, name = "NameStub1"))
         Mockito.`when`(authorizationService.getCurrentUser()).thenReturn(expectedUser)
 
-        val restaurants = panelUserService.getRestaurants()
+        val restaurants = identityService.getRestaurants()
         Assert.assertEquals(1, restaurants.size)
         Assert.assertEquals(1, restaurants[0].id)
         Assert.assertEquals("NameStub1", restaurants[0].name)
@@ -97,7 +97,7 @@ class PanelUserServiceTests {
         expectedUser.ownedRestaurants?.add(RestaurantStub.getRestaurant().copy(id = 2, name = "NameStub2"))
         Mockito.`when`(authorizationService.getCurrentUser()).thenReturn(expectedUser)
 
-        val restaurants = panelUserService.getRestaurants()
+        val restaurants = identityService.getRestaurants()
         Assert.assertEquals(2, restaurants.size)
         Assert.assertEquals(1, restaurants[0].id)
         Assert.assertEquals("NameStub1", restaurants[0].name)

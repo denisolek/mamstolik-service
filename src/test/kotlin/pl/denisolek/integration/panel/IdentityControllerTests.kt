@@ -31,8 +31,8 @@ import pl.denisolek.core.user.UserRepository
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.infrastructure.util.convertObjectToJsonBytes
-import pl.denisolek.panel.user.DTO.RegisterDTO
-import pl.denisolek.panel.user.PanelUserApi
+import pl.denisolek.panel.identity.DTO.RegisterDTO
+import pl.denisolek.panel.identity.IdentityApi
 import pl.denisolek.stubs.UserStub
 import pl.denisolek.stubs.dto.ChangePasswordDTOStub
 import pl.denisolek.stubs.dto.RegisterDTOStub
@@ -43,7 +43,7 @@ import javax.transaction.Transactional
 @ActiveProfiles("test", "fakeAuthorization")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
-class PanelUserControllerTests {
+class IdentityControllerTests {
     @SpyBean
     lateinit var authorizationService: AuthorizationService
 
@@ -58,9 +58,9 @@ class PanelUserControllerTests {
 
     lateinit var mvc: MockMvc
 
-    val USERS_BASE_PATH = "$PANEL_BASE_PATH${PanelUserApi.USERS_BASE_PATH}"
-    val USERS_PASSWORD_PATH = "$PANEL_BASE_PATH${PanelUserApi.USERS_PASSWORD_PATH}"
-    val RESTAURANTS_PATH = "$PANEL_BASE_PATH${PanelUserApi.RESTAURANTS_BASE_PATH}"
+    val USERS_BASE_PATH = "$PANEL_BASE_PATH${IdentityApi.USERS_BASE_PATH}"
+    val USERS_PASSWORD_PATH = "$PANEL_BASE_PATH${IdentityApi.USERS_PASSWORD_PATH}"
+    val RESTAURANTS_PATH = "$PANEL_BASE_PATH${IdentityApi.RESTAURANTS_BASE_PATH}"
 
     @Before
     fun setup() {

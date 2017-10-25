@@ -1,33 +1,33 @@
-package pl.denisolek.panel.user
+package pl.denisolek.panel.identity
 
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import pl.denisolek.panel.user.DTO.ChangePasswordDTO
-import pl.denisolek.panel.user.DTO.RegisterDTO
-import pl.denisolek.panel.user.DTO.SetPasswordDTO
-import pl.denisolek.panel.user.DTO.UserRestaurantDTO
+import pl.denisolek.panel.identity.DTO.ChangePasswordDTO
+import pl.denisolek.panel.identity.DTO.RegisterDTO
+import pl.denisolek.panel.identity.DTO.SetPasswordDTO
+import pl.denisolek.panel.identity.DTO.UserRestaurantDTO
 import javax.validation.Valid
 
 @RestController
-class PanelUserController(val panelUserService: PanelUserService) : PanelUserApi {
+class IdentityController(val identityService: IdentityService) : IdentityApi {
     override fun registerOwner(@RequestBody @Valid registerDTO: RegisterDTO) {
-        panelUserService.registerOwner(registerDTO)
+        identityService.registerOwner(registerDTO)
     }
 
     override fun resendActivationKey(@RequestParam(required = true) email: String) {
-        panelUserService.resendActivationKey(email)
+        identityService.resendActivationKey(email)
     }
 
     override fun setPassword(@RequestBody @Valid setPasswordDTO: SetPasswordDTO) {
-        panelUserService.setPassword(setPasswordDTO)
+        identityService.setPassword(setPasswordDTO)
     }
 
     override fun changePassword(@RequestBody @Valid changePasswordDTO: ChangePasswordDTO) {
-        panelUserService.changePassword(changePasswordDTO)
+        identityService.changePassword(changePasswordDTO)
     }
 
     override fun getRestaurants(): List<UserRestaurantDTO> {
-        return panelUserService.getRestaurants()
+        return identityService.getRestaurants()
     }
 }

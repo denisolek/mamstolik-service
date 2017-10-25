@@ -1,18 +1,18 @@
-package pl.denisolek.panel.user
+package pl.denisolek.panel.identity
 
 import io.swagger.annotations.Api
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
-import pl.denisolek.panel.user.DTO.ChangePasswordDTO
-import pl.denisolek.panel.user.DTO.RegisterDTO
-import pl.denisolek.panel.user.DTO.SetPasswordDTO
-import pl.denisolek.panel.user.DTO.UserRestaurantDTO
+import pl.denisolek.panel.identity.DTO.ChangePasswordDTO
+import pl.denisolek.panel.identity.DTO.RegisterDTO
+import pl.denisolek.panel.identity.DTO.SetPasswordDTO
+import pl.denisolek.panel.identity.DTO.UserRestaurantDTO
 import javax.validation.Valid
 
 @Api("User controller", tags = arrayOf("User"))
 @RequestMapping(PANEL_BASE_PATH)
-interface PanelUserApi {
+interface IdentityApi {
     companion object {
         const val USERS_BASE_PATH = "/users"
         const val USERS_PASSWORD_PATH = "$USERS_BASE_PATH/password"

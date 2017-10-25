@@ -16,7 +16,7 @@ class RealAuthorizationService(val userRepository: UserRepository) : Authorizati
         if (authentication.name != null)
             return userRepository.findByEmail(authentication.name!!)
         else
-            throw ServiceException(HttpStatus.NOT_FOUND, "Couldn't find user")
+            throw ServiceException(HttpStatus.NOT_FOUND, "Couldn't find identity")
 
     }
 }

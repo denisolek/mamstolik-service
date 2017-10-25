@@ -1,6 +1,6 @@
 package pl.denisolek.stubs.dto
 
-import pl.denisolek.panel.user.DTO.RegisterDTO
+import pl.denisolek.panel.identity.DTO.RegisterDTO
 
 class RegisterDTOStub {
     companion object {
