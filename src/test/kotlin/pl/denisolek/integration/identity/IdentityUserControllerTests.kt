@@ -30,7 +30,6 @@ import pl.denisolek.core.user.User.AccountState
 import pl.denisolek.core.user.UserRepository
 import pl.denisolek.identity.user.DTO.RegisterDTO
 import pl.denisolek.identity.user.IdentityUserApi
-import pl.denisolek.infrastructure.IDENTITY_BASE_PATH
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.infrastructure.util.convertObjectToJsonBytes
 import pl.denisolek.stubs.UserStub

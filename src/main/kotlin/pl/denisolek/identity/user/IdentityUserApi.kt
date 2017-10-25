@@ -7,11 +7,11 @@ import pl.denisolek.identity.user.DTO.ChangePasswordDTO
 import pl.denisolek.identity.user.DTO.RegisterDTO
 import pl.denisolek.identity.user.DTO.SetPasswordDTO
 import pl.denisolek.identity.user.DTO.UserRestaurantDTO
-import pl.denisolek.infrastructure.IDENTITY_BASE_PATH
+import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import javax.validation.Valid
 
 @Api("User controller", tags = arrayOf("User"))
-@RequestMapping(IDENTITY_BASE_PATH)
+@RequestMapping(PANEL_BASE_PATH)
 interface IdentityUserApi {
     companion object {
         const val USERS_BASE_PATH = "/users"
