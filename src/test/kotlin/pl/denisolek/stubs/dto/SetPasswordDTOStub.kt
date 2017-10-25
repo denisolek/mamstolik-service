@@ -1,6 +1,6 @@
 package pl.denisolek.stubs.dto
 
-import pl.denisolek.identity.user.DTO.SetPasswordDTO
+import pl.denisolek.panel.user.DTO.SetPasswordDTO
 
 class SetPasswordDTOStub {
     companion object {

@@ -14,7 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner
 import org.springframework.security.crypto.password.PasswordEncoder
 import pl.denisolek.core.email.EmailService
 import pl.denisolek.core.user.UserService
-import pl.denisolek.identity.user.IdentityUserService
+import pl.denisolek.panel.user.IdentityUserService
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.stubs.RestaurantStub
 import pl.denisolek.stubs.UserStub

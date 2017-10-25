@@ -1,4 +1,4 @@
-package pl.denisolek.identity.user.DTO
+package pl.denisolek.panel.user.DTO
 
 import org.apache.commons.lang3.RandomStringUtils
 import org.hibernate.validator.constraints.Email

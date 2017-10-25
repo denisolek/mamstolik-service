@@ -1,4 +1,4 @@
-package pl.denisolek.identity.user
+package pl.denisolek.panel.user
 
 import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -7,10 +7,10 @@ import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.email.EmailService
 import pl.denisolek.core.user.User
 import pl.denisolek.core.user.UserService
-import pl.denisolek.identity.user.DTO.ChangePasswordDTO
-import pl.denisolek.identity.user.DTO.RegisterDTO
-import pl.denisolek.identity.user.DTO.SetPasswordDTO
-import pl.denisolek.identity.user.DTO.UserRestaurantDTO
+import pl.denisolek.panel.user.DTO.ChangePasswordDTO
+import pl.denisolek.panel.user.DTO.RegisterDTO
+import pl.denisolek.panel.user.DTO.SetPasswordDTO
+import pl.denisolek.panel.user.DTO.UserRestaurantDTO
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 
 @Service

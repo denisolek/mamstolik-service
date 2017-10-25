@@ -1,12 +1,12 @@
-package pl.denisolek.identity.user
+package pl.denisolek.panel.user
 
 import io.swagger.annotations.Api
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import pl.denisolek.identity.user.DTO.ChangePasswordDTO
-import pl.denisolek.identity.user.DTO.RegisterDTO
-import pl.denisolek.identity.user.DTO.SetPasswordDTO
-import pl.denisolek.identity.user.DTO.UserRestaurantDTO
+import pl.denisolek.panel.user.DTO.ChangePasswordDTO
+import pl.denisolek.panel.user.DTO.RegisterDTO
+import pl.denisolek.panel.user.DTO.SetPasswordDTO
+import pl.denisolek.panel.user.DTO.UserRestaurantDTO
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import javax.validation.Valid
 

@@ -1,12 +1,12 @@
-package pl.denisolek.identity.user
+package pl.denisolek.panel.user
 
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import pl.denisolek.identity.user.DTO.ChangePasswordDTO
-import pl.denisolek.identity.user.DTO.RegisterDTO
-import pl.denisolek.identity.user.DTO.SetPasswordDTO
-import pl.denisolek.identity.user.DTO.UserRestaurantDTO
+import pl.denisolek.panel.user.DTO.ChangePasswordDTO
+import pl.denisolek.panel.user.DTO.RegisterDTO
+import pl.denisolek.panel.user.DTO.SetPasswordDTO
+import pl.denisolek.panel.user.DTO.UserRestaurantDTO
 import javax.validation.Valid
 
 @RestController

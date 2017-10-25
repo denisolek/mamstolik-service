@@ -28,8 +28,8 @@ import org.springframework.web.context.WebApplicationContext
 import pl.denisolek.core.security.Authority
 import pl.denisolek.core.user.User.AccountState
 import pl.denisolek.core.user.UserRepository
-import pl.denisolek.identity.user.DTO.RegisterDTO
-import pl.denisolek.identity.user.IdentityUserApi
+import pl.denisolek.panel.user.DTO.RegisterDTO
+import pl.denisolek.panel.user.IdentityUserApi
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.infrastructure.util.convertObjectToJsonBytes
 import pl.denisolek.stubs.UserStub

@@ -1,4 +1,4 @@
-package pl.denisolek.identity.user.DTO
+package pl.denisolek.panel.user.DTO
 
 import org.hibernate.validator.constraints.NotBlank
 import javax.validation.constraints.Pattern
