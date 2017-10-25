@@ -14,10 +14,10 @@ import pl.denisolek.panel.user.DTO.UserRestaurantDTO
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 
 @Service
-class IdentityUserService(private val userService: UserService,
-                          private val emailService: EmailService,
-                          private val authorizationService: AuthorizationService,
-                          private val passwordEncoder: PasswordEncoder) {
+class PanelUserService(private val userService: UserService,
+                       private val emailService: EmailService,
+                       private val authorizationService: AuthorizationService,
+                       private val passwordEncoder: PasswordEncoder) {
     fun registerOwner(registerDTO: RegisterDTO) {
         val username = userService.generateUsername()
         val newUser = userService.save(registerDTO.toUser().copy(

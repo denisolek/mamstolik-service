@@ -12,7 +12,7 @@ import javax.validation.Valid
 
 @Api("User controller", tags = arrayOf("User"))
 @RequestMapping(PANEL_BASE_PATH)
-interface IdentityUserApi {
+interface PanelUserApi {
     companion object {
         const val USERS_BASE_PATH = "/users"
         const val USERS_PASSWORD_PATH = "$USERS_BASE_PATH/password"

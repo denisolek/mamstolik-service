@@ -29,7 +29,7 @@ import pl.denisolek.core.security.Authority
 import pl.denisolek.core.user.User.AccountState
 import pl.denisolek.core.user.UserRepository
 import pl.denisolek.panel.user.DTO.RegisterDTO
-import pl.denisolek.panel.user.IdentityUserApi
+import pl.denisolek.panel.user.PanelUserApi
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.infrastructure.util.convertObjectToJsonBytes
 import pl.denisolek.stubs.UserStub
@@ -57,9 +57,9 @@ class IdentityUserControllerTests {
 
     lateinit var mvc: MockMvc
 
-    val USERS_BASE_PATH = "$IDENTITY_BASE_PATH${IdentityUserApi.USERS_BASE_PATH}"
-    val USERS_PASSWORD_PATH = "$IDENTITY_BASE_PATH${IdentityUserApi.USERS_PASSWORD_PATH}"
-    val RESTAURANTS_PATH = "$IDENTITY_BASE_PATH${IdentityUserApi.RESTAURANTS_BASE_PATH}"
+    val USERS_BASE_PATH = "$IDENTITY_BASE_PATH${PanelUserApi.USERS_BASE_PATH}"
+    val USERS_PASSWORD_PATH = "$IDENTITY_BASE_PATH${PanelUserApi.USERS_PASSWORD_PATH}"
+    val RESTAURANTS_PATH = "$IDENTITY_BASE_PATH${PanelUserApi.RESTAURANTS_BASE_PATH}"
 
     @Before
     fun setup() {

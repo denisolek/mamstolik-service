@@ -10,24 +10,24 @@ import pl.denisolek.panel.user.DTO.UserRestaurantDTO
 import javax.validation.Valid
 
 @RestController
-class IdentityUserController(val identityUserService: IdentityUserService) : IdentityUserApi {
+class PanelUserController(val panelUserService: PanelUserService) : PanelUserApi {
     override fun registerOwner(@RequestBody @Valid registerDTO: RegisterDTO) {
-        identityUserService.registerOwner(registerDTO)
+        panelUserService.registerOwner(registerDTO)
     }
 
     override fun resendActivationKey(@RequestParam(required = true) email: String) {
-        identityUserService.resendActivationKey(email)
+        panelUserService.resendActivationKey(email)
     }
 
     override fun setPassword(@RequestBody @Valid setPasswordDTO: SetPasswordDTO) {
-        identityUserService.setPassword(setPasswordDTO)
+        panelUserService.setPassword(setPasswordDTO)
     }
 
     override fun changePassword(@RequestBody @Valid changePasswordDTO: ChangePasswordDTO) {
-        identityUserService.changePassword(changePasswordDTO)
+        panelUserService.changePassword(changePasswordDTO)
     }
 
     override fun getRestaurants(): List<UserRestaurantDTO> {
-        return identityUserService.getRestaurants()
+        return panelUserService.getRestaurants()
     }
 }
