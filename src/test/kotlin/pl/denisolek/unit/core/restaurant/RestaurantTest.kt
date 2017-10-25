@@ -1,4 +1,4 @@
-package pl.denisolek.unit.restaurant
+package pl.denisolek.unit.core.restaurant
 
 import org.hamcrest.Matchers.`is`
 import org.junit.Assert

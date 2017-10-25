@@ -1,4 +1,4 @@
-package pl.denisolek.integration.identity
+package pl.denisolek.integration.panel
 
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.whenever
@@ -28,6 +28,7 @@ import org.springframework.web.context.WebApplicationContext
 import pl.denisolek.core.security.Authority
 import pl.denisolek.core.user.User.AccountState
 import pl.denisolek.core.user.UserRepository
+import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.panel.user.DTO.RegisterDTO
 import pl.denisolek.panel.user.PanelUserApi
 import pl.denisolek.infrastructure.config.security.AuthorizationService
@@ -42,7 +43,7 @@ import javax.transaction.Transactional
 @ActiveProfiles("test", "fakeAuthorization")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
-class IdentityUserControllerTests {
+class PanelUserControllerTests {
     @SpyBean
     lateinit var authorizationService: AuthorizationService
 
@@ -57,9 +58,9 @@ class IdentityUserControllerTests {
 
     lateinit var mvc: MockMvc
 
-    val USERS_BASE_PATH = "$IDENTITY_BASE_PATH${PanelUserApi.USERS_BASE_PATH}"
-    val USERS_PASSWORD_PATH = "$IDENTITY_BASE_PATH${PanelUserApi.USERS_PASSWORD_PATH}"
-    val RESTAURANTS_PATH = "$IDENTITY_BASE_PATH${PanelUserApi.RESTAURANTS_BASE_PATH}"
+    val USERS_BASE_PATH = "$PANEL_BASE_PATH${PanelUserApi.USERS_BASE_PATH}"
+    val USERS_PASSWORD_PATH = "$PANEL_BASE_PATH${PanelUserApi.USERS_PASSWORD_PATH}"
+    val RESTAURANTS_PATH = "$PANEL_BASE_PATH${PanelUserApi.RESTAURANTS_BASE_PATH}"
 
     @Before
     fun setup() {

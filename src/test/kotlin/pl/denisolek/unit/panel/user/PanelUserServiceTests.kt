@@ -1,4 +1,4 @@
-package pl.denisolek.unit.identity.user
+package pl.denisolek.unit.panel.user
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
