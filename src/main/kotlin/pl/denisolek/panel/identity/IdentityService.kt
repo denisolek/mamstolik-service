@@ -8,10 +8,7 @@ import pl.denisolek.core.email.EmailService
 import pl.denisolek.core.user.User
 import pl.denisolek.core.user.UserService
 import pl.denisolek.infrastructure.config.security.AuthorizationService
-import pl.denisolek.panel.identity.DTO.ChangePasswordDTO
-import pl.denisolek.panel.identity.DTO.RegisterDTO
-import pl.denisolek.panel.identity.DTO.SetPasswordDTO
-import pl.denisolek.panel.identity.DTO.UserRestaurantDTO
+import pl.denisolek.panel.identity.DTO.*
 
 @Service
 class IdentityService(private val userService: UserService,
@@ -60,5 +57,10 @@ class IdentityService(private val userService: UserService,
         return user.ownedRestaurants?.map {
             UserRestaurantDTO.fromRestaurant(it)
         } ?: mutableListOf()
+    }
+
+    fun getEmployees(): List<RestaurantEmployeeDTO> {
+        val user = authorizationService.getCurrentUser()
+        return RestaurantEmployeeDTO.fromEmployees(user.restaurant?.employees) ?: listOf()
     }
 }

@@ -4,10 +4,7 @@ import io.swagger.annotations.Api
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
-import pl.denisolek.panel.identity.DTO.ChangePasswordDTO
-import pl.denisolek.panel.identity.DTO.RegisterDTO
-import pl.denisolek.panel.identity.DTO.SetPasswordDTO
-import pl.denisolek.panel.identity.DTO.UserRestaurantDTO
+import pl.denisolek.panel.identity.DTO.*
 import javax.validation.Valid
 
 @Api("User controller", tags = arrayOf("User"))
@@ -38,4 +35,7 @@ interface IdentityApi {
 
     @GetMapping(RESTAURANTS_BASE_PATH)
     fun getRestaurants(): List<UserRestaurantDTO>
+
+    @GetMapping(EMPLOYEES_BASE_PATH)
+    fun getEmployees(): List<RestaurantEmployeeDTO>
 }
