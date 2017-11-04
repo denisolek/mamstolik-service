@@ -14,7 +14,7 @@ import pl.denisolek.infrastructure.API_BASE_PATH
 import springfox.documentation.annotations.ApiIgnore
 import java.time.LocalDateTime
 
-@Api(value = "GuestRestaurantApi")
+@Api("Restaurant controller", tags = arrayOf("Restaurant"))
 @RequestMapping(API_BASE_PATH)
 interface GuestRestaurantApi {
     companion object {

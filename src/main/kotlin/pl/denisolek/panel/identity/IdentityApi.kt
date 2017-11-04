@@ -7,7 +7,7 @@ import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.panel.identity.DTO.*
 import javax.validation.Valid
 
-@Api("User controller", tags = arrayOf("User"))
+@Api("Identity controller", tags = arrayOf("Identity"))
 @RequestMapping(PANEL_BASE_PATH)
 interface IdentityApi {
     companion object {
