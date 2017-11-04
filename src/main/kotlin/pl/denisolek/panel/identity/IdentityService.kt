@@ -55,6 +55,33 @@ class IdentityService(private val userService: UserService,
         userService.save(user)
     }
 
+    fun lostPassword(lostPasswordDTO: LostPasswordDTO) {
+        val user = userService.findByEmail(lostPasswordDTO.email.toLowerCase())
+
+        if (user != null && user.authorities.contains(Authority(Authority.Role.ROLE_OWNER))) {
+            val resetKey = RandomStringUtils.randomAlphabetic(30)
+            user.resetPasswordKey = passwordEncoder.encode(resetKey)
+            userService.save(user)
+            Thread { emailService.lostPassword(user, resetKey) }.start()
+        }
+    }
+
+    fun resetPassword(resetPasswordDTO: ResetPasswordDTO) {
+        val user = userService.findByUsername(resetPasswordDTO.username)
+
+        if (user == null || !passwordEncoder.matches(resetPasswordDTO.resetKey, user.resetPasswordKey))
+            throw ServiceException(HttpStatus.BAD_REQUEST, "Reset key doesn't match this user")
+
+        if (user.accountState == User.AccountState.NOT_ACTIVE) {
+            user.accountState = User.AccountState.ACTIVE
+        }
+
+        user.resetPasswordKey = null
+        user.activationKey = null
+        user.password = passwordEncoder.encode(resetPasswordDTO.password)
+        userService.save(user)
+    }
+
     fun getRestaurants(): List<UserRestaurantDTO> {
         val user = authorizationService.getCurrentUser()
         return user.ownedRestaurants?.map {
@@ -65,16 +92,5 @@ class IdentityService(private val userService: UserService,
     fun getEmployees(): List<RestaurantEmployeeDTO> {
         val user = authorizationService.getCurrentUser()
         return RestaurantEmployeeDTO.fromEmployees(user.restaurant?.employees) ?: listOf()
-    }
-
-    fun lostPassword(lostPasswordDTO: LostPasswordDTO) {
-        val user = userService.findByEmail(lostPasswordDTO.email.toLowerCase())
-
-        if (user != null && user.authorities.contains(Authority(Authority.Role.ROLE_OWNER))) {
-            var resetKey = RandomStringUtils.randomAlphabetic(30)
-            user.resetPasswordKey = passwordEncoder.encode(resetKey)
-            userService.save(user)
-            Thread { emailService.lostPassword(user, resetKey) }.start()
-        }
     }
 }
