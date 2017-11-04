@@ -39,4 +39,14 @@ class EmailService(private val emailSender: EmailSender, private val templateEng
         val body = templateEngine.process("register-owner", context)
         emailSender.sendEmail(user.email!!, "Rejestracja", body)
     }
+
+    fun lostPassword(user: User, resetKey: String) {
+        val context = Context()
+        context.setVariable("name", user.firstName)
+        context.setVariable("username", user.username)
+        context.setVariable("resetKey", resetKey)
+
+        val body = templateEngine.process("lost-password", context)
+        emailSender.sendEmail(user.email!!, "Reset hasła", body)
+    }
 }
