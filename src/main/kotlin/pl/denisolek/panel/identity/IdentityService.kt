@@ -1,13 +1,16 @@
 package pl.denisolek.panel.identity
 
+import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.email.EmailService
+import pl.denisolek.core.security.Authority
 import pl.denisolek.core.user.User
 import pl.denisolek.core.user.UserService
 import pl.denisolek.infrastructure.config.security.AuthorizationService
+import pl.denisolek.infrastructure.util.generateUsernameString
 import pl.denisolek.panel.identity.DTO.*
 
 @Service
@@ -18,7 +21,8 @@ class IdentityService(private val userService: UserService,
     fun registerOwner(registerDTO: RegisterDTO) {
         val username = userService.generateUsername()
         val newUser = userService.save(registerDTO.toUser().copy(
-                username = username
+                username = username,
+                email = registerDTO.email.toLowerCase()
         ))
         Thread { emailService.registerOwner(newUser) }.start()
     }
@@ -62,5 +66,16 @@ class IdentityService(private val userService: UserService,
     fun getEmployees(): List<RestaurantEmployeeDTO> {
         val user = authorizationService.getCurrentUser()
         return RestaurantEmployeeDTO.fromEmployees(user.restaurant?.employees) ?: listOf()
+    }
+
+    fun lostPassword(lostPasswordDTO: LostPasswordDTO) {
+        val user = userService.findByEmail(lostPasswordDTO.email.toLowerCase())
+
+        if(user != null && user.authorities.contains(Authority(Authority.Role.ROLE_OWNER))) {
+            var resetKey = RandomStringUtils.randomAlphabetic(30)
+            user.resetPasswordKey = passwordEncoder.encode(resetKey)
+            userService.save(user)
+            Thread { emailService.lostPassword(user, resetKey) }.start()
+        }
     }
 }
