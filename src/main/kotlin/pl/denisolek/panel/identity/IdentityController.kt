@@ -24,6 +24,10 @@ class IdentityController(val identityService: IdentityService) : IdentityApi {
         identityService.changePassword(changePasswordDTO)
     }
 
+    override fun lostPassword(@RequestBody @Valid lostPasswordDTO: LostPasswordDTO) {
+        identityService.lostPassword(lostPasswordDTO)
+    }
+
     override fun getRestaurants(): List<UserRestaurantDTO> {
         return identityService.getRestaurants()
     }

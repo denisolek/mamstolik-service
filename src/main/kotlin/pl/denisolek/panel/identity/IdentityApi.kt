@@ -33,6 +33,9 @@ interface IdentityApi {
     @PutMapping(USERS_PASSWORD_PATH)
     fun changePassword(@RequestBody @Valid changePasswordDTO: ChangePasswordDTO)
 
+    @PostMapping(USERS_LOST_PASSWORD_PATH)
+    fun lostPassword(@RequestBody @Valid lostPasswordDTO: LostPasswordDTO)
+
     @GetMapping(RESTAURANTS_BASE_PATH)
     fun getRestaurants(): List<UserRestaurantDTO>
 
