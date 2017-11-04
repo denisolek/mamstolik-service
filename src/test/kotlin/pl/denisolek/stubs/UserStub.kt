@@ -1,10 +1,8 @@
 package pl.denisolek.stubs
 
-import pl.denisolek.core.menu.Menu
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.security.Authority
 import pl.denisolek.core.user.User
-import java.time.Duration
 
 class UserStub {
     companion object {

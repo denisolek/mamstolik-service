@@ -1,6 +1,5 @@
 package pl.denisolek.core.user
 
-import pl.denisolek.core.BaseEntity
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.security.Authority
 import javax.persistence.*

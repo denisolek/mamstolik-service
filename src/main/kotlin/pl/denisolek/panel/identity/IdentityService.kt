@@ -10,7 +10,6 @@ import pl.denisolek.core.security.Authority
 import pl.denisolek.core.user.User
 import pl.denisolek.core.user.UserService
 import pl.denisolek.infrastructure.config.security.AuthorizationService
-import pl.denisolek.infrastructure.util.generateUsernameString
 import pl.denisolek.panel.identity.DTO.*
 
 @Service
@@ -71,7 +70,7 @@ class IdentityService(private val userService: UserService,
     fun lostPassword(lostPasswordDTO: LostPasswordDTO) {
         val user = userService.findByEmail(lostPasswordDTO.email.toLowerCase())
 
-        if(user != null && user.authorities.contains(Authority(Authority.Role.ROLE_OWNER))) {
+        if (user != null && user.authorities.contains(Authority(Authority.Role.ROLE_OWNER))) {
             var resetKey = RandomStringUtils.randomAlphabetic(30)
             user.resetPasswordKey = passwordEncoder.encode(resetKey)
             userService.save(user)
