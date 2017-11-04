@@ -16,6 +16,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.headers().frameOptions().disable().and()
                 .authorizeRequests()
+                .antMatchers("/users").authenticated()
                 .antMatchers("/api").permitAll()
                 .antMatchers(HttpMethod.PUT, "/panel/users/password").hasAuthority("ROLE_OWNER")
                 .antMatchers("/panel/restaurants").hasAuthority("ROLE_OWNER")
