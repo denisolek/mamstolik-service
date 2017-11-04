@@ -19,6 +19,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/api").permitAll()
                 .antMatchers(HttpMethod.PUT, "/panel/users/password").hasAuthority("ROLE_OWNER")
                 .antMatchers("/panel/restaurants").hasAuthority("ROLE_OWNER")
+                .antMatchers("/panel/employees").hasAuthority("ROLE_RESTAURANT")
                 .antMatchers("/panel/users", "/panel/users/**").permitAll()
                 .antMatchers("/panel/**").hasAuthority("ROLE_OWNER")
                 .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN");
