@@ -34,10 +34,7 @@ import pl.denisolek.infrastructure.util.convertObjectToJsonBytes
 import pl.denisolek.panel.identity.DTO.RegisterDTO
 import pl.denisolek.panel.identity.IdentityApi
 import pl.denisolek.stubs.UserStub
-import pl.denisolek.stubs.dto.ChangePasswordDTOStub
-import pl.denisolek.stubs.dto.LostPasswordDTOStub
-import pl.denisolek.stubs.dto.RegisterDTOStub
-import pl.denisolek.stubs.dto.SetPasswordDTOStub
+import pl.denisolek.stubs.dto.*
 import javax.transaction.Transactional
 
 @RunWith(SpringRunner::class)
@@ -62,6 +59,7 @@ class IdentityControllerTests {
     val USERS_BASE_PATH = "$PANEL_BASE_PATH${IdentityApi.USERS_BASE_PATH}"
     val USERS_PASSWORD_PATH = "$PANEL_BASE_PATH${IdentityApi.USERS_PASSWORD_PATH}"
     val USERS_LOST_PASSWORD_PATH = "$PANEL_BASE_PATH${IdentityApi.USERS_LOST_PASSWORD_PATH}"
+    val USERS_RESET_PASSWORD_PATH = "$PANEL_BASE_PATH${IdentityApi.USERS_RESET_PASSWORD_PATH}"
     val RESTAURANTS_PATH = "$PANEL_BASE_PATH${IdentityApi.RESTAURANTS_BASE_PATH}"
     val EMPLOYEES_PATH = "$PANEL_BASE_PATH${IdentityApi.EMPLOYEES_BASE_PATH}"
 
@@ -334,8 +332,6 @@ class IdentityControllerTests {
         result
                 .andExpect(status().isBadRequest)
                 .andExpect(jsonPath("$.message", `is`("Activation key doesn't match or password is already set.")))
-
-        print(1)
     }
 
     @Test
@@ -643,6 +639,158 @@ class IdentityControllerTests {
         val updatedUser = userRepository.findByEmail(lostPasswordDTO.email)
 
         assertNotNull(updatedUser.resetPasswordKey)
+    }
+
+    @Test
+    fun `resetPassword_ username is empty`() {
+        val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO().copy(
+                username = ""
+        )
+
+        val body = convertObjectToJsonBytes(resetPasswordDTO)
+
+        val result = mvc.perform(put(USERS_RESET_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `resetPassword_ password is empty`() {
+        val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO().copy(
+                password = ""
+        )
+
+        val body = convertObjectToJsonBytes(resetPasswordDTO)
+
+        val result = mvc.perform(put(USERS_RESET_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `resetPassword_ password too short`() {
+        val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO().copy(
+                password = "aA1"
+        )
+
+        val body = convertObjectToJsonBytes(resetPasswordDTO)
+
+        val result = mvc.perform(put(USERS_RESET_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `resetPassword_ password too long`() {
+        val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO().copy(
+                password = "aA1${randomAlphanumeric(78)}"
+        )
+
+        val body = convertObjectToJsonBytes(resetPasswordDTO)
+
+        val result = mvc.perform(put(USERS_RESET_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `resetPassword_ password without any a-z`() {
+        val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO().copy(
+                password = "TEST123456"
+        )
+
+        val body = convertObjectToJsonBytes(resetPasswordDTO)
+
+        val result = mvc.perform(put(USERS_RESET_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `resetPassword_ password without any A-Z`() {
+        val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO().copy(
+                password = "test123456"
+        )
+
+        val body = convertObjectToJsonBytes(resetPasswordDTO)
+
+        val result = mvc.perform(put(USERS_RESET_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `resetPassword_ password without any 1-9`() {
+        val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO().copy(
+                password = "testTESTOWY"
+        )
+
+        val body = convertObjectToJsonBytes(resetPasswordDTO)
+
+        val result = mvc.perform(put(USERS_RESET_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `resetPassword_ resetKey is empty`() {
+        val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO().copy(
+                resetKey = ""
+        )
+
+        val body = convertObjectToJsonBytes(resetPasswordDTO)
+
+        val result = mvc.perform(put(USERS_RESET_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
 
     @Test
