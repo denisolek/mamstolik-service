@@ -7,12 +7,15 @@ import com.nhaarman.mockito_kotlin.verify
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentCaptor
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.runners.MockitoJUnitRunner
 import org.springframework.security.crypto.password.PasswordEncoder
+import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.email.EmailService
+import pl.denisolek.core.user.User
 import pl.denisolek.core.user.UserService
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.panel.identity.IdentityService
@@ -20,6 +23,7 @@ import pl.denisolek.stubs.RestaurantStub
 import pl.denisolek.stubs.UserStub
 import pl.denisolek.stubs.dto.ChangePasswordDTOStub
 import pl.denisolek.stubs.dto.LostPasswordDTOStub
+import pl.denisolek.stubs.dto.ResetPasswordDTOStub
 import pl.denisolek.stubs.dto.SetPasswordDTOStub
 
 @RunWith(MockitoJUnitRunner::class)
@@ -79,6 +83,79 @@ class IdentityServiceTests {
         identityService.lostPassword(lostPasswordDTO)
         verify(passwordEncoderMock, times(1)).encode(any())
         verify(userServiceMock, times(1)).save(any())
+    }
+
+    @Test(expected = ServiceException::class)
+    fun `resetPassword_ wrong username`() {
+        val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO()
+        Mockito.`when`(userServiceMock.findByUsername(any())).thenReturn(null)
+        identityService.resetPassword(resetPasswordDTO)
+    }
+
+    @Test(expected = ServiceException::class)
+    fun `resetPassword_ key doesn't match`() {
+        val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO()
+        val expectedUser = UserStub.getUserOwner()
+        Mockito.`when`(userServiceMock.findByUsername(any())).thenReturn(expectedUser)
+        Mockito.`when`(passwordEncoderMock.matches(any(), any())).thenReturn(false)
+        identityService.resetPassword(resetPasswordDTO)
+    }
+
+    fun `resetPassword_ user not active`() {
+        val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO()
+        val expectedUser = UserStub.getUserOwner().copy(accountState = User.AccountState.NOT_ACTIVE)
+        Mockito.`when`(userServiceMock.findByUsername(any())).thenReturn(expectedUser)
+        Mockito.`when`(passwordEncoderMock.matches(any(), any())).thenReturn(true)
+
+        identityService.resetPassword(resetPasswordDTO)
+
+        val savedUser = ArgumentCaptor.forClass(User::class.java)
+
+        verify(passwordEncoderMock, times(1)).encode(any())
+        verify(userServiceMock, times(1)).save(savedUser.capture())
+
+        Assert.assertEquals(User.AccountState.ACTIVE, savedUser.value.accountState)
+        Assert.assertEquals(null, savedUser.value.resetPasswordKey)
+        Assert.assertEquals(null, savedUser.value.activationKey)
+        Assert.assertNotNull(savedUser.value.password)
+    }
+
+    fun `resetPassword_ user already active`() {
+        val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO()
+        val expectedUser = UserStub.getUserOwner()
+        Mockito.`when`(userServiceMock.findByUsername(any())).thenReturn(expectedUser)
+        Mockito.`when`(passwordEncoderMock.matches(any(), any())).thenReturn(true)
+
+        identityService.resetPassword(resetPasswordDTO)
+
+        val savedUser = ArgumentCaptor.forClass(User::class.java)
+
+        verify(passwordEncoderMock, times(1)).encode(any())
+        verify(userServiceMock, times(1)).save(savedUser.capture())
+
+        Assert.assertEquals(User.AccountState.ACTIVE, savedUser.value.accountState)
+        Assert.assertEquals(null, savedUser.value.resetPasswordKey)
+        Assert.assertEquals(null, savedUser.value.activationKey)
+        Assert.assertNotNull(savedUser.value.password)
+    }
+
+    fun `resetPassword_ banned user`() {
+        val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO()
+        val expectedUser = UserStub.getUserOwner().copy(accountState = User.AccountState.BANNED)
+        Mockito.`when`(userServiceMock.findByUsername(any())).thenReturn(expectedUser)
+        Mockito.`when`(passwordEncoderMock.matches(any(), any())).thenReturn(true)
+
+        identityService.resetPassword(resetPasswordDTO)
+
+        val savedUser = ArgumentCaptor.forClass(User::class.java)
+
+        verify(passwordEncoderMock, times(1)).encode(any())
+        verify(userServiceMock, times(1)).save(savedUser.capture())
+
+        Assert.assertEquals(User.AccountState.BANNED, savedUser.value.accountState)
+        Assert.assertEquals(null, savedUser.value.resetPasswordKey)
+        Assert.assertEquals(null, savedUser.value.activationKey)
+        Assert.assertNotNull(savedUser.value.password)
     }
 
     @Test
