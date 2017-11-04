@@ -71,6 +71,17 @@ class IdentityServiceTests {
     }
 
     @Test
+    fun `lostPassword_`() {
+        val lostPasswordDTO = LostPasswordDTOStub.getLostPasswordDTO()
+        val expectedUser = UserStub.getUserOwner()
+        Mockito.`when`(userServiceMock.findByEmail(any())).thenReturn(expectedUser)
+
+        identityService.lostPassword(lostPasswordDTO)
+        verify(passwordEncoderMock, times(1)).encode(any())
+        verify(userServiceMock, times(1)).save(any())
+    }
+
+    @Test
     fun `getRestaurants_ no restaurants`() {
         val expectedUser = UserStub.getUserOwner()
         Mockito.`when`(authorizationService.getCurrentUser()).thenReturn(expectedUser)
@@ -146,16 +157,5 @@ class IdentityServiceTests {
         Assert.assertEquals("Stub Three", employees[2].fullName)
         Assert.assertEquals(40, employees[3].id)
         Assert.assertEquals("Stub Four", employees[3].fullName)
-    }
-
-    @Test
-    fun `lostPassword_`() {
-        val lostPasswordDTO = LostPasswordDTOStub.getLostPasswordDTO()
-        val expectedUser = UserStub.getUserOwner()
-        Mockito.`when`(userServiceMock.findByEmail(any())).thenReturn(expectedUser)
-
-        identityService.lostPassword(lostPasswordDTO)
-        verify(passwordEncoderMock, times(1)).encode(any())
-        verify(userServiceMock, times(1)).save(any())
     }
 }
