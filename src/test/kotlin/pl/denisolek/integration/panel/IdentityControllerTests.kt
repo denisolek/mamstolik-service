@@ -35,6 +35,7 @@ import pl.denisolek.panel.identity.DTO.RegisterDTO
 import pl.denisolek.panel.identity.IdentityApi
 import pl.denisolek.stubs.UserStub
 import pl.denisolek.stubs.dto.ChangePasswordDTOStub
+import pl.denisolek.stubs.dto.LostPasswordDTOStub
 import pl.denisolek.stubs.dto.RegisterDTOStub
 import pl.denisolek.stubs.dto.SetPasswordDTOStub
 import javax.transaction.Transactional
@@ -60,6 +61,7 @@ class IdentityControllerTests {
 
     val USERS_BASE_PATH = "$PANEL_BASE_PATH${IdentityApi.USERS_BASE_PATH}"
     val USERS_PASSWORD_PATH = "$PANEL_BASE_PATH${IdentityApi.USERS_PASSWORD_PATH}"
+    val USERS_LOST_PASSWORD_PATH = "$PANEL_BASE_PATH${IdentityApi.USERS_LOST_PASSWORD_PATH}"
     val RESTAURANTS_PATH = "$PANEL_BASE_PATH${IdentityApi.RESTAURANTS_BASE_PATH}"
     val EMPLOYEES_PATH = "$PANEL_BASE_PATH${IdentityApi.EMPLOYEES_BASE_PATH}"
 
@@ -585,6 +587,62 @@ class IdentityControllerTests {
 
         assertEquals("test@test.pl", updatedUser.email)
         assertTrue(passwordEncoder.matches(changePasswordDTO.newPassword, updatedUser.password))
+    }
+
+    @Test
+    fun `lostPassword_ not existing email`() {
+        var lostPasswordDTO = LostPasswordDTOStub.getLostPasswordDTO()
+        lostPasswordDTO.email = "test123123@test.pl"
+
+        val body = convertObjectToJsonBytes(lostPasswordDTO)
+
+        val result = mvc.perform(post(USERS_LOST_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isOk)
+
+        val updatedUser = userRepository.findByEmail(lostPasswordDTO.email)
+
+        assertEquals(null, updatedUser)
+    }
+
+    @Test
+    @Transactional
+    fun `lostPassword_ not owner`() {
+        var lostPasswordDTO = LostPasswordDTOStub.getLostPasswordDTO()
+        lostPasswordDTO.email = "ms100002@mamstolik.pl"
+
+        val body = convertObjectToJsonBytes(lostPasswordDTO)
+
+        val result = mvc.perform(post(USERS_LOST_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isOk)
+
+        val updatedUser = userRepository.findByEmail(lostPasswordDTO.email)
+
+        assertEquals(null, updatedUser.resetPasswordKey)
+    }
+
+    @Test
+    @Transactional
+    fun `lostPassword_ correct data`() {
+        var lostPasswordDTO = LostPasswordDTOStub.getLostPasswordDTO()
+        lostPasswordDTO.email = "test@test.pl"
+
+        val body = convertObjectToJsonBytes(lostPasswordDTO)
+
+        val result = mvc.perform(post(USERS_LOST_PASSWORD_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isOk)
+
+        val updatedUser = userRepository.findByEmail(lostPasswordDTO.email)
+
+        assertNotNull(updatedUser.resetPasswordKey)
     }
 
     @Test
