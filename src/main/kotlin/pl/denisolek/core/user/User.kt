@@ -8,6 +8,9 @@ import javax.persistence.*
 @Entity
 @Table(name = "[user]")
 data class User(
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        var id: Int? = null,
 
         @Column(updatable = false, nullable = false, unique = true)
         var username: String? = null,
@@ -40,7 +43,7 @@ data class User(
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
         var restaurant: Restaurant? = null
-) : BaseEntity() {
+) {
 
     enum class AccountState {
         ACTIVE,

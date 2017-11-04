@@ -104,4 +104,46 @@ class IdentityServiceTests {
         Assert.assertEquals(2, restaurants[1].id)
         Assert.assertEquals("NameStub2", restaurants[1].name)
     }
+
+    @Test
+    fun `getEmployees_ no employees`() {
+        val expectedUser = UserStub.getUserRestaurant()
+        expectedUser.restaurant?.employees = mutableListOf()
+        Mockito.`when`(authorizationService.getCurrentUser()).thenReturn(expectedUser)
+
+        val employees = identityService.getEmployees()
+        Assert.assertEquals(0, employees.size)
+    }
+
+    @Test
+    fun `getEmployees_ one employee`() {
+        val expectedUser = UserStub.getUserRestaurant()
+        expectedUser.restaurant?.employees?.removeIf { it.id != 10 }
+        Mockito.`when`(authorizationService.getCurrentUser()).thenReturn(expectedUser)
+
+        val employees = identityService.getEmployees()
+        Assert.assertEquals(1, employees.size)
+        Assert.assertEquals(10, employees[0].id)
+        Assert.assertEquals("Stub One", employees[0].fullName)
+        Assert.assertEquals("StubOne", employees[0].username)
+        Assert.assertEquals("Pracownik", employees[0].title)
+        Assert.assertEquals("avatar link", employees[0].avatar)
+    }
+
+    @Test
+    fun `getEmployees_ many employees`() {
+        val expectedUser = UserStub.getUserRestaurant()
+        Mockito.`when`(authorizationService.getCurrentUser()).thenReturn(expectedUser)
+
+        val employees = identityService.getEmployees()
+        Assert.assertEquals(4, employees.size)
+        Assert.assertEquals(10, employees[0].id)
+        Assert.assertEquals("Stub One", employees[0].fullName)
+        Assert.assertEquals(20, employees[1].id)
+        Assert.assertEquals("Stub Two", employees[1].fullName)
+        Assert.assertEquals(30, employees[2].id)
+        Assert.assertEquals("Stub Three", employees[2].fullName)
+        Assert.assertEquals(40, employees[3].id)
+        Assert.assertEquals("Stub Four", employees[3].fullName)
+    }
 }

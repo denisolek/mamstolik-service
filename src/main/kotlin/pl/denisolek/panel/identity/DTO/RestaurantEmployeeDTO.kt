@@ -6,7 +6,7 @@ data class RestaurantEmployeeDTO(
         var id: Int,
         var username: String,
         var fullName: String,
-        var title: String? = "Pracownik",
+        var title: String,
         var avatar: String
 ) {
     companion object {
@@ -16,7 +16,7 @@ data class RestaurantEmployeeDTO(
                             id = it.id!!,
                             username = it.username!!,
                             fullName = "${it.firstName} ${it.lastName}",
-                            title = it.title,
+                            title = it.title ?: "Pracownik",
                             avatar = "avatar link"
                     )
                 }
