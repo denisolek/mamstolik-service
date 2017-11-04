@@ -19,6 +19,7 @@ import pl.denisolek.panel.identity.IdentityService
 import pl.denisolek.stubs.RestaurantStub
 import pl.denisolek.stubs.UserStub
 import pl.denisolek.stubs.dto.ChangePasswordDTOStub
+import pl.denisolek.stubs.dto.LostPasswordDTOStub
 import pl.denisolek.stubs.dto.SetPasswordDTOStub
 
 @RunWith(MockitoJUnitRunner::class)
@@ -145,5 +146,16 @@ class IdentityServiceTests {
         Assert.assertEquals("Stub Three", employees[2].fullName)
         Assert.assertEquals(40, employees[3].id)
         Assert.assertEquals("Stub Four", employees[3].fullName)
+    }
+
+    @Test
+    fun `lostPassword_`() {
+        val lostPasswordDTO = LostPasswordDTOStub.getLostPasswordDTO()
+        val expectedUser = UserStub.getUserOwner()
+        Mockito.`when`(userServiceMock.findByEmail(any())).thenReturn(expectedUser)
+
+        identityService.lostPassword(lostPasswordDTO)
+        verify(passwordEncoderMock, times(1)).encode(any())
+        verify(userServiceMock, times(1)).save(any())
     }
 }
