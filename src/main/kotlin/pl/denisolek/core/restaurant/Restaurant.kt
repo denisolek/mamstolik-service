@@ -62,7 +62,6 @@ data class Restaurant(
         @MapKeyEnumerated(EnumType.STRING)
         @MapKeyColumn(name = "day_of_week")
         var businessHours: MutableMap<DayOfWeek, BusinessHour> = mutableMapOf()
-
 ) {
 
     fun isOpenAt(date: LocalDateTime): Boolean {

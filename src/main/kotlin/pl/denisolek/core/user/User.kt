@@ -23,6 +23,7 @@ data class User(
         var phoneNumber: String? = null,
         var activationKey: String? = null,
         var resetPasswordKey: String? = null,
+        var title: String? = null,
 
         @Enumerated(EnumType.STRING)
         var accountState: AccountState,
