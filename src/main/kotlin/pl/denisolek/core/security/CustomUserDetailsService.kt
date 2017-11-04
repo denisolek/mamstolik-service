@@ -18,20 +18,15 @@ class CustomUserDetailsService(private val userRepository: UserRepository) : org
     override fun loadUserByUsername(username: String): UserDetails {
         val lowercaseLogin = username.toLowerCase()
 
-        var userFromDatabase: User? = userRepository.findByEmail(lowercaseLogin)
+        val userByEmail: User? = userRepository.findByEmail(lowercaseLogin)
+        val userByUsername: User? = userRepository.findByUsername(lowercaseLogin)
 
-        if (userFromDatabase == null) {
-            throw ServiceException(HttpStatus.NOT_FOUND, "User not found")
-        }
+        val userFromDatabase: User = (userByEmail ?: userByUsername) ?: throw ServiceException(HttpStatus.NOT_FOUND, "User not found")
 
         val grantedAuthorities = ArrayList<GrantedAuthority>()
 
-        for (authority in userFromDatabase.authorities) {
-            val grantedAuthority = SimpleGrantedAuthority(authority.role.toString())
-            grantedAuthorities.add(grantedAuthority)
-        }
+        userFromDatabase.authorities.mapTo(grantedAuthorities) { SimpleGrantedAuthority(it.role.toString()) }
 
         return org.springframework.security.core.userdetails.User(userFromDatabase.email, userFromDatabase.password, grantedAuthorities)
     }
-
 }
