@@ -42,7 +42,7 @@ data class CreateEmployeeDTO(
                 User(
                         firstName = createEmployeeDTO.firstName,
                         lastName = createEmployeeDTO.lastName,
-                        workEmail = createEmployeeDTO.email,
+                        workEmail = createEmployeeDTO.email.toLowerCase(),
                         phoneNumber = createEmployeeDTO.phoneNumber,
                         accountState = User.AccountState.ACTIVE,
                         authorities = when {

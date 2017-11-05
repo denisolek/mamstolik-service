@@ -813,7 +813,7 @@ class IdentityControllerTests {
                 .andExpect(jsonPath("$[0].id", `is`(11)))
                 .andExpect(jsonPath("$[0].username", `is`("ms100002")))
                 .andExpect(jsonPath("$[0].fullName", `is`("Pracownik Pracujący")))
-                .andExpect(jsonPath("$[0].title", `is`("Pracownik")))
+                .andExpect(jsonPath("$[0].title", `is`("Menedżer")))
                 .andExpect(jsonPath("$[0].avatar", `is`("avatar link")))
                 .andExpect(jsonPath("$[1].id", `is`(12)))
                 .andExpect(jsonPath("$[1].username", `is`("ms100003")))
