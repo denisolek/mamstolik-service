@@ -38,13 +38,13 @@ class RestaurantRepositoryTests {
     fun `findByCityAndIsActive_ active = true`() {
         val result = restaurantRepository.findByCityAndIsActive(3, true)
         Assert.assertEquals(1, result.size)
-        Assert.assertEquals("Pasja",result[0].name)
+        Assert.assertEquals("Pasja", result[0].name)
     }
 
     @Test
     fun `findByCityAndIsActive_ active = false`() {
         val result = restaurantRepository.findByCityAndIsActive(3, false)
         Assert.assertEquals(1, result.size)
-        Assert.assertEquals("Cien",result[0].name)
+        Assert.assertEquals("Cien", result[0].name)
     }
 }

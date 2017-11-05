@@ -4,9 +4,10 @@ import pl.denisolek.core.address.Address
 import pl.denisolek.core.menu.Menu
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.spot.Spot
-import pl.denisolek.infrastructure.DateTimeInterval
-import pl.denisolek.infrastructure.isAfterOrEqual
-import pl.denisolek.infrastructure.isBeforeOrEqual
+import pl.denisolek.core.user.User
+import pl.denisolek.infrastructure.util.DateTimeInterval
+import pl.denisolek.infrastructure.util.isAfterOrEqual
+import pl.denisolek.infrastructure.util.isBeforeOrEqual
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalDateTime
@@ -25,6 +26,12 @@ data class Restaurant(
         var food_rate: Float,
         var price_quality_rate: Float,
         var isActive: Boolean,
+
+        @ManyToOne
+        var owner: User,
+
+        @OneToMany(mappedBy = "workPlace", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+        var employees: MutableList<User>? = mutableListOf(),
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
         var address: Address,
@@ -55,7 +62,6 @@ data class Restaurant(
         @MapKeyEnumerated(EnumType.STRING)
         @MapKeyColumn(name = "day_of_week")
         var businessHours: MutableMap<DayOfWeek, BusinessHour> = mutableMapOf()
-
 ) {
 
     fun isOpenAt(date: LocalDateTime): Boolean {

@@ -1,4 +1,4 @@
-package pl.denisolek.infrastructure
+package pl.denisolek.infrastructure.util
 
 import java.time.LocalDateTime
 

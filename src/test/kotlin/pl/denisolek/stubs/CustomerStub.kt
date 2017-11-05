@@ -7,8 +7,8 @@ class CustomerStub {
         fun getCustomer(): Customer =
                 Customer(
                         email = "testcustomer@test.pl",
-                        name = "Test",
-                        surname = "Testowy",
+                        firstName = "Test",
+                        lastName = "Testowy",
                         phoneNumber = "999999999"
                 )
     }

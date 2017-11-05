@@ -1,0 +1,52 @@
+version: "2"
+
+services:
+  mamstolikDb:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: 1
+      POSTGRES_USER: postgres
+      POSTGRES_DB: mamstolik
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  mamstolikService:
+    image: mamstolik/service:0.14.9
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_HOST: mamstolikDb
+      DATABASE_PORT: 5432
+      DATABASE_NAME: mamstolik
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: 1
+      DATABASE_DDL: create-drop
+      MAIL_HOST: smtp.gmail.com
+      MAIL_USERNAME: test.mamstolik@gmail.com
+    links:
+      - mamstolikDb
+      - rabbitmq
+    depends_on:
+      - "rabbitmq"
+    entrypoint: dockerize -wait tcp://rabbitmq:5672 -timeout 40s java -Djava.security.egd=file:/dev/./urandom -Dfile.encoding=UTF-8 -jar /app.jar
+
+  sms-api:
+    image: mamstolik/sms-api
+    depends_on:
+      - "rabbitmq"
+    links:
+      - rabbitmq
+    environment:
+      SEND_SMS: "false"
+    entrypoint: dockerize -wait tcp://rabbitmq:5672 -timeout 40s node receive.js
+
+  mamstolikWeb:
+    image: mamstolik/web
+    ports:
+      - "4000:80"

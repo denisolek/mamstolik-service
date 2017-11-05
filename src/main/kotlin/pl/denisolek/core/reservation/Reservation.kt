@@ -4,7 +4,7 @@ import pl.denisolek.core.BaseEntity
 import pl.denisolek.core.customer.Customer
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.spot.Spot
-import pl.denisolek.infrastructure.DateTimeInterval
+import pl.denisolek.infrastructure.util.DateTimeInterval
 import java.time.Duration
 import java.time.LocalDateTime
 import javax.persistence.ElementCollection

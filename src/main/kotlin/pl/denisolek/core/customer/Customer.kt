@@ -7,6 +7,6 @@ import javax.persistence.Entity
 data class Customer(
         var email: String,
         var phoneNumber: String,
-        var name: String,
-        var surname: String
+        var firstName: String,
+        var lastName: String
 ) : BaseEntity()

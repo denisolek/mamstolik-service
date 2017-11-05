@@ -8,6 +8,7 @@ import pl.denisolek.core.address.City
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.guest.restaurant.DTO.RestaurantDetailsDTO
 import pl.denisolek.guest.restaurant.DTO.SearchDTO
+import springfox.documentation.annotations.ApiIgnore
 import java.time.LocalDateTime
 
 @RestController
@@ -17,11 +18,11 @@ class GuestRestaurantController(val guestRestaurantService: GuestRestaurantServi
         val API = GuestRestaurantApi.Companion
     }
 
-    override fun getRestaurant(@PathVariable(API.RESTAURANT_ID) restaurant: Restaurant): RestaurantDetailsDTO =
-            RestaurantDetailsDTO.fromRestaurant(restaurant)
-
     override fun searchRestaurants(@RequestParam city: City,
                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam date: LocalDateTime,
                                    @RequestParam peopleNumber: Int): SearchDTO =
             guestRestaurantService.searchRestaurants(city, date, peopleNumber)
+
+    override fun getRestaurant(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurant: Restaurant): RestaurantDetailsDTO =
+            RestaurantDetailsDTO.fromRestaurant(restaurant)
 }

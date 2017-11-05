@@ -6,7 +6,9 @@ import pl.denisolek.core.menu.Menu
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.security.Authority
 import pl.denisolek.core.spot.Spot
+import pl.denisolek.core.user.User
 import java.time.*
 
 class RestaurantStub {
@@ -18,6 +20,7 @@ class RestaurantStub {
                         avgReservationTime = Duration.ofMinutes(30),
                         description = "Test description for stubs",
                         isActive = true,
+                        owner = getOwner(),
                         rate = 4.0f,
                         food_rate = 4.0f,
                         price_quality_rate = 4.0f,
@@ -37,6 +40,7 @@ class RestaurantStub {
                         avgReservationTime = Duration.ofMinutes(30),
                         description = "Test description",
                         isActive = true,
+                        owner = getOwner(),
                         rate = 4.0f,
                         food_rate = 4.0f,
                         price_quality_rate = 4.0f,
@@ -47,6 +51,15 @@ class RestaurantStub {
                         spots = getSpots(),
                         reservations = getReservations(),
                         menu = Menu()
+                )
+
+        private fun getOwner(): User =
+                User(
+                        username = "msOwner",
+                        email = "owner@mamstolik.pl",
+                        accountState = User.AccountState.ACTIVE,
+                        authorities = setOf(Authority(Authority.Role.ROLE_OWNER)),
+                        password = "password"
                 )
 
         private fun getFacilities(): MutableSet<Restaurant.Facilities> =
