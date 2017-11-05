@@ -39,7 +39,7 @@ class PanelEmployeeService(private val userService: UserService,
         val updatedEmployee = employee.copy(
                 firstName = createEmployeeDTO.firstName,
                 lastName = createEmployeeDTO.lastName,
-                workEmail = createEmployeeDTO.email,
+                workEmail = createEmployeeDTO.email.toLowerCase(),
                 phoneNumber = createEmployeeDTO.phoneNumber,
                 password = when {
                     !createEmployeeDTO.pin.isNullOrBlank() -> passwordEncoder.encode(createEmployeeDTO.pin)

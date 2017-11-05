@@ -16,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
@@ -52,6 +53,7 @@ class PanelEmployeeControllerTests {
     lateinit var mvc: MockMvc
 
     val EMPLOYEES_PATH = "${PANEL_BASE_PATH}${PanelEmployeeApi.EMPLOYEES_PATH}"
+    val EMPLOYEES_ID_PATH = "${PANEL_BASE_PATH}${PanelEmployeeApi.EMPLOYEES_ID_PATH}"
 
     @Before
     fun setup() {
@@ -377,6 +379,36 @@ class PanelEmployeeControllerTests {
         result.andExpect(MockMvcResultMatchers.status().isCreated)
 
         val createdUser = userRepository.findAll().last()
+        Assert.assertEquals("TestNameMan", createdUser.firstName)
+        Assert.assertEquals("TestSurnameMan", createdUser.lastName)
+        Assert.assertEquals("testemailman@test.pl", createdUser.workEmail)
+        Assert.assertEquals("111222444", createdUser.phoneNumber)
+        Assert.assertEquals(setOf(Authority(ROLE_EMPLOYEE), Authority(ROLE_MANAGER)), createdUser.authorities)
+        Assert.assertNotNull(createdUser.password)
+        Assert.assertNotNull(createdUser.email)
+        Assert.assertNotNull(createdUser.username)
+        Assert.assertNotNull(createdUser.workPlace)
+    }
+
+    @Test
+    fun `updateEmployee_ correctData`() {
+        val employeeDTO = CreateEmployeeDTO(
+                firstName = "TestNameMan",
+                lastName = "TestSurnameMan",
+                email = "testemailMan@test.pl",
+                phoneNumber = "111222444",
+                pin = "2222",
+                isManager = true
+        )
+        val body = convertObjectToJsonBytes(employeeDTO)
+
+        val result = mvc.perform(put(EMPLOYEES_ID_PATH, 1, 12)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(MockMvcResultMatchers.status().isOk)
+
+        val createdUser = userRepository.findOne(12)
         Assert.assertEquals("TestNameMan", createdUser.firstName)
         Assert.assertEquals("TestSurnameMan", createdUser.lastName)
         Assert.assertEquals("testemailman@test.pl", createdUser.workEmail)
