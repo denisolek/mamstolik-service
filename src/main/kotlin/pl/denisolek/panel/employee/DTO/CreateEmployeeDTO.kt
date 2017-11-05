@@ -42,8 +42,7 @@ data class CreateEmployeeDTO(
                         workEmail = createEmployeeDTO.email,
                         phoneNumber = createEmployeeDTO.phoneNumber,
                         authorities = setOf(Authority(Authority.Role.ROLE_EMPLOYEE)),
-                        accountState = User.AccountState.ACTIVE,
-                        title = createEmployeeDTO.title
+                        accountState = User.AccountState.ACTIVE
                 )
     }
 }

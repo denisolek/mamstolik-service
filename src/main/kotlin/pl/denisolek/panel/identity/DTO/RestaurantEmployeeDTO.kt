@@ -16,7 +16,7 @@ data class RestaurantEmployeeDTO(
                             id = it.id!!,
                             username = it.username!!,
                             fullName = "${it.firstName} ${it.lastName}",
-                            title = it.title ?: "Pracownik",
+                            title = it.getTitle(),
                             avatar = "avatar link"
                     )
                 }

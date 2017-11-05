@@ -8,7 +8,7 @@ data class EmployeeDTO(
         var lastName: String,
         var email: String,
         var phoneNumber: String,
-        var title: String? = "Pracownik"
+        var title: String
 ) {
     companion object {
         fun fromUser(user: User) =
@@ -17,7 +17,8 @@ data class EmployeeDTO(
                         firstName = user.firstName!!,
                         lastName = user.lastName!!,
                         email = user.workEmail!!,
-                        phoneNumber = user.phoneNumber!!
+                        phoneNumber = user.phoneNumber!!,
+                        title = user.getTitle()
                 )
     }
 }
