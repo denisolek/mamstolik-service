@@ -67,8 +67,8 @@ INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, 
 
 
 INSERT INTO public.user (username, email, password, account_state, restaurant_id) VALUES ('ms100001', 'ms100001@mamstolik.pl', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'ACTIVE', 1);
-INSERT INTO public.user (username, email, first_name, last_name, password, phone_number, account_state, work_place_id) VALUES ('ms100002', 'ms100002@mamstolik.pl', 'Pracownik', 'Pracujący', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', '507946148', 'ACTIVE', 1);
-INSERT INTO public.user (username, email, first_name, last_name, password, phone_number, account_state, work_place_id) VALUES ('ms100003', 'ms100003@mamstolik.pl', 'Pracowniczka', 'Pracująca', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', '603201114', 'ACTIVE', 1);
+INSERT INTO public.user (username, email, work_email, first_name, last_name, password, phone_number, account_state, work_place_id) VALUES ('ms100002', 'ms100002@mamstolik.pl', 'ms100002@mamstolik.pl', 'Pracownik', 'Pracujący', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', '507946148', 'ACTIVE', 1);
+INSERT INTO public.user (username, email, work_email, first_name, last_name, password, phone_number, account_state, work_place_id) VALUES ('ms100003', 'ms100003@mamstolik.pl', 'ms100002@mamstolik.pl','Pracowniczka', 'Pracująca', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', '603201114', 'ACTIVE', 1);
 
 
 -- add authorities
