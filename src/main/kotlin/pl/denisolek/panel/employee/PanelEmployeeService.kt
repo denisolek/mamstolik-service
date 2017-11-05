@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service
 import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.security.Authority
-import pl.denisolek.core.security.Authority.*
-import pl.denisolek.core.security.Authority.Role.*
+import pl.denisolek.core.security.Authority.Role.ROLE_EMPLOYEE
+import pl.denisolek.core.security.Authority.Role.ROLE_MANAGER
 import pl.denisolek.core.user.User
 import pl.denisolek.core.user.UserService
 import pl.denisolek.panel.employee.DTO.CreateEmployeeDTO
