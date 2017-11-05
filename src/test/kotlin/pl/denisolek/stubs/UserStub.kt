@@ -68,10 +68,10 @@ class UserStub {
         private fun getRestaurant(): Restaurant =
                 RestaurantStub.getRestaurant().copy(
                         employees = mutableListOf(
-                                getUserEmployee().copy(id = 10, username = "StubOne", firstName = "Stub", lastName = "One"),
-                                getUserEmployee().copy(id = 20, username = "StubTwo", firstName = "Stub", lastName = "Two"),
-                                getUserEmployee().copy(id = 30, username = "StubThree", firstName = "Stub", lastName = "Three"),
-                                getUserEmployee().copy(id = 40, username = "StubFour", firstName = "Stub", lastName = "Four")
+                                getUserEmployee().copy(id = 10, username = "StubOne", firstName = "Stub", lastName = "One", phoneNumber = "111000000"),
+                                getUserEmployee().copy(id = 20, username = "StubTwo", firstName = "Stub", lastName = "Two", phoneNumber = "222000000"),
+                                getUserEmployee().copy(id = 30, username = "StubThree", firstName = "Stub", lastName = "Three", phoneNumber = "333000000"),
+                                getUserEmployee().copy(id = 40, username = "StubFour", firstName = "Stub", lastName = "Four", phoneNumber = "444000000")
                         )
                 )
     }
