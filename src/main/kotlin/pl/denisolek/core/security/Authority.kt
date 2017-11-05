@@ -14,6 +14,7 @@ class Authority(@Id
         ROLE_ADMIN,
         ROLE_OWNER,
         ROLE_EMPLOYEE,
+        ROLE_MANAGER,
         ROLE_RESTAURANT
     }
 

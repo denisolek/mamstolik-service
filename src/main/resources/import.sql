@@ -4,6 +4,7 @@ ALTER TABLE public.restaurant ALTER COLUMN "description" TYPE VARCHAR(3000);
 INSERT INTO public.authority (role) VALUES ('ROLE_OWNER');
 INSERT INTO public.authority (role) VALUES ('ROLE_ADMIN');
 INSERT INTO public.authority (role) VALUES ('ROLE_EMPLOYEE');
+INSERT INTO public.authority (role) VALUES ('ROLE_MANAGER');
 INSERT INTO public.authority (role) VALUES ('ROLE_RESTAURANT');
 
 
@@ -83,6 +84,7 @@ INSERT INTO public.user_authority (username, authority) VALUES (7, 'ROLE_OWNER')
 INSERT INTO public.user_authority (username, authority) VALUES (9, 'ROLE_EMPLOYEE');
 INSERT INTO public.user_authority (username, authority) VALUES (10, 'ROLE_RESTAURANT');
 INSERT INTO public.user_authority (username, authority) VALUES (11, 'ROLE_EMPLOYEE');
+INSERT INTO public.user_authority (username, authority) VALUES (11, 'ROLE_MANAGER');
 INSERT INTO public.user_authority (username, authority) VALUES (12, 'ROLE_EMPLOYEE');
 
 

@@ -20,12 +20,14 @@ interface PanelEmployeeApi {
     }
 
     @GetMapping(EMPLOYEES_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId)")
+    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+            "@authorizationService.currentUser.workPlace == #restaurantId")
     fun getEmployees(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant): List<EmployeeDTO>
 
     @PostMapping(EMPLOYEES_PATH)
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId)")
+    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+            "@authorizationService.currentUser.workPlace == #restaurantId")
     fun addEmployee(@ApiIgnore @PathVariable(PanelEmployeeController.API.RESTAURANT_ID) restaurantId: Restaurant,
                     @RequestBody @Valid employeeDTO: EmployeeDTO): List<EmployeeDTO>
 }
