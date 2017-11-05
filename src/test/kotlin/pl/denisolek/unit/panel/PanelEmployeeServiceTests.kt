@@ -8,9 +8,7 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.runners.MockitoJUnitRunner
 import org.springframework.security.crypto.password.PasswordEncoder
-import pl.denisolek.core.email.EmailService
 import pl.denisolek.core.user.UserService
-import pl.denisolek.panel.employee.DTO.CreateEmployeeDTO
 import pl.denisolek.panel.employee.DTO.EmployeeDTO
 import pl.denisolek.panel.employee.PanelEmployeeService
 import pl.denisolek.stubs.UserStub
@@ -27,7 +25,7 @@ class PanelEmployeeServiceTests {
     private val passwordEncoderMock = mock<PasswordEncoder>()
 
     @Test
-    fun `getEmployees_ `(){
+    fun `getEmployees_ `() {
         val restaurant = UserStub.getUserRestaurant().restaurant
         val employees = panelEmployeeService.getEmployees(restaurant!!)
         assertEmployeeDTO(

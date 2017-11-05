@@ -53,7 +53,7 @@ class PanelEmployeeControllerTests {
                 .apply<DefaultMockMvcBuilder>(SecurityMockMvcConfigurers.springSecurity())
                 .build()
     }
-    
+
     @Test
     fun `addEmployee_ email is empty`() {
         var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO()
