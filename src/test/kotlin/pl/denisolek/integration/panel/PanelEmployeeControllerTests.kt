@@ -1,7 +1,9 @@
 package pl.denisolek.integration.panel
 
 import org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric
+import org.hamcrest.Matchers.instanceOf
 import org.junit.Assert
+import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,10 +20,11 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.context.WebApplicationContext
 import pl.denisolek.core.security.Authority
-import pl.denisolek.core.security.Authority.*
-import pl.denisolek.core.security.Authority.Role.*
+import pl.denisolek.core.security.Authority.Role.ROLE_EMPLOYEE
+import pl.denisolek.core.security.Authority.Role.ROLE_MANAGER
 import pl.denisolek.core.user.UserRepository
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.infrastructure.config.security.AuthorizationService
@@ -209,6 +212,101 @@ class PanelEmployeeControllerTests {
                 .content(body))
 
         result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `addEmployee_ pin too short`() {
+        var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO().copy(
+                pin = "111"
+        )
+
+        val body = convertObjectToJsonBytes(employeeDTO)
+
+        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `addEmployee_ pin too long`() {
+        var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO().copy(
+                pin = "11111111111"
+        )
+
+        val body = convertObjectToJsonBytes(employeeDTO)
+
+        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `addEmployee_ pin with a-z`() {
+        var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO().copy(
+                pin = "1111a"
+        )
+
+        val body = convertObjectToJsonBytes(employeeDTO)
+
+        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `addEmployee_ pin with A-Z`() {
+        var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO().copy(
+                pin = "testA"
+        )
+
+        val body = convertObjectToJsonBytes(employeeDTO)
+
+        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `addEmployee_ pin with special characters`() {
+        var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO().copy(
+                pin = "11:($"
+        )
+
+        val body = convertObjectToJsonBytes(employeeDTO)
+
+        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
 
     @Test
