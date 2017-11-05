@@ -1,11 +1,11 @@
 package pl.denisolek.stubs.dto
 
-import pl.denisolek.panel.employee.DTO.EmployeeDTO
+import pl.denisolek.panel.employee.DTO.CreateEmployeeDTO
 
-class EmployeeDTOStub {
+class CreateEmployeeDTOStub {
     companion object {
-        fun getEmployeeDTO(): EmployeeDTO =
-                EmployeeDTO(
+        fun getCreateEmployeeDTO(): CreateEmployeeDTO =
+                CreateEmployeeDTO(
                         firstName = "NameStub",
                         lastName = "SurnameStub",
                         email = "stub@test.pl",

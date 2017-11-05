@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.panel.employee.DTO.CreateEmployeeDTO
 import pl.denisolek.panel.employee.DTO.EmployeeDTO
 import springfox.documentation.annotations.ApiIgnore
 import javax.validation.Valid
@@ -22,7 +23,7 @@ class PanelEmployeeController(val panelEmployeeService: PanelEmployeeService) : 
 
     @ApiImplicitParam(name = API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "integer")
     override fun addEmployee(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
-                             @RequestBody @Valid employeeDTO: EmployeeDTO): List<EmployeeDTO> {
-        return panelEmployeeService.addEmployee(employeeDTO, restaurantId)
+                             @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO): List<EmployeeDTO> {
+        return panelEmployeeService.addEmployee(createEmployeeDTO, restaurantId)
     }
 }

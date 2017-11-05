@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
+import pl.denisolek.panel.employee.DTO.CreateEmployeeDTO
 import pl.denisolek.panel.employee.DTO.EmployeeDTO
 import springfox.documentation.annotations.ApiIgnore
 import javax.validation.Valid
@@ -29,5 +30,5 @@ interface PanelEmployeeApi {
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun addEmployee(@ApiIgnore @PathVariable(PanelEmployeeController.API.RESTAURANT_ID) restaurantId: Restaurant,
-                    @RequestBody @Valid employeeDTO: EmployeeDTO): List<EmployeeDTO>
+                    @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO): List<EmployeeDTO>
 }

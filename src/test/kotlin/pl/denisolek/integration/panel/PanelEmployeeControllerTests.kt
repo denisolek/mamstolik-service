@@ -23,9 +23,9 @@ import pl.denisolek.core.user.UserRepository
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.infrastructure.util.convertObjectToJsonBytes
-import pl.denisolek.panel.employee.DTO.EmployeeDTO
+import pl.denisolek.panel.employee.DTO.CreateEmployeeDTO
 import pl.denisolek.panel.employee.PanelEmployeeApi
-import pl.denisolek.stubs.dto.EmployeeDTOStub
+import pl.denisolek.stubs.dto.CreateEmployeeDTOStub
 import javax.transaction.Transactional
 
 @RunWith(SpringRunner::class)
@@ -56,7 +56,7 @@ class PanelEmployeeControllerTests {
     
     @Test
     fun `addEmployee_ email is empty`() {
-        var employeeDTO = EmployeeDTOStub.getEmployeeDTO()
+        var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO()
         employeeDTO.email = ""
 
         val body = convertObjectToJsonBytes(employeeDTO)
@@ -70,7 +70,7 @@ class PanelEmployeeControllerTests {
 
     @Test
     fun `addEmployee_ email wrong format`() {
-        var employeeDTO = EmployeeDTOStub.getEmployeeDTO()
+        var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO()
         employeeDTO.email = "test.test.pl"
 
         val body = convertObjectToJsonBytes(employeeDTO)
@@ -84,7 +84,7 @@ class PanelEmployeeControllerTests {
 
     @Test
     fun `addEmployee_ email too long`() {
-        var employeeDTO = EmployeeDTOStub.getEmployeeDTO()
+        var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO()
         employeeDTO.email = "${randomAlphanumeric(100)}@test.pl"
 
         val body = convertObjectToJsonBytes(employeeDTO)
@@ -98,7 +98,7 @@ class PanelEmployeeControllerTests {
 
     @Test
     fun `addEmployee_ firstName is empty`() {
-        var employeeDTO = EmployeeDTOStub.getEmployeeDTO()
+        var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO()
         employeeDTO.firstName = ""
 
         val body = convertObjectToJsonBytes(employeeDTO)
@@ -112,7 +112,7 @@ class PanelEmployeeControllerTests {
 
     @Test
     fun `addEmployee_ firstName is not valid`() {
-        var employeeDTO = EmployeeDTOStub.getEmployeeDTO()
+        var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO()
         employeeDTO.firstName = "123Test"
 
         val body = convertObjectToJsonBytes(employeeDTO)
@@ -126,7 +126,7 @@ class PanelEmployeeControllerTests {
 
     @Test
     fun `addEmployee_ lastName is empty`() {
-        var employeeDTO = EmployeeDTOStub.getEmployeeDTO()
+        var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO()
         employeeDTO.lastName = ""
 
         val body = convertObjectToJsonBytes(employeeDTO)
@@ -140,7 +140,7 @@ class PanelEmployeeControllerTests {
 
     @Test
     fun `addEmployee_ lastName is not valid`() {
-        var employeeDTO = EmployeeDTOStub.getEmployeeDTO()
+        var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO()
         employeeDTO.lastName = "123Test"
 
         val body = convertObjectToJsonBytes(employeeDTO)
@@ -154,7 +154,7 @@ class PanelEmployeeControllerTests {
 
     @Test
     fun `addEmployee_ phoneNumber is empty`() {
-        var employeeDTO = EmployeeDTOStub.getEmployeeDTO()
+        var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO()
         employeeDTO.phoneNumber = ""
 
         val body = convertObjectToJsonBytes(employeeDTO)
@@ -168,7 +168,7 @@ class PanelEmployeeControllerTests {
 
     @Test
     fun `addEmployee_ phoneNumber with letters`() {
-        var employeeDTO = EmployeeDTOStub.getEmployeeDTO()
+        var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO()
         employeeDTO.phoneNumber = "111222ccc"
 
         val body = convertObjectToJsonBytes(employeeDTO)
@@ -182,7 +182,7 @@ class PanelEmployeeControllerTests {
 
     @Test
     fun `addEmployee_ phoneNumber wrong length`() {
-        var employeeDTO = EmployeeDTOStub.getEmployeeDTO()
+        var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO()
         employeeDTO.phoneNumber = "111 222 33"
 
         val body = convertObjectToJsonBytes(employeeDTO)
@@ -196,7 +196,7 @@ class PanelEmployeeControllerTests {
 
     @Test
     fun `addEmployee_ phoneNumber with not allowed chars`() {
-        var employeeDTO = EmployeeDTOStub.getEmployeeDTO()
+        var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO()
         employeeDTO.phoneNumber = "+48 111*222*333"
 
         val body = convertObjectToJsonBytes(employeeDTO)
@@ -210,7 +210,7 @@ class PanelEmployeeControllerTests {
 
     @Test
     fun `addEmployee_ correctData`() {
-        val employeeDTO = EmployeeDTO(
+        val employeeDTO = CreateEmployeeDTO(
                 firstName = "TestName",
                 lastName = "TestSurname",
                 email = "testemail@test.pl",

@@ -1,4 +1,4 @@
-package com.rsqtechnologies.health.infrastructure.exceptions
+package pl.denisolek.core.infrastructure.exceptions
 
 import javassist.tools.web.BadHttpRequest
 import org.slf4j.LoggerFactory
