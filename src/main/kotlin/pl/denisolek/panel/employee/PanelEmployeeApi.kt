@@ -24,20 +24,19 @@ interface PanelEmployeeApi {
     }
 
     @GetMapping(EMPLOYEES_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
+//    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+//            "@authorizationService.currentUser.workPlace == #restaurantId")
+    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId)")
     fun getEmployees(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant): List<EmployeeDTO>
 
     @PostMapping(EMPLOYEES_PATH)
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
+    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId)")
     fun addEmployee(@ApiIgnore @PathVariable(PanelEmployeeController.API.RESTAURANT_ID) restaurantId: Restaurant,
                     @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO): List<EmployeeDTO>
 
     @PutMapping(EMPLOYEES_ID_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
+    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId)")
     fun updateEmployee(@ApiIgnore @PathVariable(PanelEmployeeController.API.RESTAURANT_ID) restaurantId: Restaurant,
                        @ApiIgnore @PathVariable(PanelEmployeeController.API.EMPLOYEE_ID) employeeId: User,
                        @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO): List<EmployeeDTO>
