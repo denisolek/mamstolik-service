@@ -3,7 +3,10 @@ package pl.denisolek.panel.employee.DTO
 import org.hibernate.validator.constraints.Email
 import org.hibernate.validator.constraints.NotBlank
 import pl.denisolek.core.security.Authority
+import pl.denisolek.core.security.Authority.*
+import pl.denisolek.core.security.Authority.Role.*
 import pl.denisolek.core.user.User
+import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
 
@@ -30,7 +33,7 @@ data class CreateEmployeeDTO(
         @field:Pattern(regexp = "^(?!\\s*$)[0-9\\s]{4,10}$", message = "Only digits accepted in pin (4-10 length)")
         var pin: String? = null,
 
-        var title: String? = "Pracownik"
+        var isManager: Boolean = false
 ) {
     companion object {
         internal const val PHONE_MATCHER = "(\\(?\\+[\\d]{2}\\(?)?([ .-]?)([0-9]{3})([ .-]?)([0-9]{3})\\4([0-9]{3})"
@@ -41,8 +44,11 @@ data class CreateEmployeeDTO(
                         lastName = createEmployeeDTO.lastName,
                         workEmail = createEmployeeDTO.email,
                         phoneNumber = createEmployeeDTO.phoneNumber,
-                        authorities = setOf(Authority(Authority.Role.ROLE_EMPLOYEE)),
-                        accountState = User.AccountState.ACTIVE
+                        accountState = User.AccountState.ACTIVE,
+                        authorities = when {
+                            createEmployeeDTO.isManager -> setOf(Authority(ROLE_EMPLOYEE), Authority(ROLE_MANAGER))
+                            else -> setOf(Authority(ROLE_EMPLOYEE))
+                        }
                 )
     }
 }
