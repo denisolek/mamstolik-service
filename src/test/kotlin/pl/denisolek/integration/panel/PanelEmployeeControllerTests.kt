@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.context.WebApplicationContext
+import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.security.Authority
 import pl.denisolek.core.security.Authority.Role.ROLE_EMPLOYEE
 import pl.denisolek.core.security.Authority.Role.ROLE_MANAGER
@@ -212,6 +213,25 @@ class PanelEmployeeControllerTests {
                 .content(body))
 
         result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `addEmployee_ pin is null`() {
+        var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO().copy(
+                pin = null
+        )
+
+        val body = convertObjectToJsonBytes(employeeDTO)
+
+        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(ServiceException::class.java))
     }
 
     @Test

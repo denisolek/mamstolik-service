@@ -3,10 +3,9 @@ package pl.denisolek.panel.employee.DTO
 import org.hibernate.validator.constraints.Email
 import org.hibernate.validator.constraints.NotBlank
 import pl.denisolek.core.security.Authority
-import pl.denisolek.core.security.Authority.*
-import pl.denisolek.core.security.Authority.Role.*
+import pl.denisolek.core.security.Authority.Role.ROLE_EMPLOYEE
+import pl.denisolek.core.security.Authority.Role.ROLE_MANAGER
 import pl.denisolek.core.user.User
-import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
 
@@ -29,7 +28,6 @@ data class CreateEmployeeDTO(
         @field:Pattern(regexp = PHONE_MATCHER)
         var phoneNumber: String,
 
-        @field:NotBlank
         @field:Pattern(regexp = "^(?!\\s*$)[0-9\\s]{4,10}$", message = "Only digits accepted in pin (4-10 length)")
         var pin: String? = null,
 

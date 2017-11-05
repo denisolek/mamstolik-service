@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.user.User
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.panel.employee.DTO.CreateEmployeeDTO
 import pl.denisolek.panel.employee.DTO.EmployeeDTO
@@ -16,8 +17,10 @@ import javax.validation.Valid
 interface PanelEmployeeApi {
     companion object {
         const val RESTAURANT_ID: String = "restaurantId"
+        const val EMPLOYEE_ID: String = "employeeId"
 
         const val EMPLOYEES_PATH = "/{$RESTAURANT_ID}/employees"
+        const val EMPLOYEES_ID_PATH = "$EMPLOYEES_PATH/{$EMPLOYEE_ID}"
     }
 
     @GetMapping(EMPLOYEES_PATH)
@@ -31,4 +34,11 @@ interface PanelEmployeeApi {
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun addEmployee(@ApiIgnore @PathVariable(PanelEmployeeController.API.RESTAURANT_ID) restaurantId: Restaurant,
                     @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO): List<EmployeeDTO>
+
+    @PutMapping(EMPLOYEES_ID_PATH)
+    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+            "@authorizationService.currentUser.workPlace == #restaurantId")
+    fun updateEmployee(@ApiIgnore @PathVariable(PanelEmployeeController.API.RESTAURANT_ID) restaurantId: Restaurant,
+                       @ApiIgnore @PathVariable(PanelEmployeeController.API.EMPLOYEE_ID) employeeId: User,
+                       @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO): List<EmployeeDTO>
 }
