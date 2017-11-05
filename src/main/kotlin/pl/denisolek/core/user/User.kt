@@ -25,7 +25,6 @@ data class User(
         var phoneNumber: String? = null,
         var activationKey: String? = null,
         var resetPasswordKey: String? = null,
-        var title: String? = null,
 
         @Enumerated(EnumType.STRING)
         var accountState: AccountState,
@@ -36,6 +35,8 @@ data class User(
 
         @ManyToOne
         var workPlace: Restaurant? = null,
+
+        var workEmail: String? = null,
 
         @OneToMany(mappedBy = "owner", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         var ownedRestaurants: MutableList<Restaurant>? = mutableListOf(),
@@ -51,4 +52,14 @@ data class User(
         WAITING,
         BANNED
     }
+
+    fun getTitle() =
+            when {
+                this.authorities.contains(Authority(Authority.Role.ROLE_OWNER)) ->
+                    Authority.Role.ROLE_OWNER.title!!
+                this.authorities.contains(Authority(Authority.Role.ROLE_MANAGER)) ->
+                    Authority.Role.ROLE_MANAGER.title!!
+                else ->
+                    Authority.Role.ROLE_EMPLOYEE.title!!
+            }
 }
