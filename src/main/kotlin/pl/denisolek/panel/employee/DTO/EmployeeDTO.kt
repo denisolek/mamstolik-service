@@ -4,7 +4,6 @@ import org.hibernate.validator.constraints.Email
 import org.hibernate.validator.constraints.NotBlank
 import pl.denisolek.core.security.Authority
 import pl.denisolek.core.user.User
-import pl.denisolek.panel.identity.DTO.RegisterDTO
 import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
 
