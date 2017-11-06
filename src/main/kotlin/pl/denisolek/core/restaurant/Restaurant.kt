@@ -193,4 +193,12 @@ data class Restaurant(
         PRESS,
         SPORTS_BROADCAST
     }
+
+    enum class Type(val value: String) {
+        RESTAURANT("Restauracja"),
+        BAR("Bar"),
+        PUB("Pub"),
+        CAFETERIA("Kawiarnia"),
+        EATING_HOUSE("Jadłodajnia")
+    }
 }
