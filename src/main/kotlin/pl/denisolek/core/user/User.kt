@@ -39,7 +39,7 @@ data class User(
         var workEmail: String? = null,
 
         @OneToMany(mappedBy = "owner", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var ownedRestaurants: MutableList<Restaurant>? = mutableListOf(),
+        var ownedRestaurants: MutableList<Restaurant> = mutableListOf(),
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
         var restaurant: Restaurant? = null

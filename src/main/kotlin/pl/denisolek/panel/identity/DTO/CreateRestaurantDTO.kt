@@ -3,6 +3,7 @@ package pl.denisolek.panel.identity.DTO
 import org.hibernate.validator.constraints.Email
 import org.hibernate.validator.constraints.NotBlank
 import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.restaurant.Restaurant.RestaurantType
 import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
 
@@ -16,7 +17,7 @@ data class CreateRestaurantDTO(
         var email: String,
 
         @field:NotBlank
-        var type: Restaurant.Type,
+        var type: RestaurantType,
 
         @field:NotBlank
         @field:Size(min = 5)
