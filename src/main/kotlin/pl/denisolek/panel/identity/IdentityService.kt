@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.email.EmailService
+import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.security.Authority
 import pl.denisolek.core.user.User
 import pl.denisolek.core.user.UserService
@@ -84,13 +85,27 @@ class IdentityService(private val userService: UserService,
 
     fun getRestaurants(): List<UserRestaurantDTO> {
         val user = authorizationService.getCurrentUser()
-        return user.ownedRestaurants?.map {
+        return user.ownedRestaurants.map {
             UserRestaurantDTO.fromRestaurant(it)
-        } ?: mutableListOf()
+        }
     }
 
     fun getEmployees(): List<RestaurantEmployeeDTO> {
         val user = authorizationService.getCurrentUser()
         return RestaurantEmployeeDTO.fromEmployees(user.restaurant?.employees) ?: listOf()
+    }
+
+    fun createRestaurant(createRestaurantDTO: CreateRestaurantDTO) {
+        val user = authorizationService.getCurrentUser()
+
+        val restaurant = Restaurant(
+                name = createRestaurantDTO.name,
+                type = createRestaurantDTO.type,
+                owner = user
+        )
+
+        user.ownedRestaurants.add(restaurant)
+
+        userService.save(user)
     }
 }

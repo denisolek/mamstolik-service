@@ -12,7 +12,7 @@ data class UserRestaurantDTO(
                 UserRestaurantDTO(
                         id = restaurant.id!!,
                         name = restaurant.name,
-                        address = restaurant.address?.getAddressString()!!
+                        address = restaurant.address?.getAddressString() ?: ""
                 )
     }
 }

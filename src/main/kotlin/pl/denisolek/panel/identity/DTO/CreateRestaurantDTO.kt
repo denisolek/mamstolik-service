@@ -2,8 +2,8 @@ package pl.denisolek.panel.identity.DTO
 
 import org.hibernate.validator.constraints.Email
 import org.hibernate.validator.constraints.NotBlank
-import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.Restaurant.RestaurantType
+import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
 
@@ -16,7 +16,7 @@ data class CreateRestaurantDTO(
         @field:Email
         var email: String,
 
-        @field:NotBlank
+        @field:NotNull
         var type: RestaurantType,
 
         @field:NotBlank
