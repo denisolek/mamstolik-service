@@ -96,16 +96,18 @@ class IdentityService(private val userService: UserService,
     }
 
     fun createRestaurant(createRestaurantDTO: CreateRestaurantDTO) {
-        val user = authorizationService.getCurrentUser()
-
         val restaurant = Restaurant(
                 name = createRestaurantDTO.name,
                 type = createRestaurantDTO.type,
-                owner = user
+                owner = authorizationService.getCurrentUser()
         )
-
-        user.ownedRestaurants.add(restaurant)
-
-        userService.save(user)
+        userService.save(User(
+                username = userService.generateUsername(),
+                email = createRestaurantDTO.email,
+                password = passwordEncoder.encode(createRestaurantDTO.password),
+                authorities = setOf(Authority(Authority.Role.ROLE_RESTAURANT)),
+                accountState = User.AccountState.ACTIVE,
+                restaurant = restaurant
+        ))
     }
 }
