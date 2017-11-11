@@ -15,4 +15,5 @@ data class Spot(
         var minPeopleNumber: Int = 1,
 
         @ManyToOne
-        var restaurant: Restaurant)
+        var restaurant: Restaurant
+)
