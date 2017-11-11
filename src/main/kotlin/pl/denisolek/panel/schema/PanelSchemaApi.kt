@@ -16,7 +16,7 @@ interface PanelSchemaApi {
     companion object {
         const val RESTAURANT_ID: String = "restaurantId"
 
-        const val SCHEMA = "/{$RESTAURANT_ID}/schema"
+        const val SCHEMA = "/{$RESTAURANT_ID}/schemas"
     }
 
     @GetMapping(SCHEMA)
