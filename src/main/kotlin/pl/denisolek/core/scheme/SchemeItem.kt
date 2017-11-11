@@ -35,29 +35,29 @@ data class SchemeItem(
         var floor: Floor
 ) {
     enum class Type {
-        WALL, //1
-        TABLE, //2
-        ITEM, //3
-        WALL_ITEM //4
+        WALL, // 1
+        TABLE, // 2
+        ITEM, // 3
+        WALL_ITEM // 4
     }
 
     enum class TableType {
-        TWO, //1
-        TWO_ROUND, //2
-        THREE, //3
-        THREE_ROUND, //4
-        FOUR, //5
-        FOUR_RECT, //6
-        FOUR_ROUND, //7
-        FIVE_ROUND, //8
-        FIVE_RECT_1, //9
-        FIVE_RECT_2, //10
-        FIVE_RECT_3, //11
-        SIX_RECT_1, //12
-        SIX_RECT_2, //13
-        SIX_ROUND, //14
-        EIGHT_RECT, //15
-        EIGHT_ROUND //16
+        TWO, // 1
+        TWO_ROUND, // 2
+        THREE, // 3
+        THREE_ROUND, // 4
+        FOUR, // 5
+        FOUR_RECT, // 6
+        FOUR_ROUND, // 7
+        FIVE_ROUND, // 8
+        FIVE_RECT_1, // 9
+        FIVE_RECT_2, // 10
+        FIVE_RECT_3, // 11
+        SIX_RECT_1, // 12
+        SIX_RECT_2, // 13
+        SIX_ROUND, // 14
+        EIGHT_RECT, // 15
+        EIGHT_ROUND // 16
     }
 
     enum class ItemType {
