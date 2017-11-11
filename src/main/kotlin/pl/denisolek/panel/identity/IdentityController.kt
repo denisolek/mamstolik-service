@@ -39,4 +39,8 @@ class IdentityController(val identityService: IdentityService) : IdentityApi {
     override fun getEmployees(): List<RestaurantEmployeeDTO> {
         return identityService.getEmployees()
     }
+
+    override fun createRestaurant(@RequestBody @Valid createRestaurantDTO: CreateRestaurantDTO) {
+        return identityService.createRestaurant(createRestaurantDTO)
+    }
 }

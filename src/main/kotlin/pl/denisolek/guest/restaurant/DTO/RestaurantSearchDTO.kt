@@ -23,7 +23,7 @@ data class RestaurantSearchDTO(
                         service_rate = restaurant.service_rate,
                         food_rate = restaurant.food_rate,
                         price_quality_rate = restaurant.price_quality_rate,
-                        address = restaurant.address,
+                        address = restaurant.address!!,
                         cuisineTypes = restaurant.cuisineTypes,
                         facilities = restaurant.facilities
                 )

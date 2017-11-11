@@ -27,8 +27,8 @@ data class RestaurantDetailsDTO(
                                 price_quality_rate = restaurant.price_quality_rate,
                                 service_rate = restaurant.service_rate
                         ),
-                        address = restaurant.address,
-                        menu = restaurant.menu.categories.map { MenuCategoryDTO.fromMenuCategory(it) }.sortedBy { it.position },
+                        address = restaurant.address!!,
+                        menu = restaurant.menu?.categories?.map { MenuCategoryDTO.fromMenuCategory(it) }?.sortedBy { it.position }!!,
                         businessHours = restaurant.businessHours,
                         tags = listOf(restaurant.cuisineTypes, restaurant.facilities)
                 )

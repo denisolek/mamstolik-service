@@ -19,22 +19,23 @@ data class Restaurant(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Int? = null,
         var name: String,
-        var description: String,
-        var avgReservationTime: Duration,
-        var rate: Float,
-        var service_rate: Float,
-        var food_rate: Float,
-        var price_quality_rate: Float,
-        var isActive: Boolean,
+        var description: String = "",
+        var avgReservationTime: Duration = Duration.ofHours(1),
+        var rate: Float = 0f,
+        var service_rate: Float = 0f,
+        var food_rate: Float = 0f,
+        var price_quality_rate: Float = 0f,
+        var isActive: Boolean = false,
+        var type: RestaurantType,
 
         @ManyToOne
-        var owner: User,
+        var owner: User? = null,
 
         @OneToMany(mappedBy = "workPlace", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var employees: MutableList<User>? = mutableListOf(),
+        var employees: MutableList<User> = mutableListOf(),
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        var address: Address,
+        var address: Address? = null,
 
         @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         var reservations: MutableList<Reservation> = mutableListOf(),
@@ -43,7 +44,7 @@ data class Restaurant(
         var spots: MutableList<Spot> = mutableListOf(),
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        var menu: Menu,
+        var menu: Menu? = null,
 
         @ElementCollection(fetch = FetchType.EAGER)
         @Enumerated(EnumType.STRING)
@@ -192,5 +193,13 @@ data class Restaurant(
         BABY_TOILET,
         PRESS,
         SPORTS_BROADCAST
+    }
+
+    enum class RestaurantType(val value: String) {
+        RESTAURANT("Restauracja"),
+        BAR("Bar"),
+        PUB("Pub"),
+        CAFETERIA("Kawiarnia"),
+        EATING_HOUSE("Jadłodajnia")
     }
 }

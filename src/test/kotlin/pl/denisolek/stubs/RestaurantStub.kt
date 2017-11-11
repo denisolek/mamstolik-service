@@ -6,6 +6,7 @@ import pl.denisolek.core.menu.Menu
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.restaurant.Restaurant.RestaurantType.RESTAURANT
 import pl.denisolek.core.security.Authority
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.core.user.User
@@ -25,6 +26,7 @@ class RestaurantStub {
                         food_rate = 4.0f,
                         price_quality_rate = 4.0f,
                         service_rate = 4.0f,
+                        type = RESTAURANT,
                         facilities = getFacilities(),
                         cuisineTypes = getKitchenTypes(),
                         businessHours = getBusinessHours(),
@@ -45,6 +47,7 @@ class RestaurantStub {
                         food_rate = 4.0f,
                         price_quality_rate = 4.0f,
                         service_rate = 4.0f,
+                        type = RESTAURANT,
                         facilities = getFacilities(),
                         cuisineTypes = getKitchenTypes(),
                         businessHours = getBusinessHours(),
