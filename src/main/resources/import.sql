@@ -1,5 +1,6 @@
 /* @formatter:off */
-ALTER TABLE public.restaurant ALTER COLUMN "description" TYPE VARCHAR(3000);
+ALTER TABLE public.restaurant
+  ALTER COLUMN "description" TYPE VARCHAR(3000);
 
 INSERT INTO public.authority (role)
 VALUES
@@ -66,30 +67,31 @@ INSERT INTO public.user (username, email, first_name, last_name, password, accou
 VALUES
   ('ms999999', 'admin@admin.pl', 'Admin', 'Adminujący', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'ACTIVE');
 
-INSERT INTO public.user (username, email, first_name, last_name, activation_key, account_state) VALUES ('ms800000', 'ms800000@test.pl', 'Test', 'Testowy', 'activationKeyTest', 'NOT_ACTIVE');
+INSERT INTO public.user (username, email, first_name, last_name, activation_key, account_state)
+VALUES
+  ('ms800000', 'ms800000@test.pl', 'Test', 'Testowy', 'activationKeyTest', 'NOT_ACTIVE');
 
 -- address
 INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, menu_id, owner_id, description)
 VALUES
-  ('Piano Bar Restaurant & Cafe', 1, 4.5, 5.0, 5.0, 5.0, 1800, true, 1, 1, 'Piano Bar jest urokliwym, stylowym miejscem, które znajduje się w Centrum Sztuki i Biznesu w Starym Browarze. Jest niepowtarzalne i przepełnione niezwykłym klimatem. Piano Bar to restauracja, którą wyróżnia profesjonalna obsługa sprawiająca, że nasi Goście czują się naprawdę niezwykle. Dodatkowy, elegancki a zarazem ciepły wystrój wnętrza zapewnia uczucie wyjątkowości. Nasze smaki to kuchnia włoska, śródziemnomorska i potrawy kuchni polskiej. Szef Kuchni Krystian Szopka z zespołem kucharzy sprawia, że jej smak na długo pozostaje w pamięci naszych Gości. Zapraszamy na lunche, rodzinne obiady, spotkania biznesowe.'),
-  ('Ratuszova', 2, 4.5, 5.0, 5.0, 5.0, 1800, true, null, 2, 'Restauracja Ratuszova serdecznie zaprasza w swoje progi wszystkich, którzy lubią lub pragną zasmakować tradycyjne potrawy kuchni polskiej! W naszym menu na szczególną uwagę zasługuje czernina z domowym makaronem, kaczka pieczona z jabłkami oraz dania z dziczyzny. Miłośników Slow Food, pasjonatów zdrowego odżywiania oraz wszystkich smakoszy w szczególności zachęcamy do spróbowania dań gotowanych innowacyjną metodą sous-vide. Dla jeszcze większego urozmaicenia nasze menu uzupełniliśmy smakami kuchni międzynarodowej. W naszej restauracji dbamy o to by sezonowo zmieniać potrawy oraz wystrój sal. '),
-  ('Manekin', 3, 4.7, 4.0, 3.0, 3.5, 1800, true, null, 3, 'Znana i ceniona sieć lokali podająca przepyszne naleśniki. Restauracja serwuje wiele rodzajów naleśników na słodko jak i na wytrawnie ale nie tylko. Tu można zjeść również sałatki, zupy, desery, spaghetti. Ogromnym atutem jest stylizowane wnętrze, nawiązujące do krainy baśniowej. W tym surrealistycznym otoczeniu można nie tylko zjeść, lecz również zrelaksować się przy kieliszku wina czy kuflu piwa.'),
-  ('Whiskey in the Jar', 4, 4.5, 5.0, 5.0, 5.0, 1800, true, null, 4, 'Whiskey in the Jar to steakhouse, wzorowany na najlepszych amerykańskich lokalach tego typu. W menu znajdują się głównie dania mięsne – specjalnością są steki, przyrządzane z najwyższej jakości wołowiny, a także burgery i dania grillowane, dostępne pod nazwą Grill Rockersa. Wszystkie potrawy przygotowywane są na najdłuższym w Poznaniu grillu lawowym. Ogromnym powodzeniem cieszą się również autorskie drinki na bazie Jacka Daniels’a, zgodnie z nazwą lokalu podawane w designerskich słojach – jarach.'),
-  ('Chmielnik Pub', 5, 4.5, 5.0, 5.0, 5.0, 1800, true, null, 5, 'Ambasador polskiego piwa w Poznaniu. Największy wybór piw z polskich browarów rzemieślniczych w samym sercu Poznania.  Zapewniamy wyjątkowy wystrój, profesjonalną obsługę, niepowtarzalny klimat. W sezonie letnim zapraszamy do magicznego ogrodu piwnego dla 200 osób, w którym główną atrakcją jest rosnący chmiel w odmianie SYBILLA oraz działająca kuchnia oferująca dania dopasowane do piwa.'),
-  ('Rapudei Berek', 6, 4.8, 4.0, 4.4, 4.7, 1800, true, null, 6, 'Berek to rodzaj pocztówki z wakacji. Radość śródziemnomorskiego jedzenia i gorący klimat telawiwskich ulic, którego wspomnienie przeniesione zostało do Warszawy. Tworząc menu w Berku starałem się poznać lokalnych producentów i wykorzystywać jak najświeższe składniki. Wychowałem się w końcu w miejscu, gdzie owoce zjada się prosto z drzewa. Nasza pita jest wypiekana na miejscu i podawana na gorąco, hummus robimy taki, jaki sami jemy, korzystamy przede wszystkim z sezonowych warzyw. W Berku dzielę się moimi ulubionymi smakami domu, we wdzięcznym, współczesnym wydaniu.'),
-  ('Pasja', 7, 4.5, 5.0, 5.0, 5.0, 1800, true, null, 7, 'Zapewniamy wyjątkowy wystrój, profesjonalną obsługę, niepowtarzalny klimat. W sezonie letnim zapraszamy do magicznego ogrodu piwnego dla 200 osób, w którym główną atrakcją jest rosnący chmiel w odmianie SYBILLA oraz działająca kuchnia oferująca dania dopasowane do piwa.'),
-  ('Cien', 7, 4.5, 5.0, 5.0, 5.0, 1800, false, null, 8, 'Nie aktywna, bez miejsc, bez niczego');
+  ('Piano Bar Restaurant & Cafe', 1, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, 1, 1, 'Piano Bar jest urokliwym, stylowym miejscem, które znajduje się w Centrum Sztuki i Biznesu w Starym Browarze. Jest niepowtarzalne i przepełnione niezwykłym klimatem. Piano Bar to restauracja, którą wyróżnia profesjonalna obsługa sprawiająca, że nasi Goście czują się naprawdę niezwykle. Dodatkowy, elegancki a zarazem ciepły wystrój wnętrza zapewnia uczucie wyjątkowości. Nasze smaki to kuchnia włoska, śródziemnomorska i potrawy kuchni polskiej. Szef Kuchni Krystian Szopka z zespołem kucharzy sprawia, że jej smak na długo pozostaje w pamięci naszych Gości. Zapraszamy na lunche, rodzinne obiady, spotkania biznesowe.'),
+  ('Ratuszova', 2, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, NULL, 2, 'Restauracja Ratuszova serdecznie zaprasza w swoje progi wszystkich, którzy lubią lub pragną zasmakować tradycyjne potrawy kuchni polskiej! W naszym menu na szczególną uwagę zasługuje czernina z domowym makaronem, kaczka pieczona z jabłkami oraz dania z dziczyzny. Miłośników Slow Food, pasjonatów zdrowego odżywiania oraz wszystkich smakoszy w szczególności zachęcamy do spróbowania dań gotowanych innowacyjną metodą sous-vide. Dla jeszcze większego urozmaicenia nasze menu uzupełniliśmy smakami kuchni międzynarodowej. W naszej restauracji dbamy o to by sezonowo zmieniać potrawy oraz wystrój sal. '),
+  ('Manekin', 3, 4.7, 4.0, 3.0, 3.5, 1800, TRUE, NULL, 3, 'Znana i ceniona sieć lokali podająca przepyszne naleśniki. Restauracja serwuje wiele rodzajów naleśników na słodko jak i na wytrawnie ale nie tylko. Tu można zjeść również sałatki, zupy, desery, spaghetti. Ogromnym atutem jest stylizowane wnętrze, nawiązujące do krainy baśniowej. W tym surrealistycznym otoczeniu można nie tylko zjeść, lecz również zrelaksować się przy kieliszku wina czy kuflu piwa.'),
+  ('Whiskey in the Jar', 4, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, NULL, 4, 'Whiskey in the Jar to steakhouse, wzorowany na najlepszych amerykańskich lokalach tego typu. W menu znajdują się głównie dania mięsne – specjalnością są steki, przyrządzane z najwyższej jakości wołowiny, a także burgery i dania grillowane, dostępne pod nazwą Grill Rockersa. Wszystkie potrawy przygotowywane są na najdłuższym w Poznaniu grillu lawowym. Ogromnym powodzeniem cieszą się również autorskie drinki na bazie Jacka Daniels’a, zgodnie z nazwą lokalu podawane w designerskich słojach – jarach.'),
+  ('Chmielnik Pub', 5, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, NULL, 5, 'Ambasador polskiego piwa w Poznaniu. Największy wybór piw z polskich browarów rzemieślniczych w samym sercu Poznania.  Zapewniamy wyjątkowy wystrój, profesjonalną obsługę, niepowtarzalny klimat. W sezonie letnim zapraszamy do magicznego ogrodu piwnego dla 200 osób, w którym główną atrakcją jest rosnący chmiel w odmianie SYBILLA oraz działająca kuchnia oferująca dania dopasowane do piwa.'),
+  ('Rapudei Berek', 6, 4.8, 4.0, 4.4, 4.7, 1800, TRUE, NULL, 6, 'Berek to rodzaj pocztówki z wakacji. Radość śródziemnomorskiego jedzenia i gorący klimat telawiwskich ulic, którego wspomnienie przeniesione zostało do Warszawy. Tworząc menu w Berku starałem się poznać lokalnych producentów i wykorzystywać jak najświeższe składniki. Wychowałem się w końcu w miejscu, gdzie owoce zjada się prosto z drzewa. Nasza pita jest wypiekana na miejscu i podawana na gorąco, hummus robimy taki, jaki sami jemy, korzystamy przede wszystkim z sezonowych warzyw. W Berku dzielę się moimi ulubionymi smakami domu, we wdzięcznym, współczesnym wydaniu.'),
+  ('Pasja', 7, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, NULL, 7, 'Zapewniamy wyjątkowy wystrój, profesjonalną obsługę, niepowtarzalny klimat. W sezonie letnim zapraszamy do magicznego ogrodu piwnego dla 200 osób, w którym główną atrakcją jest rosnący chmiel w odmianie SYBILLA oraz działająca kuchnia oferująca dania dopasowane do piwa.'),
+  ('Cien', 7, 4.5, 5.0, 5.0, 5.0, 1800, FALSE, NULL, 8, 'Nie aktywna, bez miejsc, bez niczego');
 
 
 INSERT INTO public.user (username, email, password, account_state, restaurant_id)
 VALUES
-	('ms100001', 'ms100001@mamstolik.pl', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'ACTIVE', 1);
+  ('ms100001', 'ms100001@mamstolik.pl', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'ACTIVE', 1);
 
 INSERT INTO public.user (username, email, work_email, first_name, last_name, password, phone_number, account_state, work_place_id)
 VALUES
-	('ms100002', 'ms100002@mamstolik.pl', 'ms100002@mamstolik.pl', 'Pracownik', 'Pracujący', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', '507946148', 'ACTIVE', 1),
-	('ms100003', 'ms100003@mamstolik.pl', 'ms100002@mamstolik.pl','Pracowniczka', 'Pracująca', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', '603201114', 'ACTIVE', 1);
-
+  ('ms100002', 'ms100002@mamstolik.pl', 'ms100002@mamstolik.pl', 'Pracownik', 'Pracujący', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', '507946148', 'ACTIVE', 1),
+  ('ms100003', 'ms100003@mamstolik.pl', 'ms100002@mamstolik.pl', 'Pracowniczka', 'Pracująca', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', '603201114', 'ACTIVE', 1);
 
 -- add authorities
 INSERT INTO public.user_authority (username, authority)
@@ -107,7 +109,6 @@ VALUES
   (11, 'ROLE_EMPLOYEE'),
   (11, 'ROLE_MANAGER'),
   (12, 'ROLE_EMPLOYEE');
-
 
 -- restaurant
 INSERT INTO public.restaurant_kitchen (restaurant_id, kitchen_type)
@@ -153,13 +154,13 @@ VALUES
   ('13:00:00', '20:00:00');
 INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
 VALUES
-  (1,1, 'MONDAY'),
-  (1,2, 'TUESDAY'),
-  (1,3, 'WEDNESDAY'),
-  (1,4, 'THURSDAY'),
-  (1,5, 'FRIDAY'),
-  (1,6, 'SATURDAY'),
-  (1,7, 'SUNDAY');
+  (1, 1, 'MONDAY'),
+  (1, 2, 'TUESDAY'),
+  (1, 3, 'WEDNESDAY'),
+  (1, 4, 'THURSDAY'),
+  (1, 5, 'FRIDAY'),
+  (1, 6, 'SATURDAY'),
+  (1, 7, 'SUNDAY');
 
 INSERT INTO public.business_hour (open_time, close_time)
 VALUES
@@ -172,13 +173,13 @@ VALUES
   ('13:00:00', '22:00:00');
 INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
 VALUES
-  (2,8, 'MONDAY'),
-  (2,9, 'TUESDAY'),
-  (2,10, 'WEDNESDAY'),
-  (2,11, 'THURSDAY'),
-  (2,12, 'FRIDAY'),
-  (2,13, 'SATURDAY'),
-  (2,14, 'SUNDAY');
+  (2, 8, 'MONDAY'),
+  (2, 9, 'TUESDAY'),
+  (2, 10, 'WEDNESDAY'),
+  (2, 11, 'THURSDAY'),
+  (2, 12, 'FRIDAY'),
+  (2, 13, 'SATURDAY'),
+  (2, 14, 'SUNDAY');
 
 INSERT INTO public.business_hour (open_time, close_time)
 VALUES
@@ -191,13 +192,13 @@ VALUES
   ('13:00:00', '22:00:00');
 INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
 VALUES
-  (3,15, 'MONDAY'),
-  (3,16, 'TUESDAY'),
-  (3,17, 'WEDNESDAY'),
-  (3,18, 'THURSDAY'),
-  (3,19, 'FRIDAY'),
-  (3,20, 'SATURDAY'),
-  (3,21, 'SUNDAY');
+  (3, 15, 'MONDAY'),
+  (3, 16, 'TUESDAY'),
+  (3, 17, 'WEDNESDAY'),
+  (3, 18, 'THURSDAY'),
+  (3, 19, 'FRIDAY'),
+  (3, 20, 'SATURDAY'),
+  (3, 21, 'SUNDAY');
 
 INSERT INTO public.business_hour (open_time, close_time)
 VALUES
@@ -210,13 +211,13 @@ VALUES
   ('13:00:00', '22:00:00');
 INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
 VALUES
-  (4,22, 'MONDAY'),
-  (4,23, 'TUESDAY'),
-  (4,24, 'WEDNESDAY'),
-  (4,25, 'THURSDAY'),
-  (4,26, 'FRIDAY'),
-  (4,27, 'SATURDAY'),
-  (4,28, 'SUNDAY');
+  (4, 22, 'MONDAY'),
+  (4, 23, 'TUESDAY'),
+  (4, 24, 'WEDNESDAY'),
+  (4, 25, 'THURSDAY'),
+  (4, 26, 'FRIDAY'),
+  (4, 27, 'SATURDAY'),
+  (4, 28, 'SUNDAY');
 
 INSERT INTO public.business_hour (open_time, close_time)
 VALUES
@@ -229,13 +230,13 @@ VALUES
   ('13:00:00', '22:00:00');
 INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
 VALUES
-  (5,29, 'MONDAY'),
-  (5,30, 'TUESDAY'),
-  (5,31, 'WEDNESDAY'),
-  (5,32, 'THURSDAY'),
-  (5,33, 'FRIDAY'),
-  (5,34, 'SATURDAY'),
-  (5,35, 'SUNDAY');
+  (5, 29, 'MONDAY'),
+  (5, 30, 'TUESDAY'),
+  (5, 31, 'WEDNESDAY'),
+  (5, 32, 'THURSDAY'),
+  (5, 33, 'FRIDAY'),
+  (5, 34, 'SATURDAY'),
+  (5, 35, 'SUNDAY');
 
 INSERT INTO public.business_hour (open_time, close_time)
 VALUES
@@ -248,13 +249,13 @@ VALUES
   ('10:00:00', '23:00:00');
 INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
 VALUES
-  (6,36, 'MONDAY'),
-  (6,37, 'TUESDAY'),
-  (6,38, 'WEDNESDAY'),
-  (6,39, 'THURSDAY'),
-  (6,40, 'FRIDAY'),
-  (6,41, 'SATURDAY'),
-  (6,42, 'SUNDAY');
+  (6, 36, 'MONDAY'),
+  (6, 37, 'TUESDAY'),
+  (6, 38, 'WEDNESDAY'),
+  (6, 39, 'THURSDAY'),
+  (6, 40, 'FRIDAY'),
+  (6, 41, 'SATURDAY'),
+  (6, 42, 'SUNDAY');
 
 INSERT INTO public.business_hour (open_time, close_time)
 VALUES
@@ -317,7 +318,7 @@ VALUES
 
 -- add floors
 INSERT INTO public.floor (name, restaurant_id)
- VALUES
+VALUES
   ('Parter', 1),
   ('Pierwsze piętro', 1),
   ('Taras', 1);
@@ -325,62 +326,62 @@ INSERT INTO public.floor (name, restaurant_id)
 -- add scheme items
 INSERT INTO public.scheme_item (type, table_type, item_type, wall_item_type, floor_id, width, height, rotation, x, y, spot_id)
 VALUES
-  ('TABLE', 'FOUR_RECT', null, null, 1, 200, 200, 0.0, 238.33334859212255, 292.1991639196625, 1),
-  ('TABLE', 'FOUR_RECT', null, null, 1, 200, 200, 0.0, 1443.3333740234375, 1377.764169088224, 2),
-  ('TABLE', 'FIVE_ROUND', null, null, 1, 200, 200, 0.0, 1320.8264311483083, 2583.333333333333, 3),
-  ('TABLE', 'FIVE_RECT_1', null, null, 1, 200, 200, 0.0, 1890.4405693244653, 1900.000040690104, 4),
-  ('TABLE', 'TWO_ROUND', null, null, 1, 200, 200, 0.0, 1898.7465157837248, 2293.333251953125, 5),
-  ('TABLE', 'FOUR', null, null, 1, 200, 200, 0.0, 2376.666748046875, 2307.079971187371, 6),
-  ('TABLE', 'FOUR', null, null, 1, 200, 200, 0.0, 2353.8028982816168, 1386.6666259765625, 7),
-  ('TABLE', 'FIVE_RECT_2', null, null, 1, 200, 200, 0.0, 1518.3333333333335, 2235.7952159918527, 8),
-  ('TABLE', 'FIVE_RECT_3', null, null, 1, 200, 200, 0.0, 685, 299.99998982747394, 9),
-  ('TABLE', 'TWO', null, null, 1, 200, 200, 0.0, 2416.666666666667, 1016.6666463216147, 10),
-  ('TABLE', 'SIX_RECT_1', null, null, 1, 200, 200, 0.0, 1856.6666666666665, 1409.01273515194, 11),
-  ('TABLE', 'EIGHT_RECT', null, null, 1, 200, 200, 0.0, 1899.999959309896, 906.6666463216145, 12),
-  ('TABLE', 'EIGHT_ROUND', null, null, 1, 200, 200, 0.0, 1481.666666666667, 1874.9998372395835, 13),
-  ('TABLE', 'SIX_RECT_2', null, null, 1, 200, 200, 0.0, 197.032499980151, 2191.6665852864585, 14),
-  ('TABLE', 'EIGHT_ROUND', null, null, 1, 200, 200, 0.0, 2400, 563.1104153185751, 15),
-  ('TABLE', 'EIGHT_RECT', null, null, 1, 200, 200, 0.0, 1891.2096774193549, 536.6666463216146, 16),
-  ('TABLE', 'FOUR', null, null, 1, 200, 200, 0.0, 1068.3333536783857, 1372.731909280991, 17),
-  ('TABLE', 'FOUR', null, null, 1, 200, 200, 0.0, 600.0000203450518, 2584.065153788745, 18),
-  ('TABLE', 'FIVE_ROUND', null, null, 1, 200, 200, 0.0, 219.1597848266938, 2575.0000813802085, 19),
-  ('TABLE', 'FIVE_RECT_3', null, null, 1, 200, 200, 0.0, 2415.4406100145698, 1910, 20),
-  ('TABLE', 'TWO_ROUND', null, null, 1, 200, 200, 0.0, 237.4931130737641, 731.6666870117188, 21),
-  ('TABLE', 'FOUR_RECT', null, null, 1, 200, 200, 0.0, 268.33332316080737, 1333.7465971639333, 22),
-  ('ITEM', null, 'TOILET', null, 1, 200, 200, 0.0, 1280, 1070, null),
-  ('WALL', null, null, null, 1, 200, 200, 0.0, 1140, 598.3333333333334, null),
-  ('WALL', null, null, null, 1, 200, 200, 0.0, 1093.3333333333326, 393.33333333333326, null),
-  ('WALL', null, null, null, 1, 200, 200, 0.0, 1025.19871760124, 529.9917645517912, null),
-  ('WALL', null, null, null, 1, 200, 200, 0.0, 1795.0000000000005, 2540.0000000000005, null),
-  ('WALL', null, null, null, 1, 200, 200, 0.0, 1637.5001948734991, 1522.4999999999766, null),
-  ('WALL', null, null, null, 1, 200, 200, 0.0, 1789.9999999999998, 455.00000000000006, null),
-  ('WALL', null, null, null, 1, 200, 200, 0.0, 940.0000000000001, 986.6666666666666, null),
-  ('WALL', null, null, null, 1, 200, 200, 0.0, 941.6666666666665, 1295.0000000000002, null),
-  ('WALL', null, null, null, 1, 200, 200, 0.0, 162.49988203515016, 1029.1666666666772, null),
-  ('WALL', null, null, null, 1, 200, 200, 0.0, 103.33333333333326, 1615, null),
-  ('WALL', null, null, null, 1, 200, 200, 0.0, 105.00000000000003, 193.33333333333331, null),
-  ('WALL', null, null, null, 1, 200, 200, 0.0, 506.7980929598966, 1519.2202287944276, null),
-  ('WALL', null, null, null, 1, 200, 200, 0.0, 106.66666666666657, 2106.6666666666665, null),
-  ('WALL', null, null, null, 1, 200, 200, 0.0, -1176.555583852268, 1515.8603400051134, null),
-  ('WALL', null, null, null, 1, 200, 200, 0.0, 106.66666666666674, 2788.333333333333, null),
-  ('WALL_ITEM', null, null, 'WINDOW', 1, 200, 200, 0.0, 200, 195, null),
-  ('WALL_ITEM', null, null, 'WINDOW', 1, 200, 200, 0.0, -79.99999999999977, 2468.3333333333326, null),
-  ('WALL_ITEM', null, null, 'DOOR', 1, 200, 200, 0.0, 1053.333333333333, 2111.666666666667, null),
-  ('WALL_ITEM', null, null, 'DOOR', 1, 200, 200, 0.0, -30, 1891.6666666666665, null),
-  ('WALL_ITEM', null, null, 'DOOR', 1, 200, 200, 0.0, 1649.9999999999998, 1694.9999999999998, null),
-  ('WALL_ITEM', null, null, 'DOOR', 1, 200, 200, 0.0, 770.0000000000002, 815, null),
-  ('WALL_ITEM', null, null, 'DOOR', 1, 200, 200, 0.0, 393.3333333333335, 1618.3333333333333, null),
-  ('WALL_ITEM', null, null, 'WINDOW', 1, 200, 200, 0.0, -76.66666666666629, 1168.3333333333333, null),
-  ('WALL_ITEM', null, null, 'WINDOW', 1, 200, 200, 0.0, 1166.6666666666665, 198.33333333333343, null),
-  ('WALL_ITEM', null, null, 'WINDOW', 1, 200, 200, 0.0, 823.3333333333333, 2791.6666666666665, null),
-  ('WALL_ITEM', null, null, 'WINDOW', 1, 200, 200, 0.0, 2476.6666666666665, 1878.333333333333, null),
-  ('WALL_ITEM', null, null, 'WINDOW', 1, 200, 200, 0.0, 2476.6666666666665, 918.3333333333335, null);
+  ('TABLE', 'FOUR_RECT', NULL, NULL, 1, 200, 200, 0.0, 238.33334859212255, 292.1991639196625, 1),
+  ('TABLE', 'FOUR_RECT', NULL, NULL, 1, 200, 200, 0.0, 1443.3333740234375, 1377.764169088224, 2),
+  ('TABLE', 'FIVE_ROUND', NULL, NULL, 1, 200, 200, 0.0, 1320.8264311483083, 2583.333333333333, 3),
+  ('TABLE', 'FIVE_RECT_1', NULL, NULL, 1, 200, 200, 0.0, 1890.4405693244653, 1900.000040690104, 4),
+  ('TABLE', 'TWO_ROUND', NULL, NULL, 1, 200, 200, 0.0, 1898.7465157837248, 2293.333251953125, 5),
+  ('TABLE', 'FOUR', NULL, NULL, 1, 200, 200, 0.0, 2376.666748046875, 2307.079971187371, 6),
+  ('TABLE', 'FOUR', NULL, NULL, 1, 200, 200, 0.0, 2353.8028982816168, 1386.6666259765625, 7),
+  ('TABLE', 'FIVE_RECT_2', NULL, NULL, 1, 200, 200, 0.0, 1518.3333333333335, 2235.7952159918527, 8),
+  ('TABLE', 'FIVE_RECT_3', NULL, NULL, 1, 200, 200, 0.0, 685, 299.99998982747394, 9),
+  ('TABLE', 'TWO', NULL, NULL, 1, 200, 200, 0.0, 2416.666666666667, 1016.6666463216147, 10),
+  ('TABLE', 'SIX_RECT_1', NULL, NULL, 1, 200, 200, 0.0, 1856.6666666666665, 1409.01273515194, 11),
+  ('TABLE', 'EIGHT_RECT', NULL, NULL, 1, 200, 200, 0.0, 1899.999959309896, 906.6666463216145, 12),
+  ('TABLE', 'EIGHT_ROUND', NULL, NULL, 1, 200, 200, 0.0, 1481.666666666667, 1874.9998372395835, 13),
+  ('TABLE', 'SIX_RECT_2', NULL, NULL, 1, 200, 200, 0.0, 197.032499980151, 2191.6665852864585, 14),
+  ('TABLE', 'EIGHT_ROUND', NULL, NULL, 1, 200, 200, 0.0, 2400, 563.1104153185751, 15),
+  ('TABLE', 'EIGHT_RECT', NULL, NULL, 1, 200, 200, 0.0, 1891.2096774193549, 536.6666463216146, 16),
+  ('TABLE', 'FOUR', NULL, NULL, 1, 200, 200, 0.0, 1068.3333536783857, 1372.731909280991, 17),
+  ('TABLE', 'FOUR', NULL, NULL, 1, 200, 200, 0.0, 600.0000203450518, 2584.065153788745, 18),
+  ('TABLE', 'FIVE_ROUND', NULL, NULL, 1, 200, 200, 0.0, 219.1597848266938, 2575.0000813802085, 19),
+  ('TABLE', 'FIVE_RECT_3', NULL, NULL, 1, 200, 200, 0.0, 2415.4406100145698, 1910, 20),
+  ('TABLE', 'TWO_ROUND', NULL, NULL, 1, 200, 200, 0.0, 237.4931130737641, 731.6666870117188, 21),
+  ('TABLE', 'FOUR_RECT', NULL, NULL, 1, 200, 200, 0.0, 268.33332316080737, 1333.7465971639333, 22),
+  ('ITEM', NULL, 'TOILET', NULL, 1, 200, 200, 0.0, 1280, 1070, NULL),
+  ('WALL', NULL, NULL, NULL, 1, 200, 200, 0.0, 1140, 598.3333333333334, NULL),
+  ('WALL', NULL, NULL, NULL, 1, 200, 200, 0.0, 1093.3333333333326, 393.33333333333326, NULL),
+  ('WALL', NULL, NULL, NULL, 1, 200, 200, 0.0, 1025.19871760124, 529.9917645517912, NULL),
+  ('WALL', NULL, NULL, NULL, 1, 200, 200, 0.0, 1795.0000000000005, 2540.0000000000005, NULL),
+  ('WALL', NULL, NULL, NULL, 1, 200, 200, 0.0, 1637.5001948734991, 1522.4999999999766, NULL),
+  ('WALL', NULL, NULL, NULL, 1, 200, 200, 0.0, 1789.9999999999998, 455.00000000000006, NULL),
+  ('WALL', NULL, NULL, NULL, 1, 200, 200, 0.0, 940.0000000000001, 986.6666666666666, NULL),
+  ('WALL', NULL, NULL, NULL, 1, 200, 200, 0.0, 941.6666666666665, 1295.0000000000002, NULL),
+  ('WALL', NULL, NULL, NULL, 1, 200, 200, 0.0, 162.49988203515016, 1029.1666666666772, NULL),
+  ('WALL', NULL, NULL, NULL, 1, 200, 200, 0.0, 103.33333333333326, 1615, NULL),
+  ('WALL', NULL, NULL, NULL, 1, 200, 200, 0.0, 105.00000000000003, 193.33333333333331, NULL),
+  ('WALL', NULL, NULL, NULL, 1, 200, 200, 0.0, 506.7980929598966, 1519.2202287944276, NULL),
+  ('WALL', NULL, NULL, NULL, 1, 200, 200, 0.0, 106.66666666666657, 2106.6666666666665, NULL),
+  ('WALL', NULL, NULL, NULL, 1, 200, 200, 0.0, -1176.555583852268, 1515.8603400051134, NULL),
+  ('WALL', NULL, NULL, NULL, 1, 200, 200, 0.0, 106.66666666666674, 2788.333333333333, NULL),
+  ('WALL_ITEM', NULL, NULL, 'WINDOW', 1, 200, 200, 0.0, 200, 195, NULL),
+  ('WALL_ITEM', NULL, NULL, 'WINDOW', 1, 200, 200, 0.0, -79.99999999999977, 2468.3333333333326, NULL),
+  ('WALL_ITEM', NULL, NULL, 'DOOR', 1, 200, 200, 0.0, 1053.333333333333, 2111.666666666667, NULL),
+  ('WALL_ITEM', NULL, NULL, 'DOOR', 1, 200, 200, 0.0, -30, 1891.6666666666665, NULL),
+  ('WALL_ITEM', NULL, NULL, 'DOOR', 1, 200, 200, 0.0, 1649.9999999999998, 1694.9999999999998, NULL),
+  ('WALL_ITEM', NULL, NULL, 'DOOR', 1, 200, 200, 0.0, 770.0000000000002, 815, NULL),
+  ('WALL_ITEM', NULL, NULL, 'DOOR', 1, 200, 200, 0.0, 393.3333333333335, 1618.3333333333333, NULL),
+  ('WALL_ITEM', NULL, NULL, 'WINDOW', 1, 200, 200, 0.0, -76.66666666666629, 1168.3333333333333, NULL),
+  ('WALL_ITEM', NULL, NULL, 'WINDOW', 1, 200, 200, 0.0, 1166.6666666666665, 198.33333333333343, NULL),
+  ('WALL_ITEM', NULL, NULL, 'WINDOW', 1, 200, 200, 0.0, 823.3333333333333, 2791.6666666666665, NULL),
+  ('WALL_ITEM', NULL, NULL, 'WINDOW', 1, 200, 200, 0.0, 2476.6666666666665, 1878.333333333333, NULL),
+  ('WALL_ITEM', NULL, NULL, 'WINDOW', 1, 200, 200, 0.0, 2476.6666666666665, 918.3333333333335, NULL);
 
 -- add reservations
 INSERT INTO public.reservation (people_number, start_date_time, end_date_time, duration, state, customer_id, restaurant_id, verification_code, is_verified)
 VALUES
-(5, '2017-10-18 14:50:00.000', '2017-10-18 15:20:00.000', 1800, 0, 1, 1, 314251, true),
-(2, '2017-10-18 15:30:00.000', '2017-10-18 16:30:00.000', 3600, 0, 2, 1, 314251, true);
+  (5, '2017-10-18 14:50:00.000', '2017-10-18 15:20:00.000', 1800, 0, 1, 1, 314251, TRUE),
+  (2, '2017-10-18 15:30:00.000', '2017-10-18 16:30:00.000', 3600, 0, 2, 1, 314251, TRUE);
 
 -- reservation spots
 INSERT INTO public.reservation_spots (reservation_id, spots_id)
@@ -392,10 +393,10 @@ VALUES
 INSERT INTO public.menu_category (menu_id, position, description, name)
 VALUES
   (1, 0, 'Tylko do godziny 12.00', 'Śniadania'), -- 1
-  (1, 1, null, 'Przystawki'), -- 2
-  (1, 2, null, 'Zupy'), -- 3
-  (1, 3, null, 'Makarony'), -- 4
-  (1, 4, null, 'Desery'); -- 5
+  (1, 1, NULL, 'Przystawki'), -- 2
+  (1, 2, NULL, 'Zupy'), -- 3
+  (1, 3, NULL, 'Makarony'), -- 4
+  (1, 4, NULL, 'Desery'); -- 5
 
 -- add menu items
 INSERT INTO public.menu_item (category_id, position, price, name, description)
@@ -404,16 +405,16 @@ VALUES
   (1, 1, 11, 'Chałka z musem z koziego sera', 'Z miodem, orzechami laskowymi oraz rukolą'),
   (1, 2, 14, 'Jajko sadzone w chlebie', 'Z boczkiem, pieczarkami, pomidorem, serem oraz szpinakiem'),
   (1, 3, 12, 'Ser koryciński i hummus', 'Ze świeżymi warzywami, oliwkami i pieczywem'),
-  (2, 0, 5, 'Zapiekany chlebek ze słonym masłem', null),
-  (2, 1, 10, 'Talrze serów', null),
-  (2, 2, 13, 'Melon zawijany szynką parmeńską', null),
-  (3, 0, 10, 'Krem z brokuł z grzankami', null),
+  (2, 0, 5, 'Zapiekany chlebek ze słonym masłem', NULL),
+  (2, 1, 10, 'Talrze serów', NULL),
+  (2, 2, 13, 'Melon zawijany szynką parmeńską', NULL),
+  (3, 0, 10, 'Krem z brokuł z grzankami', NULL),
   (3, 1, 7, 'Pomidorowa', 'Z ryżem lub makaronem'),
   (3, 2, 9, 'Pieczarkowa', 'Z makaronem'),
-  (4, 0, 14, 'Spaghetti bolognese', null),
-  (4, 1, 16, 'Spaghetti carbonara', null),
-  (4, 2, 18, 'Tagliatelle ze szpinakiem', null),
-  (5, 0, 10, 'Lody czekoladowe z owocami i bitą śmietaną', null),
-  (5, 1, 7, 'Suflet czekoladowy z malinami', null),
-  (5, 2, 9, 'Sernik z brzoskwinią', null);
+  (4, 0, 14, 'Spaghetti bolognese', NULL),
+  (4, 1, 16, 'Spaghetti carbonara', NULL),
+  (4, 2, 18, 'Tagliatelle ze szpinakiem', NULL),
+  (5, 0, 10, 'Lody czekoladowe z owocami i bitą śmietaną', NULL),
+  (5, 1, 7, 'Suflet czekoladowy z malinami', NULL),
+  (5, 2, 9, 'Sernik z brzoskwinią', NULL);
 /* @formatter:on */
