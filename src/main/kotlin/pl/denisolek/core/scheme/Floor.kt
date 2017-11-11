@@ -14,7 +14,7 @@ data class Floor(
 
         @OneToMany(mappedBy = "floor", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         @JsonIgnore
-        var tables: MutableList<SchemeItem> = mutableListOf(),
+        var schemeItems: MutableList<SchemeItem> = mutableListOf(),
 
         @ManyToOne
         var restaurant: Restaurant
