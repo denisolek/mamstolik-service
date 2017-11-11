@@ -1,4 +1,4 @@
-package pl.denisolek.core.scheme
+package pl.denisolek.core.schema
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import pl.denisolek.core.restaurant.Restaurant
@@ -14,7 +14,7 @@ data class Floor(
 
         @OneToMany(mappedBy = "floor", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         @JsonIgnore
-        var schemeItems: MutableList<SchemeItem> = mutableListOf(),
+        var schemaItems: MutableList<SchemaItem> = mutableListOf(),
 
         @ManyToOne
         var restaurant: Restaurant

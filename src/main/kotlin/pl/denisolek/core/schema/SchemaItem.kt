@@ -1,11 +1,11 @@
-package pl.denisolek.core.scheme
+package pl.denisolek.core.schema
 
 import net.minidev.json.annotate.JsonIgnore
 import pl.denisolek.core.spot.Spot
 import javax.persistence.*
 
 @Entity
-data class SchemeItem(
+data class SchemaItem(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Int? = null,

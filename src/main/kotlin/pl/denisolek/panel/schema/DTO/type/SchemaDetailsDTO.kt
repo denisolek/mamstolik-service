@@ -1,6 +1,6 @@
-package pl.denisolek.panel.scheme.DTO.type
+package pl.denisolek.panel.schema.DTO.type
 
-data class SchemeDetailsDTO(
+data class SchemaDetailsDTO(
         var width: Int,
         var heigth: Int,
         var rotation: Float

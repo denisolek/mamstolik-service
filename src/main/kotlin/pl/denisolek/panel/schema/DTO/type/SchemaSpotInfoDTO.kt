@@ -1,6 +1,6 @@
-package pl.denisolek.panel.scheme.DTO.type
+package pl.denisolek.panel.schema.DTO.type
 
-data class SchemeSpotInfoDTO(
+data class SchemaSpotInfoDTO(
         var id: Int? = null,
         var number: Int,
         var capacity: Int,

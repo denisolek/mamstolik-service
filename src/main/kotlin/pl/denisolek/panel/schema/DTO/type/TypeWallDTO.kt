@@ -1,24 +1,24 @@
-package pl.denisolek.panel.scheme.DTO.type
+package pl.denisolek.panel.schema.DTO.type
 
-import pl.denisolek.core.scheme.SchemeItem
+import pl.denisolek.core.schema.SchemaItem
 
 data class TypeWallDTO(
         var id: Int? = null,
         var floorId: Int? = null,
         var floorName: String,
-        var position: SchemePositionDTO,
-        var details: SchemeDetailsDTO
+        var position: SchemaPositionDTO,
+        var details: SchemaDetailsDTO
 ) {
-    constructor(item: SchemeItem) : this(
+    constructor(item: SchemaItem) : this(
             id = item.id,
             floorId = item.floor.id,
             floorName = item.floor.name,
-            details = SchemeDetailsDTO(
+            details = SchemaDetailsDTO(
                     width = item.width,
                     heigth = item.height,
                     rotation = item.rotation
             ),
-            position = SchemePositionDTO(
+            position = SchemaPositionDTO(
                     x = item.x,
                     y = item.y
             )

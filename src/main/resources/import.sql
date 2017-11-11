@@ -322,8 +322,8 @@ VALUES
   ('Pierwsze piętro', 1),
   ('Taras', 1);
 
--- add scheme items
-INSERT INTO public.scheme_item (type, table_type, item_type, wall_item_type, floor_id, width, height, rotation, x, y, spot_id)
+-- add schema items
+INSERT INTO public.schema_item (type, table_type, item_type, wall_item_type, floor_id, width, height, rotation, x, y, spot_id)
 VALUES
   ('TABLE', 'FOUR_RECT', NULL, NULL, 1, 200, 200, 0.0, 238.33334859212255, 292.1991639196625, 1),
   ('TABLE', 'FOUR_RECT', NULL, NULL, 1, 200, 200, 0.0, 1443.3333740234375, 1377.764169088224, 2),
