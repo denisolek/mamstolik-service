@@ -25,12 +25,17 @@ import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.context.WebApplicationContext
+import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.restaurant.Restaurant.RestaurantType.RESTAURANT
+import pl.denisolek.core.restaurant.RestaurantRepository
 import pl.denisolek.core.security.Authority
+import pl.denisolek.core.user.User
 import pl.denisolek.core.user.User.AccountState
 import pl.denisolek.core.user.UserRepository
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.infrastructure.util.convertObjectToJsonBytes
+import pl.denisolek.panel.identity.DTO.CreateRestaurantDTO
 import pl.denisolek.panel.identity.DTO.RegisterDTO
 import pl.denisolek.panel.identity.IdentityApi
 import pl.denisolek.stubs.UserStub
@@ -47,6 +52,9 @@ class IdentityControllerTests {
 
     @Autowired
     lateinit var userRepository: UserRepository
+
+    @Autowired
+    lateinit var restaurantRepository: RestaurantRepository
 
     @Autowired
     lateinit var passwordEncoder: PasswordEncoder
@@ -820,5 +828,296 @@ class IdentityControllerTests {
                 .andExpect(jsonPath("$[1].fullName", `is`("Pracowniczka Pracująca")))
                 .andExpect(jsonPath("$[1].title", `is`("Pracownik")))
                 .andExpect(jsonPath("$[1].avatar", `is`("avatar link")))
+    }
+
+    @Test
+    fun `createRestaurant_ empty name`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
+        createRestaurantDTO.name = ""
+
+        val body = convertObjectToJsonBytes(createRestaurantDTO)
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `createRestaurant_ email already exists`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
+        createRestaurantDTO.email = "test@test.pl"
+
+        val body = convertObjectToJsonBytes(createRestaurantDTO)
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isConflict)
+    }
+
+    @Test
+    fun `createRestaurant_ email is empty`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
+        createRestaurantDTO.email = ""
+
+        val body = convertObjectToJsonBytes(createRestaurantDTO)
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `createRestaurant_ email wrong format`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
+        createRestaurantDTO.email = "test.test.pl"
+
+        val body = convertObjectToJsonBytes(createRestaurantDTO)
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `createRestaurant_ email too long`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
+        createRestaurantDTO.email = "${randomAlphanumeric(100)}@test.pl"
+
+        val body = convertObjectToJsonBytes(createRestaurantDTO)
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `createRestaurant_ type is empty`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
+        val body = convertObjectToJsonBytes(createRestaurantDTO).replace("\"type\":\"RESTAURANT\"", "\"type\":\"\"")
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `createRestaurant_ type is invalid`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
+        val body = convertObjectToJsonBytes(createRestaurantDTO).replace("\"type\":\"RESTAURANT\"", "\"type\":\"INVALID_TYPE\"")
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `createRestaurant_ phoneNumber is empty`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
+        createRestaurantDTO.phoneNumber = ""
+
+        val body = convertObjectToJsonBytes(createRestaurantDTO)
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `createRestaurant_ phoneNumber with letters`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
+        createRestaurantDTO.phoneNumber = "111222ccc"
+
+        val body = convertObjectToJsonBytes(createRestaurantDTO)
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `createRestaurant_ phoneNumber wrong length`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
+        createRestaurantDTO.phoneNumber = "111 222 33"
+
+        val body = convertObjectToJsonBytes(createRestaurantDTO)
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `createRestaurant_ phoneNumber with not allowed chars`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
+        createRestaurantDTO.phoneNumber = "+48 111*222*333"
+
+        val body = convertObjectToJsonBytes(createRestaurantDTO)
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `createRestaurant_ password too short`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub().copy(
+                password = "aA1"
+        )
+
+        val body = convertObjectToJsonBytes(createRestaurantDTO)
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `createRestaurant_ password too long`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub().copy(
+                password = "aA1${randomAlphanumeric(78)}"
+        )
+
+        val body = convertObjectToJsonBytes(createRestaurantDTO)
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `createRestaurant_ password without any a-z`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub().copy(
+                password = "TEST123456"
+        )
+
+        val body = convertObjectToJsonBytes(createRestaurantDTO)
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `createRestaurant_ password without any A-Z`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub().copy(
+                password = "test123456"
+        )
+
+        val body = convertObjectToJsonBytes(createRestaurantDTO)
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `createRestaurant_ password without any 1-9`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub().copy(
+                password = "testTESTOWY"
+        )
+
+        val body = convertObjectToJsonBytes(createRestaurantDTO)
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isBadRequest)
+                .andReturn()
+
+        assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
+    }
+
+    @Test
+    fun `createRestaurant_ correct data`() {
+        var createRestaurantDTO = CreateRestaurantDTO(
+                name = "New Restaurant",
+                email = "newrestaurant@test.pl",
+                type = RESTAURANT,
+                password = "Test12345",
+                phoneNumber = "111222333"
+        )
+
+        val body = convertObjectToJsonBytes(createRestaurantDTO)
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result
+                .andExpect(status().isCreated)
+                .andReturn()
+
+        val createdUser = userRepository.findByEmail("newrestaurant@test.pl")
+        val createdRestaurant = restaurantRepository.findPartlyByName("New Restaurant")[0]
+
+        `createRestaurant assert restaurant`(createdRestaurant)
+        `createRestaurant assert user`(createdUser, createdRestaurant)
+
+    }
+
+    private fun `createRestaurant assert restaurant`(createdRestaurant: Restaurant) {
+        assertNotNull(createdRestaurant)
+        assertEquals("New Restaurant", createdRestaurant.name)
+        assertEquals(RESTAURANT, createdRestaurant.type)
+        assertNotNull(createdRestaurant.owner)
+        assertEquals(1, createdRestaurant.owner?.id)
+    }
+
+    private fun `createRestaurant assert user`(createdUser: User, createdRestaurant: Restaurant) {
+        assertNotNull(createdUser)
+        assertEquals("newrestaurant@test.pl", createdUser.email)
+        assertNotNull(createdUser.username)
+        assertNotNull(createdUser.password)
+        assertEquals(setOf(Authority(Authority.Role.ROLE_RESTAURANT)), createdUser.authorities)
+        assertEquals(AccountState.ACTIVE, createdUser.accountState)
+        assertEquals(createdRestaurant, createdUser.restaurant)
     }
 }
