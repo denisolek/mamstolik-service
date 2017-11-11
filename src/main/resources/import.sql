@@ -230,16 +230,94 @@ INSERT INTO public.customer (email, phone_number, first_name, last_name) VALUES 
 INSERT INTO public.customer (email, phone_number, first_name, last_name) VALUES ('maurycy.lisowski@gmail.pl', '729712835', 'Maurycy', 'Lisowski');
 
 -- add spots
-INSERT INTO public.spot (capacity, restaurant_id) VALUES (4, 1);
-INSERT INTO public.spot (capacity, restaurant_id) VALUES (4, 1);
-INSERT INTO public.spot (capacity, restaurant_id) VALUES (5, 1);
-INSERT INTO public.spot (capacity, restaurant_id) VALUES (5, 1);
-INSERT INTO public.spot (capacity, restaurant_id) VALUES (2, 1);
-INSERT INTO public.spot (capacity, restaurant_id, min_people_number) VALUES (6, 2, 3);
-INSERT INTO public.spot (capacity, restaurant_id, min_people_number) VALUES (7, 2, 3);
-INSERT INTO public.spot (capacity, restaurant_id, min_people_number) VALUES (8, 2, 4);
-INSERT INTO public.spot (capacity, restaurant_id) VALUES (3, 2);
-INSERT INTO public.spot (capacity, restaurant_id) VALUES (1, 2);
+INSERT INTO public.spot (capacity, restaurant_id, min_people_number)
+VALUES
+	(4, 1, 1), -- 1
+	(4, 1, 1), -- 2
+	(5, 1, 1), -- 3
+	(5, 1, 1), -- 4
+	(2, 1, 1), -- 5
+	(4, 1, 1), -- 6
+	(4, 1, 1), -- 7
+	(5, 1, 1), -- 8
+	(5, 1, 1), -- 9
+	(2, 1, 1), -- 10
+	(6, 1, 3), -- 11
+	(7, 1, 3), -- 12
+	(8, 1, 4), -- 13
+	(6, 1, 3), -- 14
+	(7, 1, 3), -- 15
+	(8, 1, 4), -- 16
+	(4, 1, 1), -- 17
+	(4, 1, 1), -- 18
+	(5, 1, 1), -- 19
+	(5, 1, 1), -- 20
+	(2, 1, 1), -- 21
+	(4, 1, 1), -- 22
+	(6, 2, 3), -- 23
+	(7, 2, 3), -- 24
+	(8, 2, 4), -- 25
+	(3, 2, 1), -- 26
+	(1, 2, 1); -- 27
+
+-- add floors
+INSERT INTO public.floor (name, restaurant_id) VALUES ('Parter', 1);
+INSERT INTO public.floor (name, restaurant_id) VALUES ('Pierwsze piętro', 1);
+INSERT INTO public.floor (name, restaurant_id) VALUES ('Taras', 1);
+
+-- add scheme items
+INSERT INTO public.scheme_item (type, table_type, item_type, wall_item_type, floor_id, width, height, rotation, x, y, spot_id)
+VALUES
+	('TABLE', 'FOUR_RECT', null, null, 1, 200, 200, 0.0, 238.33334859212255, 292.1991639196625, 1),
+	('TABLE', 'FOUR_RECT', null, null, 1, 200, 200, 0.0, 1443.3333740234375, 1377.764169088224, 2),
+	('TABLE', 'FIVE_ROUND', null, null, 1, 200, 200, 0.0, 1320.8264311483083, 2583.333333333333, 3),
+	('TABLE', 'FIVE_RECT_1', null, null, 1, 200, 200, 0.0, 1890.4405693244653, 1900.000040690104, 4),
+	('TABLE', 'TWO_ROUND', null, null, 1, 200, 200, 0.0, 1898.7465157837248, 2293.333251953125, 5),
+	('TABLE', 'FOUR', null, null, 1, 200, 200, 0.0, 2376.666748046875, 2307.079971187371, 6),
+	('TABLE', 'FOUR', null, null, 1, 200, 200, 0.0, 2353.8028982816168, 1386.6666259765625, 7),
+	('TABLE', 'FIVE_RECT_2', null, null, 1, 200, 200, 0.0, 1518.3333333333335, 2235.7952159918527, 8),
+	('TABLE', 'FIVE_RECT_3', null, null, 1, 200, 200, 0.0, 685, 299.99998982747394, 9),
+	('TABLE', 'TWO', null, null, 1, 200, 200, 0.0, 2416.666666666667, 1016.6666463216147, 10),
+	('TABLE', 'SIX_RECT_1', null, null, 1, 200, 200, 0.0, 1856.6666666666665, 1409.01273515194, 11),
+	('TABLE', 'EIGHT_RECT', null, null, 1, 200, 200, 0.0, 1899.999959309896, 906.6666463216145, 12),
+	('TABLE', 'EIGHT_ROUND', null, null, 1, 200, 200, 0.0, 1481.666666666667, 1874.9998372395835, 13),
+	('TABLE', 'SIX_RECT_2', null, null, 1, 200, 200, 0.0, 197.032499980151, 2191.6665852864585, 14),
+	('TABLE', 'EIGHT_ROUND', null, null, 1, 200, 200, 0.0, 2400, 563.1104153185751, 15),
+	('TABLE', 'EIGHT_RECT', null, null, 1, 200, 200, 0.0, 1891.2096774193549, 536.6666463216146, 16),
+	('TABLE', 'FOUR', null, null, 1, 200, 200, 0.0, 1068.3333536783857, 1372.731909280991, 17),
+	('TABLE', 'FOUR', null, null, 1, 200, 200, 0.0, 600.0000203450518, 2584.065153788745, 18),
+	('TABLE', 'FIVE_ROUND', null, null, 1, 200, 200, 0.0, 219.1597848266938, 2575.0000813802085, 19),
+	('TABLE', 'FIVE_RECT_3', null, null, 1, 200, 200, 0.0, 2415.4406100145698, 1910, 20),
+	('TABLE', 'TWO_ROUND', null, null, 1, 200, 200, 0.0, 237.4931130737641, 731.6666870117188, 21),
+	('TABLE', 'FOUR_RECT', null, null, 1, 200, 200, 0.0, 268.33332316080737, 1333.7465971639333, 22),
+  ('ITEM', null, 'TOILET', null, 1, 200, 200, 0.0, 1280, 1070, null),
+  ('WALL', null, null, null, 1, 200, 200, 0.0, 1140, 598.3333333333334, null),
+  ('WALL', null, null, null, 1, 200, 200, 0.0, 1093.3333333333326, 393.33333333333326, null),
+  ('WALL', null, null, null, 1, 200, 200, 0.0, 1025.19871760124, 529.9917645517912, null),
+  ('WALL', null, null, null, 1, 200, 200, 0.0, 1795.0000000000005, 2540.0000000000005, null),
+  ('WALL', null, null, null, 1, 200, 200, 0.0, 1637.5001948734991, 1522.4999999999766, null),
+  ('WALL', null, null, null, 1, 200, 200, 0.0, 1789.9999999999998, 455.00000000000006, null),
+  ('WALL', null, null, null, 1, 200, 200, 0.0, 940.0000000000001, 986.6666666666666, null),
+  ('WALL', null, null, null, 1, 200, 200, 0.0, 941.6666666666665, 1295.0000000000002, null),
+  ('WALL', null, null, null, 1, 200, 200, 0.0, 162.49988203515016, 1029.1666666666772, null),
+  ('WALL', null, null, null, 1, 200, 200, 0.0, 103.33333333333326, 1615, null),
+  ('WALL', null, null, null, 1, 200, 200, 0.0, 105.00000000000003, 193.33333333333331, null),
+  ('WALL', null, null, null, 1, 200, 200, 0.0, 506.7980929598966, 1519.2202287944276, null),
+  ('WALL', null, null, null, 1, 200, 200, 0.0, 106.66666666666657, 2106.6666666666665, null),
+  ('WALL', null, null, null, 1, 200, 200, 0.0, -1176.555583852268, 1515.8603400051134, null),
+  ('WALL', null, null, null, 1, 200, 200, 0.0, 106.66666666666674, 2788.333333333333, null),
+  ('WALL_ITEM', null, null, 'WINDOW', 1, 200, 200, 0.0, 200, 195, null),
+  ('WALL_ITEM', null, null, 'WINDOW', 1, 200, 200, 0.0, -79.99999999999977, 2468.3333333333326, null),
+  ('WALL_ITEM', null, null, 'DOOR', 1, 200, 200, 0.0, 1053.333333333333, 2111.666666666667, null),
+  ('WALL_ITEM', null, null, 'DOOR', 1, 200, 200, 0.0, -30, 1891.6666666666665, null),
+  ('WALL_ITEM', null, null, 'DOOR', 1, 200, 200, 0.0, 1649.9999999999998, 1694.9999999999998, null),
+  ('WALL_ITEM', null, null, 'DOOR', 1, 200, 200, 0.0, 770.0000000000002, 815, null),
+  ('WALL_ITEM', null, null, 'DOOR', 1, 200, 200, 0.0, 393.3333333333335, 1618.3333333333333, null),
+  ('WALL_ITEM', null, null, 'WINDOW', 1, 200, 200, 0.0, -76.66666666666629, 1168.3333333333333, null),
+  ('WALL_ITEM', null, null, 'WINDOW', 1, 200, 200, 0.0, 1166.6666666666665, 198.33333333333343, null),
+  ('WALL_ITEM', null, null, 'WINDOW', 1, 200, 200, 0.0, 823.3333333333333, 2791.6666666666665, null),
+  ('WALL_ITEM', null, null, 'WINDOW', 1, 200, 200, 0.0, 2476.6666666666665, 1878.333333333333, null),
+  ('WALL_ITEM', null, null, 'WINDOW', 1, 200, 200, 0.0, 2476.6666666666665, 918.3333333333335, null);
 
 -- add reservations
 INSERT INTO public.reservation (people_number, start_date_time, end_date_time, duration, state, customer_id, restaurant_id, verification_code, is_verified) VALUES (5, '2017-10-18 14:50:00.000', '2017-10-18 15:20:00.000', 1800, 0, 1, 1, 314251, true);
