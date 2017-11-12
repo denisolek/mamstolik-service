@@ -105,6 +105,9 @@ data class Restaurant(
         return this.spots.filterNot { takenSpots.contains(it) }
     }
 
+    fun getFloor(floorId: Int): Floor =
+            this.floors.first { it.id == floorId }
+
     enum class AvailabilityType {
         AVAILABLE,
         POSSIBLE,
