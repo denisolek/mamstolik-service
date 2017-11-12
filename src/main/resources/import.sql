@@ -380,13 +380,19 @@ VALUES
 INSERT INTO public.reservation (people_number, start_date_time, end_date_time, duration, state, customer_id, restaurant_id, verification_code, is_verified)
 VALUES
   (5, '2017-10-18 14:50:00.000', '2017-10-18 15:20:00.000', 1800, 0, 1, 1, 314251, TRUE),
-  (2, '2017-10-18 15:30:00.000', '2017-10-18 16:30:00.000', 3600, 0, 2, 1, 314251, TRUE);
+  (2, '2017-10-18 15:30:00.000', '2017-10-18 16:30:00.000', 3600, 0, 2, 1, 314251, TRUE),
+  (3, '2018-10-18 15:30:00.000', '2018-10-18 16:30:00.000', 3600, 0, 2, 1, 314251, TRUE),
+  (3, '2018-10-19 15:30:00.000', '2018-10-19 16:30:00.000', 3600, 0, 2, 1, 314251, TRUE),
+  (3, '2018-10-20 15:30:00.000', '2018-10-20 16:30:00.000', 3600, 0, 2, 1, 314251, TRUE);
 
 -- reservation spots
-INSERT INTO public.reservation_spots (reservation_id, spots_id)
+INSERT INTO public.reservation_spots (reservation_id, spot_id)
 VALUES
   (1, 3),
-  (2, 4);
+  (2, 4),
+  (3, 3),
+  (4, 4),
+  (5, 3);
 
 -- add menu category
 INSERT INTO public.menu_category (menu_id, position, description, name)
