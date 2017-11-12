@@ -28,4 +28,10 @@ class PanelSchemaService(val restaurantService: RestaurantService) {
         restaurant.floors.remove(floor)
         return SchemaDTO(restaurantService.save(restaurant))
     }
+
+    fun updateSchema(restaurant: Restaurant, schemaDTO: SchemaDTO): SchemaDTO {
+
+
+        return schemaDTO
+    }
 }

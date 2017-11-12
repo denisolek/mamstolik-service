@@ -20,6 +20,10 @@ class PanelSchemaController(val panelSchemaService: PanelSchemaService) : PanelS
     override fun getSchema(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant): SchemaDTO =
             panelSchemaService.getSchema(restaurantId)
 
+    override fun updateSchema(@ApiIgnore @PathVariable(PanelSchemaApi.RESTAURANT_ID) restaurantId: Restaurant,
+                              @RequestBody schemaDTO: SchemaDTO): SchemaDTO =
+            panelSchemaService.updateSchema(restaurantId, schemaDTO)
+
     override fun addFloor(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
                           @RequestBody @Valid floorDTO: FloorDTO): SchemaDTO =
             panelSchemaService.addFloor(restaurantId, floorDTO)
