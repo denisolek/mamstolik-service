@@ -5,7 +5,6 @@ import pl.denisolek.core.schema.SchemaItem
 data class TypeItemDTO(
         var id: Int? = null,
         var floorId: Int? = null,
-        var floorName: String,
         var subType: SchemaItem.ItemType,
         var position: SchemaPositionDTO,
         var details: SchemaDetailsDTO
@@ -13,7 +12,6 @@ data class TypeItemDTO(
     constructor(item: SchemaItem) : this(
             id = item.id,
             floorId = item.floor.id,
-            floorName = item.floor.name,
             subType = item.itemType!!,
             details = SchemaDetailsDTO(
                     width = item.width,

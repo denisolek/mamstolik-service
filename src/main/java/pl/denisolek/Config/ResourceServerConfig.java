@@ -23,6 +23,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/panel/employees").hasAuthority("ROLE_RESTAURANT")
                 .antMatchers("/panel/users", "/panel/users/**").permitAll()
 //                .antMatchers("/panel/*/employees").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER")
+                .antMatchers("/panel/*/schemas/**").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER")
                 .antMatchers("/panel/*/employees").hasAuthority("ROLE_OWNER")
                 .antMatchers("/panel/**").hasAnyAuthority("ROLE_OWNER", "ROLE_EMPLOYEE")
                 .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN");

@@ -10,4 +10,7 @@ class RestaurantService(private val restaurantRepository: RestaurantRepository) 
 
     fun findPartlyByName(name: String): List<Restaurant> =
             restaurantRepository.findPartlyByName(name)
+
+    fun save(restaurant: Restaurant) =
+            restaurantRepository.save(restaurant)
 }

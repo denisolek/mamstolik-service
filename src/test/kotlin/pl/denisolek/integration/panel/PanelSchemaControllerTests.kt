@@ -42,7 +42,7 @@ class PanelSchemaControllerTests {
 
     lateinit var mvc: MockMvc
 
-    val SCHEMA_PATH = "${PANEL_BASE_PATH}${PanelSchemaApi.SCHEMA}"
+    val SCHEMA_PATH = "${PANEL_BASE_PATH}${PanelSchemaApi.SCHEMAS_PATH}"
 
     @Before
     fun setup() {

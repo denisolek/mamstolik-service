@@ -2,25 +2,39 @@ package pl.denisolek.panel.schema
 
 import io.swagger.annotations.Api
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.*
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
+import pl.denisolek.panel.schema.DTO.FloorDTO
 import pl.denisolek.panel.schema.DTO.SchemaDTO
 import springfox.documentation.annotations.ApiIgnore
+import javax.validation.Valid
 
 @Api("Schema controller", tags = arrayOf("Schema"))
 @RequestMapping(PANEL_BASE_PATH)
 interface PanelSchemaApi {
     companion object {
         const val RESTAURANT_ID: String = "restaurantId"
+        const val FLOOR_ID: String = "floorId"
 
-        const val SCHEMA = "/{$RESTAURANT_ID}/schemas"
+        const val SCHEMAS_PATH = "/{$RESTAURANT_ID}/schemas"
+        const val FLOORS_PATH = "$SCHEMAS_PATH/floors"
+        const val FLOORS_ID_PATH = "$SCHEMAS_PATH/floors/{$FLOOR_ID}"
     }
 
-    @GetMapping(SCHEMA)
+    @GetMapping(SCHEMAS_PATH)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun getSchema(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant): SchemaDTO
+
+    @PostMapping(FLOORS_PATH)
+    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+            "@authorizationService.currentUser.workPlace == #restaurantId")
+    fun addFloor(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+                 @RequestBody @Valid floorDTO: FloorDTO): SchemaDTO
+
+    @DeleteMapping(FLOORS_ID_PATH)
+    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+            "@authorizationService.currentUser.workPlace == #restaurantId")
+    fun deleteFloor(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant): SchemaDTO
 }
