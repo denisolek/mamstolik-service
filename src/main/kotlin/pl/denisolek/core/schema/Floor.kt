@@ -2,6 +2,7 @@ package pl.denisolek.core.schema
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import pl.denisolek.core.restaurant.Restaurant
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -18,4 +19,14 @@ data class Floor(
 
         @ManyToOne
         var restaurant: Restaurant
-)
+) {
+    fun haveReservationsInFuture(): Boolean {
+        val reservedSpots = this.restaurant.reservations
+                .filter { it.startDateTime.isAfter(LocalDateTime.now()) }
+                .flatMap { it.spots }
+                .toSet()
+        val conflictItems = this.schemaItems.filter { reservedSpots.contains(it.spot) }
+        if (conflictItems.isEmpty()) return false
+        return true
+    }
+}
