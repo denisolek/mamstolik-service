@@ -1,6 +1,8 @@
 package pl.denisolek.panel.schema
 
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.core.schema.Floor
@@ -22,7 +24,8 @@ class PanelSchemaService(val restaurantService: RestaurantService) {
     }
 
     fun deleteFloor(restaurant: Restaurant, floor: Floor): SchemaDTO {
-        floor.haveReservationsInFuture()
-        return SchemaDTO(restaurant)
+        if (floor.haveReservationsInFuture()) throw ServiceException(HttpStatus.BAD_REQUEST, "There are some reservations including spots on that floor")
+        restaurant.floors.remove(floor)
+        return SchemaDTO(restaurantService.save(restaurant))
     }
 }
