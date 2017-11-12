@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.schema.Floor
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.panel.schema.DTO.FloorDTO
 import pl.denisolek.panel.schema.DTO.SchemaDTO
@@ -38,5 +39,6 @@ interface PanelSchemaApi {
     @DeleteMapping(FLOORS_ID_PATH)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
             "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun deleteFloor(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant): SchemaDTO
+    fun deleteFloor(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+                    @ApiIgnore @PathVariable(FLOOR_ID) floorId: Floor): SchemaDTO
 }

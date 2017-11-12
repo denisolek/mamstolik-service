@@ -20,4 +20,9 @@ class PanelSchemaService(val restaurantService: RestaurantService) {
         ))
         return SchemaDTO(restaurantService.save(restaurant))
     }
+
+    fun deleteFloor(restaurant: Restaurant, floor: Floor): SchemaDTO {
+        floor.haveReservationsInFuture()
+        return SchemaDTO(restaurant)
+    }
 }
