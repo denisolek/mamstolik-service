@@ -5,7 +5,7 @@ import pl.denisolek.core.schema.SchemaItem
 import pl.denisolek.panel.schema.DTO.type.*
 
 data class SchemaDTO(
-        var floors: List<SchemaFloorDTO>,
+        var floors: List<SchemaFloorDTO>? = null,
         var tables: List<TypeTableDTO>,
         var walls: List<TypeWallDTO>,
         var items: List<TypeItemDTO>,
