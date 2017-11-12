@@ -1,6 +1,7 @@
 package pl.denisolek.panel.schema
 
 import io.swagger.annotations.Api
+import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import pl.denisolek.core.restaurant.Restaurant
@@ -28,6 +29,7 @@ interface PanelSchemaApi {
     fun getSchema(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant): SchemaDTO
 
     @PostMapping(FLOORS_PATH)
+    @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun addFloor(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
