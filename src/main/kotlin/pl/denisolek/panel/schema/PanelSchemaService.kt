@@ -24,7 +24,7 @@ class PanelSchemaService(val restaurantService: RestaurantService) {
     }
 
     fun deleteFloor(restaurant: Restaurant, floor: Floor): SchemaDTO {
-        if (floor.haveReservationsInFuture()) throw ServiceException(HttpStatus.BAD_REQUEST, "There are some reservations including spots on that floor")
+        if (floor.haveReservationsInFuture()) throw ServiceException(HttpStatus.CONFLICT, "There are some reservations including spots on that floor")
         restaurant.floors.remove(floor)
         return SchemaDTO(restaurantService.save(restaurant))
     }
