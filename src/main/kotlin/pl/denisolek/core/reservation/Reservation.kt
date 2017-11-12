@@ -7,10 +7,7 @@ import pl.denisolek.core.spot.Spot
 import pl.denisolek.infrastructure.util.DateTimeInterval
 import java.time.Duration
 import java.time.LocalDateTime
-import javax.persistence.ElementCollection
-import javax.persistence.Entity
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
+import javax.persistence.*
 
 @Entity
 data class Reservation(
@@ -29,7 +26,8 @@ data class Reservation(
         @JoinColumn
         var customer: Customer,
 
-        @ElementCollection
+        @ManyToMany(fetch = FetchType.EAGER)
+        @JoinTable(name = "reservation_spots", joinColumns = arrayOf(JoinColumn(name = "reservation_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "spot_id")))
         var spots: List<Spot>
 ) : BaseEntity(), DateTimeInterval {
     enum class ReservationState {
