@@ -18,4 +18,12 @@ data class SchemaDTO(
             items = restaurant.floors.flatMap { it.schemaItems.filter { it.type == SchemaItem.Type.ITEM }.map { TypeItemDTO(it) } },
             wallItems = restaurant.floors.flatMap { it.schemaItems.filter { it.type == SchemaItem.Type.WALL_ITEM }.map { TypeWallItemDTO(it) } }
     )
+
+    companion object {
+        fun toSchemaItems(schemaDTO: SchemaDTO, restaurant: Restaurant) =
+                schemaDTO.tables.map { TypeTableDTO.toSchemaItem(it, restaurant) }
+                        .plus(schemaDTO.walls.map { TypeWallDTO.toSchemaItem(it, restaurant) })
+                        .plus(schemaDTO.items.map { TypeItemDTO.toSchemaItem(it, restaurant) })
+                        .plus(schemaDTO.wallItems.map { TypeWallItemDTO.toSchemaItem(it, restaurant) })
+    }
 }

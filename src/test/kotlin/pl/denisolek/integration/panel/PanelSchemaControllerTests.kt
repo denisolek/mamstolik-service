@@ -74,7 +74,7 @@ class PanelSchemaControllerTests {
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
 
-        assertEquals(3, actual.floors.size)
+        assertEquals(3, actual.floors!!.size)
         assertEquals(22, actual.tables.size)
         assertEquals(15, actual.walls.size)
         assertEquals(1, actual.items.size)
@@ -118,12 +118,12 @@ class PanelSchemaControllerTests {
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
 
-        assertEquals(2, actual.floors.size)
+        assertEquals(2, actual.floors!!.size)
         assertEquals(22, actual.tables.size)
         assertEquals(15, actual.walls.size)
         assertEquals(1, actual.items.size)
         assertEquals(12, actual.wallItems.size)
-        actual.floors.map {
+        actual.floors!!.map {
             assertTrue(it.id != 2)
         }
     }

@@ -6,11 +6,13 @@ import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.core.schema.Floor
+import pl.denisolek.core.schema.SchemaService
 import pl.denisolek.panel.schema.DTO.FloorDTO
 import pl.denisolek.panel.schema.DTO.SchemaDTO
 
 @Service
-class PanelSchemaService(val restaurantService: RestaurantService) {
+class PanelSchemaService(val restaurantService: RestaurantService,
+                         val schemaService: SchemaService) {
     fun getSchema(restaurant: Restaurant): SchemaDTO {
         return SchemaDTO(restaurant)
     }
@@ -30,8 +32,8 @@ class PanelSchemaService(val restaurantService: RestaurantService) {
     }
 
     fun updateSchema(restaurant: Restaurant, schemaDTO: SchemaDTO): SchemaDTO {
-
-
-        return schemaDTO
+        val items = SchemaDTO.toSchemaItems(schemaDTO, restaurant)
+        schemaService.saveSchemaItems(items)
+        return SchemaDTO(restaurant)
     }
 }
