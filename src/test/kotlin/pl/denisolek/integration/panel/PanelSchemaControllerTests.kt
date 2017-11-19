@@ -1,16 +1,13 @@
 package pl.denisolek.integration.panel
 
-import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.whenever
 import org.hamcrest.Matchers
 import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Matchers.anyInt
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.SpyBean
@@ -151,7 +148,8 @@ class PanelSchemaControllerTests {
                 .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
-        Assert.assertEquals(2, actual.tables[0].floorId)
+        Assert.assertEquals(1, actual.tables.last().id)
+        Assert.assertEquals(2, actual.tables.last().floorId)
     }
 
     @Test
@@ -235,8 +233,6 @@ class PanelSchemaControllerTests {
         Assert.assertEquals(SchemaSpotInfoDTO(1, 1, 4, 1), actual.tables[0].spotInfo)
     }
 
-    // TODO fix inmemory relation management in updateSchema
-    @Ignore
     @Test
     fun `updateSchema_ add new table`() {
         val schemaDTO = prepareUpdateSchemaDTO()
@@ -264,7 +260,10 @@ class PanelSchemaControllerTests {
                 .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
-        Assert.assertEquals(SchemaSpotInfoDTO(anyInt(), 15000, 10, 5), actual.tables.last().spotInfo)
+        Assert.assertNotNull(actual.tables.last().spotInfo.id)
+        Assert.assertEquals(15000, actual.tables.last().spotInfo.number)
+        Assert.assertEquals(10, actual.tables.last().spotInfo.capacity)
+        Assert.assertEquals(5, actual.tables.last().spotInfo.minPeopleNumber)
     }
 
     private fun prepareUpdateSchemaDTO(): SchemaDTO {

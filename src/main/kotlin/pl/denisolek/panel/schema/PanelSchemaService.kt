@@ -6,6 +6,7 @@ import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.core.schema.Floor
+import pl.denisolek.core.schema.SchemaItem
 import pl.denisolek.core.schema.SchemaService
 import pl.denisolek.panel.schema.DTO.FloorDTO
 import pl.denisolek.panel.schema.DTO.SchemaDTO
@@ -33,7 +34,25 @@ class PanelSchemaService(val restaurantService: RestaurantService,
 
     fun updateSchema(restaurant: Restaurant, schemaDTO: SchemaDTO): SchemaDTO {
         val items = SchemaDTO.toSchemaItems(schemaDTO, restaurant)
-        schemaService.saveSchemaItems(items)
+        val updatedItems = schemaService.saveSchemaItems(items)
+        val groupedItems = updatedItems.groupBy { it.floor.id }
+        updateRestaurantSpots(updatedItems, restaurant)
+        updateRestaurantFloors(restaurant, groupedItems)
         return SchemaDTO(restaurant)
+    }
+
+    private fun updateRestaurantFloors(restaurant: Restaurant, groupedItems: Map<Int?, List<SchemaItem>>) {
+        restaurant.floors.forEach { (id, _, schemaItems) ->
+            schemaItems.clear()
+            if (groupedItems[id] != null)
+                schemaItems.addAll(groupedItems[id]!!.toMutableList())
+        }
+    }
+
+    private fun updateRestaurantSpots(updatedItems: MutableList<SchemaItem>, restaurant: Restaurant) {
+        updatedItems.forEach {
+            if (!restaurant.spots.contains(it.spot) && it.spot != null)
+                restaurant.spots.add(it.spot!!)
+        }
     }
 }
