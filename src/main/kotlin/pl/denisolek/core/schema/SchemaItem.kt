@@ -1,6 +1,6 @@
 package pl.denisolek.core.schema
 
-import net.minidev.json.annotate.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonIgnore
 import pl.denisolek.core.spot.Spot
 import javax.persistence.*
 

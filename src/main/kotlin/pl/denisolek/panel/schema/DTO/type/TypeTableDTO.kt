@@ -36,6 +36,8 @@ data class TypeTableDTO(
     )
 
     companion object {
+        // TODO | Probably need to throw exception when id==null and spotId != null
+        // TODO | we cant have situation like this becouse spot is not updateable from this endpoint
         fun toSchemaItem(table: TypeTableDTO, restaurant: Restaurant) =
                 SchemaItem(
                         id = table.id,
