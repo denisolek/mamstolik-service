@@ -6,14 +6,14 @@ import pl.denisolek.panel.schema.DTO.type.*
 
 data class SchemaDTO(
         var floors: List<SchemaFloorDTO>? = null,
-        var tables: List<TypeTableDTO>,
+        var tables: MutableList<TypeTableDTO>,
         var walls: List<TypeWallDTO>,
         var items: List<TypeItemDTO>,
         var wallItems: List<TypeWallItemDTO>
 ) {
     constructor(restaurant: Restaurant) : this(
             floors = restaurant.floors.map { SchemaFloorDTO(it) },
-            tables = restaurant.floors.flatMap { it.schemaItems.filter { it.type == SchemaItem.Type.TABLE }.map { TypeTableDTO(it) } },
+            tables = restaurant.floors.flatMap { it.schemaItems.filter { it.type == SchemaItem.Type.TABLE }.map { TypeTableDTO(it) } }.toMutableList(),
             walls = restaurant.floors.flatMap { it.schemaItems.filter { it.type == SchemaItem.Type.WALL }.map { TypeWallDTO(it) } },
             items = restaurant.floors.flatMap { it.schemaItems.filter { it.type == SchemaItem.Type.ITEM }.map { TypeItemDTO(it) } },
             wallItems = restaurant.floors.flatMap { it.schemaItems.filter { it.type == SchemaItem.Type.WALL_ITEM }.map { TypeWallItemDTO(it) } }

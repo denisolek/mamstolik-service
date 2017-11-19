@@ -1,5 +1,6 @@
 package pl.denisolek.integration.panel
 
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.whenever
 import org.hamcrest.Matchers
@@ -8,6 +9,7 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Matchers.anyInt
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.SpyBean
@@ -35,6 +37,7 @@ import pl.denisolek.panel.schema.DTO.SchemaDTO
 import pl.denisolek.panel.schema.DTO.type.SchemaDetailsDTO
 import pl.denisolek.panel.schema.DTO.type.SchemaPositionDTO
 import pl.denisolek.panel.schema.DTO.type.SchemaSpotInfoDTO
+import pl.denisolek.panel.schema.DTO.type.TypeTableDTO
 import pl.denisolek.panel.schema.PanelSchemaApi
 import javax.transaction.Transactional
 
@@ -229,6 +232,36 @@ class PanelSchemaControllerTests {
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         Assert.assertEquals(SchemaSpotInfoDTO(1, 1, 4, 1), actual.tables[0].spotInfo)
+    }
+
+    @Test
+    fun `updateSchema_ add new table`() {
+        val schemaDTO = prepareUpdateSchemaDTO()
+        schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
+
+        val newTable = TypeTableDTO(
+                floorId = 1,
+                subType = SchemaItem.TableType.EIGHT_ROUND,
+                position = SchemaPositionDTO(15000f, 15000f),
+                details = SchemaDetailsDTO(15000, 15000, 15000f),
+                spotInfo = SchemaSpotInfoDTO(
+                        number = 15000,
+                        capacity = 10,
+                        minPeopleNumber = 5
+                ))
+
+        schemaDTO.tables.add(newTable)
+
+        val body = convertObjectToJsonBytes(schemaDTO)
+
+        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
+        Assert.assertEquals(SchemaSpotInfoDTO(anyInt(), 15000, 10, 5), actual.tables.last().spotInfo)
     }
 
     private fun prepareUpdateSchemaDTO(): SchemaDTO {
