@@ -1,5 +1,7 @@
 package pl.denisolek.core.restaurant
 
+import org.springframework.http.HttpStatus
+import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.address.Address
 import pl.denisolek.core.menu.Menu
 import pl.denisolek.core.reservation.Reservation
@@ -106,7 +108,11 @@ data class Restaurant(
     }
 
     fun getFloor(floorId: Int): Floor =
-            this.floors.first { it.id == floorId }
+            try {
+                this.floors.first { it.id == floorId }
+            } catch (e: NoSuchElementException) {
+                throw ServiceException(HttpStatus.BAD_REQUEST, "Trying to assign item to not existing floor.")
+            }
 
     enum class AvailabilityType {
         AVAILABLE,
