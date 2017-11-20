@@ -27,7 +27,7 @@ data class SchemaItem(
         @Enumerated(EnumType.STRING)
         var wallItemType: WallItemType? = null,
 
-        @OneToOne(cascade = arrayOf(CascadeType.PERSIST))
+        @OneToOne(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         var spot: Spot? = null,
 
         @ManyToOne
