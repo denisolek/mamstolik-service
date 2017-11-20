@@ -281,6 +281,41 @@ class PanelSchemaControllerTests {
         Assert.assertEquals(5, actual.tables.last().spotInfo.minPeopleNumber)
     }
 
+    @Test
+    fun `updateSchema_ add new table - tableId not existing, spotId not existing`() {
+        val schemaDTO = prepareUpdateSchemaDTO()
+        schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
+
+        val newTable = TypeTableDTO(
+                id = 123456,
+                floorId = 1,
+                subType = SchemaItem.TableType.EIGHT_ROUND,
+                position = SchemaPositionDTO(16000f, 16000f),
+                details = SchemaDetailsDTO(16000, 16000, 16000f),
+                spotInfo = SchemaSpotInfoDTO(
+                        id = 123456,
+                        number = 16000,
+                        capacity = 11,
+                        minPeopleNumber = 6
+                ))
+
+        schemaDTO.tables.add(newTable)
+
+        val body = convertObjectToJsonBytes(schemaDTO)
+
+        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
+        Assert.assertNotNull(actual.tables.last().spotInfo.id)
+        Assert.assertEquals(16000, actual.tables.last().spotInfo.number)
+        Assert.assertEquals(11, actual.tables.last().spotInfo.capacity)
+        Assert.assertEquals(6, actual.tables.last().spotInfo.minPeopleNumber)
+    }
+
     private fun prepareUpdateSchemaDTO(): SchemaDTO {
         val user = userRepository.findOne(1)
         doReturn(user).whenever(authorizationService).getCurrentUser()
