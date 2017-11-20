@@ -32,6 +32,8 @@ class PanelSchemaService(val restaurantService: RestaurantService,
         return SchemaDTO(restaurantService.save(restaurant))
     }
 
+    // TODO usuwanie nie działa
+    // TODO przemyśleć proces czyszczenia kolekcji,inaczej nie ma prawa działać
     fun updateSchema(restaurant: Restaurant, schemaDTO: SchemaDTO): SchemaDTO {
         val items = SchemaDTO.toSchemaItems(schemaDTO, restaurant)
         val updatedItems = schemaService.saveSchemaItems(items)
