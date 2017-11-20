@@ -51,7 +51,7 @@ data class TypeTableDTO(
                     type = TABLE,
                     tableType = table.subType,
                     spot = Spot(
-                            id = table.spotInfo.id,
+                            id = setProperSpotId(table, restaurant),
                             number = table.spotInfo.number,
                             capacity = table.spotInfo.capacity,
                             minPeopleNumber = table.spotInfo.minPeopleNumber,
@@ -59,6 +59,15 @@ data class TypeTableDTO(
                     ),
                     floor = restaurant.getFloor(table.floorId)
             )
+        }
+
+        private fun setProperSpotId(table: TypeTableDTO, restaurant: Restaurant): Int? {
+            return when {
+                table.id != null -> restaurant.floors.mapNotNull {
+                    it.schemaItems.find { it.id == table.id }
+                }.firstOrNull()?.spot?.id
+                else -> null
+            }
         }
     }
 }
