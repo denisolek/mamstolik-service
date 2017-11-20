@@ -1,5 +1,7 @@
 package pl.denisolek.panel.schema.DTO.type
 
+import org.springframework.http.HttpStatus
+import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.schema.SchemaItem
 import pl.denisolek.core.schema.SchemaItem.TableType
@@ -36,26 +38,27 @@ data class TypeTableDTO(
     )
 
     companion object {
-        // TODO | Probably need to throw exception when id==null and spotId != null
-        // TODO | we cant have situation like this becouse spot is not updateable from this endpoint
-        fun toSchemaItem(table: TypeTableDTO, restaurant: Restaurant) =
-                SchemaItem(
-                        id = table.id,
-                        x = table.position.x,
-                        y = table.position.y,
-                        width = table.details.width,
-                        height = table.details.heigth,
-                        rotation = table.details.rotation,
-                        type = TABLE,
-                        tableType = table.subType,
-                        spot = Spot(
-                                id = table.spotInfo.id,
-                                number = table.spotInfo.number,
-                                capacity = table.spotInfo.capacity,
-                                minPeopleNumber = table.spotInfo.minPeopleNumber,
-                                restaurant = restaurant
-                        ),
-                        floor = restaurant.getFloor(table.floorId)
-                )
+        fun toSchemaItem(table: TypeTableDTO, restaurant: Restaurant): SchemaItem {
+            if (table.id == null && table.spotInfo.id != null)
+                throw ServiceException(HttpStatus.BAD_REQUEST, "You can't assign exisiting spot to the new table.")
+            return SchemaItem(
+                    id = table.id,
+                    x = table.position.x,
+                    y = table.position.y,
+                    width = table.details.width,
+                    height = table.details.heigth,
+                    rotation = table.details.rotation,
+                    type = TABLE,
+                    tableType = table.subType,
+                    spot = Spot(
+                            id = table.spotInfo.id,
+                            number = table.spotInfo.number,
+                            capacity = table.spotInfo.capacity,
+                            minPeopleNumber = table.spotInfo.minPeopleNumber,
+                            restaurant = restaurant
+                    ),
+                    floor = restaurant.getFloor(table.floorId)
+            )
+        }
     }
 }
