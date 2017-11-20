@@ -219,7 +219,7 @@ class PanelSchemaControllerTests {
     @Test
     fun `updateSchema_ update existing table - spotInfo`() {
         val schemaDTO = prepareUpdateSchemaDTO()
-        schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
+        schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(5, 100, 4, 1)
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
@@ -231,6 +231,21 @@ class PanelSchemaControllerTests {
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         Assert.assertEquals(SchemaSpotInfoDTO(1, 1, 4, 1), actual.tables[0].spotInfo)
+    }
+
+    @Test
+    fun `updateSchema_ update not existing table when request tableId is not null and spotId is already existing post - spotInfo`() {
+        val schemaDTO = prepareUpdateSchemaDTO()
+        schemaDTO.tables[0].id = 312312
+        schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(5, 100, 4, 1)
+
+        val body = convertObjectToJsonBytes(schemaDTO)
+
+        mvc.perform(put(SCHEMAS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isBadRequest)
+                .andReturn()
     }
 
     @Test

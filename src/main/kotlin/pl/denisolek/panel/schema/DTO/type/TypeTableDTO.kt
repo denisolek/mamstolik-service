@@ -39,7 +39,7 @@ data class TypeTableDTO(
 
     companion object {
         fun toSchemaItem(table: TypeTableDTO, restaurant: Restaurant): SchemaItem {
-            if (table.id == null && table.spotInfo.id != null)
+            if ((table.id == null || !restaurantContainsTable(table, restaurant))&& table.spotInfo.id != null)
                 throw ServiceException(HttpStatus.BAD_REQUEST, "You can't assign exisiting spot to the new table.")
             return SchemaItem(
                     id = table.id,
@@ -68,6 +68,14 @@ data class TypeTableDTO(
                 }.firstOrNull()?.spot?.id
                 else -> null
             }
+        }
+
+        private fun restaurantContainsTable(table: TypeTableDTO, restaurant: Restaurant): Boolean {
+            restaurant.floors.forEach {
+                if (it.schemaItems.filter { it.id == table.id }.count() > 0)
+                    return true
+            }
+            return false
         }
     }
 }
