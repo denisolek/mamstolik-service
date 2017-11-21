@@ -7,13 +7,11 @@ import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.core.schema.Floor
 import pl.denisolek.core.schema.SchemaItem
-import pl.denisolek.core.schema.SchemaService
 import pl.denisolek.panel.schema.DTO.FloorDTO
 import pl.denisolek.panel.schema.DTO.SchemaDTO
 
 @Service
-class PanelSchemaService(val restaurantService: RestaurantService,
-                         val schemaService: SchemaService) {
+class PanelSchemaService(val restaurantService: RestaurantService) {
     fun getSchema(restaurant: Restaurant): SchemaDTO {
         return SchemaDTO(restaurant)
     }
@@ -32,57 +30,51 @@ class PanelSchemaService(val restaurantService: RestaurantService,
         return SchemaDTO(restaurantService.save(restaurant))
     }
 
-    // TODO usuwanie nie działa
-    // TODO przemyśleć proces czyszczenia kolekcji,inaczej nie ma prawa działać
-//    fun updateSchema(restaurant: Restaurant, schemaDTO: SchemaDTO): SchemaDTO {
-//        val items = SchemaDTO.toSchemaItems(schemaDTO, restaurant)
-//        val updatedItems = schemaService.saveSchemaItems(items)
-//        val groupedItems = updatedItems.groupBy { it.floor.id }
-//        updateRestaurantSpots(updatedItems, restaurant)
-//        updateRestaurantFloors(restaurant, groupedItems)
-//        return SchemaDTO(restaurant)
-//    }
-//
-//    private fun updateRestaurantFloors(restaurant: Restaurant, groupedItems: Map<Int?, List<SchemaItem>>) {
-//        restaurant.floors.forEach { (id, _, schemaItems) ->
-//            schemaItems.clear()
-//            if (groupedItems[id] != null)
-//                schemaItems.addAll(groupedItems[id]!!.toMutableList())
-//        }
-//    }
-//
-//    private fun updateRestaurantSpots(updatedItems: MutableList<SchemaItem>, restaurant: Restaurant) {
-//        updatedItems.forEach {
-//            if (!restaurant.spots.contains(it.spot) && it.spot != null)
-//                restaurant.spots.add(it.spot!!)
-//        }
-//    }
-
     fun updateSchema(restaurant: Restaurant, schemaDTO: SchemaDTO): SchemaDTO {
         val items = SchemaDTO.toSchemaItems(schemaDTO, restaurant)
-                .groupBy { it.floor.id }
+        val restaurantTables = restaurant.floors
+                .flatMap { it.schemaItems }
+                .filter { it.type == SchemaItem.Type.TABLE }
+                .toMutableList()
+        val updatedItems = getUpdatedItems(items, restaurantTables)
+        assignItemsToRestaurant(restaurant, updatedItems)
+        return SchemaDTO(restaurantService.save(restaurant))
+    }
 
-        restaurant.floors.map { (id, _, schemaItems) ->
-            schemaItems.removeIf { it.type != SchemaItem.Type.TABLE }
-            items[id]?.forEach { schemaItem ->
-                when {
-                    schemaItem.type == SchemaItem.Type.TABLE -> {
-                        if (schemaItems.filter { it.id == schemaItem.id }.count() > 0) {
-                            schemaItems.first { schemaItem.id == it.id }.let {
-                                it.width = schemaItem.width
-                                it.height = schemaItem.height
-                                it.rotation = schemaItem.rotation
-                                it.x = schemaItem.x
-                                it.y = schemaItem.y
-                            }
-                        } else {
-                            schemaItems.add(schemaItem)
-                        }
-                    }
-                    else -> schemaItems.add(schemaItem)
+    private fun getUpdatedItems(items: List<SchemaItem>, restaurantTables: MutableList<SchemaItem>): Map<Int?, List<SchemaItem?>> {
+        return items.map { item ->
+            when {
+                (isExistingTable(item, restaurantTables)) -> restaurantTables.find { it.id == item.id }?.let {
+                    updateExistingTable(it, item)
+                    restaurantTables.removeIf { it.id == item.id }
+                    it
+                }
+                else -> item
+            }
+        }.plus(restaurantTables).groupBy { it?.floor?.id }
+    }
+
+    private fun assignItemsToRestaurant(restaurant: Restaurant, updatedItems: Map<Int?, List<SchemaItem?>>) {
+        restaurant.floors.forEach { (id, _, schemaItems) ->
+            schemaItems.clear()
+            when {
+                updatedItems.containsKey(id) -> updatedItems[id]?.map { item ->
+                    item?.let { schemaItems.add(it) }
                 }
             }
         }
-        return SchemaDTO(restaurantService.save(restaurant))
     }
+
+    private fun updateExistingTable(it: SchemaItem, item: SchemaItem) {
+        it.width = item.width
+        it.height = item.height
+        it.rotation = item.rotation
+        it.x = item.x
+        it.y = item.y
+        it.tableType = item.tableType
+        it.floor = item.floor
+    }
+
+    private fun isExistingTable(item: SchemaItem, restaurantTables: MutableList<SchemaItem>) =
+            item.type == SchemaItem.Type.TABLE && restaurantTables.any { it.id == item.id }
 }
