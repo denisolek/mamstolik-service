@@ -57,6 +57,20 @@ class PanelSchemaService(val restaurantService: RestaurantService) {
         return SchemaDTO(restaurantService.save(restaurant))
     }
 
+    fun deleteSpot(restaurant: Restaurant, spot: Spot): SchemaDTO {
+        if (spot.haveReservationsInFuture())
+            throw ServiceException(HttpStatus.CONFLICT, "This spot have reservations in future")
+
+        if (spot.restaurant.id != restaurant.id)
+            throw ServiceException(HttpStatus.NOT_FOUND, "Spot not found in this restaurant")
+
+        restaurant.spots.removeIf { it.id == spot.id }
+        restaurant.floors.map {
+            it.schemaItems.removeIf { it.spot?.id == spot.id }
+        }
+        return SchemaDTO(restaurantService.save(restaurant))
+    }
+
     private fun getUpdatedItems(items: List<SchemaItem>, restaurantTables: MutableList<SchemaItem>): Map<Int?, List<SchemaItem?>> {
         return items.map { item ->
             when {
