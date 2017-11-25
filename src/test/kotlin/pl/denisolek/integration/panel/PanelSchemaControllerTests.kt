@@ -584,6 +584,38 @@ class PanelSchemaControllerTests {
         assertEquals(1, actual.tables.last().spotInfo.minPeopleNumber)
     }
 
+    @Test
+    fun `updateSchema_ enable grid`() {
+        val schemaDTO = prepareUpdateSchemaDTO()
+        schemaDTO.isGridEnabled = true
+        val body = convertObjectToJsonBytes(schemaDTO)
+
+        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
+        assertTrue(actual.isGridEnabled)
+    }
+
+    @Test
+    fun `updateSchema_ disable grid`() {
+        val schemaDTO = prepareUpdateSchemaDTO()
+        schemaDTO.isGridEnabled = false
+        val body = convertObjectToJsonBytes(schemaDTO)
+
+        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
+        assertFalse(actual.isGridEnabled)
+    }
+
     private fun prepareUpdateSchemaDTO(): SchemaDTO {
         val user = userRepository.findOne(1)
         doReturn(user).whenever(authorizationService).getCurrentUser()
@@ -698,9 +730,9 @@ class PanelSchemaControllerTests {
                 .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
-        Assert.assertTrue(actual.tables.isNotEmpty())
-        Assert.assertTrue(actual.wallItems.isEmpty())
-        Assert.assertTrue(actual.items.isEmpty())
-        Assert.assertTrue(actual.wallItems.isEmpty())
+        assertTrue(actual.tables.isNotEmpty())
+        assertTrue(actual.wallItems.isEmpty())
+        assertTrue(actual.items.isEmpty())
+        assertTrue(actual.wallItems.isEmpty())
     }
 }
