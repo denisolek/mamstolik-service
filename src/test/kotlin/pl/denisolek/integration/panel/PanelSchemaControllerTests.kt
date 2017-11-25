@@ -848,4 +848,40 @@ class PanelSchemaControllerTests {
         assertEquals(50, editedSpot?.capacity)
         assertEquals(25, editedSpot?.minPeopleNumber)
     }
+
+    @Test
+    fun `deleteSpot_ not existing spot`() {
+        mvc.perform(delete(SPOTS_ID_PATH, 1, 500)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound)
+                .andReturn()
+    }
+
+    @Test
+    fun `deleteSpot_ spot from different restaurant`() {
+        mvc.perform(delete(SPOTS_ID_PATH, 1, 24)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound)
+                .andReturn()
+    }
+
+    @Test
+    fun `deleteSpot_ spot with reservations in the future`() {
+        mvc.perform(delete(SPOTS_ID_PATH, 1, 3)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict)
+                .andReturn()
+    }
+
+    @Test
+    fun `deleteSpot_ correct data`() {
+        val result = mvc.perform(delete(SPOTS_ID_PATH, 1, 2)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
+        val editedSpot = actual.tables.find { it.spotInfo.id == 2 }?.spotInfo
+        assertNull(editedSpot)
+    }
 }
