@@ -7,8 +7,10 @@ import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.core.schema.Floor
 import pl.denisolek.core.schema.SchemaItem
+import pl.denisolek.core.spot.Spot
 import pl.denisolek.panel.schema.DTO.FloorDTO
 import pl.denisolek.panel.schema.DTO.SchemaDTO
+import pl.denisolek.panel.schema.DTO.type.SchemaSpotInfoDTO
 
 @Service
 class PanelSchemaService(val restaurantService: RestaurantService) {
@@ -78,4 +80,17 @@ class PanelSchemaService(val restaurantService: RestaurantService) {
 
     private fun isExistingTable(item: SchemaItem, restaurantTables: MutableList<SchemaItem>) =
             item.type == SchemaItem.Type.TABLE && restaurantTables.any { it.id == item.id }
+
+    fun updateSpot(restaurant: Restaurant, spot: Spot, spotInfoDTO: SchemaSpotInfoDTO): SchemaDTO {
+        if (spot.haveReservationsInFuture())
+            throw ServiceException(HttpStatus.CONFLICT, "This spot have reservations in future")
+
+        restaurant.spots.find { it.id == spot.id }?.let {
+            it.number = spotInfoDTO.number
+            it.capacity = spotInfoDTO.capacity
+            it.minPeopleNumber = spotInfoDTO.minPeopleNumber
+        } ?: throw ServiceException(HttpStatus.NOT_FOUND, "Spot not found in this restaurant")
+
+        return SchemaDTO(restaurantService.save(restaurant))
+    }
 }

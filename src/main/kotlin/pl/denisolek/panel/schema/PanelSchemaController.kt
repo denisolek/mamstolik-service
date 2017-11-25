@@ -5,14 +5,15 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.schema.Floor
+import pl.denisolek.core.spot.Spot
 import pl.denisolek.panel.schema.DTO.FloorDTO
 import pl.denisolek.panel.schema.DTO.SchemaDTO
+import pl.denisolek.panel.schema.DTO.type.SchemaSpotInfoDTO
 import springfox.documentation.annotations.ApiIgnore
 import javax.validation.Valid
 
 @RestController
 class PanelSchemaController(val panelSchemaService: PanelSchemaService) : PanelSchemaApi {
-
     companion object {
         val API = PanelSchemaApi.Companion
     }
@@ -31,4 +32,9 @@ class PanelSchemaController(val panelSchemaService: PanelSchemaService) : PanelS
     override fun deleteFloor(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
                              @ApiIgnore @PathVariable(API.FLOOR_ID) floorId: Floor): SchemaDTO =
             panelSchemaService.deleteFloor(restaurantId, floorId)
+
+    override fun updateSpot(@ApiIgnore @PathVariable(PanelSchemaApi.RESTAURANT_ID) restaurantId: Restaurant,
+                            @ApiIgnore @PathVariable(PanelSchemaApi.SPOT_ID) spotId: Spot,
+                            @RequestBody @Valid spotInfoDTO: SchemaSpotInfoDTO): SchemaDTO =
+            panelSchemaService.updateSpot(restaurantId, spotId, spotInfoDTO)
 }
