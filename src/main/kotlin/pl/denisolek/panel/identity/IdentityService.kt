@@ -100,8 +100,7 @@ class IdentityService(private val userService: UserService,
         val restaurant = Restaurant(
                 name = createRestaurantDTO.name,
                 type = createRestaurantDTO.type,
-                owner = authorizationService.getCurrentUser(),
-                settings = Settings()
+                owner = authorizationService.getCurrentUser()
         )
         userService.save(User(
                 username = userService.generateUsername(),

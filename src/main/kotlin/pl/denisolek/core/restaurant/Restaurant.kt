@@ -52,8 +52,8 @@ data class Restaurant(
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
         var menu: Menu? = null,
 
-        @OneToOne(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL))
-        var settings: Settings? = Settings(),
+        @OneToOne(cascade = arrayOf(CascadeType.ALL))
+        var settings: Settings? = null,
 
         @ElementCollection(fetch = FetchType.EAGER)
         @Enumerated(EnumType.STRING)

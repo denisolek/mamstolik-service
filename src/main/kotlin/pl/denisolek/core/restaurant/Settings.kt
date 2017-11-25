@@ -7,8 +7,6 @@ class Settings(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Int? = null,
-        @OneToOne
-        var restaurant: Restaurant? = null,
         var localization: Boolean? = false,
         var special_dates: Boolean? = false,
         var description: Boolean? = false,
