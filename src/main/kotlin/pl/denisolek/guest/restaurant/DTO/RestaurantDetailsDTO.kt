@@ -7,6 +7,7 @@ import java.time.DayOfWeek
 
 data class RestaurantDetailsDTO(
         var id: Int? = null,
+        var settings: GuestRestaurantSettingsDTO,
         var name: String,
         var description: String?,
         var rate: RestaurantRateDTO,
@@ -19,6 +20,7 @@ data class RestaurantDetailsDTO(
         fun fromRestaurant(restaurant: Restaurant): RestaurantDetailsDTO =
                 RestaurantDetailsDTO(
                         id = restaurant.id,
+                        settings = setSettings(restaurant),
                         name = restaurant.name,
                         description = setDescription(restaurant),
                         rate = setRate(restaurant),
@@ -27,6 +29,14 @@ data class RestaurantDetailsDTO(
                         businessHours = restaurant.businessHours,
                         tags = listOf(restaurant.cuisineTypes, restaurant.facilities)
                 )
+
+        private fun setSettings(restaurant: Restaurant): GuestRestaurantSettingsDTO {
+            return GuestRestaurantSettingsDTO(
+                    description = restaurant.settings!!.description,
+                    localization = restaurant.settings!!.localization,
+                    menu = restaurant.settings!!.menu
+            )
+        }
 
         private fun setDescription(restaurant: Restaurant) =
                 if (restaurant.settings!!.description) restaurant.description else null
