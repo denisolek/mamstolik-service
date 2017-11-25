@@ -1,8 +1,11 @@
 package pl.denisolek.core.restaurant
 
+import org.springframework.http.HttpStatus
+import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.address.Address
 import pl.denisolek.core.menu.Menu
 import pl.denisolek.core.reservation.Reservation
+import pl.denisolek.core.schema.Floor
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.core.user.User
 import pl.denisolek.infrastructure.util.DateTimeInterval
@@ -42,6 +45,9 @@ data class Restaurant(
 
         @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         var spots: MutableList<Spot> = mutableListOf(),
+
+        @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+        var floors: MutableList<Floor> = mutableListOf(),
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
         var menu: Menu? = null,
@@ -100,6 +106,13 @@ data class Restaurant(
 
         return this.spots.filterNot { takenSpots.contains(it) }
     }
+
+    fun getFloor(floorId: Int): Floor =
+            try {
+                this.floors.first { it.id == floorId }
+            } catch (e: NoSuchElementException) {
+                throw ServiceException(HttpStatus.BAD_REQUEST, "Trying to assign item to not existing floor.")
+            }
 
     enum class AvailabilityType {
         AVAILABLE,

@@ -17,6 +17,10 @@ spring:
         properties:
             hibernate:
                 format_sql: true
+                connection:
+                    char_set: UTF-8
+                hbm2ddl:
+                    import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
         show-sql: true
     jackson:
         serialization:

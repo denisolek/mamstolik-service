@@ -9,10 +9,13 @@ data class Spot(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Int? = null,
 
+        var number: Int,
+
         var capacity: Int,
 
         @Column(nullable = false, columnDefinition = "int default 1")
         var minPeopleNumber: Int = 1,
 
         @ManyToOne
-        var restaurant: Restaurant)
+        var restaurant: Restaurant
+)

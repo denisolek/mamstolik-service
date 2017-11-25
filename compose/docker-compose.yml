@@ -17,7 +17,7 @@ services:
       - "15672:15672"
 
   mamstolikService:
-    image: mamstolik/service:0.14.9
+    image: mamstolik/service:0.15.0
     ports:
       - "8080:8080"
     environment:
