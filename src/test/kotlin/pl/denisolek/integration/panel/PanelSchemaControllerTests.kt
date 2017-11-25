@@ -26,6 +26,7 @@ import pl.denisolek.core.restaurant.RestaurantRepository
 import pl.denisolek.core.schema.Floor
 import pl.denisolek.core.schema.SchemaItem
 import pl.denisolek.core.schema.SchemaItem.ItemType.TOILET
+import pl.denisolek.core.schema.SchemaItem.TableType.EIGHT_ROUND
 import pl.denisolek.core.schema.SchemaItem.WallItemType.WINDOW
 import pl.denisolek.core.user.UserRepository
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
@@ -167,7 +168,7 @@ class PanelSchemaControllerTests {
     @Test
     fun `updateSchema_ update existing item - subType`() {
         val schemaDTO = prepareUpdateSchemaDTO()
-        schemaDTO.tables[0].subType = SchemaItem.TableType.EIGHT_ROUND
+        schemaDTO.tables[0].subType = EIGHT_ROUND
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
@@ -178,7 +179,7 @@ class PanelSchemaControllerTests {
                 .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
-        assertEquals(SchemaItem.TableType.EIGHT_ROUND, actual.tables[0].subType)
+        assertEquals(EIGHT_ROUND, actual.tables[0].subType)
     }
 
     @Test
@@ -254,7 +255,7 @@ class PanelSchemaControllerTests {
 
         val newTable = TypeTableDTO(
                 floorId = 1,
-                subType = SchemaItem.TableType.EIGHT_ROUND,
+                subType = EIGHT_ROUND,
                 position = SchemaPositionDTO(15000f, 15000f),
                 details = SchemaDetailsDTO(15000, 15000, 15000f),
                 spotInfo = SchemaSpotInfoDTO(
@@ -288,7 +289,7 @@ class PanelSchemaControllerTests {
         val newTable = TypeTableDTO(
                 id = 123456,
                 floorId = 1,
-                subType = SchemaItem.TableType.EIGHT_ROUND,
+                subType = EIGHT_ROUND,
                 position = SchemaPositionDTO(16000f, 16000f),
                 details = SchemaDetailsDTO(16000, 16000, 16000f),
                 spotInfo = SchemaSpotInfoDTO(
@@ -323,7 +324,7 @@ class PanelSchemaControllerTests {
         val newTable = TypeTableDTO(
                 id = null,
                 floorId = 1,
-                subType = SchemaItem.TableType.EIGHT_ROUND,
+                subType = EIGHT_ROUND,
                 position = SchemaPositionDTO(17000f, 17000f),
                 details = SchemaDetailsDTO(17000, 17000, 17000f),
                 spotInfo = SchemaSpotInfoDTO(
@@ -358,7 +359,7 @@ class PanelSchemaControllerTests {
         val newTable = TypeTableDTO(
                 id = 123456,
                 floorId = 1,
-                subType = SchemaItem.TableType.EIGHT_ROUND,
+                subType = EIGHT_ROUND,
                 position = SchemaPositionDTO(18000f, 18000f),
                 details = SchemaDetailsDTO(18000, 18000, 18000f),
                 spotInfo = SchemaSpotInfoDTO(
@@ -383,6 +384,204 @@ class PanelSchemaControllerTests {
         assertEquals(18000, actual.tables.last().spotInfo.number)
         assertEquals(13, actual.tables.last().spotInfo.capacity)
         assertEquals(8, actual.tables.last().spotInfo.minPeopleNumber)
+    }
+
+    @Test
+    fun `updateSchema_ add new table no grid, capacity 1`() {
+        val schemaDTO = prepareUpdateSchemaDTO()
+        schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
+
+        val newTable = TypeTableDTO(
+                floorId = 1,
+                spotInfo = SchemaSpotInfoDTO(
+                        number = 19000,
+                        capacity = 1,
+                        minPeopleNumber = 1
+                ))
+
+        schemaDTO.tables.add(newTable)
+
+        val body = convertObjectToJsonBytes(schemaDTO)
+
+        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
+        val actualTable = actual.tables.last()
+        Assert.assertNotNull(actualTable.spotInfo.id)
+        assertEquals(300f, actualTable.position!!.x)
+        assertEquals(300f, actualTable.position!!.y)
+        assertEquals(200, actualTable.details!!.width)
+        assertEquals(200, actualTable.details!!.heigth)
+        assertEquals(0f, actualTable.details!!.rotation)
+        assertEquals(SchemaItem.TableType.TWO, actualTable.subType)
+        assertEquals(19000, actualTable.spotInfo.number)
+        assertEquals(1, actualTable.spotInfo.capacity)
+        assertEquals(1, actualTable.spotInfo.minPeopleNumber)
+    }
+
+    @Test
+    fun `updateSchema_ add new table no grid, capacity 10`() {
+        val schemaDTO = prepareUpdateSchemaDTO()
+        schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
+
+        val newTable = TypeTableDTO(
+                floorId = 1,
+                spotInfo = SchemaSpotInfoDTO(
+                        number = 20000,
+                        capacity = 10,
+                        minPeopleNumber = 1
+                ))
+
+        schemaDTO.tables.add(newTable)
+
+        val body = convertObjectToJsonBytes(schemaDTO)
+
+        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
+        val actualTable = actual.tables.last()
+        Assert.assertNotNull(actualTable.spotInfo.id)
+        assertEquals(300f, actualTable.position!!.x)
+        assertEquals(300f, actualTable.position!!.y)
+        assertEquals(200, actualTable.details!!.width)
+        assertEquals(200, actualTable.details!!.heigth)
+        assertEquals(0f, actualTable.details!!.rotation)
+        assertEquals(EIGHT_ROUND, actualTable.subType)
+        assertEquals(20000, actualTable.spotInfo.number)
+        assertEquals(10, actualTable.spotInfo.capacity)
+        assertEquals(1, actualTable.spotInfo.minPeopleNumber)
+    }
+
+    @Test
+    fun `updateSchema_ add new table capacity less than 0`() {
+        val schemaDTO = prepareUpdateSchemaDTO()
+        schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
+
+        val newTable = TypeTableDTO(
+                floorId = 1,
+                spotInfo = SchemaSpotInfoDTO(
+                        number = 19000,
+                        capacity = -10,
+                        minPeopleNumber = 1
+                ))
+
+        schemaDTO.tables.add(newTable)
+
+        val body = convertObjectToJsonBytes(schemaDTO)
+
+        mvc.perform(put(SCHEMAS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateSchema_ add new table capacity more than 200`() {
+        val schemaDTO = prepareUpdateSchemaDTO()
+        schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
+
+        val newTable = TypeTableDTO(
+                floorId = 1,
+                spotInfo = SchemaSpotInfoDTO(
+                        number = 19000,
+                        capacity = 200,
+                        minPeopleNumber = 1
+                ))
+
+        schemaDTO.tables.add(newTable)
+
+        val body = convertObjectToJsonBytes(schemaDTO)
+
+        mvc.perform(put(SCHEMAS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateSchema_ add new table minPeopleNumber less than 0`() {
+        val schemaDTO = prepareUpdateSchemaDTO()
+        schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
+
+        val newTable = TypeTableDTO(
+                floorId = 1,
+                spotInfo = SchemaSpotInfoDTO(
+                        number = 19000,
+                        capacity = 5,
+                        minPeopleNumber = -10
+                ))
+
+        schemaDTO.tables.add(newTable)
+
+        val body = convertObjectToJsonBytes(schemaDTO)
+
+        mvc.perform(put(SCHEMAS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateSchema_ add new table minPeopleNumber more than 100`() {
+        val schemaDTO = prepareUpdateSchemaDTO()
+        schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
+
+        val newTable = TypeTableDTO(
+                floorId = 1,
+                spotInfo = SchemaSpotInfoDTO(
+                        number = 19000,
+                        capacity = 5,
+                        minPeopleNumber = 200
+                ))
+
+        schemaDTO.tables.add(newTable)
+
+        val body = convertObjectToJsonBytes(schemaDTO)
+
+        mvc.perform(put(SCHEMAS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateSchema_ add new table, minPeopleNumber is null`() {
+        val schemaDTO = prepareUpdateSchemaDTO()
+        schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
+
+        val newTable = TypeTableDTO(
+                floorId = 1,
+                subType = EIGHT_ROUND,
+                position = SchemaPositionDTO(15000f, 15000f),
+                details = SchemaDetailsDTO(15000, 15000, 15000f),
+                spotInfo = SchemaSpotInfoDTO(
+                        number = 21000,
+                        capacity = 5
+                ))
+
+        schemaDTO.tables.add(newTable)
+
+        val body = convertObjectToJsonBytes(schemaDTO)
+
+        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
+        Assert.assertNotNull(actual.tables.last().spotInfo.id)
+        assertEquals(21000, actual.tables.last().spotInfo.number)
+        assertEquals(5, actual.tables.last().spotInfo.capacity)
+        assertEquals(1, actual.tables.last().spotInfo.minPeopleNumber)
     }
 
     private fun prepareUpdateSchemaDTO(): SchemaDTO {

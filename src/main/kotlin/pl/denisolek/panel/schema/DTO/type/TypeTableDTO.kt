@@ -62,6 +62,8 @@ data class TypeTableDTO(
         }
 
         private fun setSpot(table: TypeTableDTO, restaurant: Restaurant): Spot {
+            if (table.spotInfo.capacity !in 1..100 || table.spotInfo.minPeopleNumber !in 1..100)
+                throw ServiceException(HttpStatus.BAD_REQUEST, "Capacity and minPeopleNumber must be in range 1-100")
             return Spot(
                     id = setProperSpotId(table, restaurant),
                     number = table.spotInfo.number,
