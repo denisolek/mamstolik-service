@@ -37,6 +37,7 @@ import pl.denisolek.panel.schema.DTO.FloorDTO
 import pl.denisolek.panel.schema.DTO.SchemaDTO
 import pl.denisolek.panel.schema.DTO.type.*
 import pl.denisolek.panel.schema.PanelSchemaApi
+import pl.denisolek.stubs.dto.SchemaSpotInfoDTOStub
 import javax.transaction.Transactional
 
 @RunWith(SpringRunner::class)
@@ -61,6 +62,7 @@ class PanelSchemaControllerTests {
     val SCHEMAS_PATH = "${PANEL_BASE_PATH}${PanelSchemaApi.SCHEMAS_PATH}"
     val FLOORS_PATH = "${PANEL_BASE_PATH}${PanelSchemaApi.FLOORS_PATH}"
     val FLOORS_ID_PATH = "${PANEL_BASE_PATH}${PanelSchemaApi.FLOORS_ID_PATH}"
+    val SPOTS_ID_PATH = "${PANEL_BASE_PATH}${PanelSchemaApi.SPOTS_ID_PATH}"
 
     @Before
     fun setup() {
@@ -734,5 +736,116 @@ class PanelSchemaControllerTests {
         assertTrue(actual.wallItems.isEmpty())
         assertTrue(actual.items.isEmpty())
         assertTrue(actual.wallItems.isEmpty())
+    }
+
+    @Test
+    fun `updateSpot_ not existing spot`() {
+        val schemaSpotInfoDTO = SchemaSpotInfoDTOStub.getSchemaSpotInfoDTOStub()
+        val body = convertObjectToJsonBytes(schemaSpotInfoDTO)
+
+        mvc.perform(put(SPOTS_ID_PATH, 1, 900)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isNotFound)
+                .andReturn()
+    }
+
+    @Test
+    fun `updateSpot_ capacity less than 1`() {
+        val schemaSpotInfoDTO = SchemaSpotInfoDTOStub.getSchemaSpotInfoDTOStub()
+        schemaSpotInfoDTO.capacity = -10
+        val body = convertObjectToJsonBytes(schemaSpotInfoDTO)
+
+        mvc.perform(put(SPOTS_ID_PATH, 1, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isBadRequest)
+                .andReturn()
+    }
+
+    @Test
+    fun `updateSpot_ capacity more than 100`() {
+        val schemaSpotInfoDTO = SchemaSpotInfoDTOStub.getSchemaSpotInfoDTOStub()
+        schemaSpotInfoDTO.capacity = 200
+        val body = convertObjectToJsonBytes(schemaSpotInfoDTO)
+
+        mvc.perform(put(SPOTS_ID_PATH, 1, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isBadRequest)
+                .andReturn()
+    }
+
+    @Test
+    fun `updateSpot_ minPeopleNumber less than 1`() {
+        val schemaSpotInfoDTO = SchemaSpotInfoDTOStub.getSchemaSpotInfoDTOStub()
+        schemaSpotInfoDTO.minPeopleNumber = -10
+        val body = convertObjectToJsonBytes(schemaSpotInfoDTO)
+
+        mvc.perform(put(SPOTS_ID_PATH, 1, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isBadRequest)
+                .andReturn()
+    }
+
+    @Test
+    fun `updateSpot_ minPeopleNumber more than 100`() {
+        val schemaSpotInfoDTO = SchemaSpotInfoDTOStub.getSchemaSpotInfoDTOStub()
+        schemaSpotInfoDTO.minPeopleNumber = 200
+        val body = convertObjectToJsonBytes(schemaSpotInfoDTO)
+
+        mvc.perform(put(SPOTS_ID_PATH, 1, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isBadRequest)
+                .andReturn()
+    }
+
+    @Test
+    fun `updateSpot_ spot with future reservations`() {
+        val schemaSpotInfoDTO = SchemaSpotInfoDTOStub.getSchemaSpotInfoDTOStub()
+        val body = convertObjectToJsonBytes(schemaSpotInfoDTO)
+
+        mvc.perform(put(SPOTS_ID_PATH, 1, 3)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isConflict)
+                .andReturn()
+    }
+
+    @Test
+    fun `updateSpot_ spot from different restaurant`() {
+        val schemaSpotInfoDTO = SchemaSpotInfoDTOStub.getSchemaSpotInfoDTOStub()
+        val body = convertObjectToJsonBytes(schemaSpotInfoDTO)
+
+        mvc.perform(put(SPOTS_ID_PATH, 1, 24)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isNotFound)
+                .andReturn()
+    }
+
+    @Test
+    fun `updateSpot_ correct data`() {
+        val schemaSpotInfoDTO = SchemaSpotInfoDTO(
+                number = 10000,
+                capacity = 50,
+                minPeopleNumber = 25
+        )
+        val body = convertObjectToJsonBytes(schemaSpotInfoDTO)
+
+        val result = mvc.perform(put(SPOTS_ID_PATH, 1, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
+        val editedSpot = actual.tables.find { it.spotInfo.id == 1 }?.spotInfo
+        assertNotNull(editedSpot)
+        assertEquals(10000, editedSpot?.number)
+        assertEquals(50, editedSpot?.capacity)
+        assertEquals(25, editedSpot?.minPeopleNumber)
     }
 }

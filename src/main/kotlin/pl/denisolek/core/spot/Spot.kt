@@ -25,7 +25,7 @@ data class Spot(
                 .filter { it.startDateTime.isAfter(LocalDateTime.now()) }
                 .flatMap { it.spots }
                 .toSet()
-        if (reservedSpots.contains(this)) return false
+        if (!reservedSpots.contains(this)) return false
         return true
     }
 }

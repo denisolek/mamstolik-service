@@ -44,6 +44,19 @@ class PanelSchemaService(val restaurantService: RestaurantService) {
         return SchemaDTO(restaurantService.save(restaurant))
     }
 
+    fun updateSpot(restaurant: Restaurant, spot: Spot, spotInfoDTO: SchemaSpotInfoDTO): SchemaDTO {
+        if (spot.haveReservationsInFuture())
+            throw ServiceException(HttpStatus.CONFLICT, "This spot have reservations in future")
+
+        restaurant.spots.find { it.id == spot.id }?.let {
+            it.number = spotInfoDTO.number
+            it.capacity = spotInfoDTO.capacity
+            it.minPeopleNumber = spotInfoDTO.minPeopleNumber
+        } ?: throw ServiceException(HttpStatus.NOT_FOUND, "Spot not found in this restaurant")
+
+        return SchemaDTO(restaurantService.save(restaurant))
+    }
+
     private fun getUpdatedItems(items: List<SchemaItem>, restaurantTables: MutableList<SchemaItem>): Map<Int?, List<SchemaItem?>> {
         return items.map { item ->
             when {
@@ -80,17 +93,4 @@ class PanelSchemaService(val restaurantService: RestaurantService) {
 
     private fun isExistingTable(item: SchemaItem, restaurantTables: MutableList<SchemaItem>) =
             item.type == SchemaItem.Type.TABLE && restaurantTables.any { it.id == item.id }
-
-    fun updateSpot(restaurant: Restaurant, spot: Spot, spotInfoDTO: SchemaSpotInfoDTO): SchemaDTO {
-        if (spot.haveReservationsInFuture())
-            throw ServiceException(HttpStatus.CONFLICT, "This spot have reservations in future")
-
-        restaurant.spots.find { it.id == spot.id }?.let {
-            it.number = spotInfoDTO.number
-            it.capacity = spotInfoDTO.capacity
-            it.minPeopleNumber = spotInfoDTO.minPeopleNumber
-        } ?: throw ServiceException(HttpStatus.NOT_FOUND, "Spot not found in this restaurant")
-
-        return SchemaDTO(restaurantService.save(restaurant))
-    }
 }
