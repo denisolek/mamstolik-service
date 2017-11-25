@@ -82,6 +82,16 @@ VALUES
   ('Pasja', 7, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, NULL, 7, 'Zapewniamy wyjątkowy wystrój, profesjonalną obsługę, niepowtarzalny klimat. W sezonie letnim zapraszamy do magicznego ogrodu piwnego dla 200 osób, w którym główną atrakcją jest rosnący chmiel w odmianie SYBILLA oraz działająca kuchnia oferująca dania dopasowane do piwa.'),
   ('Cien', 7, 4.5, 5.0, 5.0, 5.0, 1800, FALSE, NULL, 8, 'Nie aktywna, bez miejsc, bez niczego');
 
+INSERT INTO public.settings(restaurant_id, description, localization, menu, photos, schema, special_dates)
+VALUES
+  (1, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
+  (2, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
+  (3, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
+  (4, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
+  (5, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
+  (6, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
+  (7, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
+  (8, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE);
 
 INSERT INTO public.user (username, email, password, account_state, restaurant_id)
 VALUES

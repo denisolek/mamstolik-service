@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.email.EmailService
+import pl.denisolek.core.restaurant.Settings
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.security.Authority
 import pl.denisolek.core.user.User
@@ -99,7 +100,8 @@ class IdentityService(private val userService: UserService,
         val restaurant = Restaurant(
                 name = createRestaurantDTO.name,
                 type = createRestaurantDTO.type,
-                owner = authorizationService.getCurrentUser()
+                owner = authorizationService.getCurrentUser(),
+                settings = Settings()
         )
         userService.save(User(
                 username = userService.generateUsername(),
