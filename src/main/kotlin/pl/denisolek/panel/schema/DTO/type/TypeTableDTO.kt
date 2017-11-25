@@ -11,9 +11,9 @@ import pl.denisolek.core.spot.Spot
 data class TypeTableDTO(
         var id: Int? = null,
         var floorId: Int,
-        var subType: TableType,
-        var position: SchemaPositionDTO,
-        var details: SchemaDetailsDTO,
+        var subType: TableType? = null,
+        var position: SchemaPositionDTO? = null,
+        var details: SchemaDetailsDTO? = null,
         var spotInfo: SchemaSpotInfoDTO
 ) {
     constructor(item: SchemaItem) : this(
@@ -38,27 +38,47 @@ data class TypeTableDTO(
     )
 
     companion object {
+        private const val DEFAULT_X = 300f
+        private const val DEFAULT_Y = 300f
+        private const val DEFAULT_WIDTH = 200
+        private const val DEFAULT_HEIGHT = 200
+        private const val DEFAULT_ROTATION = 0f
+
         fun toSchemaItem(table: TypeTableDTO, restaurant: Restaurant): SchemaItem {
             if ((table.id == null || !restaurantContainsTable(table, restaurant)) && restaurantContainsSpot(table, restaurant))
                 throw ServiceException(HttpStatus.BAD_REQUEST, "You can't assign exisiting spot to the new table.")
             return SchemaItem(
                     id = if (restaurantContainsTable(table, restaurant)) table.id else null,
-                    x = table.position.x,
-                    y = table.position.y,
-                    width = table.details.width,
-                    height = table.details.heigth,
-                    rotation = table.details.rotation,
+                    x = table.position?.x ?: DEFAULT_X,
+                    y = table.position?.y ?: DEFAULT_Y,
+                    width = table.details?.width ?: DEFAULT_WIDTH,
+                    height = table.details?.heigth ?: DEFAULT_HEIGHT,
+                    rotation = table.details?.rotation ?: DEFAULT_ROTATION,
                     type = TABLE,
-                    tableType = table.subType,
-                    spot = Spot(
-                            id = setProperSpotId(table, restaurant),
-                            number = table.spotInfo.number,
-                            capacity = table.spotInfo.capacity,
-                            minPeopleNumber = table.spotInfo.minPeopleNumber,
-                            restaurant = restaurant
-                    ),
+                    tableType = setTableType(table),
+                    spot = setSpot(table, restaurant),
                     floor = restaurant.getFloor(table.floorId)
             )
+        }
+
+        private fun setSpot(table: TypeTableDTO, restaurant: Restaurant): Spot {
+            return Spot(
+                    id = setProperSpotId(table, restaurant),
+                    number = table.spotInfo.number,
+                    capacity = table.spotInfo.capacity,
+                    minPeopleNumber = table.spotInfo.minPeopleNumber,
+                    restaurant = restaurant
+            )
+        }
+
+        private fun setTableType(table: TypeTableDTO): TableType? {
+            return table.subType ?: when (table.spotInfo.capacity) {
+                in 0..2 -> TableType.TWO
+                3 -> TableType.THREE
+                4 -> TableType.FOUR
+                5 -> TableType.FIVE_ROUND
+                else -> TableType.EIGHT_ROUND
+            }
         }
 
         private fun setProperSpotId(table: TypeTableDTO, restaurant: Restaurant): Int? {

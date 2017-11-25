@@ -33,7 +33,7 @@ interface PanelSchemaApi {
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun updateSchema(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                     @RequestBody schemaDTO: SchemaDTO): SchemaDTO
+                     @RequestBody @Valid schemaDTO: SchemaDTO): SchemaDTO
 
     @PostMapping(FLOORS_PATH)
     @ResponseStatus(HttpStatus.CREATED)
