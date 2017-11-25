@@ -881,7 +881,9 @@ class PanelSchemaControllerTests {
                 .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
-        val editedSpot = actual.tables.find { it.spotInfo.id == 2 }?.spotInfo
-        assertNull(editedSpot)
+        val removedSchemaItem = actual.tables.find { it.id == 2 }
+        val removedSpot = actual.tables.find { it.spotInfo.id == 2 }?.spotInfo
+        assertNull(removedSchemaItem)
+        assertNull(removedSpot)
     }
 }
