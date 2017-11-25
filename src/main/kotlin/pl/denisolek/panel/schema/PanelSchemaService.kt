@@ -7,8 +7,10 @@ import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.core.schema.Floor
 import pl.denisolek.core.schema.SchemaItem
+import pl.denisolek.core.spot.Spot
 import pl.denisolek.panel.schema.DTO.FloorDTO
 import pl.denisolek.panel.schema.DTO.SchemaDTO
+import pl.denisolek.panel.schema.DTO.type.SchemaSpotInfoDTO
 
 @Service
 class PanelSchemaService(val restaurantService: RestaurantService) {
@@ -39,6 +41,33 @@ class PanelSchemaService(val restaurantService: RestaurantService) {
         val updatedItems = getUpdatedItems(items, restaurantTables)
         assignItemsToRestaurant(restaurant, updatedItems)
         restaurant.settings!!.schema = schemaDTO.isGridEnabled
+        return SchemaDTO(restaurantService.save(restaurant))
+    }
+
+    fun updateSpot(restaurant: Restaurant, spot: Spot, spotInfoDTO: SchemaSpotInfoDTO): SchemaDTO {
+        if (spot.haveReservationsInFuture())
+            throw ServiceException(HttpStatus.CONFLICT, "This spot have reservations in future")
+
+        restaurant.spots.find { it.id == spot.id }?.let {
+            it.number = spotInfoDTO.number
+            it.capacity = spotInfoDTO.capacity
+            it.minPeopleNumber = spotInfoDTO.minPeopleNumber
+        } ?: throw ServiceException(HttpStatus.NOT_FOUND, "Spot not found in this restaurant")
+
+        return SchemaDTO(restaurantService.save(restaurant))
+    }
+
+    fun deleteSpot(restaurant: Restaurant, spot: Spot): SchemaDTO {
+        if (spot.haveReservationsInFuture())
+            throw ServiceException(HttpStatus.CONFLICT, "This spot have reservations in future")
+
+        if (spot.restaurant.id != restaurant.id)
+            throw ServiceException(HttpStatus.NOT_FOUND, "Spot not found in this restaurant")
+
+        restaurant.spots.removeIf { it.id == spot.id }
+        restaurant.floors.map {
+            it.schemaItems.removeIf { it.spot?.id == spot.id }
+        }
         return SchemaDTO(restaurantService.save(restaurant))
     }
 

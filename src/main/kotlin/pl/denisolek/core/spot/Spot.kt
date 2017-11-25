@@ -1,6 +1,7 @@
 package pl.denisolek.core.spot
 
 import pl.denisolek.core.restaurant.Restaurant
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -18,4 +19,13 @@ data class Spot(
 
         @ManyToOne
         var restaurant: Restaurant
-)
+) {
+    fun haveReservationsInFuture(): Boolean {
+        val reservedSpots = this.restaurant.reservations
+                .filter { it.startDateTime.isAfter(LocalDateTime.now()) }
+                .flatMap { it.spots }
+                .toSet()
+        if (!reservedSpots.contains(this)) return false
+        return true
+    }
+}
