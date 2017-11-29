@@ -26,5 +26,5 @@ interface PanelReservationApi {
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun addReservation(@ApiIgnore @PathVariable(PanelSchemaApi.RESTAURANT_ID) restaurantId: Restaurant,
-                       @RequestBody @Valid reservationDTO: PanelReservationDTO): Reservation
+                       @RequestBody @Valid reservationDTO: PanelReservationDTO): List<Reservation>
 }

@@ -38,6 +38,7 @@ data class CreateEmployeeDTO(
 
         fun toUser(createEmployeeDTO: CreateEmployeeDTO) =
                 User(
+                        email = createEmployeeDTO.email.toLowerCase(),
                         firstName = createEmployeeDTO.firstName,
                         lastName = createEmployeeDTO.lastName,
                         workEmail = createEmployeeDTO.email.toLowerCase(),

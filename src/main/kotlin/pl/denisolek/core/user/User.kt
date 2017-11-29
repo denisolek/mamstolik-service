@@ -15,7 +15,7 @@ data class User(
         var username: String? = null,
 
         @Column(nullable = false, unique = true)
-        var email: String? = null,
+        var email: String,
 
         var password: String? = null,
         var firstName: String? = null,
