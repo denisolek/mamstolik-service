@@ -27,7 +27,7 @@ data class Reservation(
         @ManyToOne
         var restaurant: Restaurant,
 
-        @ManyToOne
+        @ManyToOne(cascade = arrayOf(CascadeType.ALL))
         @JoinColumn
         var customer: Customer,
 
