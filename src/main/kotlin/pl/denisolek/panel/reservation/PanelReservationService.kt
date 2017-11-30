@@ -12,6 +12,7 @@ import pl.denisolek.core.spot.Spot
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.panel.reservation.DTO.PanelCreateReservationDTO
 import pl.denisolek.panel.reservation.DTO.PanelReservationDTO
+import pl.denisolek.panel.reservation.DTO.PanelReservationsDTO
 import pl.denisolek.panel.reservation.DTO.ReservationCustomerDTO
 
 @Service
@@ -19,7 +20,7 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
                               private val reservationService: ReservationService,
                               private val customerService: CustomerService) {
 
-    fun addReservation(restaurant: Restaurant, createReservationDTO: PanelCreateReservationDTO): List<PanelReservationDTO> {
+    fun addReservation(restaurant: Restaurant, createReservationDTO: PanelCreateReservationDTO): PanelReservationsDTO {
         val reservationSpots = findReservationSpots(createReservationDTO, restaurant)
         if (!allSpotsAvailable(restaurant, createReservationDTO, reservationSpots))
             throw ServiceException(HttpStatus.BAD_REQUEST, "Some of provided spots at taken at ${createReservationDTO.dateTime}.")
@@ -31,7 +32,11 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
                 spots = reservationSpots
         ))
         restaurant.reservations.add(reservation)
-        return PanelReservationDTO.fromReservations(restaurant.reservations.filter { it.startDateTime.toLocalDate() == createReservationDTO.dateTime.toLocalDate() })
+        return PanelReservationsDTO(
+                openTime = restaurant.getBusinessHoursForDate(createReservationDTO.dateTime)?.openTime,
+                closeTime = restaurant.getBusinessHoursForDate(createReservationDTO.dateTime)?.closeTime,
+                reservations = PanelReservationDTO.fromReservations(restaurant.reservations.filter { it.startDateTime.toLocalDate() == createReservationDTO.dateTime.toLocalDate() })
+        )
     }
 
     private fun allSpotsAvailable(restaurant: Restaurant, createReservationDTO: PanelCreateReservationDTO, reservationSpots: MutableList<Spot>) =
