@@ -8,7 +8,8 @@ data class PanelReservationDTO(
         var peopleNumber: Int,
         var time: LocalTime,
         var spots: List<ReservationSpotInfoDTO>,
-        var note: String? = null
+        var note: String? = null,
+        var state: Reservation.ReservationState
 ) {
     companion object {
         fun fromReservations(reservations: List<Reservation>) =
@@ -18,7 +19,8 @@ data class PanelReservationDTO(
                             peopleNumber = it.peopleNumber,
                             time = it.startDateTime.toLocalTime(),
                             spots = ReservationSpotInfoDTO.fromSpots(it.spots),
-                            note = it.note
+                            note = it.note,
+                            state = it.state
                     )
                 }
     }
