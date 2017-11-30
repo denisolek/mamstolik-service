@@ -32,4 +32,8 @@ data class Spot(
         if (!reservedSpots.contains(this)) return false
         return true
     }
+
+    override fun hashCode(): Int {
+        return 31 * (schemaItem?.id ?: 31)
+    }
 }
