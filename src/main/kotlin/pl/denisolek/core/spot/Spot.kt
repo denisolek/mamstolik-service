@@ -1,6 +1,7 @@
 package pl.denisolek.core.spot
 
 import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.schema.SchemaItem
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -18,7 +19,10 @@ data class Spot(
         var minPeopleNumber: Int = 1,
 
         @ManyToOne
-        var restaurant: Restaurant
+        var restaurant: Restaurant,
+
+        @OneToOne(mappedBy = "spot")
+        var schemaItem: SchemaItem? = null
 ) {
     fun haveReservationsInFuture(): Boolean {
         val reservedSpots = this.restaurant.reservations
