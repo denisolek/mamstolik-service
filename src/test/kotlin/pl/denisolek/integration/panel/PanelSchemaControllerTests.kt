@@ -204,7 +204,7 @@ class PanelSchemaControllerTests {
     @Test
     fun `updateSchema_ update existing item - details`() {
         val schemaDTO = prepareUpdateSchemaDTO()
-        schemaDTO.tables[0].details = SchemaDetailsDTO(10000, 10000, 10000f)
+        schemaDTO.tables[0].details = SchemaDetailsDTO(10000f, 10000f, 10000f)
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
@@ -215,7 +215,7 @@ class PanelSchemaControllerTests {
                 .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
-        assertEquals(SchemaDetailsDTO(10000, 10000, 10000f), actual.tables[0].details)
+        assertEquals(SchemaDetailsDTO(10000f, 10000f, 10000f), actual.tables[0].details)
     }
 
     @Test
@@ -259,7 +259,7 @@ class PanelSchemaControllerTests {
                 floorId = 1,
                 subType = EIGHT_ROUND,
                 position = SchemaPositionDTO(15000f, 15000f),
-                details = SchemaDetailsDTO(15000, 15000, 15000f),
+                details = SchemaDetailsDTO(15000f, 15000f, 15000f),
                 spotInfo = SchemaSpotInfoDTO(
                         number = 15000,
                         capacity = 10,
@@ -293,7 +293,7 @@ class PanelSchemaControllerTests {
                 floorId = 1,
                 subType = EIGHT_ROUND,
                 position = SchemaPositionDTO(16000f, 16000f),
-                details = SchemaDetailsDTO(16000, 16000, 16000f),
+                details = SchemaDetailsDTO(16000f, 16000f, 16000f),
                 spotInfo = SchemaSpotInfoDTO(
                         id = 123456,
                         number = 16000,
@@ -328,7 +328,7 @@ class PanelSchemaControllerTests {
                 floorId = 1,
                 subType = EIGHT_ROUND,
                 position = SchemaPositionDTO(17000f, 17000f),
-                details = SchemaDetailsDTO(17000, 17000, 17000f),
+                details = SchemaDetailsDTO(17000f, 17000f, 17000f),
                 spotInfo = SchemaSpotInfoDTO(
                         id = 123456,
                         number = 17000,
@@ -363,7 +363,7 @@ class PanelSchemaControllerTests {
                 floorId = 1,
                 subType = EIGHT_ROUND,
                 position = SchemaPositionDTO(18000f, 18000f),
-                details = SchemaDetailsDTO(18000, 18000, 18000f),
+                details = SchemaDetailsDTO(18000f, 18000f, 18000f),
                 spotInfo = SchemaSpotInfoDTO(
                         id = null,
                         number = 18000,
@@ -416,8 +416,8 @@ class PanelSchemaControllerTests {
         Assert.assertNotNull(actualTable.spotInfo.id)
         assertEquals(300f, actualTable.position!!.x)
         assertEquals(300f, actualTable.position!!.y)
-        assertEquals(200, actualTable.details!!.width)
-        assertEquals(200, actualTable.details!!.heigth)
+        assertEquals(200f, actualTable.details!!.width)
+        assertEquals(200f, actualTable.details!!.heigth)
         assertEquals(0f, actualTable.details!!.rotation)
         assertEquals(SchemaItem.TableType.TWO, actualTable.subType)
         assertEquals(19000, actualTable.spotInfo.number)
@@ -453,8 +453,8 @@ class PanelSchemaControllerTests {
         Assert.assertNotNull(actualTable.spotInfo.id)
         assertEquals(300f, actualTable.position!!.x)
         assertEquals(300f, actualTable.position!!.y)
-        assertEquals(200, actualTable.details!!.width)
-        assertEquals(200, actualTable.details!!.heigth)
+        assertEquals(200f, actualTable.details!!.width)
+        assertEquals(200f, actualTable.details!!.heigth)
         assertEquals(0f, actualTable.details!!.rotation)
         assertEquals(EIGHT_ROUND, actualTable.subType)
         assertEquals(20000, actualTable.spotInfo.number)
@@ -563,7 +563,7 @@ class PanelSchemaControllerTests {
                 floorId = 1,
                 subType = EIGHT_ROUND,
                 position = SchemaPositionDTO(15000f, 15000f),
-                details = SchemaDetailsDTO(15000, 15000, 15000f),
+                details = SchemaDetailsDTO(15000f, 15000f, 15000f),
                 spotInfo = SchemaSpotInfoDTO(
                         number = 21000,
                         capacity = 5
@@ -638,7 +638,7 @@ class PanelSchemaControllerTests {
         val newWall = TypeWallDTO(
                 floorId = 1,
                 position = SchemaPositionDTO(19000f, 19000f),
-                details = SchemaDetailsDTO(19000, 19000, 19000f))
+                details = SchemaDetailsDTO(19000f, 19000f, 19000f))
 
         schemaDTO.walls.add(newWall)
 
@@ -654,7 +654,7 @@ class PanelSchemaControllerTests {
         Assert.assertNotNull(actual.walls.last().id)
         assertEquals(1, actual.walls.last().floorId)
         assertEquals(SchemaPositionDTO(19000f, 19000f), actual.walls.last().position)
-        assertEquals(SchemaDetailsDTO(19000, 19000, 19000f), actual.walls.last().details)
+        assertEquals(SchemaDetailsDTO(19000f, 19000f, 19000f), actual.walls.last().details)
     }
 
     @Test
@@ -666,7 +666,7 @@ class PanelSchemaControllerTests {
                 floorId = 1,
                 subType = WINDOW,
                 position = SchemaPositionDTO(20000f, 20000f),
-                details = SchemaDetailsDTO(20000, 20000, 20000f))
+                details = SchemaDetailsDTO(20000f, 20000f, 20000f))
 
         schemaDTO.wallItems.add(newWallItem)
 
@@ -683,7 +683,7 @@ class PanelSchemaControllerTests {
         assertEquals(1, actual.wallItems.last().floorId)
         assertEquals(WINDOW, actual.wallItems.last().subType)
         assertEquals(SchemaPositionDTO(20000f, 20000f), actual.wallItems.last().position)
-        assertEquals(SchemaDetailsDTO(20000, 20000, 20000f), actual.wallItems.last().details)
+        assertEquals(SchemaDetailsDTO(20000f, 20000f, 20000f), actual.wallItems.last().details)
     }
 
     @Test
@@ -695,7 +695,7 @@ class PanelSchemaControllerTests {
                 floorId = 1,
                 subType = TOILET,
                 position = SchemaPositionDTO(21000f, 21000f),
-                details = SchemaDetailsDTO(21000, 21000, 21000f))
+                details = SchemaDetailsDTO(21000f, 21000f, 21000f))
 
         schemaDTO.items.add(item)
 
@@ -712,7 +712,7 @@ class PanelSchemaControllerTests {
         assertEquals(1, actual.items.last().floorId)
         assertEquals(TOILET, actual.items.last().subType)
         assertEquals(SchemaPositionDTO(21000f, 21000f), actual.items.last().position)
-        assertEquals(SchemaDetailsDTO(21000, 21000, 21000f), actual.items.last().details)
+        assertEquals(SchemaDetailsDTO(21000f, 21000f, 21000f), actual.items.last().details)
     }
 
     @Test

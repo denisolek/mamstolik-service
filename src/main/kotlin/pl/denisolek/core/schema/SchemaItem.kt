@@ -11,8 +11,8 @@ data class SchemaItem(
         var id: Int? = null,
         var x: Float = 0.0f,
         var y: Float = 0.0f,
-        var width: Int = 0,
-        var height: Int = 0,
+        var width: Float = 0.0f,
+        var height: Float = 0.0f,
         var rotation: Float = 0.0f,
 
         @Enumerated(EnumType.STRING)
