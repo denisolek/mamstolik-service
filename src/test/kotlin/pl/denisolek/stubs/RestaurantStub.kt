@@ -32,7 +32,8 @@ class RestaurantStub {
                         businessHours = getBusinessHours(),
                         spots = mutableListOf(),
                         reservations = mutableListOf(),
-                        menu = Menu()
+                        menu = Menu(),
+                        phoneNumber = "123123123"
                 )
 
         fun getRestaurant(): Restaurant =
@@ -53,7 +54,8 @@ class RestaurantStub {
                         businessHours = getBusinessHours(),
                         spots = getSpots(),
                         reservations = getReservations(),
-                        menu = Menu()
+                        menu = Menu(),
+                        phoneNumber = "123123123"
                 )
 
         private fun getOwner(): User =

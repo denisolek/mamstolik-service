@@ -48,7 +48,7 @@ class FloorStub {
                                 startDateTime = LocalDateTime.now().plusDays(1),
                                 endDateTime = LocalDateTime.now().plusDays(1).plusMinutes(30),
                                 spots = mutableListOf(getSpots()[0]),
-                                restaurant = Restaurant(name = "Stubbed Restaurant", type = Restaurant.RestaurantType.RESTAURANT),
+                                restaurant = getStubbedRestaurant(),
                                 customer = Customer(email = "reservation@test.pl", firstName = "Rezerwator", lastName = "Rezerwujący", phoneNumber = "123123123"),
                                 duration = Duration.ofMinutes(30),
                                 peopleNumber = 3,
@@ -59,14 +59,15 @@ class FloorStub {
                                 startDateTime = LocalDateTime.now().plusDays(2),
                                 endDateTime = LocalDateTime.now().plusDays(2).plusMinutes(30),
                                 spots = mutableListOf(getSpots()[0]),
-                                restaurant = Restaurant(name = "Stubbed Restaurant", type = Restaurant.RestaurantType.RESTAURANT),
+                                restaurant = getStubbedRestaurant(),
                                 customer = Customer(email = "reservation@test.pl", firstName = "Rezerwator", lastName = "Rezerwujący", phoneNumber = "123123123"),
                                 duration = Duration.ofMinutes(30),
                                 peopleNumber = 3,
                                 state = PENDING,
                                 verificationCode = 111111
                         )
-                )
+                ),
+                phoneNumber = "123123123"
         )
 
         private fun getFloor() = Floor(
@@ -77,31 +78,35 @@ class FloorStub {
         private fun getRestaurant() = Restaurant(
                 name = "Stubbed Restaurant",
                 type = Restaurant.RestaurantType.RESTAURANT,
-                spots = getSpots()
+                spots = getSpots(),
+                phoneNumber = "123123123"
         )
 
         private fun getSpots(): MutableList<Spot> = mutableListOf(
                 Spot(
                         id = 1,
                         number = 1,
-                        restaurant = Restaurant(name = "Stubbed Restaurant", type = Restaurant.RestaurantType.RESTAURANT),
+                        restaurant = getStubbedRestaurant(),
                         minPeopleNumber = 3,
                         capacity = 6
                 ),
                 Spot(
                         id = 2,
                         number = 2,
-                        restaurant = Restaurant(name = "Stubbed Restaurant", type = Restaurant.RestaurantType.RESTAURANT),
+                        restaurant = getStubbedRestaurant(),
                         minPeopleNumber = 3,
                         capacity = 6
                 ),
                 Spot(
                         id = 3,
                         number = 3,
-                        restaurant = Restaurant(name = "Stubbed Restaurant", type = Restaurant.RestaurantType.RESTAURANT),
+                        restaurant = getStubbedRestaurant(),
                         minPeopleNumber = 3,
                         capacity = 6
                 )
         )
+
+        private fun getStubbedRestaurant() =
+                Restaurant(name = "Stubbed Restaurant", type = Restaurant.RestaurantType.RESTAURANT, phoneNumber = "123123123")
     }
 }

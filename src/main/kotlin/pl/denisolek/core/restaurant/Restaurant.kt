@@ -23,6 +23,7 @@ data class Restaurant(
         var id: Int? = null,
         var name: String,
         var description: String = "",
+        var phoneNumber: String,
         var avgReservationTime: Duration = Duration.ofHours(1),
         var rate: Float = 0f,
         var service_rate: Float = 0f,

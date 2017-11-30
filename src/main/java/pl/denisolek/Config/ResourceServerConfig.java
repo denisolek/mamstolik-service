@@ -25,7 +25,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 //                .antMatchers("/panel/*/employees").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER")
                 .antMatchers("/panel/*/schemas/**").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER")
                 .antMatchers("/panel/*/employees").hasAuthority("ROLE_OWNER")
-                .antMatchers("/panel/**").hasAnyAuthority("ROLE_OWNER", "ROLE_EMPLOYEE")
+                .antMatchers("/panel/**").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER", "ROLE_EMPLOYEE")
                 .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN");
     }
 }
