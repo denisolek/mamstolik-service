@@ -40,8 +40,8 @@ data class TypeTableDTO(
     companion object {
         private const val DEFAULT_X = 300f
         private const val DEFAULT_Y = 300f
-        private const val DEFAULT_WIDTH = 200
-        private const val DEFAULT_HEIGHT = 200
+        private const val DEFAULT_WIDTH = 200f
+        private const val DEFAULT_HEIGHT = 200f
         private const val DEFAULT_ROTATION = 0f
 
         fun toSchemaItem(table: TypeTableDTO, restaurant: Restaurant): SchemaItem {

@@ -76,12 +76,14 @@ data class Restaurant(
 ) {
 
     fun isOpenAt(date: LocalDateTime): Boolean {
-        val businessHour = this.businessHours[date.dayOfWeek] ?: return false
+        val businessHour = getBusinessHoursForDate(date) ?: return false
 
         if (date.toLocalTime().isAfterOrEqual(businessHour.openTime) && date.toLocalTime().isBeforeOrEqual(businessHour.closeTime.minusMinutes(this.avgReservationTime.toMinutes())))
             return true
         return false
     }
+
+    fun getBusinessHoursForDate(date: LocalDateTime) = this.businessHours[date.dayOfWeek]
 
     fun getAvailability(date: LocalDateTime, peopleNumber: Int): AvailabilityType {
         if (!isOpenAt(date))
