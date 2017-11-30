@@ -10,39 +10,42 @@ import pl.denisolek.core.reservation.ReservationService
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.infrastructure.config.security.AuthorizationService
-import pl.denisolek.panel.reservation.DTO.PanelCustomerInfoDTO
+import pl.denisolek.panel.reservation.DTO.PanelCreateReservationDTO
 import pl.denisolek.panel.reservation.DTO.PanelReservationDTO
+import pl.denisolek.panel.reservation.DTO.ReservationCustomerDTO
 
 @Service
 class PanelReservationService(private val authorizationService: AuthorizationService,
                               private val reservationService: ReservationService,
                               private val customerService: CustomerService) {
-    fun addReservation(restaurant: Restaurant, reservationDTO: PanelReservationDTO): List<Reservation> {
-        val reservationSpots = findReservationSpots(reservationDTO, restaurant)
-        if (!allSpotsAvailable(restaurant, reservationDTO, reservationSpots))
-            throw ServiceException(HttpStatus.BAD_REQUEST, "Some of provided spots at taken at ${reservationDTO.date}.")
-        reservationService.save(Reservation(
-                panelReservationDTO = reservationDTO,
+
+    fun addReservation(restaurant: Restaurant, createReservationDTO: PanelCreateReservationDTO): List<PanelReservationDTO> {
+        val reservationSpots = findReservationSpots(createReservationDTO, restaurant)
+        if (!allSpotsAvailable(restaurant, createReservationDTO, reservationSpots))
+            throw ServiceException(HttpStatus.BAD_REQUEST, "Some of provided spots at taken at ${createReservationDTO.dateTime}.")
+        val reservation = reservationService.save(Reservation(
+                panelCreateReservationDTO = createReservationDTO,
                 restaurant = restaurant,
                 approvedBy = authorizationService.getCurrentUser(),
-                customer = prepareReservationCustomer(reservationDTO, restaurant),
+                customer = prepareReservationCustomer(createReservationDTO, restaurant),
                 spots = reservationSpots
         ))
-        return listOf()
+        restaurant.reservations.add(reservation)
+        return PanelReservationDTO.fromReservations(restaurant.reservations.filter { it.startDateTime.toLocalDate() == createReservationDTO.dateTime.toLocalDate() })
     }
 
-    private fun allSpotsAvailable(restaurant: Restaurant, reservationDTO: PanelReservationDTO, reservationSpots: MutableList<Spot>) =
-            restaurant.getAvailableSpotsAt(reservationDTO.date).containsAll(reservationSpots)
+    private fun allSpotsAvailable(restaurant: Restaurant, createReservationDTO: PanelCreateReservationDTO, reservationSpots: MutableList<Spot>) =
+            restaurant.getAvailableSpotsAt(createReservationDTO.dateTime).containsAll(reservationSpots)
 
-    private fun findReservationSpots(reservationDTO: PanelReservationDTO, restaurant: Restaurant): MutableList<Spot> {
-        return reservationDTO.spots.map { spotId ->
+    private fun findReservationSpots(createReservationDTO: PanelCreateReservationDTO, restaurant: Restaurant): MutableList<Spot> {
+        return createReservationDTO.spots.map { spotId ->
             restaurant.spots.find { it.id == spotId } ?: throw ServiceException(HttpStatus.NOT_FOUND, "Spot id $spotId doesn't exist or doesn't belong to the restaurant.")
         }.toMutableList()
     }
 
-    private fun prepareReservationCustomer(reservationDTO: PanelReservationDTO, restaurant: Restaurant): Customer {
-        return customerService.findOrCreate(PanelCustomerInfoDTO.createCustomer(
-                panelCustomerInfoDTO = reservationDTO.customerInfo,
+    private fun prepareReservationCustomer(createReservationDTO: PanelCreateReservationDTO, restaurant: Restaurant): Customer {
+        return customerService.findOrCreate(ReservationCustomerDTO.createCustomer(
+                reservationCustomerDTO = createReservationDTO.customer,
                 user = authorizationService.getCurrentUser(),
                 restaurant = restaurant
         ))

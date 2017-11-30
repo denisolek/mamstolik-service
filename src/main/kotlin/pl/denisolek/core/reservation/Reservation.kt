@@ -5,7 +5,7 @@ import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.core.user.User
 import pl.denisolek.infrastructure.util.DateTimeInterval
-import pl.denisolek.panel.reservation.DTO.PanelReservationDTO
+import pl.denisolek.panel.reservation.DTO.PanelCreateReservationDTO
 import java.time.Duration
 import java.time.LocalDateTime
 import javax.persistence.*
@@ -39,15 +39,15 @@ data class Reservation(
         @JoinTable(name = "reservation_spots", joinColumns = arrayOf(JoinColumn(name = "reservation_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "spot_id")))
         var spots: MutableList<Spot> = mutableListOf()
 ) : DateTimeInterval {
-    constructor(panelReservationDTO: PanelReservationDTO, restaurant: Restaurant, customer: Customer, approvedBy: User, spots: MutableList<Spot>) : this(
-            startDateTime = panelReservationDTO.date,
-            endDateTime = panelReservationDTO.date.plus(restaurant.avgReservationTime),
-            peopleNumber = panelReservationDTO.peopleNumber,
+    constructor(panelCreateReservationDTO: PanelCreateReservationDTO, restaurant: Restaurant, customer: Customer, approvedBy: User, spots: MutableList<Spot>) : this(
+            startDateTime = panelCreateReservationDTO.dateTime,
+            endDateTime = panelCreateReservationDTO.dateTime.plus(restaurant.avgReservationTime),
+            peopleNumber = panelCreateReservationDTO.peopleNumber,
             state = ReservationState.ACCEPTED,
             verificationCode = null,
             duration = restaurant.avgReservationTime,
             isVerified = true,
-            note = panelReservationDTO.note,
+            note = panelCreateReservationDTO.note,
             restaurant = restaurant,
             customer = customer,
             approvedBy = approvedBy,

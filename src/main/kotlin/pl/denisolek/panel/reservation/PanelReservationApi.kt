@@ -4,9 +4,9 @@ import io.swagger.annotations.Api
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
-import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
+import pl.denisolek.panel.reservation.DTO.PanelCreateReservationDTO
 import pl.denisolek.panel.reservation.DTO.PanelReservationDTO
 import pl.denisolek.panel.schema.PanelSchemaApi
 import springfox.documentation.annotations.ApiIgnore
@@ -26,5 +26,5 @@ interface PanelReservationApi {
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun addReservation(@ApiIgnore @PathVariable(PanelSchemaApi.RESTAURANT_ID) restaurantId: Restaurant,
-                       @RequestBody @Valid reservationDTO: PanelReservationDTO): List<Reservation>
+                       @RequestBody @Valid createReservationDTO: PanelCreateReservationDTO): List<PanelReservationDTO>
 }
