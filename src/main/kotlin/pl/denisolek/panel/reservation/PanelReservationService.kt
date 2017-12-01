@@ -54,4 +54,21 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
 
     fun getReservations(restaurant: Restaurant, date: LocalDate): PanelReservationsDTO =
             PanelReservationsDTO.createPanelReservationDTO(restaurant, date)
+
+    fun editReservation(restaurant: Restaurant, reservation: Reservation, createReservationDTO: PanelCreateReservationDTO): PanelReservationsDTO {
+        val reservationSpots = findReservationSpots(createReservationDTO, restaurant)
+        if (!allSpotsAvailable(restaurant, createReservationDTO, reservationSpots))
+            throw ServiceException(HttpStatus.BAD_REQUEST, "Some of provided spots at taken at ${createReservationDTO.dateTime}.")
+        val reservation = reservationService.save(Reservation(
+                id = reservation.id,
+                panelCreateReservationDTO = createReservationDTO,
+                restaurant = restaurant,
+                approvedBy = authorizationService.getCurrentUser(),
+                customer = prepareReservationCustomer(createReservationDTO, restaurant),
+                spots = reservationSpots
+        ))
+        restaurant.reservations.removeIf { it.id == reservation.id }
+        restaurant.reservations.add(reservation)
+        return PanelReservationsDTO.createPanelReservationDTO(restaurant, createReservationDTO.dateTime.toLocalDate())
+    }
 }

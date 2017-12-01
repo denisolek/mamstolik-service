@@ -4,6 +4,7 @@ import pl.denisolek.core.reservation.Reservation
 import java.time.LocalTime
 
 data class PanelReservationDTO(
+        var id: Int,
         var customer: ReservationCustomerDTO,
         var peopleNumber: Int,
         var time: LocalTime,
@@ -15,6 +16,7 @@ data class PanelReservationDTO(
         fun fromReservations(reservations: List<Reservation>) =
                 reservations.map {
                     PanelReservationDTO(
+                            id = it.id!!,
                             customer = ReservationCustomerDTO.fromCustomer(it.customer),
                             peopleNumber = it.peopleNumber,
                             time = it.startDateTime.toLocalTime(),
