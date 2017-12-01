@@ -30,6 +30,7 @@ data class Restaurant(
         var food_rate: Float = 0f,
         var price_quality_rate: Float = 0f,
         var isActive: Boolean = false,
+        @Enumerated(EnumType.STRING)
         var type: RestaurantType,
 
         @ManyToOne
