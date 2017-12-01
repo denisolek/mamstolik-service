@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import pl.denisolek.core.reservation.Reservation
+import pl.denisolek.core.reservation.ReservationRepository
 import pl.denisolek.core.user.UserRepository
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.infrastructure.config.security.AuthorizationService
@@ -44,6 +45,9 @@ class PanelReservationControllerTests {
 
     @Autowired
     lateinit var userRepository: UserRepository
+
+    @Autowired
+    lateinit var reservationRepository: ReservationRepository
 
     @Autowired
     lateinit var applicationContext: WebApplicationContext
@@ -416,5 +420,21 @@ class PanelReservationControllerTests {
         assertEquals(LocalTime.of(23, 0), actual.closeTime)
         assertEquals(1, actual.reservations.count())
         assertEquals(expectedReservation, actual.reservations[0])
+    }
+
+    @Test
+    fun `cancelReservation_ existing reservation`() {
+        mvc.perform(MockMvcRequestBuilders.delete(RESERVATIONS_ID_PATH, 1, 2))
+                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andReturn()
+
+        val canceledReservation = reservationRepository.findOne(2)
+        assertEquals(Reservation.ReservationState.CANCELED, canceledReservation.state)
+    }
+
+    @Test
+    fun `cancelReservation_ not existing reservation`() {
+        mvc.perform(MockMvcRequestBuilders.delete(RESERVATIONS_ID_PATH, 1, 500))
+                .andExpect(MockMvcResultMatchers.status().isNotFound)
     }
 }

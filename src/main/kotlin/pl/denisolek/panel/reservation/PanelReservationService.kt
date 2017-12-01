@@ -6,8 +6,10 @@ import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.customer.Customer
 import pl.denisolek.core.customer.CustomerService
 import pl.denisolek.core.reservation.Reservation
+import pl.denisolek.core.reservation.Reservation.ReservationState.CANCELED
 import pl.denisolek.core.reservation.ReservationService
 import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.panel.reservation.DTO.PanelCreateReservationDTO
@@ -18,6 +20,7 @@ import java.time.LocalDate
 @Service
 class PanelReservationService(private val authorizationService: AuthorizationService,
                               private val reservationService: ReservationService,
+                              private val restaurantService: RestaurantService,
                               private val customerService: CustomerService) {
 
     fun addReservation(restaurant: Restaurant, createReservationDTO: PanelCreateReservationDTO): PanelReservationsDTO {
@@ -56,6 +59,7 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
             PanelReservationsDTO.createPanelReservationDTO(restaurant, date)
 
     fun editReservation(restaurant: Restaurant, reservation: Reservation, createReservationDTO: PanelCreateReservationDTO): PanelReservationsDTO {
+        validateReservationAssignment(reservation, restaurant)
         val reservationSpots = findReservationSpots(createReservationDTO, restaurant)
         if (!allSpotsAvailable(restaurant, createReservationDTO, reservationSpots))
             throw ServiceException(HttpStatus.BAD_REQUEST, "Some of provided spots at taken at ${createReservationDTO.dateTime}.")
@@ -70,5 +74,17 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
         restaurant.reservations.removeIf { it.id == reservation.id }
         restaurant.reservations.add(reservation)
         return PanelReservationsDTO.createPanelReservationDTO(restaurant, createReservationDTO.dateTime.toLocalDate())
+    }
+
+    private fun validateReservationAssignment(reservation: Reservation, restaurant: Restaurant) {
+        if (reservation.restaurant != restaurant)
+            throw ServiceException(HttpStatus.BAD_REQUEST, "This reservation is assigned to another restaurant.")
+    }
+
+    fun cancelReservation(restaurant: Restaurant, reservation: Reservation): PanelReservationsDTO {
+        validateReservationAssignment(reservation, restaurant)
+        restaurant.reservations.find { it == reservation }.let { it?.state = CANCELED }
+        val updatedRestaurant = restaurantService.save(restaurant)
+        return PanelReservationsDTO.createPanelReservationDTO(updatedRestaurant, reservation.startDateTime.toLocalDate())
     }
 }
