@@ -39,7 +39,8 @@ data class Reservation(
         @JoinTable(name = "reservation_spots", joinColumns = arrayOf(JoinColumn(name = "reservation_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "spot_id")))
         var spots: MutableList<Spot> = mutableListOf()
 ) : DateTimeInterval {
-    constructor(panelCreateReservationDTO: PanelCreateReservationDTO, restaurant: Restaurant, customer: Customer, approvedBy: User, spots: MutableList<Spot>) : this(
+    constructor(id: Int? = null, panelCreateReservationDTO: PanelCreateReservationDTO, restaurant: Restaurant, customer: Customer, approvedBy: User, spots: MutableList<Spot>) : this(
+            id = id,
             startDateTime = panelCreateReservationDTO.dateTime,
             endDateTime = panelCreateReservationDTO.dateTime.plus(restaurant.avgReservationTime),
             peopleNumber = panelCreateReservationDTO.peopleNumber,
