@@ -2,7 +2,6 @@ package pl.denisolek.integration.panel
 
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,7 +28,9 @@ import pl.denisolek.panel.reservation.DTO.PanelReservationsDTO
 import pl.denisolek.panel.reservation.DTO.ReservationCustomerDTO
 import pl.denisolek.panel.reservation.DTO.ReservationSpotInfoDTO
 import pl.denisolek.panel.reservation.PanelReservationApi
+import pl.denisolek.panel.reservation.PanelReservationController
 import pl.denisolek.stubs.dto.PanelCreateReservationDTOStub
+import java.time.LocalDate
 import java.time.LocalTime
 import javax.transaction.Transactional
 
@@ -213,5 +214,44 @@ class PanelReservationControllerTests {
         assertEquals(LocalTime.of(23, 0), actual.closeTime)
         assertEquals(1, actual.reservations.count())
         assertEquals(expectedReservation, actual.reservations[0])
+    }
+
+    @Test
+    fun `getReservations no reservations`() {
+        val result = mvc.perform(MockMvcRequestBuilders.get(RESERVATIONS_PATH, 1)
+                .param(PanelReservationController.API.DATE, LocalDate.of(2020, 10, 18).toString()))
+                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelReservationsDTO::class.java)
+        assertEquals(LocalTime.of(13, 0), actual.openTime)
+        assertEquals(LocalTime.of(20, 0), actual.closeTime)
+        assertEquals(0, actual.reservations.count())
+    }
+
+    @Test
+    fun `getReservations with one reservation`() {
+        val result = mvc.perform(MockMvcRequestBuilders.get(RESERVATIONS_PATH, 1)
+                .param(PanelReservationController.API.DATE, LocalDate.of(2018, 10, 18).toString()))
+                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelReservationsDTO::class.java)
+        assertEquals(LocalTime.of(12, 0), actual.openTime)
+        assertEquals(LocalTime.of(21, 0), actual.closeTime)
+        assertEquals(1, actual.reservations.count())
+    }
+
+    @Test
+    fun `getReservations with multiple reservations`() {
+        val result = mvc.perform(MockMvcRequestBuilders.get(RESERVATIONS_PATH, 1)
+                .param(PanelReservationController.API.DATE, LocalDate.of(2017, 10, 18).toString()))
+                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelReservationsDTO::class.java)
+        assertEquals(LocalTime.of(12, 0), actual.openTime)
+        assertEquals(LocalTime.of(21, 0), actual.closeTime)
+        assertEquals(2, actual.reservations.count())
     }
 }
