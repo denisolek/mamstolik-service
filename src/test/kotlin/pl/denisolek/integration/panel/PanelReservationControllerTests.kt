@@ -148,4 +148,70 @@ class PanelReservationControllerTests {
 
         result.andExpect(MockMvcResultMatchers.status().isBadRequest)
     }
+
+    @Test
+    fun `addReservation_ invalid spot`() {
+        val createReservationStub = PanelCreateReservationDTOStub.getPanelCreateReservationDTOStub()
+        createReservationStub.spots = listOf(500)
+        val body = convertObjectToJsonBytes(createReservationStub)
+        val result = mvc.perform(MockMvcRequestBuilders.post(RESERVATIONS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(MockMvcResultMatchers.status().isNotFound)
+    }
+
+    @Test
+    fun `addReservation_ taken spot`() {
+        val createReservationStub = PanelCreateReservationDTOStub.getPanelCreateReservationDTOStub()
+        val body = convertObjectToJsonBytes(createReservationStub)
+        mvc.perform(MockMvcRequestBuilders.post(RESERVATIONS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(MockMvcResultMatchers.status().isCreated)
+
+        val actualCreateReservationStub = PanelCreateReservationDTOStub.getPanelCreateReservationDTOStub()
+        val actualBody = convertObjectToJsonBytes(actualCreateReservationStub)
+        val actualResult = mvc.perform(MockMvcRequestBuilders.post(RESERVATIONS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(actualBody))
+        actualResult.andExpect(MockMvcResultMatchers.status().isBadRequest)
+    }
+
+    @Test
+    fun `addReservation_ existing customer with other data`() {
+        val createReservationStub = PanelCreateReservationDTOStub.getPanelCreateReservationDTOStub()
+        createReservationStub.customer.phoneNumber = "666894323"
+        val body = convertObjectToJsonBytes(createReservationStub)
+        val result = mvc.perform(MockMvcRequestBuilders.post(RESERVATIONS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(MockMvcResultMatchers.status().isCreated)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelReservationsDTO::class.java)
+
+        val expectedReservation = PanelReservationDTO(
+                customer = ReservationCustomerDTO(
+                        firstName = "Karola",
+                        lastName = "Szafrańska",
+                        email = "karola.szafranska@gmail.pl",
+                        phoneNumber = "666894323"
+                ),
+                peopleNumber = 3,
+                time = LocalTime.of(14, 0),
+                spots = listOf(ReservationSpotInfoDTO(
+                        id = 1,
+                        number = 1,
+                        floorName = "Parter"
+                )),
+                note = "NoteStub",
+                state = Reservation.ReservationState.ACCEPTED
+        )
+
+        assertEquals(LocalTime.of(13, 0), actual.openTime)
+        assertEquals(LocalTime.of(23, 0), actual.closeTime)
+        assertEquals(1, actual.reservations.count())
+        assertEquals(expectedReservation, actual.reservations[0])
+    }
 }
