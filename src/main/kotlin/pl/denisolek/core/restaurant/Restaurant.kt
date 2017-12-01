@@ -5,6 +5,7 @@ import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.address.Address
 import pl.denisolek.core.menu.Menu
 import pl.denisolek.core.reservation.Reservation
+import pl.denisolek.core.reservation.Reservation.ReservationState.*
 import pl.denisolek.core.schema.Floor
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.core.user.User
@@ -109,7 +110,7 @@ data class Restaurant(
         }
 
         val takenSpots = this.reservations
-                .filter { searchDateInterval.overlaps(it) }
+                .filter { searchDateInterval.overlaps(it) && it.state != CANCELED }
                 .flatMap { it.spots }
 
         return this.spots.filterNot { takenSpots.contains(it) }
