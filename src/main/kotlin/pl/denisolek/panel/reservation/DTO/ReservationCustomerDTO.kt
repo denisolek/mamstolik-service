@@ -1,5 +1,6 @@
 package pl.denisolek.panel.reservation.DTO
 
+import org.hibernate.validator.constraints.Email
 import pl.denisolek.core.customer.Customer
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.user.User
@@ -7,6 +8,7 @@ import pl.denisolek.core.user.User
 data class ReservationCustomerDTO(
         var firstName: String? = null,
         var lastName: String? = null,
+        @field:Email
         var email: String? = null,
         var phoneNumber: String? = null
 ) {

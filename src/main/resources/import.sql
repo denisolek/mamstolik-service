@@ -54,7 +54,7 @@ INSERT INTO public.menu DEFAULT VALUES;
 -- add users
 INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state)
 VALUES
-  ('ms100000', 'test@test.pl', 'Właściciel', 'Właścicielowy', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'MamStolik', 'ACTIVE'),
+  ('ms100000', 'test@test.pl', 'Tomasz', 'Jabłoński', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'MamStolik', 'ACTIVE'),
   ('ms200000', 'przemyslaw.pawlicki@gmail.com', 'Przemysław', 'Pawlicki', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE'),
   ('ms300000', 'bartosz.zmarzlik@gmail.com', 'Bartosz', 'Zmarzlik', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE'),
   ('ms400000', 'janusz.kolodziej@gmail.com', 'Janusz', 'Kołodziej', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE'),
@@ -82,16 +82,16 @@ VALUES
   (TRUE, TRUE, TRUE, TRUE, TRUE, TRUE);
 
 -- address
-INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, menu_id, settings_id, owner_id, description)
+INSERT INTO public.restaurant (name, address_id, rate, service_rate, food_rate, price_quality_rate, avg_reservation_time, is_active, menu_id, settings_id, owner_id, type, phone_number, description)
 VALUES
-  ('Piano Bar Restaurant & Cafe', 1, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, 1, 1, 1, 'Piano Bar jest urokliwym, stylowym miejscem, które znajduje się w Centrum Sztuki i Biznesu w Starym Browarze. Jest niepowtarzalne i przepełnione niezwykłym klimatem. Piano Bar to restauracja, którą wyróżnia profesjonalna obsługa sprawiająca, że nasi Goście czują się naprawdę niezwykle. Dodatkowy, elegancki a zarazem ciepły wystrój wnętrza zapewnia uczucie wyjątkowości. Nasze smaki to kuchnia włoska, śródziemnomorska i potrawy kuchni polskiej. Szef Kuchni Krystian Szopka z zespołem kucharzy sprawia, że jej smak na długo pozostaje w pamięci naszych Gości. Zapraszamy na lunche, rodzinne obiady, spotkania biznesowe.'),
-  ('Ratuszova', 2, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, NULL, 2, 2, 'Restauracja Ratuszova serdecznie zaprasza w swoje progi wszystkich, którzy lubią lub pragną zasmakować tradycyjne potrawy kuchni polskiej! W naszym menu na szczególną uwagę zasługuje czernina z domowym makaronem, kaczka pieczona z jabłkami oraz dania z dziczyzny. Miłośników Slow Food, pasjonatów zdrowego odżywiania oraz wszystkich smakoszy w szczególności zachęcamy do spróbowania dań gotowanych innowacyjną metodą sous-vide. Dla jeszcze większego urozmaicenia nasze menu uzupełniliśmy smakami kuchni międzynarodowej. W naszej restauracji dbamy o to by sezonowo zmieniać potrawy oraz wystrój sal. '),
-  ('Manekin', 3, 4.7, 4.0, 3.0, 3.5, 1800, TRUE, NULL, 3, 3, 'Znana i ceniona sieć lokali podająca przepyszne naleśniki. Restauracja serwuje wiele rodzajów naleśników na słodko jak i na wytrawnie ale nie tylko. Tu można zjeść również sałatki, zupy, desery, spaghetti. Ogromnym atutem jest stylizowane wnętrze, nawiązujące do krainy baśniowej. W tym surrealistycznym otoczeniu można nie tylko zjeść, lecz również zrelaksować się przy kieliszku wina czy kuflu piwa.'),
-  ('Whiskey in the Jar', 4, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, NULL, 4, 4, 'Whiskey in the Jar to steakhouse, wzorowany na najlepszych amerykańskich lokalach tego typu. W menu znajdują się głównie dania mięsne – specjalnością są steki, przyrządzane z najwyższej jakości wołowiny, a także burgery i dania grillowane, dostępne pod nazwą Grill Rockersa. Wszystkie potrawy przygotowywane są na najdłuższym w Poznaniu grillu lawowym. Ogromnym powodzeniem cieszą się również autorskie drinki na bazie Jacka Daniels’a, zgodnie z nazwą lokalu podawane w designerskich słojach – jarach.'),
-  ('Chmielnik Pub', 5, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, NULL, 5, 5, 'Ambasador polskiego piwa w Poznaniu. Największy wybór piw z polskich browarów rzemieślniczych w samym sercu Poznania.  Zapewniamy wyjątkowy wystrój, profesjonalną obsługę, niepowtarzalny klimat. W sezonie letnim zapraszamy do magicznego ogrodu piwnego dla 200 osób, w którym główną atrakcją jest rosnący chmiel w odmianie SYBILLA oraz działająca kuchnia oferująca dania dopasowane do piwa.'),
-  ('Rapudei Berek', 6, 4.8, 4.0, 4.4, 4.7, 1800, TRUE, NULL, 6, 6, 'Berek to rodzaj pocztówki z wakacji. Radość śródziemnomorskiego jedzenia i gorący klimat telawiwskich ulic, którego wspomnienie przeniesione zostało do Warszawy. Tworząc menu w Berku starałem się poznać lokalnych producentów i wykorzystywać jak najświeższe składniki. Wychowałem się w końcu w miejscu, gdzie owoce zjada się prosto z drzewa. Nasza pita jest wypiekana na miejscu i podawana na gorąco, hummus robimy taki, jaki sami jemy, korzystamy przede wszystkim z sezonowych warzyw. W Berku dzielę się moimi ulubionymi smakami domu, we wdzięcznym, współczesnym wydaniu.'),
-  ('Pasja', 7, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, NULL, 7, 8, 'Zapewniamy wyjątkowy wystrój, profesjonalną obsługę, niepowtarzalny klimat. W sezonie letnim zapraszamy do magicznego ogrodu piwnego dla 200 osób, w którym główną atrakcją jest rosnący chmiel w odmianie SYBILLA oraz działająca kuchnia oferująca dania dopasowane do piwa.'),
-  ('Cien', 7, 4.5, 5.0, 5.0, 5.0, 1800, FALSE, NULL, 8, 9, 'Nie aktywna, bez miejsc, bez niczego');
+  ('Piano Bar Restaurant & Cafe', 1, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, 1, 1, 1, 'RESTAURANT', '780199283', 'Piano Bar jest urokliwym, stylowym miejscem, które znajduje się w Centrum Sztuki i Biznesu w Starym Browarze. Jest niepowtarzalne i przepełnione niezwykłym klimatem. Piano Bar to restauracja, którą wyróżnia profesjonalna obsługa sprawiająca, że nasi Goście czują się naprawdę niezwykle. Dodatkowy, elegancki a zarazem ciepły wystrój wnętrza zapewnia uczucie wyjątkowości. Nasze smaki to kuchnia włoska, śródziemnomorska i potrawy kuchni polskiej. Szef Kuchni Krystian Szopka z zespołem kucharzy sprawia, że jej smak na długo pozostaje w pamięci naszych Gości. Zapraszamy na lunche, rodzinne obiady, spotkania biznesowe.'),
+  ('Ratuszova', 2, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, NULL, 2, 2, 'BAR', '786395188', 'Restauracja Ratuszova serdecznie zaprasza w swoje progi wszystkich, którzy lubią lub pragną zasmakować tradycyjne potrawy kuchni polskiej! W naszym menu na szczególną uwagę zasługuje czernina z domowym makaronem, kaczka pieczona z jabłkami oraz dania z dziczyzny. Miłośników Slow Food, pasjonatów zdrowego odżywiania oraz wszystkich smakoszy w szczególności zachęcamy do spróbowania dań gotowanych innowacyjną metodą sous-vide. Dla jeszcze większego urozmaicenia nasze menu uzupełniliśmy smakami kuchni międzynarodowej. W naszej restauracji dbamy o to by sezonowo zmieniać potrawy oraz wystrój sal. '),
+  ('Manekin', 3, 4.7, 4.0, 3.0, 3.5, 1800, TRUE, NULL, 3, 3, 'RESTAURANT', '883597040', 'Znana i ceniona sieć lokali podająca przepyszne naleśniki. Restauracja serwuje wiele rodzajów naleśników na słodko jak i na wytrawnie ale nie tylko. Tu można zjeść również sałatki, zupy, desery, spaghetti. Ogromnym atutem jest stylizowane wnętrze, nawiązujące do krainy baśniowej. W tym surrealistycznym otoczeniu można nie tylko zjeść, lecz również zrelaksować się przy kieliszku wina czy kuflu piwa.'),
+  ('Whiskey in the Jar', 4, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, NULL, 4, 4, 'PUB', '536412108', 'Whiskey in the Jar to steakhouse, wzorowany na najlepszych amerykańskich lokalach tego typu. W menu znajdują się głównie dania mięsne – specjalnością są steki, przyrządzane z najwyższej jakości wołowiny, a także burgery i dania grillowane, dostępne pod nazwą Grill Rockersa. Wszystkie potrawy przygotowywane są na najdłuższym w Poznaniu grillu lawowym. Ogromnym powodzeniem cieszą się również autorskie drinki na bazie Jacka Daniels’a, zgodnie z nazwą lokalu podawane w designerskich słojach – jarach.'),
+  ('Chmielnik Pub', 5, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, NULL, 5, 5, 'RESTAURANT', '881084469', 'Ambasador polskiego piwa w Poznaniu. Największy wybór piw z polskich browarów rzemieślniczych w samym sercu Poznania.  Zapewniamy wyjątkowy wystrój, profesjonalną obsługę, niepowtarzalny klimat. W sezonie letnim zapraszamy do magicznego ogrodu piwnego dla 200 osób, w którym główną atrakcją jest rosnący chmiel w odmianie SYBILLA oraz działająca kuchnia oferująca dania dopasowane do piwa.'),
+  ('Rapudei Berek', 6, 4.8, 4.0, 4.4, 4.7, 1800, TRUE, NULL, 6, 6, 'RESTAURANT', '727000890', 'Berek to rodzaj pocztówki z wakacji. Radość śródziemnomorskiego jedzenia i gorący klimat telawiwskich ulic, którego wspomnienie przeniesione zostało do Warszawy. Tworząc menu w Berku starałem się poznać lokalnych producentów i wykorzystywać jak najświeższe składniki. Wychowałem się w końcu w miejscu, gdzie owoce zjada się prosto z drzewa. Nasza pita jest wypiekana na miejscu i podawana na gorąco, hummus robimy taki, jaki sami jemy, korzystamy przede wszystkim z sezonowych warzyw. W Berku dzielę się moimi ulubionymi smakami domu, we wdzięcznym, współczesnym wydaniu.'),
+  ('Pasja', 7, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, NULL, 7, 8, 'RESTAURANT', '575718545', 'Zapewniamy wyjątkowy wystrój, profesjonalną obsługę, niepowtarzalny klimat. W sezonie letnim zapraszamy do magicznego ogrodu piwnego dla 200 osób, w którym główną atrakcją jest rosnący chmiel w odmianie SYBILLA oraz działająca kuchnia oferująca dania dopasowane do piwa.'),
+  ('Cien', 7, 4.5, 5.0, 5.0, 5.0, 1800, FALSE, NULL, 8, 9, 'RESTAURANT', '666897683', 'Nie aktywna, bez miejsc, bez niczego');
 
 INSERT INTO public.user (username, email, password, account_state, restaurant_id)
 VALUES
@@ -99,8 +99,8 @@ VALUES
 
 INSERT INTO public.user (username, email, work_email, first_name, last_name, password, phone_number, account_state, work_place_id)
 VALUES
-  ('ms100002', 'ms100002@mamstolik.pl', 'ms100002@mamstolik.pl', 'Pracownik', 'Pracujący', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', '507946148', 'ACTIVE', 1),
-  ('ms100003', 'ms100003@mamstolik.pl', 'ms100002@mamstolik.pl', 'Pracowniczka', 'Pracująca', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', '603201114', 'ACTIVE', 1);
+  ('ms100002', 'ms100002@mamstolik.pl', 'ms100002@mamstolik.pl', 'Krystian', 'Nowicki', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', '507946148', 'ACTIVE', 1),
+  ('ms100003', 'ms100003@mamstolik.pl', 'ms100002@mamstolik.pl', 'Magdalena', 'Karpińska', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', '603201114', 'ACTIVE', 1);
 
 -- add authorities
 INSERT INTO public.user_authority (username, authority)
@@ -374,17 +374,17 @@ VALUES
   ('WALL', NULL, NULL, NULL, 1, 2645, 50, 90.0, -1176.555583852268, 1515.8603400051134, NULL),
   ('WALL', NULL, NULL, NULL, 1, 1708.3333333333333, 50, 0.0, 106.66666666666674, 2788.333333333333, NULL),
   ('WALL_ITEM', NULL, NULL, 'WINDOW', 1, 450, 48, 0.0, 200, 195, NULL),
-  ('WALL_ITEM', NULL, NULL, 'WINDOW', 1, 450, 48, 0.0, -79.99999999999977, 2468.3333333333326, NULL),
+  ('WALL_ITEM', NULL, NULL, 'WINDOW', 1, 450, 48, 90, -79.99999999999977, 2468.3333333333326, NULL),
   ('WALL_ITEM', NULL, NULL, 'DOOR', 1, 350, 48, 0.0, 1053.333333333333, 2111.666666666667, NULL),
-  ('WALL_ITEM', NULL, NULL, 'DOOR', 1, 350, 48, 0.0, -30, 1891.6666666666665, NULL),
-  ('WALL_ITEM', NULL, NULL, 'DOOR', 1, 350, 48, 0.0, 1649.9999999999998, 1694.9999999999998, NULL),
-  ('WALL_ITEM', NULL, NULL, 'DOOR', 1, 350, 48, 0.0, 770.0000000000002, 815, NULL),
+  ('WALL_ITEM', NULL, NULL, 'DOOR', 1, 350, 48, 90, -30, 1891.6666666666665, NULL),
+  ('WALL_ITEM', NULL, NULL, 'DOOR', 1, 350, 48, 90, 1649.9999999999998, 1694.9999999999998, NULL),
+  ('WALL_ITEM', NULL, NULL, 'DOOR', 1, 350, 48, 270, 770.0000000000002, 815, NULL),
   ('WALL_ITEM', NULL, NULL, 'DOOR', 1, 350, 48, 0.0, 393.3333333333335, 1618.3333333333333, NULL),
-  ('WALL_ITEM', NULL, NULL, 'WINDOW', 1, 450, 48, 0.0, -76.66666666666629, 1168.3333333333333, NULL),
+  ('WALL_ITEM', NULL, NULL, 'WINDOW', 1, 450, 48, 90, -76.66666666666629, 1168.3333333333333, NULL),
   ('WALL_ITEM', NULL, NULL, 'WINDOW', 1, 450, 48, 0.0, 1166.6666666666665, 198.33333333333343, NULL),
   ('WALL_ITEM', NULL, NULL, 'WINDOW', 1, 450, 48, 0.0, 823.3333333333333, 2791.6666666666665, NULL),
-  ('WALL_ITEM', NULL, NULL, 'WINDOW', 1, 450, 48, 0.0, 2476.6666666666665, 1878.333333333333, NULL),
-  ('WALL_ITEM', NULL, NULL, 'WINDOW', 1, 450, 48, 0.0, 2476.6666666666665, 918.3333333333335, NULL),
+  ('WALL_ITEM', NULL, NULL, 'WINDOW', 1, 450, 48, 90, 2476.6666666666665, 1878.333333333333, NULL),
+  ('WALL_ITEM', NULL, NULL, 'WINDOW', 1, 450, 48, 90, 2476.6666666666665, 918.3333333333335, NULL),
   ('ITEM', NULL, 'TOILET', NULL, 2, 200, 200, 0.0, 1280, 1070, NULL),
   ('ITEM', NULL, 'STAIRS', NULL, 2, 200, 200, 0.0, 2416.666666666667, 1016.6666463216147, NULL),
   ('WALL', NULL, NULL, NULL, 2, 313.33333333333326, 50, 0.0, 1140, 598.3333333333334, NULL),
@@ -403,17 +403,17 @@ VALUES
   ('WALL', NULL, NULL, NULL, 2, 2645, 50, 90.0, -1176.555583852268, 1515.8603400051134, NULL),
   ('WALL', NULL, NULL, NULL, 2, 1708.3333333333333, 50, 0.0, 106.66666666666674, 2788.333333333333, NULL),
   ('WALL_ITEM', NULL, NULL, 'WINDOW', 2, 450, 48, 0.0, 200, 195, NULL),
-  ('WALL_ITEM', NULL, NULL, 'WINDOW', 2, 450, 48, 0.0, -79.99999999999977, 2468.3333333333326, NULL),
+  ('WALL_ITEM', NULL, NULL, 'WINDOW', 2, 450, 48, 90, -79.99999999999977, 2468.3333333333326, NULL),
   ('WALL_ITEM', NULL, NULL, 'DOOR', 2, 350, 48, 0.0, 1053.333333333333, 2111.666666666667, NULL),
-  ('WALL_ITEM', NULL, NULL, 'DOOR', 2, 350, 48, 0.0, -30, 1891.6666666666665, NULL),
-  ('WALL_ITEM', NULL, NULL, 'DOOR', 2, 350, 48, 0.0, 1649.9999999999998, 1694.9999999999998, NULL),
-  ('WALL_ITEM', NULL, NULL, 'DOOR', 2, 350, 48, 0.0, 770.0000000000002, 815, NULL),
+  ('WALL_ITEM', NULL, NULL, 'DOOR', 2, 350, 48, 90, -30, 1891.6666666666665, NULL),
+  ('WALL_ITEM', NULL, NULL, 'DOOR', 2, 350, 48, 90, 1649.9999999999998, 1694.9999999999998, NULL),
+  ('WALL_ITEM', NULL, NULL, 'DOOR', 2, 350, 48, 270, 770.0000000000002, 815, NULL),
   ('WALL_ITEM', NULL, NULL, 'DOOR', 2, 350, 48, 0.0, 393.3333333333335, 1618.3333333333333, NULL),
-  ('WALL_ITEM', NULL, NULL, 'WINDOW', 2, 450, 48, 0.0, -76.66666666666629, 1168.3333333333333, NULL),
+  ('WALL_ITEM', NULL, NULL, 'WINDOW', 2, 450, 48, 90, -76.66666666666629, 1168.3333333333333, NULL),
   ('WALL_ITEM', NULL, NULL, 'WINDOW', 2, 450, 48, 0.0, 1166.6666666666665, 198.33333333333343, NULL),
   ('WALL_ITEM', NULL, NULL, 'WINDOW', 2, 450, 48, 0.0, 823.3333333333333, 2791.6666666666665, NULL),
-  ('WALL_ITEM', NULL, NULL, 'WINDOW', 2, 450, 48, 0.0, 2476.6666666666665, 1878.333333333333, NULL),
-  ('WALL_ITEM', NULL, NULL, 'WINDOW', 2, 450, 48, 0.0, 2476.6666666666665, 918.3333333333335, NULL);
+  ('WALL_ITEM', NULL, NULL, 'WINDOW', 2, 450, 48, 90, 2476.6666666666665, 1878.333333333333, NULL),
+  ('WALL_ITEM', NULL, NULL, 'WINDOW', 2, 450, 48, 90, 2476.6666666666665, 918.3333333333335, NULL);
 
 -- add reservations
 INSERT INTO public.reservation (people_number, start_date_time, end_date_time, duration, state, customer_id, restaurant_id, verification_code, is_verified)

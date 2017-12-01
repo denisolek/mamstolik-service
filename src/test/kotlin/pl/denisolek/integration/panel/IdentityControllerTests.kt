@@ -809,7 +809,9 @@ class IdentityControllerTests {
                 .andExpect(status().isOk)
                 .andExpect(jsonPath("$[0].id", `is`(1)))
                 .andExpect(jsonPath("$[0].name", `is`("Piano Bar Restaurant & Cafe")))
-                .andExpect(jsonPath("$[0].address", `is`("PÓŁWIEJSKA 42 1A, POZNAŃ")))
+                .andExpect(jsonPath("$[0].streetName", `is`("Półwiejska 42")))
+                .andExpect(jsonPath("$[0].buildingNumber", `is`("1A")))
+                .andExpect(jsonPath("$[0].city", `is`("Poznań")))
     }
 
     @Test
@@ -820,12 +822,12 @@ class IdentityControllerTests {
                 .andExpect(status().isOk)
                 .andExpect(jsonPath("$[0].id", `is`(11)))
                 .andExpect(jsonPath("$[0].username", `is`("ms100002")))
-                .andExpect(jsonPath("$[0].fullName", `is`("Pracownik Pracujący")))
+                .andExpect(jsonPath("$[0].fullName", `is`("Krystian Nowicki")))
                 .andExpect(jsonPath("$[0].title", `is`("Menedżer")))
                 .andExpect(jsonPath("$[0].avatar", `is`("avatar link")))
                 .andExpect(jsonPath("$[1].id", `is`(12)))
                 .andExpect(jsonPath("$[1].username", `is`("ms100003")))
-                .andExpect(jsonPath("$[1].fullName", `is`("Pracowniczka Pracująca")))
+                .andExpect(jsonPath("$[1].fullName", `is`("Magdalena Karpińska")))
                 .andExpect(jsonPath("$[1].title", `is`("Pracownik")))
                 .andExpect(jsonPath("$[1].avatar", `is`("avatar link")))
     }
