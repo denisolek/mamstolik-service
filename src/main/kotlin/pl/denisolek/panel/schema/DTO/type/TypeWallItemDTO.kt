@@ -17,7 +17,7 @@ data class TypeWallItemDTO(
             subType = item.wallItemType!!,
             details = SchemaDetailsDTO(
                     width = item.width,
-                    heigth = item.height,
+                    height = item.height,
                     rotation = item.rotation
             ),
             position = SchemaPositionDTO(
@@ -33,7 +33,7 @@ data class TypeWallItemDTO(
                         x = wallItem.position.x,
                         y = wallItem.position.y,
                         width = wallItem.details.width,
-                        height = wallItem.details.heigth,
+                        height = wallItem.details.height,
                         rotation = wallItem.details.rotation,
                         type = SchemaItem.Type.WALL_ITEM,
                         wallItemType = wallItem.subType,

@@ -22,7 +22,7 @@ data class TypeTableDTO(
             subType = item.tableType!!,
             details = SchemaDetailsDTO(
                     width = item.width,
-                    heigth = item.height,
+                    height = item.height,
                     rotation = item.rotation
             ),
             position = SchemaPositionDTO(
@@ -52,7 +52,7 @@ data class TypeTableDTO(
                     x = table.position?.x ?: DEFAULT_X,
                     y = table.position?.y ?: DEFAULT_Y,
                     width = table.details?.width ?: DEFAULT_WIDTH,
-                    height = table.details?.heigth ?: DEFAULT_HEIGHT,
+                    height = table.details?.height ?: DEFAULT_HEIGHT,
                     rotation = table.details?.rotation ?: DEFAULT_ROTATION,
                     type = TABLE,
                     tableType = setTableType(table),

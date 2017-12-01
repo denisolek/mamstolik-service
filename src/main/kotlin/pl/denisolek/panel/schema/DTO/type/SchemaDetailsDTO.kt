@@ -2,6 +2,6 @@ package pl.denisolek.panel.schema.DTO.type
 
 data class SchemaDetailsDTO(
         var width: Float,
-        var heigth: Float,
+        var height: Float,
         var rotation: Float
 )
