@@ -10,7 +10,6 @@ import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.panel.reservation.DTO.PanelCreateReservationDTO
 import pl.denisolek.panel.reservation.DTO.PanelReservationsDTO
-import pl.denisolek.panel.schema.PanelSchemaApi
 import springfox.documentation.annotations.ApiIgnore
 import java.time.LocalDate
 import javax.validation.Valid

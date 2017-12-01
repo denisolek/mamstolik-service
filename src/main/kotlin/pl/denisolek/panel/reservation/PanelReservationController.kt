@@ -37,6 +37,6 @@ class PanelReservationController(val panelReservationService: PanelReservationSe
     )
     override fun editReservation(@ApiIgnore @PathVariable(PanelReservationApi.RESTAURANT_ID) restaurantId: Restaurant,
                                  @ApiIgnore @PathVariable(PanelReservationApi.RESERVATION_ID) reservationId: Reservation,
-                                 @RequestBody @Valid createReservationDTO: PanelCreateReservationDTO): PanelReservationsDTO  =
+                                 @RequestBody @Valid createReservationDTO: PanelCreateReservationDTO): PanelReservationsDTO =
             panelReservationService.editReservation(restaurantId, reservationId, createReservationDTO)
 }
