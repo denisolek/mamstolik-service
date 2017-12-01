@@ -84,9 +84,9 @@ class PanelSchemaControllerTests {
 
         assertEquals(3, actual.floors!!.size)
         assertEquals(22, actual.tables.size)
-        assertEquals(15, actual.walls.size)
-        assertEquals(1, actual.items.size)
-        assertEquals(12, actual.wallItems.size)
+        assertEquals(30, actual.walls.size)
+        assertEquals(3, actual.items.size)
+        assertEquals(24, actual.wallItems.size)
     }
 
     @Test
@@ -417,7 +417,7 @@ class PanelSchemaControllerTests {
         assertEquals(300f, actualTable.position!!.x)
         assertEquals(300f, actualTable.position!!.y)
         assertEquals(200f, actualTable.details!!.width)
-        assertEquals(200f, actualTable.details!!.heigth)
+        assertEquals(200f, actualTable.details!!.height)
         assertEquals(0f, actualTable.details!!.rotation)
         assertEquals(SchemaItem.TableType.TWO, actualTable.subType)
         assertEquals(19000, actualTable.spotInfo.number)
@@ -454,7 +454,7 @@ class PanelSchemaControllerTests {
         assertEquals(300f, actualTable.position!!.x)
         assertEquals(300f, actualTable.position!!.y)
         assertEquals(200f, actualTable.details!!.width)
-        assertEquals(200f, actualTable.details!!.heigth)
+        assertEquals(200f, actualTable.details!!.height)
         assertEquals(0f, actualTable.details!!.rotation)
         assertEquals(EIGHT_ROUND, actualTable.subType)
         assertEquals(20000, actualTable.spotInfo.number)
@@ -651,10 +651,10 @@ class PanelSchemaControllerTests {
                 .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
-        Assert.assertNotNull(actual.walls.last().id)
-        assertEquals(1, actual.walls.last().floorId)
-        assertEquals(SchemaPositionDTO(19000f, 19000f), actual.walls.last().position)
-        assertEquals(SchemaDetailsDTO(19000f, 19000f, 19000f), actual.walls.last().details)
+        Assert.assertNotNull(actual.walls[15].id)
+        assertEquals(1, actual.walls[15].floorId)
+        assertEquals(SchemaPositionDTO(19000f, 19000f), actual.walls[15].position)
+        assertEquals(SchemaDetailsDTO(19000f, 19000f, 19000f), actual.walls[15].details)
     }
 
     @Test
@@ -679,11 +679,11 @@ class PanelSchemaControllerTests {
                 .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
-        Assert.assertNotNull(actual.wallItems.last().id)
-        assertEquals(1, actual.wallItems.last().floorId)
-        assertEquals(WINDOW, actual.wallItems.last().subType)
-        assertEquals(SchemaPositionDTO(20000f, 20000f), actual.wallItems.last().position)
-        assertEquals(SchemaDetailsDTO(20000f, 20000f, 20000f), actual.wallItems.last().details)
+        Assert.assertNotNull(actual.wallItems[12].id)
+        assertEquals(1, actual.wallItems[12].floorId)
+        assertEquals(WINDOW, actual.wallItems[12].subType)
+        assertEquals(SchemaPositionDTO(20000f, 20000f), actual.wallItems[12].position)
+        assertEquals(SchemaDetailsDTO(20000f, 20000f, 20000f), actual.wallItems[12].details)
     }
 
     @Test
@@ -708,11 +708,11 @@ class PanelSchemaControllerTests {
                 .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
-        Assert.assertNotNull(actual.items.last().id)
-        assertEquals(1, actual.items.last().floorId)
-        assertEquals(TOILET, actual.items.last().subType)
-        assertEquals(SchemaPositionDTO(21000f, 21000f), actual.items.last().position)
-        assertEquals(SchemaDetailsDTO(21000f, 21000f, 21000f), actual.items.last().details)
+        Assert.assertNotNull(actual.items[1].id)
+        assertEquals(1, actual.items[1].floorId)
+        assertEquals(TOILET, actual.items[1].subType)
+        assertEquals(SchemaPositionDTO(21000f, 21000f), actual.items[1].position)
+        assertEquals(SchemaDetailsDTO(21000f, 21000f, 21000f), actual.items[1].details)
     }
 
     @Test

@@ -17,7 +17,7 @@ data class TypeItemDTO(
             subType = item.itemType!!,
             details = SchemaDetailsDTO(
                     width = item.width,
-                    heigth = item.height,
+                    height = item.height,
                     rotation = item.rotation
             ),
             position = SchemaPositionDTO(
@@ -33,7 +33,7 @@ data class TypeItemDTO(
                         x = item.position.x,
                         y = item.position.y,
                         width = item.details.width,
-                        height = item.details.heigth,
+                        height = item.details.height,
                         rotation = item.details.rotation,
                         type = ITEM,
                         itemType = item.subType,

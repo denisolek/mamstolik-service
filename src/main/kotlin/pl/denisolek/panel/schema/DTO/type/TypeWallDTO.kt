@@ -15,7 +15,7 @@ data class TypeWallDTO(
             floorId = item.floor.id!!,
             details = SchemaDetailsDTO(
                     width = item.width,
-                    heigth = item.height,
+                    height = item.height,
                     rotation = item.rotation
             ),
             position = SchemaPositionDTO(
@@ -31,7 +31,7 @@ data class TypeWallDTO(
                         x = wall.position.x,
                         y = wall.position.y,
                         width = wall.details.width,
-                        height = wall.details.heigth,
+                        height = wall.details.height,
                         rotation = wall.details.rotation,
                         type = WALL,
                         floor = restaurant.getFloor(wall.floorId)
