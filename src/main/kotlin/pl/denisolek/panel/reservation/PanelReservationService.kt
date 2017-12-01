@@ -11,9 +11,9 @@ import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.panel.reservation.DTO.PanelCreateReservationDTO
-import pl.denisolek.panel.reservation.DTO.PanelReservationDTO
 import pl.denisolek.panel.reservation.DTO.PanelReservationsDTO
 import pl.denisolek.panel.reservation.DTO.ReservationCustomerDTO
+import java.time.LocalDate
 
 @Service
 class PanelReservationService(private val authorizationService: AuthorizationService,
@@ -32,11 +32,7 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
                 spots = reservationSpots
         ))
         restaurant.reservations.add(reservation)
-        return PanelReservationsDTO(
-                openTime = restaurant.getBusinessHoursForDate(createReservationDTO.dateTime)?.openTime,
-                closeTime = restaurant.getBusinessHoursForDate(createReservationDTO.dateTime)?.closeTime,
-                reservations = PanelReservationDTO.fromReservations(restaurant.reservations.filter { it.startDateTime.toLocalDate() == createReservationDTO.dateTime.toLocalDate() })
-        )
+        return PanelReservationsDTO.createPanelReservationDTO(restaurant, createReservationDTO.dateTime.toLocalDate())
     }
 
     private fun allSpotsAvailable(restaurant: Restaurant, createReservationDTO: PanelCreateReservationDTO, reservationSpots: MutableList<Spot>) =
@@ -55,4 +51,7 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
                 restaurant = restaurant
         ))
     }
+
+    fun getReservations(restaurant: Restaurant, date: LocalDate): PanelReservationsDTO =
+            PanelReservationsDTO.createPanelReservationDTO(restaurant, date)
 }
