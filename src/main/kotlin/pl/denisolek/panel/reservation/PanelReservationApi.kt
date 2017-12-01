@@ -12,7 +12,6 @@ import pl.denisolek.panel.reservation.DTO.PanelReservationsDTO
 import pl.denisolek.panel.schema.PanelSchemaApi
 import springfox.documentation.annotations.ApiIgnore
 import java.time.LocalDate
-import java.time.LocalDateTime
 import javax.validation.Valid
 
 @Api("Reservation controller", tags = arrayOf("Reservation"))
