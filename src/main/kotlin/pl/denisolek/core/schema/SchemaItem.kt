@@ -61,7 +61,8 @@ data class SchemaItem(
     }
 
     enum class ItemType {
-        TOILET
+        TOILET,
+        STAIRS
     }
 
     enum class WallItemType {
