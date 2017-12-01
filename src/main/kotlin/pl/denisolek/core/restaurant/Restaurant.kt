@@ -13,6 +13,7 @@ import pl.denisolek.infrastructure.util.isAfterOrEqual
 import pl.denisolek.infrastructure.util.isBeforeOrEqual
 import java.time.DayOfWeek
 import java.time.Duration
+import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -77,14 +78,14 @@ data class Restaurant(
 ) {
 
     fun isOpenAt(date: LocalDateTime): Boolean {
-        val businessHour = getBusinessHoursForDate(date) ?: return false
+        val businessHour = getBusinessHoursForDate(date.toLocalDate()) ?: return false
 
         if (date.toLocalTime().isAfterOrEqual(businessHour.openTime) && date.toLocalTime().isBeforeOrEqual(businessHour.closeTime.minusMinutes(this.avgReservationTime.toMinutes())))
             return true
         return false
     }
 
-    fun getBusinessHoursForDate(date: LocalDateTime) = this.businessHours[date.dayOfWeek]
+    fun getBusinessHoursForDate(date: LocalDate) = this.businessHours[date.dayOfWeek]
 
     fun getAvailability(date: LocalDateTime, peopleNumber: Int): AvailabilityType {
         if (!isOpenAt(date))
