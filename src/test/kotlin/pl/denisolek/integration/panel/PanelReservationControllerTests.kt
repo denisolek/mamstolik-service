@@ -2,6 +2,7 @@ package pl.denisolek.integration.panel
 
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -92,5 +93,59 @@ class PanelReservationControllerTests {
         assertEquals(LocalTime.of(23, 0), actual.closeTime)
         assertEquals(1, actual.reservations.count())
         assertEquals(expectedReservation, actual.reservations[0])
+    }
+
+    @Test
+    fun `addReservation_ empty customer`() {
+        val createReservationStub = PanelCreateReservationDTOStub.getPanelCreateReservationDTOStub()
+        createReservationStub.customer = ReservationCustomerDTO(
+                firstName = null,
+                lastName = null,
+                email = null,
+                phoneNumber = null
+        )
+        val body = convertObjectToJsonBytes(createReservationStub)
+        val result = mvc.perform(MockMvcRequestBuilders.post(RESERVATIONS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(MockMvcResultMatchers.status().isCreated)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelReservationsDTO::class.java)
+
+        val expectedReservation = PanelReservationDTO(
+                customer = ReservationCustomerDTO(
+                        firstName = "Tomasz",
+                        lastName = "Jabłoński",
+                        email = "test@test.pl",
+                        phoneNumber = "780199283"
+                ),
+                peopleNumber = 3,
+                time = LocalTime.of(14, 0),
+                spots = listOf(ReservationSpotInfoDTO(
+                        id = 1,
+                        number = 1,
+                        floorName = "Parter"
+                )),
+                note = "NoteStub",
+                state = Reservation.ReservationState.ACCEPTED
+        )
+
+        assertEquals(LocalTime.of(13, 0), actual.openTime)
+        assertEquals(LocalTime.of(23, 0), actual.closeTime)
+        assertEquals(1, actual.reservations.count())
+        assertEquals(expectedReservation, actual.reservations[0])
+    }
+
+    @Test
+    fun `addReservation_ invalid email`() {
+        val createReservationStub = PanelCreateReservationDTOStub.getPanelCreateReservationDTOStub()
+        createReservationStub.customer.email = "invalidEmail"
+        val body = convertObjectToJsonBytes(createReservationStub)
+        val result = mvc.perform(MockMvcRequestBuilders.post(RESERVATIONS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(MockMvcResultMatchers.status().isBadRequest)
     }
 }
