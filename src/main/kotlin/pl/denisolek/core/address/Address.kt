@@ -1,12 +1,12 @@
 package pl.denisolek.core.address
 
-import pl.denisolek.core.BaseEntity
-import javax.persistence.CascadeType
-import javax.persistence.Entity
-import javax.persistence.OneToOne
+import javax.persistence.*
 
 @Entity
 data class Address(
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        var id: Int? = null,
         var streetName: String,
         var buildingNumber: String,
         var postalCode: String,
@@ -15,7 +15,4 @@ data class Address(
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
         var city: City
-) : BaseEntity() {
-    fun getAddressString() =
-            "${this.streetName} ${this.buildingNumber}, ${city.name}".toUpperCase()
-}
+)

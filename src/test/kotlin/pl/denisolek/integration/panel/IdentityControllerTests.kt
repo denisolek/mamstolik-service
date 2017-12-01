@@ -809,7 +809,9 @@ class IdentityControllerTests {
                 .andExpect(status().isOk)
                 .andExpect(jsonPath("$[0].id", `is`(1)))
                 .andExpect(jsonPath("$[0].name", `is`("Piano Bar Restaurant & Cafe")))
-                .andExpect(jsonPath("$[0].address", `is`("PÓŁWIEJSKA 42 1A, POZNAŃ")))
+                .andExpect(jsonPath("$[0].streetName", `is`("Półwiejska 42")))
+                .andExpect(jsonPath("$[0].buildingNumber", `is`("1A")))
+                .andExpect(jsonPath("$[0].city", `is`("Poznań")))
     }
 
     @Test
