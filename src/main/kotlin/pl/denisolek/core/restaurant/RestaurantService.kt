@@ -15,12 +15,12 @@ class RestaurantService(private val restaurantRepository: RestaurantRepository) 
             restaurantRepository.save(restaurant)
 
     fun generateUrlName(name: String): String {
-        val urlName = name.replace(" ", ".").toLowerCase()
+        var urlName = name.replace(" ", ".").toLowerCase()
         var urlNameIdentifier = 1
         var exists = when (restaurantRepository.countByUrlName(urlName)) {
             0 -> false
             else -> {
-                urlName.plus(".$urlNameIdentifier")
+                urlName = "$urlName.$urlNameIdentifier"
                 true
             }
         }
@@ -29,8 +29,8 @@ class RestaurantService(private val restaurantRepository: RestaurantRepository) 
             restaurantRepository.countByUrlName(urlName) == 0 -> exists = false
             else -> {
                 urlNameIdentifier++
-                urlName.dropLastWhile { it == ".".single() }
-                urlName.plus(".$urlNameIdentifier")
+                urlName = urlName.removeRange(urlName.lastIndexOf("."), urlName.count())
+                urlName = "$urlName.$urlNameIdentifier"
             }
         }
         return urlName

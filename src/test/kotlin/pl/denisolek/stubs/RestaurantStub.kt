@@ -17,6 +17,7 @@ class RestaurantStub {
         fun getRestaurantForStubs(): Restaurant =
                 Restaurant(
                         name = "Test restaurant for stubs",
+                        urlName = "test.restaurant.for.stubs",
                         address = getAddress(),
                         avgReservationTime = Duration.ofMinutes(30),
                         description = "Test description for stubs",
@@ -39,6 +40,7 @@ class RestaurantStub {
         fun getRestaurant(): Restaurant =
                 Restaurant(
                         name = "Test restaurant",
+                        urlName = "test.restaurant",
                         address = getAddress(),
                         avgReservationTime = Duration.ofMinutes(30),
                         description = "Test description",
@@ -61,6 +63,7 @@ class RestaurantStub {
         fun getRestaurantForAvailability(): Restaurant =
                 Restaurant(
                         name = "Test restaurant",
+                        urlName = "test.restaurant",
                         address = getAddress(),
                         avgReservationTime = Duration.ofMinutes(30),
                         description = "Test description",
