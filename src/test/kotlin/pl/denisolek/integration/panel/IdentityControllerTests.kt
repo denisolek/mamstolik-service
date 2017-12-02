@@ -69,6 +69,7 @@ class IdentityControllerTests {
     val USERS_LOST_PASSWORD_PATH = "$PANEL_BASE_PATH${IdentityApi.USERS_LOST_PASSWORD_PATH}"
     val USERS_RESET_PASSWORD_PATH = "$PANEL_BASE_PATH${IdentityApi.USERS_RESET_PASSWORD_PATH}"
     val RESTAURANTS_PATH = "$PANEL_BASE_PATH${IdentityApi.RESTAURANTS_BASE_PATH}"
+    val RESTAURANTS_URL_NAME_PATH = "$PANEL_BASE_PATH${IdentityApi.RESTAURANTS_URL_NAME_PATH}"
     val EMPLOYEES_PATH = "$PANEL_BASE_PATH${IdentityApi.EMPLOYEES_BASE_PATH}"
 
     @Before
@@ -815,6 +816,21 @@ class IdentityControllerTests {
     }
 
     @Test
+    fun `getRestaurant_ existing`() {
+        mvc.perform(get(RESTAURANTS_URL_NAME_PATH, "piano.bar.restaurant.&.cafe"))
+                .andExpect(status().isOk)
+                .andExpect(jsonPath("$.name", `is`("Piano Bar Restaurant & Cafe")))
+                .andExpect(jsonPath("$.username", `is`("ms100001")))
+                .andExpect(jsonPath("$.avatar", `is`("avatar link")))
+    }
+
+    @Test
+    fun `getRestaurant_ not existing`() {
+        mvc.perform(get(RESTAURANTS_URL_NAME_PATH, "not.existing"))
+                .andExpect(status().isNotFound)
+    }
+
+    @Test
     fun `getEmployees_ `() {
         val user = userRepository.findOne(10)
         doReturn(user).whenever(authorizationService).getCurrentUser()
@@ -836,6 +852,48 @@ class IdentityControllerTests {
     fun `createRestaurant_ empty name`() {
         var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
         createRestaurantDTO.name = ""
+
+        val body = convertObjectToJsonBytes(createRestaurantDTO)
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `createRestaurant_ name with multiple dashes`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
+        createRestaurantDTO.name = "test--name"
+
+        val body = convertObjectToJsonBytes(createRestaurantDTO)
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `createRestaurant_ name with dash at the beggining and ending`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
+        createRestaurantDTO.name = "-test-"
+
+        val body = convertObjectToJsonBytes(createRestaurantDTO)
+
+        val result = mvc.perform(post(RESTAURANTS_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `createRestaurant_ name with special characters`() {
+        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
+        createRestaurantDTO.name = "test%:"
 
         val body = convertObjectToJsonBytes(createRestaurantDTO)
 
@@ -1108,6 +1166,7 @@ class IdentityControllerTests {
     private fun `createRestaurant assert restaurant`(createdRestaurant: Restaurant) {
         assertNotNull(createdRestaurant)
         assertEquals("New Restaurant", createdRestaurant.name)
+        assertEquals("new.restaurant", createdRestaurant.urlName)
         assertEquals(RESTAURANT, createdRestaurant.type)
         assertNotNull(createdRestaurant.owner)
         assertEquals(1, createdRestaurant.owner?.id)

@@ -1,6 +1,7 @@
 package pl.denisolek.core.user
 
 import org.springframework.stereotype.Service
+import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.infrastructure.util.generateUsernameString
 
 @Service
@@ -13,6 +14,9 @@ class UserService(val userRepository: UserRepository) {
 
     fun findByUsername(username: String): User? =
             userRepository.findByUsername(username)
+
+    fun findByRestaurant(restaurant: Restaurant): User? =
+            userRepository.findByRestaurant(restaurant)
 
     fun generateUsername(): String {
         var exists: Boolean = true

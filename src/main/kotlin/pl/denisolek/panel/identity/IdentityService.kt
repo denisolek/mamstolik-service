@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service
 import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.email.EmailService
 import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.core.security.Authority
 import pl.denisolek.core.user.User
 import pl.denisolek.core.user.UserService
@@ -17,7 +18,8 @@ import pl.denisolek.panel.identity.DTO.*
 class IdentityService(private val userService: UserService,
                       private val emailService: EmailService,
                       private val authorizationService: AuthorizationService,
-                      private val passwordEncoder: PasswordEncoder) {
+                      private val passwordEncoder: PasswordEncoder,
+                      private val restaurantService: RestaurantService) {
     fun registerOwner(registerDTO: RegisterDTO) {
         val username = userService.generateUsername()
         val newUser = userService.save(registerDTO.toUser().copy(
@@ -98,6 +100,7 @@ class IdentityService(private val userService: UserService,
     fun createRestaurant(createRestaurantDTO: CreateRestaurantDTO) {
         val restaurant = Restaurant(
                 name = createRestaurantDTO.name,
+                urlName = restaurantService.generateUrlName(createRestaurantDTO.name),
                 type = createRestaurantDTO.type,
                 owner = authorizationService.getCurrentUser(),
                 phoneNumber = createRestaurantDTO.phoneNumber
@@ -110,5 +113,15 @@ class IdentityService(private val userService: UserService,
                 accountState = User.AccountState.ACTIVE,
                 restaurant = restaurant
         ))
+    }
+
+    fun getRestaurant(urlName: String): RestaurantLoginDTO {
+        val restaurant = restaurantService.findByUrlName(urlName) ?: throw ServiceException(HttpStatus.NOT_FOUND, "Restaurant not found")
+        val user = userService.findByRestaurant(restaurant) ?: throw ServiceException(HttpStatus.NOT_FOUND, "Restaurant user not found")
+        return RestaurantLoginDTO(
+                name = restaurant.name,
+                username = user.username!!,
+                avatar = "avatar link"
+        )
     }
 }

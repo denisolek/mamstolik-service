@@ -11,6 +11,31 @@ class RestaurantService(private val restaurantRepository: RestaurantRepository) 
     fun findPartlyByName(name: String): List<Restaurant> =
             restaurantRepository.findPartlyByName(name)
 
+    fun findByUrlName(urlName: String): Restaurant? =
+            restaurantRepository.findByUrlName(urlName)
+
     fun save(restaurant: Restaurant) =
             restaurantRepository.save(restaurant)
+
+    fun generateUrlName(name: String): String {
+        var urlName = name.replace(" ", ".").toLowerCase()
+        var urlNameIdentifier = 1
+        var exists = when (restaurantRepository.countByUrlName(urlName)) {
+            0 -> false
+            else -> {
+                urlName = "$urlName.$urlNameIdentifier"
+                true
+            }
+        }
+
+        while (exists) when {
+            restaurantRepository.countByUrlName(urlName) == 0 -> exists = false
+            else -> {
+                urlNameIdentifier++
+                urlName = urlName.removeRange(urlName.lastIndexOf("."), urlName.count())
+                urlName = "$urlName.$urlNameIdentifier"
+            }
+        }
+        return urlName
+    }
 }

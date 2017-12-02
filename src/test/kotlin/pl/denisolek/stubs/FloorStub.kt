@@ -41,6 +41,7 @@ class FloorStub {
 
         fun getRestaurantWithReservations() = Restaurant(
                 name = "Stubbed Restaurant",
+                urlName = "stubbed.restaurant",
                 type = Restaurant.RestaurantType.RESTAURANT,
                 spots = getSpots(),
                 reservations = mutableListOf(
@@ -77,6 +78,7 @@ class FloorStub {
 
         private fun getRestaurant() = Restaurant(
                 name = "Stubbed Restaurant",
+                urlName = "stubbed.restaurant",
                 type = Restaurant.RestaurantType.RESTAURANT,
                 spots = getSpots(),
                 phoneNumber = "123123123"
@@ -107,6 +109,6 @@ class FloorStub {
         )
 
         private fun getStubbedRestaurant() =
-                Restaurant(name = "Stubbed Restaurant", type = Restaurant.RestaurantType.RESTAURANT, phoneNumber = "123123123")
+                Restaurant(name = "Stubbed Restaurant", urlName = "stubbed.restaurant", type = Restaurant.RestaurantType.RESTAURANT, phoneNumber = "123123123")
     }
 }
