@@ -12,7 +12,9 @@ import pl.denisolek.guest.restaurant.DTO.RestaurantDetailsDTO
 import pl.denisolek.guest.restaurant.DTO.SearchDTO
 import pl.denisolek.infrastructure.API_BASE_PATH
 import springfox.documentation.annotations.ApiIgnore
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 @Api("Restaurant controller", tags = arrayOf("Restaurant"))
 @RequestMapping(API_BASE_PATH)
@@ -21,7 +23,8 @@ interface GuestRestaurantApi {
         const val RESTAURANT_ID: String = "restaurantId"
 
         const val RESTAURANTS_BASE_PATH = "/restaurants"
-        const val GET_RESTAURANT_PATH = "$RESTAURANTS_BASE_PATH/{$RESTAURANT_ID}"
+        const val RESTAURANTS_ID_PATH = "$RESTAURANTS_BASE_PATH/{$RESTAURANT_ID}"
+        const val RESTAURANTS_ID_DATES_PATH = "$RESTAURANTS_ID_PATH/dates"
     }
 
     @GetMapping(RESTAURANTS_BASE_PATH)
@@ -29,6 +32,11 @@ interface GuestRestaurantApi {
                           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam date: LocalDateTime,
                           @RequestParam peopleNumber: Int): SearchDTO
 
-    @GetMapping(GET_RESTAURANT_PATH)
-    fun getRestaurant(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurant: Restaurant): RestaurantDetailsDTO
+    @GetMapping(RESTAURANTS_ID_PATH)
+    fun getRestaurant(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant): RestaurantDetailsDTO
+
+    @GetMapping(RESTAURANTS_ID_DATES_PATH)
+    fun getRestaurantAvailableDates(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam date: LocalDateTime,
+                                    @RequestParam peopleNumber: Int): Map<LocalDate, List<LocalTime>>
 }

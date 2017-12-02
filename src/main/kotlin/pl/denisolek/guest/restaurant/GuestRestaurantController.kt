@@ -1,5 +1,7 @@
 package pl.denisolek.guest.restaurant
 
+import io.swagger.annotations.ApiImplicitParam
+import io.swagger.annotations.ApiImplicitParams
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
@@ -9,7 +11,9 @@ import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.guest.restaurant.DTO.RestaurantDetailsDTO
 import pl.denisolek.guest.restaurant.DTO.SearchDTO
 import springfox.documentation.annotations.ApiIgnore
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 @RestController
 class GuestRestaurantController(val guestRestaurantService: GuestRestaurantService) : GuestRestaurantApi {
@@ -23,6 +27,13 @@ class GuestRestaurantController(val guestRestaurantService: GuestRestaurantServi
                                    @RequestParam peopleNumber: Int): SearchDTO =
             guestRestaurantService.searchRestaurants(city, date, peopleNumber)
 
-    override fun getRestaurant(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurant: Restaurant): RestaurantDetailsDTO =
-            RestaurantDetailsDTO.fromRestaurant(restaurant)
+    override fun getRestaurant(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant): RestaurantDetailsDTO =
+            RestaurantDetailsDTO.fromRestaurant(restaurantId)
+
+    @ApiImplicitParams(
+            ApiImplicitParam(name = "restaurantId", value = "Restaurant Id", paramType = "path", dataType = "int", required = true),
+            ApiImplicitParam(name = "peopleNumber", value = "People number", paramType = "query", dataType = "int", required = true)
+    )
+    override fun getRestaurantAvailableDates(restaurantId: Restaurant, date: LocalDateTime, peopleNumber: Int): Map<LocalDate, List<LocalTime>> =
+            guestRestaurantService.getRestaurantAvailableDates(restaurantId, date, peopleNumber)
 }

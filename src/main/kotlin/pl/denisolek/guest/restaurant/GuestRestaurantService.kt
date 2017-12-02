@@ -6,7 +6,9 @@ import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.guest.restaurant.DTO.RestaurantSearchDTO
 import pl.denisolek.guest.restaurant.DTO.SearchDTO
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 @Service
 class GuestRestaurantService(val restaurantService: RestaurantService) {
@@ -23,5 +25,11 @@ class GuestRestaurantService(val restaurantService: RestaurantService) {
                     }
                 }
         return output
+    }
+
+    fun getRestaurantAvailableDates(restaurant: Restaurant, date: LocalDateTime, peopleNumber: Int): Map<LocalDate, List<LocalTime>> {
+
+
+        return mapOf()
     }
 }
