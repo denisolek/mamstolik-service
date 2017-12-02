@@ -69,6 +69,7 @@ class IdentityControllerTests {
     val USERS_LOST_PASSWORD_PATH = "$PANEL_BASE_PATH${IdentityApi.USERS_LOST_PASSWORD_PATH}"
     val USERS_RESET_PASSWORD_PATH = "$PANEL_BASE_PATH${IdentityApi.USERS_RESET_PASSWORD_PATH}"
     val RESTAURANTS_PATH = "$PANEL_BASE_PATH${IdentityApi.RESTAURANTS_BASE_PATH}"
+    val RESTAURANTS_URL_NAME_PATH = "$PANEL_BASE_PATH${IdentityApi.RESTAURANTS_URL_NAME_PATH}"
     val EMPLOYEES_PATH = "$PANEL_BASE_PATH${IdentityApi.EMPLOYEES_BASE_PATH}"
 
     @Before
@@ -812,6 +813,21 @@ class IdentityControllerTests {
                 .andExpect(jsonPath("$[0].streetName", `is`("Półwiejska 42")))
                 .andExpect(jsonPath("$[0].buildingNumber", `is`("1A")))
                 .andExpect(jsonPath("$[0].city", `is`("Poznań")))
+    }
+
+    @Test
+    fun `getRestaurant_ existing`() {
+        mvc.perform(get(RESTAURANTS_URL_NAME_PATH, "piano.bar.restaurant.&.cafe"))
+                .andExpect(status().isOk)
+                .andExpect(jsonPath("$.name", `is`("Piano Bar Restaurant & Cafe")))
+                .andExpect(jsonPath("$.username", `is`("ms100001")))
+                .andExpect(jsonPath("$.avatar", `is`("avatar link")))
+    }
+
+    @Test
+    fun `getRestaurant_ not existing`() {
+        mvc.perform(get(RESTAURANTS_URL_NAME_PATH, "not.existing"))
+                .andExpect(status().isNotFound)
     }
 
     @Test
