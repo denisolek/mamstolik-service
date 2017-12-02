@@ -191,11 +191,11 @@ class RestaurantTest {
         )
 
         Assert.assertEquals(1, actual.size)
-        val actualValues = actual[LocalDate.of(2018,11,29)]!!
+        val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
         Assert.assertEquals(36, actualValues.size)
-        Assert.assertFalse(actualValues.contains(LocalTime.of(13,45)))
-        Assert.assertFalse(actualValues.contains(LocalTime.of(14,0)))
-        Assert.assertFalse(actualValues.contains(LocalTime.of(14,15)))
+        Assert.assertFalse(actualValues.contains(LocalTime.of(13, 45)))
+        Assert.assertFalse(actualValues.contains(LocalTime.of(14, 0)))
+        Assert.assertFalse(actualValues.contains(LocalTime.of(14, 15)))
     }
 
     @Test
@@ -208,7 +208,7 @@ class RestaurantTest {
         )
 
         Assert.assertEquals(1, actual.size)
-        val actualValues = actual[LocalDate.of(2018,11,29)]!!
+        val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
         Assert.assertEquals(39, actualValues.size)
     }
 
@@ -222,7 +222,7 @@ class RestaurantTest {
         )
 
         Assert.assertEquals(1, actual.size)
-        val actualValues = actual[LocalDate.of(2018,11,29)]!!
+        val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
         Assert.assertEquals(39, actualValues.size)
     }
 
@@ -236,7 +236,7 @@ class RestaurantTest {
         )
 
         Assert.assertEquals(1, actual.size)
-        val actualValues = actual[LocalDate.of(2018,11,29)]!!
+        val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
         Assert.assertEquals(39, actualValues.size)
     }
 
@@ -250,7 +250,7 @@ class RestaurantTest {
         )
 
         Assert.assertEquals(1, actual.size)
-        val actualValues = actual[LocalDate.of(2018,11,29)]!!
+        val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
         Assert.assertEquals(39, actualValues.size)
     }
 
