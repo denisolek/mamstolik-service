@@ -34,6 +34,8 @@ class GuestRestaurantController(val guestRestaurantService: GuestRestaurantServi
             ApiImplicitParam(name = "restaurantId", value = "Restaurant Id", paramType = "path", dataType = "int", required = true),
             ApiImplicitParam(name = "peopleNumber", value = "People number", paramType = "query", dataType = "int", required = true)
     )
-    override fun getRestaurantAvailableDates(restaurantId: Restaurant, date: LocalDateTime, peopleNumber: Int): Map<LocalDate, List<LocalTime>> =
+    override fun getRestaurantAvailableDates(@ApiIgnore @PathVariable(GuestRestaurantApi.RESTAURANT_ID) restaurantId: Restaurant,
+                                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam date: LocalDateTime,
+                                             @RequestParam peopleNumber: Int): Map<LocalDate, List<LocalTime>> =
             guestRestaurantService.getRestaurantAvailableDates(restaurantId, date, peopleNumber)
 }

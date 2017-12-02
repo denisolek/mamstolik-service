@@ -27,9 +27,6 @@ class GuestRestaurantService(val restaurantService: RestaurantService) {
         return output
     }
 
-    fun getRestaurantAvailableDates(restaurant: Restaurant, date: LocalDateTime, peopleNumber: Int): Map<LocalDate, List<LocalTime>> {
-
-
-        return mapOf()
-    }
+    fun getRestaurantAvailableDates(restaurant: Restaurant, date: LocalDateTime, peopleNumber: Int): Map<LocalDate, List<LocalTime>> =
+            restaurant.getAvailableDates(date, peopleNumber)
 }
