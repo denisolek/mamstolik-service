@@ -142,6 +142,18 @@ data class Restaurant(
         return this.spots.filterNot { takenSpots.contains(it) }
     }
 
+    fun getTakenSpotsAt(searchDate: LocalDateTime): List<Spot> {
+
+        val searchDateInterval = object : DateTimeInterval {
+            override var startDateTime: LocalDateTime = searchDate
+            override var endDateTime: LocalDateTime = searchDate.plus(avgReservationTime)
+        }
+
+        return this.reservations
+                .filter { searchDateInterval.overlaps(it) && it.state != CANCELED }
+                .flatMap { it.spots }
+    }
+
     fun getFloor(floorId: Int): Floor =
             try {
                 this.floors.first { it.id == floorId }
