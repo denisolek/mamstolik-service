@@ -13,28 +13,28 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
-    @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.authenticationManager(authenticationManager);
-    }
+	@Override
+	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+		endpoints.authenticationManager(authenticationManager);
+	}
 
-    @Override
-    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security
-                .allowFormAuthenticationForClients()
-                .checkTokenAccess("isAuthenticated()");
-    }
+	@Override
+	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+		security
+				.allowFormAuthenticationForClients()
+				.checkTokenAccess("isAuthenticated()");
+	}
 
-    @Override
-    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()
-                .withClient("mamstolik")
-                .authorizedGrantTypes("password", "refresh_token")
-                .authorities("ROLE_CLIENT")
-                .scopes("read", "write", "trust")
-                .accessTokenValiditySeconds(600).secret("secret");
-    }
+	@Override
+	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+		clients.inMemory()
+				.withClient("mamstolik")
+				.authorizedGrantTypes("password", "refresh_token")
+				.authorities("ROLE_CLIENT")
+				.scopes("read", "write", "trust")
+				.accessTokenValiditySeconds(600).secret("secret");
+	}
 }

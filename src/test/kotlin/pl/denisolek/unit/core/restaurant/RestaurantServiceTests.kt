@@ -1,9 +1,7 @@
 package pl.denisolek.unit.core.restaurant
 
 import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
