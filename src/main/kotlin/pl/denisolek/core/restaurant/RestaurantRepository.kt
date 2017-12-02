@@ -15,4 +15,6 @@ interface RestaurantRepository : JpaRepository<Restaurant, Int> {
             "where (lower(r.name) like lower(CONCAT(:name, '%'))) " +
             "order by r.name asc")
     fun findPartlyByName(@Param(value = "name") name: String): List<Restaurant>
+
+    fun countByUrlName(urlName: String): Int
 }

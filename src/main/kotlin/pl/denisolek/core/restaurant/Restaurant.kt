@@ -22,6 +22,7 @@ data class Restaurant(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Int? = null,
         var name: String,
+        var urlName: String,
         var description: String = "",
         var phoneNumber: String,
         var avgReservationTime: Duration = Duration.ofHours(1),
