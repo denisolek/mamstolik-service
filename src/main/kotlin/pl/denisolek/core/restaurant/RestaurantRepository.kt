@@ -17,4 +17,6 @@ interface RestaurantRepository : JpaRepository<Restaurant, Int> {
     fun findPartlyByName(@Param(value = "name") name: String): List<Restaurant>
 
     fun countByUrlName(urlName: String): Int
+
+    fun findByUrlName(urlName: String): Restaurant?
 }

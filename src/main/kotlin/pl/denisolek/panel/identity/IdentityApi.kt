@@ -5,18 +5,22 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.panel.identity.DTO.*
+import springfox.documentation.annotations.ApiIgnore
 import javax.validation.Valid
 
 @Api("Identity controller", tags = arrayOf("Identity"))
 @RequestMapping(PANEL_BASE_PATH)
 interface IdentityApi {
     companion object {
+        const val URL_NAME = "urlName"
+
         const val USERS_BASE_PATH = "/users"
         const val USERS_PASSWORD_PATH = "$USERS_BASE_PATH/password"
         const val USERS_RESEND_ACTIVATION_KEY_PATH = "$USERS_BASE_PATH/resend-activation"
         const val USERS_LOST_PASSWORD_PATH = "$USERS_BASE_PATH/lost-password"
         const val USERS_RESET_PASSWORD_PATH = "$USERS_BASE_PATH/reset-password"
         const val RESTAURANTS_BASE_PATH = "/restaurants"
+        const val RESTAURANTS_URL_NAME_PATH = "$RESTAURANTS_BASE_PATH/{$URL_NAME:.+}"
         const val EMPLOYEES_BASE_PATH = "/employees"
     }
 
@@ -41,6 +45,9 @@ interface IdentityApi {
 
     @GetMapping(RESTAURANTS_BASE_PATH)
     fun getRestaurants(): List<UserRestaurantDTO>
+
+    @GetMapping(RESTAURANTS_URL_NAME_PATH)
+    fun getRestaurant(@ApiIgnore @PathVariable(URL_NAME) urlName: String): RestaurantLoginDTO
 
     @PostMapping(RESTAURANTS_BASE_PATH)
     @ResponseStatus(HttpStatus.CREATED)

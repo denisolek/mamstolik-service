@@ -1,13 +1,21 @@
 package pl.denisolek.panel.identity
 
+import io.swagger.annotations.ApiImplicitParam
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import pl.denisolek.panel.identity.DTO.*
+import pl.denisolek.panel.reservation.PanelReservationController
+import springfox.documentation.annotations.ApiIgnore
 import javax.validation.Valid
 
 @RestController
 class IdentityController(val identityService: IdentityService) : IdentityApi {
+    companion object {
+        val API = IdentityApi.Companion
+    }
+
     override fun registerOwner(@RequestBody @Valid registerDTO: RegisterDTO) {
         identityService.registerOwner(registerDTO)
     }
@@ -34,6 +42,11 @@ class IdentityController(val identityService: IdentityService) : IdentityApi {
 
     override fun getRestaurants(): List<UserRestaurantDTO> {
         return identityService.getRestaurants()
+    }
+
+    @ApiImplicitParam(name = API.URL_NAME, value = "Restaurant url name", paramType = "path", dataType = "string")
+    override fun getRestaurant(@ApiIgnore @PathVariable(API.URL_NAME) urlName: String): RestaurantLoginDTO {
+        return identityService.getRestaurant(urlName)
     }
 
     override fun getEmployees(): List<RestaurantEmployeeDTO> {

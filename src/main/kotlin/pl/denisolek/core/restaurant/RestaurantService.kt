@@ -11,6 +11,9 @@ class RestaurantService(private val restaurantRepository: RestaurantRepository) 
     fun findPartlyByName(name: String): List<Restaurant> =
             restaurantRepository.findPartlyByName(name)
 
+    fun findByUrlName(urlName: String): Restaurant? =
+            restaurantRepository.findByUrlName(urlName)
+
     fun save(restaurant: Restaurant) =
             restaurantRepository.save(restaurant)
 
