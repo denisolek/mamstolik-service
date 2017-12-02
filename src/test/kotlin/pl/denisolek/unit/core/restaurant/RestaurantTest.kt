@@ -181,4 +181,100 @@ class RestaurantTest {
 
         Assert.assertThat(actual, `is`(Restaurant.AvailabilityType.NOT_AVAILABLE))
     }
+
+    @Test
+    fun `getAvailableDates_ peopleNumber is 5, all spots taken at 14_00`() {
+        val restaurant = RestaurantStub.getRestaurantForAvailability()
+        val actual = restaurant.getAvailableDates(
+                date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
+                peopleNumber = 5
+        )
+
+        Assert.assertEquals(1, actual.size)
+        val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
+        Assert.assertEquals(36, actualValues.size)
+        Assert.assertFalse(actualValues.contains(LocalTime.of(13, 45)))
+        Assert.assertFalse(actualValues.contains(LocalTime.of(14, 0)))
+        Assert.assertFalse(actualValues.contains(LocalTime.of(14, 15)))
+    }
+
+    @Test
+    fun `getAvailableDates_ peopleNumber is 2, 2 people spot always free`() {
+        val restaurant = RestaurantStub.getRestaurantForAvailability()
+        restaurant.reservations.removeIf { it.peopleNumber == 2 }
+        val actual = restaurant.getAvailableDates(
+                date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
+                peopleNumber = 2
+        )
+
+        Assert.assertEquals(1, actual.size)
+        val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
+        Assert.assertEquals(39, actualValues.size)
+    }
+
+    @Test
+    fun `getAvailableDates_ peopleNumber is 2, all spots free`() {
+        val restaurant = RestaurantStub.getRestaurantForAvailability()
+        restaurant.reservations.clear()
+        val actual = restaurant.getAvailableDates(
+                date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
+                peopleNumber = 5
+        )
+
+        Assert.assertEquals(1, actual.size)
+        val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
+        Assert.assertEquals(39, actualValues.size)
+    }
+
+    @Test
+    fun `getAvailableDates_ peopleNumber is 1, all spots free`() {
+        val restaurant = RestaurantStub.getRestaurantForAvailability()
+        restaurant.reservations.clear()
+        val actual = restaurant.getAvailableDates(
+                date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
+                peopleNumber = 5
+        )
+
+        Assert.assertEquals(1, actual.size)
+        val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
+        Assert.assertEquals(39, actualValues.size)
+    }
+
+    @Test
+    fun `getAvailableDates_ peopleNumber is 5, 5 people spot always free`() {
+        val restaurant = RestaurantStub.getRestaurantForAvailability()
+        restaurant.reservations.removeIf { it.peopleNumber == 5 }
+        val actual = restaurant.getAvailableDates(
+                date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
+                peopleNumber = 5
+        )
+
+        Assert.assertEquals(1, actual.size)
+        val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
+        Assert.assertEquals(39, actualValues.size)
+    }
+
+    @Test
+    fun `getAvailableDates_ peopleNumber is 5, full month`() {
+        val restaurant = RestaurantStub.getRestaurantForAvailability()
+        restaurant.reservations.removeIf { it.peopleNumber == 5 }
+        val actual = restaurant.getAvailableDates(
+                date = LocalDateTime.of(LocalDate.of(2018, 11, 1), LocalTime.of(8, 0)),
+                peopleNumber = 5
+        )
+
+        Assert.assertEquals(25, actual.size)
+    }
+
+    @Test
+    fun `getAvailableDates_ peopleNumber is 6, full month`() {
+        val restaurant = RestaurantStub.getRestaurantForAvailability()
+        restaurant.reservations.removeIf { it.peopleNumber == 5 }
+        val actual = restaurant.getAvailableDates(
+                date = LocalDateTime.of(LocalDate.of(2018, 11, 1), LocalTime.of(8, 0)),
+                peopleNumber = 6
+        )
+
+        Assert.assertEquals(0, actual.size)
+    }
 }

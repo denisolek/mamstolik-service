@@ -5,19 +5,17 @@ import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.address.Address
 import pl.denisolek.core.menu.Menu
 import pl.denisolek.core.reservation.Reservation
-import pl.denisolek.core.reservation.Reservation.ReservationState.*
+import pl.denisolek.core.reservation.Reservation.ReservationState.CANCELED
 import pl.denisolek.core.schema.Floor
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.core.user.User
 import pl.denisolek.infrastructure.util.DateTimeInterval
 import pl.denisolek.infrastructure.util.isAfterOrEqual
 import pl.denisolek.infrastructure.util.isBeforeOrEqual
-import java.time.DayOfWeek
-import java.time.Duration
-import java.time.LocalDate
-import java.time.LocalDateTime
+import java.time.*
 import javax.persistence.*
 
+@Suppress("NON_EXHAUSTIVE_WHEN")
 @Entity
 data class Restaurant(
         @Id
@@ -88,6 +86,34 @@ data class Restaurant(
 
     fun getBusinessHoursForDate(date: LocalDate) = this.businessHours[date.dayOfWeek]
 
+    fun getAvailableDates(date: LocalDateTime, peopleNumber: Int): Map<LocalDate, List<LocalTime>> {
+        var searchDate = date
+        val result = mutableMapOf<LocalDate, List<LocalTime>>()
+        while (date.month == searchDate.month) {
+            var hours = getAvailableHours(searchDate, peopleNumber)
+            if (!hours.isEmpty()) {
+                if (date == searchDate) hours = hours.filter { it.isAfter(date.toLocalTime()) }
+                result.put(searchDate.toLocalDate(), hours)
+            }
+            searchDate = searchDate.plusDays(1)
+        }
+        return result
+    }
+
+    private fun getAvailableHours(date: LocalDateTime, peopleNumber: Int): List<LocalTime> {
+        val businessHours = getBusinessHoursForDate(date.toLocalDate()) ?: return listOf()
+        var searchTime = businessHours.openTime
+        val result = mutableListOf<LocalTime>()
+        while (searchTime.isBefore(businessHours.closeTime)) {
+            when (getAvailability(LocalDateTime.of(date.toLocalDate(), searchTime), peopleNumber)) {
+                AvailabilityType.AVAILABLE, AvailabilityType.POSSIBLE ->
+                    result.add(searchTime)
+            }
+            searchTime = searchTime.plus(Duration.ofMinutes(15))
+        }
+        return result
+    }
+
     fun getAvailability(date: LocalDateTime, peopleNumber: Int): AvailabilityType {
         if (!isOpenAt(date))
             return AvailabilityType.CLOSED
@@ -114,6 +140,18 @@ data class Restaurant(
                 .flatMap { it.spots }
 
         return this.spots.filterNot { takenSpots.contains(it) }
+    }
+
+    fun getTakenSpotsAt(searchDate: LocalDateTime): List<Spot> {
+
+        val searchDateInterval = object : DateTimeInterval {
+            override var startDateTime: LocalDateTime = searchDate
+            override var endDateTime: LocalDateTime = searchDate.plus(avgReservationTime)
+        }
+
+        return this.reservations
+                .filter { searchDateInterval.overlaps(it) && it.state != CANCELED }
+                .flatMap { it.spots }
     }
 
     fun getFloor(floorId: Int): Floor =
