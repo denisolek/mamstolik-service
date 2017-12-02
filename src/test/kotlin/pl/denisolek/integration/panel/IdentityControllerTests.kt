@@ -1150,6 +1150,7 @@ class IdentityControllerTests {
     private fun `createRestaurant assert restaurant`(createdRestaurant: Restaurant) {
         assertNotNull(createdRestaurant)
         assertEquals("New Restaurant", createdRestaurant.name)
+        assertEquals("new.restaurant", createdRestaurant.urlName)
         assertEquals(RESTAURANT, createdRestaurant.type)
         assertNotNull(createdRestaurant.owner)
         assertEquals(1, createdRestaurant.owner?.id)
