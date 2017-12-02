@@ -6,6 +6,7 @@ import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.guest.restaurant.DTO.RestaurantSearchDTO
 import pl.denisolek.guest.restaurant.DTO.SearchDTO
+import pl.denisolek.guest.restaurant.DTO.SpotInfoDTO
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -29,4 +30,19 @@ class GuestRestaurantService(val restaurantService: RestaurantService) {
 
     fun getRestaurantAvailableDates(restaurant: Restaurant, date: LocalDateTime, peopleNumber: Int): Map<LocalDate, List<LocalTime>> =
             restaurant.getAvailableDates(date, peopleNumber)
+
+    fun getRestaurantAvailableSpots(restaurant: Restaurant, date: LocalDateTime, peopleNumber: Int): List<SpotInfoDTO> {
+        if (!restaurant.isOpenAt(date))
+            return restaurant.spots.map { SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.NOT_AVAILABLE) }
+
+        val takenSpots = restaurant.getTakenSpotsAt(date)
+        return restaurant.spots.map {
+            when {
+                takenSpots.contains(it) -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.NOT_AVAILABLE)
+                it.capacity >= peopleNumber && it.minPeopleNumber <= peopleNumber -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.AVAILABLE)
+                it.capacity >= peopleNumber && it.minPeopleNumber > peopleNumber -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.POSSIBLE)
+                else -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.NOT_AVAILABLE)
+            }
+        }
+    }
 }
