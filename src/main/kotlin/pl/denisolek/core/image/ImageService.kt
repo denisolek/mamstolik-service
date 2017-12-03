@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.restaurant.Restaurant
-import pl.denisolek.core.user.User
 import pl.denisolek.infrastructure.AVATAR
 import pl.denisolek.infrastructure.FULL_SIZE
 import pl.denisolek.infrastructure.THUMBNAIL

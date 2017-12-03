@@ -1,14 +1,11 @@
 package pl.denisolek.panel.image
 
-import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
-import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.image.Image
 import pl.denisolek.core.image.ImageService
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
-import pl.denisolek.infrastructure.util.isImageType
 import pl.denisolek.panel.image.DTO.ImageDTO
 
 @Service
