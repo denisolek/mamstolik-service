@@ -1,5 +1,6 @@
 package pl.denisolek.panel.employee.DTO
 
+import pl.denisolek.core.security.Authority
 import pl.denisolek.core.user.User
 
 data class EmployeeDTO(
@@ -8,17 +9,25 @@ data class EmployeeDTO(
         var lastName: String,
         var email: String,
         var phoneNumber: String,
-        var title: String
+        var role: Authority.Role,
+        var avatar: String? = null
 ) {
     companion object {
-        fun fromUser(user: User) =
+        fun fromUser(user: User, isOwner: Boolean = false) =
                 EmployeeDTO(
                         id = user.id,
                         firstName = user.firstName!!,
                         lastName = user.lastName!!,
-                        email = user.workEmail!!,
+                        email = when {
+                            isOwner -> user.email
+                            else -> user.workEmail!!
+                        },
                         phoneNumber = user.phoneNumber!!,
-                        title = user.getTitle()
+                        role = when {
+                            isOwner -> Authority.Role.ROLE_OWNER
+                            else -> user.getRole()
+                        },
+                        avatar = user.avatar?.uuid
                 )
     }
 }

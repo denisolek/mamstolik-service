@@ -8,6 +8,7 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.runners.MockitoJUnitRunner
 import org.springframework.security.crypto.password.PasswordEncoder
+import pl.denisolek.core.image.ImageService
 import pl.denisolek.core.user.UserService
 import pl.denisolek.panel.employee.DTO.EmployeeDTO
 import pl.denisolek.panel.employee.PanelEmployeeService
@@ -23,6 +24,9 @@ class PanelEmployeeServiceTests {
 
     @Mock
     private val passwordEncoderMock = mock<PasswordEncoder>()
+
+    @Mock
+    private val imageService = mock<ImageService>()
 
     @Test
     fun `getEmployees_ `() {

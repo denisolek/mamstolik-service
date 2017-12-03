@@ -3,10 +3,11 @@ package pl.denisolek.core.restaurant
 import org.springframework.http.HttpStatus
 import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.address.Address
+import pl.denisolek.core.floor.Floor
+import pl.denisolek.core.image.Image
 import pl.denisolek.core.menu.Menu
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.reservation.Reservation.ReservationState.CANCELED
-import pl.denisolek.core.floor.Floor
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.core.user.User
 import pl.denisolek.infrastructure.util.DateTimeInterval
@@ -15,7 +16,6 @@ import pl.denisolek.infrastructure.util.isBeforeOrEqual
 import java.time.*
 import javax.persistence.*
 
-@Suppress("NON_EXHAUSTIVE_WHEN")
 @Entity
 data class Restaurant(
         @Id
@@ -45,6 +45,12 @@ data class Restaurant(
 
         @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         var reservations: MutableList<Reservation> = mutableListOf(),
+
+        @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+        var images: MutableList<Image> = mutableListOf(),
+
+        @OneToOne(cascade = arrayOf(CascadeType.ALL))
+        var mainImage: Image? = null,
 
         @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         var spots: MutableList<Spot> = mutableListOf(),

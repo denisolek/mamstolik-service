@@ -39,6 +39,10 @@ spring:
         username: ${MAIL_USERNAME}
     rabbitmq:
         host: rabbitmq
+    http:
+        multipart:
+            max-file-size: 3Mb
+            max-request-size: 3Mb
 
 # Swagger
 springfox:

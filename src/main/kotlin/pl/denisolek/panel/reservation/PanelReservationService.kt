@@ -24,6 +24,7 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
                               private val customerService: CustomerService) {
 
     fun addReservation(restaurant: Restaurant, createReservationDTO: PanelCreateReservationDTO): PanelReservationsDTO {
+        validateReservationTime(createReservationDTO)
         val reservationSpots = findReservationSpots(createReservationDTO, restaurant)
         if (!allSpotsAvailable(restaurant, createReservationDTO, reservationSpots))
             throw ServiceException(HttpStatus.BAD_REQUEST, "Some of provided spots at taken at ${createReservationDTO.dateTime}.")
@@ -36,6 +37,11 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
         ))
         restaurant.reservations.add(reservation)
         return PanelReservationsDTO.createPanelReservationDTO(restaurant, createReservationDTO.dateTime.toLocalDate())
+    }
+
+    private fun validateReservationTime(createReservationDTO: PanelCreateReservationDTO) {
+        if (createReservationDTO.dateTime.toLocalTime().minute % 15 != 0)
+            throw ServiceException(HttpStatus.BAD_REQUEST, "You can make only at 0, 15, 30, 45.")
     }
 
     private fun allSpotsAvailable(restaurant: Restaurant, createReservationDTO: PanelCreateReservationDTO, reservationSpots: MutableList<Spot>) =
@@ -59,6 +65,7 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
             PanelReservationsDTO.createPanelReservationDTO(restaurant, date)
 
     fun editReservation(restaurant: Restaurant, reservation: Reservation, createReservationDTO: PanelCreateReservationDTO): PanelReservationsDTO {
+        validateReservationTime(createReservationDTO)
         validateReservationAssignment(reservation, restaurant)
         val reservationSpots = findReservationSpots(createReservationDTO, restaurant)
         if (!allSpotsAvailable(restaurant, createReservationDTO, reservationSpots))

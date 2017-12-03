@@ -22,8 +22,8 @@ import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import pl.denisolek.Exception.ServiceException
-import pl.denisolek.core.restaurant.RestaurantRepository
 import pl.denisolek.core.floor.Floor
+import pl.denisolek.core.restaurant.RestaurantRepository
 import pl.denisolek.core.schema.SchemaItem
 import pl.denisolek.core.schema.SchemaItem.ItemType.TOILET
 import pl.denisolek.core.schema.SchemaItem.TableType.EIGHT_ROUND

@@ -3,10 +3,10 @@ package pl.denisolek.panel.schema
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import pl.denisolek.Exception.ServiceException
-import pl.denisolek.core.restaurant.Restaurant
-import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.core.floor.Floor
 import pl.denisolek.core.floor.FloorService
+import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.core.schema.SchemaItem
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.core.spot.SpotService

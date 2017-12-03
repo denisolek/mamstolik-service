@@ -77,6 +77,8 @@ dependencies {
     compileOnly('org.projectlombok:lombok')
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+
+    compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
 }
 
 dependencies {

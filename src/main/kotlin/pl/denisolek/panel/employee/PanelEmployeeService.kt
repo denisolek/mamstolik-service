@@ -3,21 +3,28 @@ package pl.denisolek.panel.employee
 import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.web.multipart.MultipartFile
 import pl.denisolek.Exception.ServiceException
+import pl.denisolek.core.image.ImageService
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.security.Authority
 import pl.denisolek.core.security.Authority.Role.ROLE_EMPLOYEE
 import pl.denisolek.core.security.Authority.Role.ROLE_MANAGER
 import pl.denisolek.core.user.User
 import pl.denisolek.core.user.UserService
+import pl.denisolek.panel.employee.DTO.AvatarDTO
 import pl.denisolek.panel.employee.DTO.CreateEmployeeDTO
 import pl.denisolek.panel.employee.DTO.EmployeeDTO
 
 @Service
 class PanelEmployeeService(private val userService: UserService,
-                           private val passwordEncoder: PasswordEncoder) {
+                           private val passwordEncoder: PasswordEncoder,
+                           private val imageService: ImageService) {
     fun getEmployees(restaurant: Restaurant): List<EmployeeDTO> {
-        return restaurant.employees.map { EmployeeDTO.fromUser(it) } ?: listOf()
+        return listOf(
+                restaurant.employees.map { EmployeeDTO.fromUser(it) },
+                listOf(EmployeeDTO.fromUser(restaurant.owner!!, true))
+        ).flatten()
     }
 
     fun addEmployee(createEmployeeDTO: CreateEmployeeDTO, restaurant: Restaurant): EmployeeDTO {
@@ -50,5 +57,21 @@ class PanelEmployeeService(private val userService: UserService,
         )
 
         return EmployeeDTO.fromUser(userService.save(updatedEmployee))
+    }
+
+    fun uploadAvatar(restaurant: Restaurant, user: User, avatar: MultipartFile): AvatarDTO {
+        imageService.validateImage(avatar)
+        removeAvatarIfExists(user)
+        val uuidName = imageService.generateUUID()
+        imageService.saveAvatar(uuidName, avatar)
+        val newImage = imageService.saveImage(avatar, uuidName)
+        user.avatar = newImage
+        userService.save(user)
+        return AvatarDTO.fromImage(newImage)
+    }
+
+    private fun removeAvatarIfExists(user: User) {
+        if (user.avatar?.uuid != null)
+            imageService.removeAvatar(user.avatar!!.uuid)
     }
 }

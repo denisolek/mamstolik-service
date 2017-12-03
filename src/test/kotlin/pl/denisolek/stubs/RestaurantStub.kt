@@ -85,6 +85,10 @@ class RestaurantStub {
 
         private fun getOwner(): User =
                 User(
+                        id = 1,
+                        firstName = "firstName",
+                        lastName = "lastName",
+                        phoneNumber = "111111111",
                         username = "msOwner",
                         email = "owner@mamstolik.pl",
                         accountState = User.AccountState.ACTIVE,

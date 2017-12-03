@@ -3,8 +3,7 @@ package pl.denisolek.integration.panel
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.whenever
 import org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric
-import org.hamcrest.Matchers.`is`
-import org.hamcrest.Matchers.instanceOf
+import org.hamcrest.Matchers.*
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -838,14 +837,16 @@ class IdentityControllerTests {
                 .andExpect(status().isOk)
                 .andExpect(jsonPath("$[0].id", `is`(11)))
                 .andExpect(jsonPath("$[0].username", `is`("ms100002")))
-                .andExpect(jsonPath("$[0].fullName", `is`("Krystian Nowicki")))
-                .andExpect(jsonPath("$[0].title", `is`("Menedżer")))
-                .andExpect(jsonPath("$[0].avatar", `is`("avatar link")))
+                .andExpect(jsonPath("$[0].firstName", `is`("Krystian")))
+                .andExpect(jsonPath("$[0].lastName", `is`("Nowicki")))
+                .andExpect(jsonPath("$[0].role", `is`("ROLE_MANAGER")))
+                .andExpect(jsonPath("$[0].avatar", isEmptyOrNullString()))
                 .andExpect(jsonPath("$[1].id", `is`(12)))
                 .andExpect(jsonPath("$[1].username", `is`("ms100003")))
-                .andExpect(jsonPath("$[1].fullName", `is`("Magdalena Karpińska")))
-                .andExpect(jsonPath("$[1].title", `is`("Pracownik")))
-                .andExpect(jsonPath("$[1].avatar", `is`("avatar link")))
+                .andExpect(jsonPath("$[1].firstName", `is`("Magdalena")))
+                .andExpect(jsonPath("$[1].lastName", `is`("Karpińska")))
+                .andExpect(jsonPath("$[1].role", `is`("ROLE_EMPLOYEE")))
+                .andExpect(jsonPath("$[1].avatar", isEmptyOrNullString()))
     }
 
     @Test
