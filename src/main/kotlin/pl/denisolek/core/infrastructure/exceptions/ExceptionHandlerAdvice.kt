@@ -1,6 +1,7 @@
 package pl.denisolek.core.infrastructure.exceptions
 
 import javassist.tools.web.BadHttpRequest
+import org.apache.tomcat.util.http.fileupload.FileUploadBase
 import org.slf4j.LoggerFactory
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.expression.AccessException
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.multipart.MultipartException
+import pl.denisolek.Exception.ResponseTemplate
 import pl.denisolek.Exception.ServiceException
 import javax.persistence.EntityExistsException
 import javax.persistence.EntityNotFoundException
@@ -28,6 +31,14 @@ class ExceptionHandlerAdvice {
     fun handleException(e: ServiceException): ResponseEntity<*> {
         ex = e
         log.error("$e.stackTrace $e.cause?.message")
+        return ResponseEntity.status(e.httpStatus).body(e.body)
+    }
+
+    @ExceptionHandler(MultipartException::class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    fun requestHandlerMultipartException(): ResponseEntity<*> {
+        val e = ServiceException(HttpStatus.BAD_REQUEST, "Invalid file size.")
         return ResponseEntity.status(e.httpStatus).body(e.body)
     }
 

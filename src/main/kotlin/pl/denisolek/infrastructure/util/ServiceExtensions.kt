@@ -1,6 +1,8 @@
 package pl.denisolek.infrastructure.util
 
+import org.springframework.http.HttpStatus
 import org.springframework.web.multipart.MultipartFile
+import pl.denisolek.Exception.ServiceException
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -44,7 +46,11 @@ fun LocalDateTime.isInsideInclusiveEnd(startTime: LocalDateTime, endTime: LocalD
         = this.isAfter(startTime) && this.isBeforeOrEqual(endTime)
 
 fun MultipartFile.getExtension() =
-        this.originalFilename.substring(this.originalFilename.lastIndexOf("."), this.originalFilename.length)
+        try {
+            this.originalFilename.substring(this.originalFilename.lastIndexOf("."), this.originalFilename.length)
+        } catch (e: IndexOutOfBoundsException) {
+            throw ServiceException(HttpStatus.BAD_REQUEST, "File without extension.")
+        }
 
 fun MultipartFile.isImageType() =
         IMAGE_TYPES.contains(this.getExtension().toLowerCase())
