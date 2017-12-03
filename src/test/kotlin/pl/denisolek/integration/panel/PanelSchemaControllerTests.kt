@@ -835,12 +835,10 @@ class PanelSchemaControllerTests {
                 .andExpect(status().isOk)
                 .andReturn()
 
-        val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
-        val editedSpot = actual.tables.find { it.spotInfo.id == 1 }?.spotInfo
-        assertNotNull(editedSpot)
-        assertEquals(10000, editedSpot?.number)
-        assertEquals(50, editedSpot?.capacity)
-        assertEquals(25, editedSpot?.minPeopleNumber)
+        val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaSpotInfoDTO::class.java)
+        assertEquals(10000, actual.number)
+        assertEquals(50, actual.capacity)
+        assertEquals(25, actual.minPeopleNumber)
     }
 
     @Test
@@ -871,13 +869,12 @@ class PanelSchemaControllerTests {
     fun `deleteSpot_ correct data`() {
         val result = mvc.perform(delete(SPOTS_ID_PATH, 1, 2)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk)
+                .andExpect(status().isNoContent)
                 .andReturn()
 
-        val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
-        val removedSchemaItem = actual.tables.find { it.id == 2 }
-        val removedSpot = actual.tables.find { it.spotInfo.id == 2 }?.spotInfo
-        assertNull(removedSchemaItem)
-        assertNull(removedSpot)
+        val restaurant = restaurantRepository.findOne(1)
+        restaurant.spots.forEach {
+            Assert.assertFalse(it.id == 2)
+        }
     }
 }

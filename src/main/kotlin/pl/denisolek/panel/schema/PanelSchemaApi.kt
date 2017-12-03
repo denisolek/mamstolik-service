@@ -61,8 +61,9 @@ interface PanelSchemaApi {
                    @RequestBody @Valid spotInfoDTO: SchemaSpotInfoDTO): SchemaSpotInfoDTO
 
     @DeleteMapping(SPOTS_ID_PATH)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun deleteSpot(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                   @ApiIgnore @PathVariable(SPOT_ID) spotId: Spot): SchemaDTO
+                   @ApiIgnore @PathVariable(SPOT_ID) spotId: Spot)
 }

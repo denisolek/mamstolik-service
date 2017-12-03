@@ -63,7 +63,7 @@ class PanelSchemaService(val restaurantService: RestaurantService,
         return SchemaSpotInfoDTO.fromSpot(spotService.save(updatedSpot))
     }
 
-    fun deleteSpot(restaurant: Restaurant, spot: Spot): SchemaDTO {
+    fun deleteSpot(restaurant: Restaurant, spot: Spot) {
         if (spot.haveReservationsInFuture())
             throw ServiceException(HttpStatus.CONFLICT, "This spot have reservations in future")
 
@@ -74,7 +74,7 @@ class PanelSchemaService(val restaurantService: RestaurantService,
         restaurant.floors.map {
             it.schemaItems.removeIf { it.spot?.id == spot.id }
         }
-        return SchemaDTO(restaurantService.save(restaurant))
+        restaurantService.save(restaurant)
     }
 
     private fun getUpdatedItems(items: List<SchemaItem>, restaurantTables: MutableList<SchemaItem>): Map<Int?, List<SchemaItem?>> {
