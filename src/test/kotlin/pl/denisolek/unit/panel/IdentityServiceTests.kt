@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.email.EmailService
 import pl.denisolek.core.restaurant.RestaurantService
+import pl.denisolek.core.security.Authority
 import pl.denisolek.core.user.User
 import pl.denisolek.core.user.UserService
 import pl.denisolek.infrastructure.config.security.AuthorizationService
@@ -205,7 +206,9 @@ class IdentityServiceTests {
         Mockito.`when`(authorizationService.getCurrentUser()).thenReturn(expectedUser)
 
         val employees = identityService.getEmployees()
-        Assert.assertEquals(0, employees.size)
+        Assert.assertEquals(1, employees.size)
+        Assert.assertEquals("msOwner", employees[0].username)
+        Assert.assertEquals(Authority.Role.ROLE_OWNER, employees[0].role)
     }
 
     @Test
@@ -215,13 +218,19 @@ class IdentityServiceTests {
         Mockito.`when`(authorizationService.getCurrentUser()).thenReturn(expectedUser)
 
         val employees = identityService.getEmployees()
-        Assert.assertEquals(1, employees.size)
+        Assert.assertEquals(2, employees.size)
         Assert.assertEquals(10, employees[0].id)
         Assert.assertEquals("Stub", employees[0].firstName)
         Assert.assertEquals("One", employees[0].lastName)
         Assert.assertEquals("StubOne", employees[0].username)
-        Assert.assertEquals("Pracownik", employees[0].role)
-        Assert.assertEquals("avatar link", employees[0].avatar)
+        Assert.assertEquals(Authority.Role.ROLE_EMPLOYEE, employees[0].role)
+        Assert.assertEquals(null, employees[0].avatar)
+        Assert.assertEquals(1, employees[1].id)
+        Assert.assertEquals("firstName", employees[1].firstName)
+        Assert.assertEquals("lastName", employees[1].lastName)
+        Assert.assertEquals("msOwner", employees[1].username)
+        Assert.assertEquals(Authority.Role.ROLE_OWNER, employees[1].role)
+        Assert.assertEquals(null, employees[1].avatar)
     }
 
     @Test
@@ -230,19 +239,21 @@ class IdentityServiceTests {
         Mockito.`when`(authorizationService.getCurrentUser()).thenReturn(expectedUser)
 
         val employees = identityService.getEmployees()
-        Assert.assertEquals(4, employees.size)
+        Assert.assertEquals(5, employees.size)
         Assert.assertEquals(10, employees[0].id)
         Assert.assertEquals("Stub", employees[0].firstName)
         Assert.assertEquals("One", employees[0].lastName)
         Assert.assertEquals(20, employees[1].id)
         Assert.assertEquals("Stub", employees[1].firstName)
-        Assert.assertEquals("Two", employees[1].firstName)
+        Assert.assertEquals("Two", employees[1].lastName)
         Assert.assertEquals(30, employees[2].id)
         Assert.assertEquals("Stub", employees[2].firstName)
         Assert.assertEquals("Three", employees[2].lastName)
         Assert.assertEquals(40, employees[3].id)
         Assert.assertEquals("Stub", employees[3].firstName)
         Assert.assertEquals("Four", employees[3].lastName)
-
+        Assert.assertEquals(1, employees[4].id)
+        Assert.assertEquals("firstName", employees[4].firstName)
+        Assert.assertEquals("lastName", employees[4].lastName)
     }
 }
