@@ -1,4 +1,4 @@
-package pl.denisolek.core.images
+package pl.denisolek.core.image
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component

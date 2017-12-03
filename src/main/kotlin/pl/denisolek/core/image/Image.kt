@@ -1,4 +1,4 @@
-package pl.denisolek.core.images
+package pl.denisolek.core.image
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue

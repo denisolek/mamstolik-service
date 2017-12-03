@@ -1,4 +1,4 @@
-package pl.denisolek.core.images
+package pl.denisolek.core.image
 
 import org.springframework.stereotype.Service
 
