@@ -217,9 +217,10 @@ class IdentityServiceTests {
         val employees = identityService.getEmployees()
         Assert.assertEquals(1, employees.size)
         Assert.assertEquals(10, employees[0].id)
-        Assert.assertEquals("Stub One", employees[0].fullName)
+        Assert.assertEquals("Stub", employees[0].firstName)
+        Assert.assertEquals("One", employees[0].lastName)
         Assert.assertEquals("StubOne", employees[0].username)
-        Assert.assertEquals("Pracownik", employees[0].title)
+        Assert.assertEquals("Pracownik", employees[0].role)
         Assert.assertEquals("avatar link", employees[0].avatar)
     }
 
@@ -231,12 +232,17 @@ class IdentityServiceTests {
         val employees = identityService.getEmployees()
         Assert.assertEquals(4, employees.size)
         Assert.assertEquals(10, employees[0].id)
-        Assert.assertEquals("Stub One", employees[0].fullName)
+        Assert.assertEquals("Stub", employees[0].firstName)
+        Assert.assertEquals("One", employees[0].lastName)
         Assert.assertEquals(20, employees[1].id)
-        Assert.assertEquals("Stub Two", employees[1].fullName)
+        Assert.assertEquals("Stub", employees[1].firstName)
+        Assert.assertEquals("Two", employees[1].firstName)
         Assert.assertEquals(30, employees[2].id)
-        Assert.assertEquals("Stub Three", employees[2].fullName)
+        Assert.assertEquals("Stub", employees[2].firstName)
+        Assert.assertEquals("Three", employees[2].lastName)
         Assert.assertEquals(40, employees[3].id)
-        Assert.assertEquals("Stub Four", employees[3].fullName)
+        Assert.assertEquals("Stub", employees[3].firstName)
+        Assert.assertEquals("Four", employees[3].lastName)
+
     }
 }
