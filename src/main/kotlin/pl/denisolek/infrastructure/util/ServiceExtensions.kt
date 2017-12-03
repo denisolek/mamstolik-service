@@ -1,9 +1,11 @@
 package pl.denisolek.infrastructure.util
 
+import org.springframework.web.multipart.MultipartFile
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
+const val IMAGE_TYPES = ".jpg,.png,.jpeg"
 
 fun LocalDate.isBeforeOrEqual(localDate: LocalDate)
         = !this.isAfter(localDate)
@@ -40,3 +42,9 @@ fun LocalDateTime.isInsideInclusiveStart(startTime: LocalDateTime, endTime: Loca
 
 fun LocalDateTime.isInsideInclusiveEnd(startTime: LocalDateTime, endTime: LocalDateTime)
         = this.isAfter(startTime) && this.isBeforeOrEqual(endTime)
+
+fun MultipartFile.getExtension() =
+        this.originalFilename.substring(this.originalFilename.lastIndexOf("."), this.originalFilename.length)
+
+fun MultipartFile.isImageType() =
+        IMAGE_TYPES.contains(this.getExtension().toLowerCase())
