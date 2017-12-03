@@ -7,10 +7,13 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import pl.denisolek.Exception.ServiceException
+import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.user.User
 import pl.denisolek.infrastructure.AVATAR
 import pl.denisolek.infrastructure.FULL_SIZE
 import pl.denisolek.infrastructure.THUMBNAIL
 import pl.denisolek.infrastructure.TMP
+import pl.denisolek.infrastructure.util.isImageType
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
@@ -65,6 +68,17 @@ class ImageService(private val imageRepository: ImageRepository,
         Files.copy(thumbnail.inputStream(), thumbnailLocation.resolve("$uuidName.png"))
     }
 
+    fun saveAvatar(uuidName: String, image: MultipartFile) {
+        val thumbnail = File("/$TMP/${AVATAR}_$uuidName.png")
+        resize(image, thumbnail, 200, 200)
+        Files.copy(thumbnail.inputStream(), avatarLocation.resolve("$uuidName.png"))
+    }
+
+    fun removeAvatar(uuid: String) {
+        val avatar = File(avatarLocation.resolve(uuid + ".png").toString())
+        avatar.delete()
+    }
+
     fun loadAsResource(imageType: String, uuid: String): Resource {
         val image = imageRepository.findByUuid(uuid) ?: throw ServiceException(HttpStatus.NOT_FOUND, "Image not found")
         val file = when (imageType) {
@@ -79,5 +93,18 @@ class ImageService(private val imageRepository: ImageRepository,
             (resource.exists() || resource.isReadable) -> resource
             else -> throw ServiceException(HttpStatus.NOT_FOUND, "Image not found")
         }
+    }
+
+    fun validateImage(image: MultipartFile) {
+        if (image.isEmpty) throw ServiceException(HttpStatus.BAD_REQUEST, "Image is empty.")
+        if (!image.isImageType()) throw ServiceException(HttpStatus.METHOD_NOT_ALLOWED, "Wrong image type.")
+    }
+
+    fun saveImage(image: MultipartFile, uuidName: String, restaurant: Restaurant? = null): Image {
+        return imageRepository.save(Image(
+                fileName = image.originalFilename,
+                uuid = uuidName,
+                restaurant = restaurant
+        ))
     }
 }
