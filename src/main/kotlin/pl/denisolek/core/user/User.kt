@@ -1,5 +1,6 @@
 package pl.denisolek.core.user
 
+import pl.denisolek.core.image.Image
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.security.Authority
 import javax.persistence.*
@@ -42,7 +43,10 @@ data class User(
         var ownedRestaurants: MutableList<Restaurant> = mutableListOf(),
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        var restaurant: Restaurant? = null
+        var restaurant: Restaurant? = null,
+
+        @OneToOne(cascade = arrayOf(CascadeType.ALL))
+        var avatar: Image? = null
 ) {
 
     enum class AccountState {
@@ -53,13 +57,13 @@ data class User(
         BANNED
     }
 
-    fun getTitle() =
+    fun getRole() =
             when {
                 this.authorities.contains(Authority(Authority.Role.ROLE_OWNER)) ->
-                    Authority.Role.ROLE_OWNER.title!!
+                    Authority.Role.ROLE_OWNER
                 this.authorities.contains(Authority(Authority.Role.ROLE_MANAGER)) ->
-                    Authority.Role.ROLE_MANAGER.title!!
+                    Authority.Role.ROLE_MANAGER
                 else ->
-                    Authority.Role.ROLE_EMPLOYEE.title!!
+                    Authority.Role.ROLE_EMPLOYEE
             }
 }

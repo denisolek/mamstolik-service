@@ -94,7 +94,11 @@ class IdentityService(private val userService: UserService,
 
     fun getEmployees(): List<RestaurantEmployeeDTO> {
         val user = authorizationService.getCurrentUser()
-        return RestaurantEmployeeDTO.fromEmployees(user.restaurant?.employees) ?: listOf()
+        val restaurant = user.restaurant!!
+        return listOf(
+                RestaurantEmployeeDTO.fromEmployees(restaurant.employees),
+                listOf(RestaurantEmployeeDTO.getOwner(restaurant.owner!!))
+        ).flatten()
     }
 
     fun createRestaurant(createRestaurantDTO: CreateRestaurantDTO) {
