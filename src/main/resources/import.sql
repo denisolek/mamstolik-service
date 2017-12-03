@@ -52,15 +52,15 @@ VALUES
 INSERT INTO public.menu DEFAULT VALUES;
 
 -- add users
-INSERT INTO public.user (username, email, first_name, last_name, password, company_name, account_state)
+INSERT INTO public.user (username, email, phone_number, first_name, last_name, password, company_name, account_state)
 VALUES
-  ('ms100000', 'test@test.pl', 'Tomasz', 'Jabłoński', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'MamStolik', 'ACTIVE'),
-  ('ms200000', 'przemyslaw.pawlicki@gmail.com', 'Przemysław', 'Pawlicki', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE'),
-  ('ms300000', 'bartosz.zmarzlik@gmail.com', 'Bartosz', 'Zmarzlik', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE'),
-  ('ms400000', 'janusz.kolodziej@gmail.com', 'Janusz', 'Kołodziej', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE'),
-  ('ms500000', 'bartosz.smektala@gmail.com', 'Bartosz', 'Smektała', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE'),
-  ('ms600000', 'martyna.wierzbicka@gmail.com', 'Martyna', 'Wierzbicka', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE'),
-  ('ms700000', 'ofir.vidavsky@gmail.com', 'Ofir', 'Vidavsky', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE');
+  ('ms100000', 'test@test.pl', '509201391', 'Tomasz', 'Jabłoński', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'MamStolik', 'ACTIVE'),
+  ('ms200000', 'przemyslaw.pawlicki@gmail.com', '602918372', 'Przemysław', 'Pawlicki', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE'),
+  ('ms300000', 'bartosz.zmarzlik@gmail.com', '729392837', 'Bartosz', 'Zmarzlik', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE'),
+  ('ms400000', 'janusz.kolodziej@gmail.com', '726349182', 'Janusz', 'Kołodziej', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE'),
+  ('ms500000', 'bartosz.smektala@gmail.com', '692837163', 'Bartosz', 'Smektała', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE'),
+  ('ms600000', 'martyna.wierzbicka@gmail.com', '613283756', 'Martyna', 'Wierzbicka', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE'),
+  ('ms700000', 'ofir.vidavsky@gmail.com', '722351461', 'Ofir', 'Vidavsky', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'Firmowa firma', 'ACTIVE');
 
 INSERT INTO public.user (username, email, first_name, last_name, password, account_state)
 VALUES
@@ -418,7 +418,7 @@ VALUES
 -- add reservations
 INSERT INTO public.reservation (people_number, start_date_time, end_date_time, duration, state, customer_id, restaurant_id, verification_code, is_verified)
 VALUES
-  (5, '2017-10-18 14:50:00.000', '2017-10-18 15:20:00.000', 1800, 0, 1, 1, 314251, TRUE),
+  (5, '2017-10-18 14:45:00.000', '2017-10-18 15:15:00.000', 1800, 0, 1, 1, 314251, TRUE),
   (2, '2017-10-18 15:30:00.000', '2017-10-18 16:30:00.000', 3600, 0, 2, 1, 314251, TRUE),
   (3, '2018-10-18 15:30:00.000', '2018-10-18 16:30:00.000', 3600, 0, 2, 1, 314251, TRUE),
   (3, '2018-10-19 15:30:00.000', '2018-10-19 16:30:00.000', 3600, 0, 2, 1, 314251, TRUE),
