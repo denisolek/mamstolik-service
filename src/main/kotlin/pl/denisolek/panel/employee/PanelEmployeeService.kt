@@ -17,10 +17,10 @@ import pl.denisolek.panel.employee.DTO.EmployeeDTO
 class PanelEmployeeService(private val userService: UserService,
                            private val passwordEncoder: PasswordEncoder) {
     fun getEmployees(restaurant: Restaurant): List<EmployeeDTO> {
-        return restaurant.employees?.map { EmployeeDTO.fromUser(it) } ?: listOf()
+        return restaurant.employees.map { EmployeeDTO.fromUser(it) } ?: listOf()
     }
 
-    fun addEmployee(createEmployeeDTO: CreateEmployeeDTO, restaurant: Restaurant): List<EmployeeDTO> {
+    fun addEmployee(createEmployeeDTO: CreateEmployeeDTO, restaurant: Restaurant): EmployeeDTO {
         if (createEmployeeDTO.pin.isNullOrBlank()) throw ServiceException(HttpStatus.BAD_REQUEST, "Only digits accepted in pin (4-10 length)")
         val username = userService.generateUsername()
         val newEmployee = CreateEmployeeDTO.toUser(createEmployeeDTO).copy(
@@ -29,13 +29,11 @@ class PanelEmployeeService(private val userService: UserService,
                 password = passwordEncoder.encode(createEmployeeDTO.pin),
                 workPlace = restaurant
         )
-        userService.save(newEmployee)
-        return restaurant.employees?.map {
-            EmployeeDTO.fromUser(it)
-        } ?: listOf()
+
+        return EmployeeDTO.fromUser(userService.save(newEmployee))
     }
 
-    fun updateEmployee(createEmployeeDTO: CreateEmployeeDTO, restaurant: Restaurant, employee: User): List<EmployeeDTO> {
+    fun updateEmployee(createEmployeeDTO: CreateEmployeeDTO, restaurant: Restaurant, employee: User): EmployeeDTO {
         val updatedEmployee = employee.copy(
                 firstName = createEmployeeDTO.firstName,
                 lastName = createEmployeeDTO.lastName,
@@ -50,9 +48,7 @@ class PanelEmployeeService(private val userService: UserService,
                     else -> setOf(Authority(ROLE_EMPLOYEE))
                 }
         )
-        userService.save(updatedEmployee)
-        return restaurant.employees?.map {
-            EmployeeDTO.fromUser(it)
-        } ?: listOf()
+
+        return EmployeeDTO.fromUser(userService.save(updatedEmployee))
     }
 }

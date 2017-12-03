@@ -25,7 +25,7 @@ class PanelEmployeeController(val panelEmployeeService: PanelEmployeeService) : 
 
     @ApiImplicitParam(name = API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "integer")
     override fun addEmployee(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
-                             @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO): List<EmployeeDTO> {
+                             @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO): EmployeeDTO {
         return panelEmployeeService.addEmployee(createEmployeeDTO, restaurantId)
     }
 
@@ -35,7 +35,7 @@ class PanelEmployeeController(val panelEmployeeService: PanelEmployeeService) : 
     )
     override fun updateEmployee(@ApiIgnore @PathVariable(PanelEmployeeController.API.RESTAURANT_ID) restaurantId: Restaurant,
                                 @ApiIgnore @PathVariable(PanelEmployeeController.API.EMPLOYEE_ID) employeeId: User,
-                                @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO): List<EmployeeDTO> {
+                                @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO): EmployeeDTO {
         return panelEmployeeService.updateEmployee(createEmployeeDTO, restaurantId, employeeId)
     }
 }

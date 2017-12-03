@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.restaurant.RestaurantRepository
-import pl.denisolek.core.schema.Floor
+import pl.denisolek.core.floor.Floor
 import pl.denisolek.core.schema.SchemaItem
 import pl.denisolek.core.schema.SchemaItem.ItemType.TOILET
 import pl.denisolek.core.schema.SchemaItem.TableType.EIGHT_ROUND
@@ -91,7 +91,7 @@ class PanelSchemaControllerTests {
 
     @Test
     fun `addFloor_ correct data`() {
-        val floorDTOStub = FloorDTO("Stubbed name")
+        val floorDTOStub = FloorDTO(name = "Stubbed name")
         val body = convertObjectToJsonBytes(floorDTOStub)
         mvc.perform(post(FLOORS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -120,19 +120,13 @@ class PanelSchemaControllerTests {
     fun `deleteFloor_ without reservations in future`() {
         val user = userRepository.findOne(1)
         doReturn(user).whenever(authorizationService).getCurrentUser()
-        val result = mvc.perform(delete(FLOORS_ID_PATH, 1, 2))
-                .andExpect(status().isOk)
+        mvc.perform(delete(FLOORS_ID_PATH, 1, 2))
+                .andExpect(status().isNoContent)
                 .andReturn()
 
-        val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
-
-        assertEquals(2, actual.floors!!.size)
-        assertEquals(22, actual.tables.size)
-        assertEquals(15, actual.walls.size)
-        assertEquals(1, actual.items.size)
-        assertEquals(12, actual.wallItems.size)
-        actual.floors!!.map {
-            assertTrue(it.id != 2)
+        val restaurant = restaurantRepository.findOne(1)
+        restaurant.floors.forEach {
+            Assert.assertFalse(it.id == 2)
         }
     }
 
@@ -841,12 +835,10 @@ class PanelSchemaControllerTests {
                 .andExpect(status().isOk)
                 .andReturn()
 
-        val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
-        val editedSpot = actual.tables.find { it.spotInfo.id == 1 }?.spotInfo
-        assertNotNull(editedSpot)
-        assertEquals(10000, editedSpot?.number)
-        assertEquals(50, editedSpot?.capacity)
-        assertEquals(25, editedSpot?.minPeopleNumber)
+        val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaSpotInfoDTO::class.java)
+        assertEquals(10000, actual.number)
+        assertEquals(50, actual.capacity)
+        assertEquals(25, actual.minPeopleNumber)
     }
 
     @Test
@@ -877,13 +869,12 @@ class PanelSchemaControllerTests {
     fun `deleteSpot_ correct data`() {
         val result = mvc.perform(delete(SPOTS_ID_PATH, 1, 2)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk)
+                .andExpect(status().isNoContent)
                 .andReturn()
 
-        val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
-        val removedSchemaItem = actual.tables.find { it.id == 2 }
-        val removedSpot = actual.tables.find { it.spotInfo.id == 2 }?.spotInfo
-        assertNull(removedSchemaItem)
-        assertNull(removedSpot)
+        val restaurant = restaurantRepository.findOne(1)
+        restaurant.spots.forEach {
+            Assert.assertFalse(it.id == 2)
+        }
     }
 }

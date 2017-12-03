@@ -5,31 +5,38 @@ import org.springframework.stereotype.Service
 import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
-import pl.denisolek.core.schema.Floor
+import pl.denisolek.core.floor.Floor
+import pl.denisolek.core.floor.FloorService
 import pl.denisolek.core.schema.SchemaItem
 import pl.denisolek.core.spot.Spot
+import pl.denisolek.core.spot.SpotService
 import pl.denisolek.panel.schema.DTO.FloorDTO
 import pl.denisolek.panel.schema.DTO.SchemaDTO
 import pl.denisolek.panel.schema.DTO.type.SchemaSpotInfoDTO
 
 @Service
-class PanelSchemaService(val restaurantService: RestaurantService) {
+class PanelSchemaService(val restaurantService: RestaurantService,
+                         val floorService: FloorService,
+                         val spotService: SpotService) {
     fun getSchema(restaurant: Restaurant): SchemaDTO {
         return SchemaDTO(restaurant)
     }
 
-    fun addFloor(restaurant: Restaurant, floorDTO: FloorDTO): SchemaDTO {
-        restaurant.floors.add(Floor(
+    fun addFloor(restaurant: Restaurant, floorDTO: FloorDTO): FloorDTO {
+        val floor = floorService.save(Floor(
                 name = floorDTO.name,
                 restaurant = restaurant
         ))
-        return SchemaDTO(restaurantService.save(restaurant))
+        return FloorDTO(
+                id = floor.id,
+                name = floor.name
+        )
     }
 
-    fun deleteFloor(restaurant: Restaurant, floor: Floor): SchemaDTO {
+    fun deleteFloor(restaurant: Restaurant, floor: Floor) {
         if (floor.haveReservationsInFuture()) throw ServiceException(HttpStatus.CONFLICT, "There are some reservations including spots on that floor")
         restaurant.floors.remove(floor)
-        return SchemaDTO(restaurantService.save(restaurant))
+        restaurantService.save(restaurant)
     }
 
     fun updateSchema(restaurant: Restaurant, schemaDTO: SchemaDTO): SchemaDTO {
@@ -44,20 +51,19 @@ class PanelSchemaService(val restaurantService: RestaurantService) {
         return SchemaDTO(restaurantService.save(restaurant))
     }
 
-    fun updateSpot(restaurant: Restaurant, spot: Spot, spotInfoDTO: SchemaSpotInfoDTO): SchemaDTO {
+    fun updateSpot(restaurant: Restaurant, spot: Spot, spotInfoDTO: SchemaSpotInfoDTO): SchemaSpotInfoDTO {
         if (spot.haveReservationsInFuture())
             throw ServiceException(HttpStatus.CONFLICT, "This spot have reservations in future")
 
-        restaurant.spots.find { it.id == spot.id }?.let {
-            it.number = spotInfoDTO.number
-            it.capacity = spotInfoDTO.capacity
-            it.minPeopleNumber = spotInfoDTO.minPeopleNumber
-        } ?: throw ServiceException(HttpStatus.NOT_FOUND, "Spot not found in this restaurant")
+        val updatedSpot = restaurant.spots.find { it.id == spot.id } ?: throw ServiceException(HttpStatus.NOT_FOUND, "Spot not found in this restaurant")
+        updatedSpot.number = spotInfoDTO.number
+        updatedSpot.capacity = spotInfoDTO.capacity
+        updatedSpot.minPeopleNumber = spotInfoDTO.minPeopleNumber
 
-        return SchemaDTO(restaurantService.save(restaurant))
+        return SchemaSpotInfoDTO.fromSpot(spotService.save(updatedSpot))
     }
 
-    fun deleteSpot(restaurant: Restaurant, spot: Spot): SchemaDTO {
+    fun deleteSpot(restaurant: Restaurant, spot: Spot) {
         if (spot.haveReservationsInFuture())
             throw ServiceException(HttpStatus.CONFLICT, "This spot have reservations in future")
 
@@ -68,7 +74,7 @@ class PanelSchemaService(val restaurantService: RestaurantService) {
         restaurant.floors.map {
             it.schemaItems.removeIf { it.spot?.id == spot.id }
         }
-        return SchemaDTO(restaurantService.save(restaurant))
+        restaurantService.save(restaurant)
     }
 
     private fun getUpdatedItems(items: List<SchemaItem>, restaurantTables: MutableList<SchemaItem>): Map<Int?, List<SchemaItem?>> {

@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import pl.denisolek.core.restaurant.Restaurant
-import pl.denisolek.core.schema.Floor
+import pl.denisolek.core.floor.Floor
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.panel.schema.DTO.FloorDTO
 import pl.denisolek.panel.schema.DTO.SchemaDTO
@@ -26,20 +26,20 @@ class PanelSchemaController(val panelSchemaService: PanelSchemaService) : PanelS
             panelSchemaService.updateSchema(restaurantId, schemaDTO)
 
     override fun addFloor(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
-                          @RequestBody @Valid floorDTO: FloorDTO): SchemaDTO =
+                          @RequestBody @Valid floorDTO: FloorDTO): FloorDTO =
             panelSchemaService.addFloor(restaurantId, floorDTO)
 
     override fun deleteFloor(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
-                             @ApiIgnore @PathVariable(API.FLOOR_ID) floorId: Floor): SchemaDTO =
+                             @ApiIgnore @PathVariable(API.FLOOR_ID) floorId: Floor) =
             panelSchemaService.deleteFloor(restaurantId, floorId)
 
     override fun updateSpot(@ApiIgnore @PathVariable(PanelSchemaApi.RESTAURANT_ID) restaurantId: Restaurant,
                             @ApiIgnore @PathVariable(PanelSchemaApi.SPOT_ID) spotId: Spot,
-                            @RequestBody @Valid spotInfoDTO: SchemaSpotInfoDTO): SchemaDTO =
+                            @RequestBody @Valid spotInfoDTO: SchemaSpotInfoDTO): SchemaSpotInfoDTO =
             panelSchemaService.updateSpot(restaurantId, spotId, spotInfoDTO)
 
     override fun deleteSpot(@ApiIgnore @PathVariable(PanelSchemaApi.RESTAURANT_ID) restaurantId: Restaurant,
-                            @ApiIgnore @PathVariable(PanelSchemaApi.SPOT_ID) spotId: Spot): SchemaDTO =
+                            @ApiIgnore @PathVariable(PanelSchemaApi.SPOT_ID) spotId: Spot) =
             panelSchemaService.deleteSpot(restaurantId, spotId)
 
 }

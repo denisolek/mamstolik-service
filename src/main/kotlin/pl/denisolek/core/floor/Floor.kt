@@ -1,7 +1,8 @@
-package pl.denisolek.core.schema
+package pl.denisolek.core.floor
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.schema.SchemaItem
 import java.time.LocalDateTime
 import javax.persistence.*
 

@@ -7,7 +7,7 @@ import pl.denisolek.core.image.Image
 import pl.denisolek.core.menu.Menu
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.reservation.Reservation.ReservationState.CANCELED
-import pl.denisolek.core.schema.Floor
+import pl.denisolek.core.floor.Floor
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.core.user.User
 import pl.denisolek.infrastructure.util.DateTimeInterval
