@@ -8,30 +8,21 @@ data class RestaurantEmployeeDTO(
         var username: String,
         var firstName: String,
         var lastName: String,
-        var title: Authority.Role,
+        var role: Authority.Role,
         var avatar: String? = null
 ) {
     companion object {
-        fun fromEmployees(employees: List<User>?): List<RestaurantEmployeeDTO> =
-                employees?.map {
-                    RestaurantEmployeeDTO(
-                            id = it.id!!,
-                            username = it.username!!,
-                            firstName = it.firstName!!,
-                            lastName = it.lastName!!,
-                            title = it.getRole(),
-                            avatar = it.avatar?.uuid
-                    )
-                } ?: listOf()
-
-        fun getOwner(owner: User): RestaurantEmployeeDTO =
+        fun fromUser(user: User, isOwner: Boolean = false): RestaurantEmployeeDTO =
                 RestaurantEmployeeDTO(
-                        id = owner.id!!,
-                        username = owner.username!!,
-                        firstName = owner.firstName!!,
-                        lastName = owner.lastName!!,
-                        title = Authority.Role.ROLE_OWNER,
-                        avatar = owner.avatar?.uuid
+                        id = user.id!!,
+                        username = user.username!!,
+                        firstName = user.firstName!!,
+                        lastName = user.lastName!!,
+                        role = when {
+                            isOwner -> Authority.Role.ROLE_OWNER
+                            else -> user.getRole()
+                        },
+                        avatar = user.avatar?.uuid
                 )
     }
 }

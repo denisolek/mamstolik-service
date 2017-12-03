@@ -17,7 +17,10 @@ import pl.denisolek.panel.employee.DTO.EmployeeDTO
 class PanelEmployeeService(private val userService: UserService,
                            private val passwordEncoder: PasswordEncoder) {
     fun getEmployees(restaurant: Restaurant): List<EmployeeDTO> {
-        return restaurant.employees.map { EmployeeDTO.fromUser(it) } ?: listOf()
+        return listOf(
+                restaurant.employees.map { EmployeeDTO.fromUser(it) },
+                listOf(EmployeeDTO.fromUser(restaurant.owner!!, true))
+        ).flatten()
     }
 
     fun addEmployee(createEmployeeDTO: CreateEmployeeDTO, restaurant: Restaurant): EmployeeDTO {

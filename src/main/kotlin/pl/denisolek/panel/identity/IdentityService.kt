@@ -96,8 +96,8 @@ class IdentityService(private val userService: UserService,
         val user = authorizationService.getCurrentUser()
         val restaurant = user.restaurant!!
         return listOf(
-                RestaurantEmployeeDTO.fromEmployees(restaurant.employees),
-                listOf(RestaurantEmployeeDTO.getOwner(restaurant.owner!!))
+                restaurant.employees.map { RestaurantEmployeeDTO.fromUser(it) },
+                listOf(RestaurantEmployeeDTO.fromUser(restaurant.owner!!, true))
         ).flatten()
     }
 
