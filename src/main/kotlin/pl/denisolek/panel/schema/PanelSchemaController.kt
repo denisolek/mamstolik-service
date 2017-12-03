@@ -35,7 +35,7 @@ class PanelSchemaController(val panelSchemaService: PanelSchemaService) : PanelS
 
     override fun updateSpot(@ApiIgnore @PathVariable(PanelSchemaApi.RESTAURANT_ID) restaurantId: Restaurant,
                             @ApiIgnore @PathVariable(PanelSchemaApi.SPOT_ID) spotId: Spot,
-                            @RequestBody @Valid spotInfoDTO: SchemaSpotInfoDTO): SchemaDTO =
+                            @RequestBody @Valid spotInfoDTO: SchemaSpotInfoDTO): SchemaSpotInfoDTO =
             panelSchemaService.updateSpot(restaurantId, spotId, spotInfoDTO)
 
     override fun deleteSpot(@ApiIgnore @PathVariable(PanelSchemaApi.RESTAURANT_ID) restaurantId: Restaurant,

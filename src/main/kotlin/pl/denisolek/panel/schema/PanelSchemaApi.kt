@@ -58,7 +58,7 @@ interface PanelSchemaApi {
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun updateSpot(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
                    @ApiIgnore @PathVariable(SPOT_ID) spotId: Spot,
-                   @RequestBody @Valid spotInfoDTO: SchemaSpotInfoDTO): SchemaDTO
+                   @RequestBody @Valid spotInfoDTO: SchemaSpotInfoDTO): SchemaSpotInfoDTO
 
     @DeleteMapping(SPOTS_ID_PATH)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
