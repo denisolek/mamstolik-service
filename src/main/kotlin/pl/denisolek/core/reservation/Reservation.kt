@@ -41,8 +41,8 @@ data class Reservation(
 ) : DateTimeInterval {
     constructor(id: Int? = null, panelCreateReservationDTO: PanelCreateReservationDTO, restaurant: Restaurant, customer: Customer, approvedBy: User, spots: MutableList<Spot>) : this(
             id = id,
-            startDateTime = panelCreateReservationDTO.dateTime,
-            endDateTime = panelCreateReservationDTO.dateTime.plus(restaurant.avgReservationTime),
+            startDateTime = panelCreateReservationDTO.dateTime.withSecond(0).withNano(0),
+            endDateTime = panelCreateReservationDTO.dateTime.plus(restaurant.avgReservationTime).withSecond(0).withNano(0),
             peopleNumber = panelCreateReservationDTO.peopleNumber,
             state = ReservationState.ACCEPTED,
             verificationCode = null,
