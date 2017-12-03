@@ -33,11 +33,11 @@ interface PanelEmployeeApi {
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId)")
     fun addEmployee(@ApiIgnore @PathVariable(PanelEmployeeController.API.RESTAURANT_ID) restaurantId: Restaurant,
-                    @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO): List<EmployeeDTO>
+                    @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO): EmployeeDTO
 
     @PutMapping(EMPLOYEES_ID_PATH)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId)")
     fun updateEmployee(@ApiIgnore @PathVariable(PanelEmployeeController.API.RESTAURANT_ID) restaurantId: Restaurant,
                        @ApiIgnore @PathVariable(PanelEmployeeController.API.EMPLOYEE_ID) employeeId: User,
-                       @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO): List<EmployeeDTO>
+                       @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO): EmployeeDTO
 }
