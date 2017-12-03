@@ -31,4 +31,12 @@ class PanelImageService(private val imageService: ImageService,
             }
         }
     }
+
+    fun removeImage(restaurant: Restaurant, image: Image) {
+        restaurant.images.removeIf { it == image }
+        if (restaurant.mainImage == image)
+            restaurant.mainImage = null
+        restaurantService.save(restaurant)
+        imageService.removeImage(image.uuid)
+    }
 }

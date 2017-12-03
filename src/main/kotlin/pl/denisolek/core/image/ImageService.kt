@@ -78,6 +78,13 @@ class ImageService(private val imageRepository: ImageRepository,
         avatar.delete()
     }
 
+    fun removeImage(uuid: String) {
+        val fullSize = File(fullSizeLocation.resolve(uuid + ".png").toString())
+        val thumbnail = File(thumbnailLocation.resolve(uuid + ".png").toString())
+        fullSize.delete()
+        thumbnail.delete()
+    }
+
     fun loadAsResource(imageType: String, uuid: String): Resource {
         val image = imageRepository.findByUuid(uuid) ?: throw ServiceException(HttpStatus.NOT_FOUND, "Image not found")
         val file = when (imageType) {

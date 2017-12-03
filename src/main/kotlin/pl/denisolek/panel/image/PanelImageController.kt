@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
+import pl.denisolek.core.image.Image
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.panel.image.DTO.ImageDTO
 import springfox.documentation.annotations.ApiIgnore
@@ -26,5 +27,13 @@ class PanelImageController(val panelImageService: PanelImageService) : PanelImag
                              @RequestParam(value = API.IMAGE_TYPE, required = true, defaultValue = "regular") imageType: String,
                              @RequestParam(value = API.IMAGE, required = true) image: MultipartFile): ImageDTO =
             panelImageService.uploadImage(restaurantId, imageType, image)
+
+    @ApiImplicitParams(
+            ApiImplicitParam(name = API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "int", required = true),
+            ApiImplicitParam(name = API.IMAGE_ID, value = "Image Id", paramType = "path", dataType = "int", required = true)
+    )
+    override fun removeImage(@ApiIgnore @PathVariable(PanelImageApi.RESTAURANT_ID) restaurantId: Restaurant,
+                             @ApiIgnore @PathVariable(PanelImageApi.IMAGE_ID) imageId: Image) =
+            panelImageService.removeImage(restaurantId, imageId)
 
 }
