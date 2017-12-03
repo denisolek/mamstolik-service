@@ -8,6 +8,10 @@ import java.util.*
 
 @Service
 class ImageService(private val imageRepository: ImageRepository) {
+
+    fun save(image: Image) =
+            imageRepository.save(image)
+
     fun generateUUID(): String {
         var exists: Boolean = true
         var uuid = ""
@@ -24,5 +28,11 @@ class ImageService(private val imageRepository: ImageRepository) {
         Thumbnails.of(image.inputStream)
                 .size(width, height)
                 .toFile(resizedImage)
+    }
+
+    fun toFile(image: MultipartFile, fullsize: File) {
+        Thumbnails.of(image.inputStream)
+                .scale(1.0, 1.0)
+                .toFile(fullsize)
     }
 }

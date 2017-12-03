@@ -1,9 +1,7 @@
 package pl.denisolek.core.image
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import pl.denisolek.core.restaurant.Restaurant
+import javax.persistence.*
 
 @Entity
 data class Image(
@@ -11,5 +9,7 @@ data class Image(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Int? = null,
         var fileName: String,
-        var uuid: String
+        var uuid: String,
+        @ManyToOne
+        var restaurant: Restaurant
 )
