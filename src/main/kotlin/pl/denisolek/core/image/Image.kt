@@ -11,5 +11,5 @@ data class Image(
         var fileName: String,
         var uuid: String,
         @ManyToOne
-        var restaurant: Restaurant
+        var restaurant: Restaurant? = null
 )

@@ -11,7 +11,7 @@ data class ImageDTO(
         fun fromImage(image: Image) = ImageDTO(
                 id = image.id!!,
                 uuid = image.uuid,
-                isMain = image.restaurant.mainImage == image
+                isMain = image.restaurant?.mainImage == image
         )
     }
 }

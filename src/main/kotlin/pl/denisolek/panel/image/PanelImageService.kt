@@ -16,11 +16,11 @@ class PanelImageService(private val imageService: ImageService,
                         private val restaurantService: RestaurantService) {
 
     fun uploadImage(restaurant: Restaurant, imageType: String, image: MultipartFile): ImageDTO {
-        validateImage(image)
+        imageService.validateImage(image)
         val uuidName = imageService.generateUUID()
         imageService.saveFullSize(uuidName, image)
         imageService.saveThumbnail(uuidName, image)
-        val newImage = saveImage(image, uuidName, restaurant)
+        val newImage = imageService.saveImage(image, uuidName, restaurant)
         assignMainImage(imageType, restaurant, newImage)
         return ImageDTO.fromImage(newImage)
     }
@@ -33,18 +33,5 @@ class PanelImageService(private val imageService: ImageService,
                 restaurantService.save(restaurant)
             }
         }
-    }
-
-    private fun saveImage(image: MultipartFile, uuidName: String, restaurant: Restaurant): Image {
-        return imageService.save(Image(
-                fileName = image.originalFilename,
-                uuid = uuidName,
-                restaurant = restaurant
-        ))
-    }
-
-    private fun validateImage(image: MultipartFile) {
-        if (image.isEmpty) throw ServiceException(HttpStatus.BAD_REQUEST, "Image is empty.")
-        if (!image.isImageType()) throw ServiceException(HttpStatus.METHOD_NOT_ALLOWED, "Wrong image type.")
     }
 }

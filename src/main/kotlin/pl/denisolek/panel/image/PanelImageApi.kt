@@ -22,7 +22,6 @@ interface PanelImageApi {
     }
 
     @PostMapping(IMAGES_PATH)
-    @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun uploadImage(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
