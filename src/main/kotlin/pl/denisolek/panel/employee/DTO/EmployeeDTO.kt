@@ -26,7 +26,8 @@ data class EmployeeDTO(
                         role = when {
                             isOwner -> Authority.Role.ROLE_OWNER
                             else -> user.getRole()
-                        }
+                        },
+                        avatar = user.avatar?.uuid
                 )
     }
 }
