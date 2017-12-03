@@ -1,6 +1,6 @@
 package pl.denisolek.panel.schema.DTO.type
 
-import pl.denisolek.core.schema.Floor
+import pl.denisolek.core.floor.Floor
 import pl.denisolek.core.schema.SchemaItem
 
 data class SchemaFloorDTO(

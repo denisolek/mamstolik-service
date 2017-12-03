@@ -4,7 +4,7 @@ import pl.denisolek.core.customer.Customer
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.reservation.Reservation.ReservationState.PENDING
 import pl.denisolek.core.restaurant.Restaurant
-import pl.denisolek.core.schema.Floor
+import pl.denisolek.core.floor.Floor
 import pl.denisolek.core.schema.SchemaItem
 import pl.denisolek.core.spot.Spot
 import java.time.Duration

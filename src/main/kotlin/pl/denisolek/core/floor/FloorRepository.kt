@@ -1,4 +1,4 @@
-package pl.denisolek.core.schema
+package pl.denisolek.core.floor
 
 import org.springframework.data.jpa.repository.JpaRepository
 

@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import pl.denisolek.core.restaurant.Restaurant
-import pl.denisolek.core.schema.Floor
+import pl.denisolek.core.floor.Floor
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.panel.schema.DTO.FloorDTO
@@ -44,13 +44,14 @@ interface PanelSchemaApi {
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun addFloor(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                 @RequestBody @Valid floorDTO: FloorDTO): SchemaDTO
+                 @RequestBody @Valid floorDTO: FloorDTO): FloorDTO
 
     @DeleteMapping(FLOORS_ID_PATH)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun deleteFloor(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                    @ApiIgnore @PathVariable(FLOOR_ID) floorId: Floor): SchemaDTO
+                    @ApiIgnore @PathVariable(FLOOR_ID) floorId: Floor)
 
     @PutMapping(SPOTS_ID_PATH)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
