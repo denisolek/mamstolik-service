@@ -12,6 +12,7 @@ import pl.denisolek.infrastructure.FULL_SIZE
 import pl.denisolek.infrastructure.THUMBNAIL
 import pl.denisolek.infrastructure.TMP
 import pl.denisolek.infrastructure.util.isImageType
+import pl.denisolek.panel.image.DTO.ImageDTO
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
@@ -23,22 +24,22 @@ class PanelImageService(private val imageService: ImageService, storagePropertie
     private val thumbnailLocation: Path = Paths.get(storageProperties.thumbnailLocation)
     private val fullSizeLocation: Path = Paths.get(storageProperties.fullSizeLocation)
 
-    fun uploadImage(restaurant: Restaurant, imageType: String, image: MultipartFile) {
+    fun uploadImage(restaurant: Restaurant, imageType: String, image: MultipartFile): ImageDTO {
         if (image.isEmpty) throw ServiceException(HttpStatus.BAD_REQUEST, "Image is empty.")
         if (!image.isImageType()) throw ServiceException(HttpStatus.BAD_REQUEST, "Wrong image type.")
 
         val uuidName = imageService.generateUUID()
-        var thumbnail = File("/$TMP/${THUMBNAIL}_$uuidName.png")
-        var fullsize = File("/$TMP/${FULL_SIZE}_$uuidName.png")
+        val thumbnail = File("/$TMP/${THUMBNAIL}_$uuidName.png")
+        val fullSize = File("/$TMP/${FULL_SIZE}_$uuidName.png")
         imageService.resize(image, thumbnail, 300, 300)
-        imageService.toFile(image, fullsize)
+        imageService.toFile(image, fullSize)
         Files.copy(thumbnail.inputStream(), thumbnailLocation.resolve("$uuidName.png"))
-        Files.copy(fullsize.inputStream(), fullSizeLocation.resolve("$uuidName.png"))
+        Files.copy(fullSize.inputStream(), fullSizeLocation.resolve("$uuidName.png"))
 
-        imageService.save(Image(
+        return ImageDTO.fromImage(imageService.save(Image(
                 fileName = image.originalFilename,
                 uuid = uuidName,
                 restaurant = restaurant
-        ))
+        )))
     }
 }

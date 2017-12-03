@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
+import pl.denisolek.panel.image.DTO.ImageDTO
 import springfox.documentation.annotations.ApiIgnore
 
 @Api("Image controller", tags = arrayOf("Image"))
@@ -25,6 +26,6 @@ interface PanelImageApi {
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun uploadImage(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                    @RequestParam(value = IMAGE_TYPE, required = true, defaultValue = "regular") imageType: String,
-                    @RequestParam(value = IMAGE, required = true) image: MultipartFile)
+                    @RequestParam(value = IMAGE_TYPE, required = false, defaultValue = "regular") imageType: String,
+                    @RequestParam(value = IMAGE, required = true) image: MultipartFile): ImageDTO
 }

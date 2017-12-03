@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
 import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.panel.image.DTO.ImageDTO
 import springfox.documentation.annotations.ApiIgnore
 
 @RestController
@@ -23,7 +24,7 @@ class PanelImageController(val panelImageService: PanelImageService) : PanelImag
     )
     override fun uploadImage(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
                              @RequestParam(value = API.IMAGE_TYPE, required = true, defaultValue = "regular") imageType: String,
-                             @RequestParam(value = API.IMAGE, required = true) image: MultipartFile) {
-        panelImageService.uploadImage(restaurantId, imageType, image)
-    }
+                             @RequestParam(value = API.IMAGE, required = true) image: MultipartFile): ImageDTO =
+            panelImageService.uploadImage(restaurantId, imageType, image)
+
 }
