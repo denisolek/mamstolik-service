@@ -64,7 +64,7 @@ data class Restaurant(
         var menu: Menu? = null,
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        var settings: Settings,
+        var settings: Settings? = Settings(),
 
         @ElementCollection(fetch = FetchType.EAGER)
         @Enumerated(EnumType.STRING)

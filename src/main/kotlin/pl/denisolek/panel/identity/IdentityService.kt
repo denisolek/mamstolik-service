@@ -107,7 +107,8 @@ class IdentityService(private val userService: UserService,
                 urlName = restaurantService.generateUrlName(createRestaurantDTO.name),
                 type = createRestaurantDTO.type,
                 owner = authorizationService.getCurrentUser(),
-                phoneNumber = createRestaurantDTO.phoneNumber
+                phoneNumber = createRestaurantDTO.phoneNumber,
+                email = createRestaurantDTO.email
         )
         userService.save(User(
                 username = userService.generateUsername(),

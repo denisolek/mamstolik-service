@@ -34,6 +34,7 @@ class RestaurantStub {
                         spots = mutableListOf(),
                         reservations = mutableListOf(),
                         menu = Menu(),
+                        email = "stubbed.restaurant@gmail.com",
                         phoneNumber = "123123123"
                 )
 
@@ -57,6 +58,7 @@ class RestaurantStub {
                         spots = getSpots(),
                         reservations = getReservations(),
                         menu = Menu(),
+                        email = "stubbed.restaurant@gmail.com",
                         phoneNumber = "123123123"
                 )
 
@@ -80,6 +82,7 @@ class RestaurantStub {
                         spots = getAvailabilitySpots(),
                         reservations = getAvailabilityReservations(),
                         menu = Menu(),
+                        email = "stubbed.restaurant@gmail.com",
                         phoneNumber = "123123123"
                 )
 
