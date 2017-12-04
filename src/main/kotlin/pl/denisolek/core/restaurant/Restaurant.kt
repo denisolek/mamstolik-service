@@ -10,6 +10,7 @@ import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.reservation.Reservation.ReservationState.CANCELED
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.core.user.User
+import pl.denisolek.guest.restaurant.DTO.MenuCategoryDTO
 import pl.denisolek.infrastructure.util.DateTimeInterval
 import pl.denisolek.infrastructure.util.isAfterOrEqual
 import pl.denisolek.infrastructure.util.isBeforeOrEqual
@@ -25,6 +26,7 @@ data class Restaurant(
         var urlName: String,
         var description: String = "",
         var phoneNumber: String,
+        var email: String,
         var avgReservationTime: Duration = Duration.ofHours(1),
         var rate: Float = 0f,
         var service_rate: Float = 0f,
@@ -62,7 +64,7 @@ data class Restaurant(
         var menu: Menu? = null,
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        var settings: Settings? = null,
+        var settings: Settings,
 
         @ElementCollection(fetch = FetchType.EAGER)
         @Enumerated(EnumType.STRING)
@@ -170,6 +172,14 @@ data class Restaurant(
             } catch (e: NoSuchElementException) {
                 throw ServiceException(HttpStatus.BAD_REQUEST, "Trying to assign item to not existing floor.")
             }
+
+    fun getMenu(): List<MenuCategoryDTO>? {
+        return if (this.settings!!.menu)
+            this.menu?.categories?.map { MenuCategoryDTO.fromMenuCategory(it) }?.sortedBy { it.position }!!
+        else
+            null
+    }
+
 
     enum class AvailabilityType {
         AVAILABLE,

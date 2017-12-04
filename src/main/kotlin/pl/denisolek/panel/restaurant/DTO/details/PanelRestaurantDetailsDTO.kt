@@ -17,7 +17,7 @@ data class PanelRestaurantDetailsDTO(
         var email: String,
         var phoneNumber: String,
         var type: RestaurantType,
-        var address: Address,
+        var address: Address? = null,
         var businessHours: MutableMap<DayOfWeek, BusinessHour>,
         var specialDates: List<SpecialDateDTO>,
         var cuisineTypes: List<Restaurant.CuisineType>,
@@ -25,4 +25,24 @@ data class PanelRestaurantDetailsDTO(
         var menu: List<MenuCategoryDTO>,
         var images: List<ImageDTO>,
         var settings: Settings
-)
+) {
+    companion object {
+        fun fromRestaurant(restaurant: Restaurant) =
+                PanelRestaurantDetailsDTO(
+                        name = restaurant.name,
+                        urlName = restaurant.urlName,
+                        description = restaurant.description,
+                        email = restaurant.email,
+                        phoneNumber = restaurant.phoneNumber,
+                        type = restaurant.type,
+                        address = restaurant.address,
+                        businessHours = restaurant.businessHours,
+                        specialDates = restaurant.specialDates.map { SpecialDateDTO.fromSpecialDate(it) },
+                        cuisineTypes = restaurant.cuisineTypes.toList(),
+                        facilities = restaurant.facilities.toList(),
+                        menu = restaurant.getMenu() ?: listOf(),
+                        images = restaurant.images.map { ImageDTO.fromImage(it) },
+                        settings = restaurant.settings
+                )
+    }
+}
