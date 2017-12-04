@@ -80,7 +80,10 @@ data class Restaurant(
         @JoinTable(name = "restaurant_business_hour", joinColumns = arrayOf(JoinColumn(name = "restaurant_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "business_hour_id")))
         @MapKeyEnumerated(EnumType.STRING)
         @MapKeyColumn(name = "day_of_week")
-        var businessHours: MutableMap<DayOfWeek, BusinessHour> = mutableMapOf()
+        var businessHours: MutableMap<DayOfWeek, BusinessHour> = mutableMapOf(),
+
+        @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+        var specialDates: MutableList<SpecialDate> = mutableListOf()
 ) {
 
     fun isOpenAt(date: LocalDateTime): Boolean {
