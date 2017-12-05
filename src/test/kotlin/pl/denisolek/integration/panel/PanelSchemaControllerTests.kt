@@ -59,10 +59,10 @@ class PanelSchemaControllerTests {
 
     lateinit var mvc: MockMvc
 
-    val SCHEMAS_PATH = "${PANEL_BASE_PATH}${PanelSchemaApi.SCHEMAS_PATH}"
-    val FLOORS_PATH = "${PANEL_BASE_PATH}${PanelSchemaApi.FLOORS_PATH}"
-    val FLOORS_ID_PATH = "${PANEL_BASE_PATH}${PanelSchemaApi.FLOORS_ID_PATH}"
-    val SPOTS_ID_PATH = "${PANEL_BASE_PATH}${PanelSchemaApi.SPOTS_ID_PATH}"
+    val SCHEMAS_PATH = "$PANEL_BASE_PATH${PanelSchemaApi.SCHEMAS_PATH}"
+    val FLOORS_PATH = "$PANEL_BASE_PATH${PanelSchemaApi.FLOORS_PATH}"
+    val FLOORS_ID_PATH = "$PANEL_BASE_PATH${PanelSchemaApi.FLOORS_ID_PATH}"
+    val SPOTS_ID_PATH = "$PANEL_BASE_PATH${PanelSchemaApi.SPOTS_ID_PATH}"
 
     @Before
     fun setup() {
