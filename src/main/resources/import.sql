@@ -286,6 +286,16 @@ VALUES
   (7, 48, 'SATURDAY'),
   (7, 49, 'SUNDAY');
 
+INSERT INTO public.business_hour (close_time, open_time, is_closed)
+VALUES
+  ('12:00:00', '14:00:00', FALSE),
+  ('00:00:00', '00:00:00', TRUE);
+
+INSERT INTO public.special_date (date, description, business_hour_id, restaurant_id)
+VALUES
+  ('2017-10-10', '', 50, 1),
+  ('2017-10-17', 'Remont', 51, 1);
+
 -- add customers
 INSERT INTO public.customer (email, phone_number, first_name, last_name)
 VALUES

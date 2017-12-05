@@ -89,7 +89,7 @@ data class Restaurant(
 ) {
 
     fun isOpenAt(date: LocalDateTime): Boolean {
-        val businessHour = getBusinessHoursForDate(date.toLocalDate()) ?: return false
+        val businessHour = this.specialDates.find { it.date == date.toLocalDate() }?.businessHour ?: getBusinessHoursForDate(date.toLocalDate()) ?: return false
 
         return !businessHour.isClosed &&
                 date.toLocalTime().isAfterOrEqual(businessHour.openTime) &&

@@ -5,7 +5,9 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.runners.MockitoJUnitRunner
+import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.restaurant.SpecialDate
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.stubs.RestaurantStub
 import java.time.DayOfWeek
@@ -31,6 +33,57 @@ class RestaurantTest {
         restaurant.businessHours[DayOfWeek.TUESDAY]?.isClosed = true
         val actual = restaurant.isOpenAt(LocalDateTime.of(LocalDate.of(2017, 10, 3), LocalTime.of(15, 0)))
 
+        Assert.assertFalse(actual)
+    }
+
+    @Test
+    fun `isOpenAt_ specialDate, isClosed is true`() {
+        val restaurant = RestaurantStub.getRestaurant()
+        restaurant.specialDates.add(SpecialDate(
+                date = LocalDate.of(2017, 10, 10),
+                businessHour = BusinessHour(
+                        openTime = LocalTime.MIN,
+                        closeTime = LocalTime.MAX,
+                        isClosed = true
+                ),
+                restaurant = restaurant
+        ))
+        val actual = restaurant.isOpenAt(LocalDateTime.of(LocalDate.of(2017, 10, 10), LocalTime.of(15, 0)))
+
+        Assert.assertFalse(actual)
+    }
+
+    @Test
+    fun `isOpenAt_ specialDate, date inside businessHours, isClosed is false`() {
+        val restaurant = RestaurantStub.getRestaurant()
+        restaurant.businessHours.remove(DayOfWeek.TUESDAY)
+        restaurant.specialDates.add(SpecialDate(
+                date = LocalDate.of(2017, 10, 10),
+                businessHour = BusinessHour(
+                        openTime = LocalTime.of(10, 0),
+                        closeTime = LocalTime.of(12,0),
+                        isClosed = false
+                ),
+                restaurant = restaurant
+        ))
+        val actual = restaurant.isOpenAt(LocalDateTime.of(LocalDate.of(2017, 10, 10), LocalTime.of(11, 0)))
+        Assert.assertTrue(actual)
+    }
+
+    @Test
+    fun `isOpenAt_ specialDate, date inside businessHours, isClosed is true`() {
+        val restaurant = RestaurantStub.getRestaurant()
+        restaurant.businessHours.remove(DayOfWeek.TUESDAY)
+        restaurant.specialDates.add(SpecialDate(
+                date = LocalDate.of(2017, 10, 10),
+                businessHour = BusinessHour(
+                        openTime = LocalTime.of(10, 0),
+                        closeTime = LocalTime.of(12,0),
+                        isClosed = true
+                ),
+                restaurant = restaurant
+        ))
+        val actual = restaurant.isOpenAt(LocalDateTime.of(LocalDate.of(2017, 10, 10), LocalTime.of(11, 0)))
         Assert.assertFalse(actual)
     }
 
