@@ -91,9 +91,9 @@ data class Restaurant(
     fun isOpenAt(date: LocalDateTime): Boolean {
         val businessHour = getBusinessHoursForDate(date.toLocalDate()) ?: return false
 
-        if (date.toLocalTime().isAfterOrEqual(businessHour.openTime) && date.toLocalTime().isBeforeOrEqual(businessHour.closeTime.minusMinutes(this.avgReservationTime.toMinutes())))
-            return true
-        return false
+        return !businessHour.isClosed &&
+                date.toLocalTime().isAfterOrEqual(businessHour.openTime) &&
+                date.toLocalTime().isBeforeOrEqual(businessHour.closeTime.minusMinutes(this.avgReservationTime.toMinutes()))
     }
 
     fun getBusinessHoursForDate(date: LocalDate) = this.businessHours[date.dayOfWeek]
@@ -275,11 +275,12 @@ data class Restaurant(
         SPORTS_BROADCAST
     }
 
-    enum class RestaurantType(val value: String) {
-        RESTAURANT("Restauracja"),
-        BAR("Bar"),
-        PUB("Pub"),
-        CAFETERIA("Kawiarnia"),
-        EATING_HOUSE("Jadłodajnia")
+    enum class RestaurantType {
+        RESTAURANT,
+        BAR,
+        PUB,
+        CAFETERIA,
+        EATING_HOUSE,
+        OTHER
     }
 }

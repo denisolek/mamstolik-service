@@ -152,15 +152,16 @@ VALUES
   (6, 'PLAYGROUND');
 
 -- add business hours
-INSERT INTO public.business_hour (open_time, close_time)
+INSERT INTO public.business_hour (open_time, close_time, is_closed)
 VALUES
-  ('12:00:00', '21:00:00'),
-  ('12:00:00', '21:00:00'),
-  ('12:00:00', '21:00:00'),
-  ('12:00:00', '21:00:00'),
-  ('13:00:00', '23:00:00'),
-  ('13:00:00', '23:00:00'),
-  ('13:00:00', '20:00:00');
+  ('12:00:00', '21:00:00', FALSE),
+  ('12:00:00', '21:00:00', FALSE),
+  ('12:00:00', '21:00:00', FALSE),
+  ('12:00:00', '21:00:00', FALSE),
+  ('13:00:00', '23:00:00', FALSE),
+  ('13:00:00', '23:00:00', FALSE),
+  ('13:00:00', '20:00:00', FALSE);
+
 INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
 VALUES
   (1, 1, 'MONDAY'),
