@@ -172,15 +172,15 @@ VALUES
   (1, 6, 'SATURDAY'),
   (1, 7, 'SUNDAY');
 
-INSERT INTO public.business_hour (open_time, close_time)
+INSERT INTO public.business_hour (open_time, close_time, is_closed)
 VALUES
-  ('10:00:00', '19:00:00'),
-  ('10:00:00', '19:00:00'),
-  ('10:00:00', '19:00:00'),
-  ('10:00:00', '19:00:00'),
-  ('10:00:00', '22:00:00'),
-  ('13:00:00', '22:00:00'),
-  ('13:00:00', '22:00:00');
+  ('10:00:00', '19:00:00', FALSE),
+  ('10:00:00', '19:00:00', FALSE),
+  ('10:00:00', '19:00:00', FALSE),
+  ('10:00:00', '19:00:00', FALSE),
+  ('10:00:00', '22:00:00', FALSE),
+  ('13:00:00', '22:00:00', FALSE),
+  ('13:00:00', '22:00:00', FALSE);
 INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
 VALUES
   (2, 8, 'MONDAY'),
@@ -191,15 +191,15 @@ VALUES
   (2, 13, 'SATURDAY'),
   (2, 14, 'SUNDAY');
 
-INSERT INTO public.business_hour (open_time, close_time)
+INSERT INTO public.business_hour (open_time, close_time, is_closed)
 VALUES
-  ('10:00:00', '19:00:00'),
-  ('10:00:00', '19:00:00'),
-  ('10:00:00', '19:00:00'),
-  ('10:00:00', '19:00:00'),
-  ('10:00:00', '22:00:00'),
-  ('13:00:00', '22:00:00'),
-  ('13:00:00', '22:00:00');
+  ('10:00:00', '19:00:00', FALSE),
+  ('10:00:00', '19:00:00', FALSE),
+  ('10:00:00', '19:00:00', FALSE),
+  ('10:00:00', '19:00:00', FALSE),
+  ('10:00:00', '22:00:00', FALSE),
+  ('13:00:00', '22:00:00', FALSE),
+  ('13:00:00', '22:00:00', FALSE);
 INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
 VALUES
   (3, 15, 'MONDAY'),
@@ -210,15 +210,15 @@ VALUES
   (3, 20, 'SATURDAY'),
   (3, 21, 'SUNDAY');
 
-INSERT INTO public.business_hour (open_time, close_time)
+INSERT INTO public.business_hour (open_time, close_time, is_closed)
 VALUES
-  ('10:00:00', '19:00:00'),
-  ('10:00:00', '19:00:00'),
-  ('10:00:00', '19:00:00'),
-  ('10:00:00', '19:00:00'),
-  ('10:00:00', '22:00:00'),
-  ('13:00:00', '22:00:00'),
-  ('13:00:00', '22:00:00');
+  ('10:00:00', '19:00:00', FALSE),
+  ('10:00:00', '19:00:00', FALSE),
+  ('10:00:00', '19:00:00', FALSE),
+  ('10:00:00', '19:00:00', FALSE),
+  ('10:00:00', '22:00:00', FALSE),
+  ('13:00:00', '22:00:00', FALSE),
+  ('13:00:00', '22:00:00', FALSE);
 INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
 VALUES
   (4, 22, 'MONDAY'),
@@ -229,15 +229,15 @@ VALUES
   (4, 27, 'SATURDAY'),
   (4, 28, 'SUNDAY');
 
-INSERT INTO public.business_hour (open_time, close_time)
+INSERT INTO public.business_hour (open_time, close_time, is_closed)
 VALUES
-  ('10:00:00', '19:00:00'),
-  ('10:00:00', '19:00:00'),
-  ('10:00:00', '19:00:00'),
-  ('10:00:00', '19:00:00'),
-  ('10:00:00', '22:00:00'),
-  ('13:00:00', '22:00:00'),
-  ('13:00:00', '22:00:00');
+  ('10:00:00', '19:00:00', FALSE),
+  ('10:00:00', '19:00:00', FALSE),
+  ('10:00:00', '19:00:00', FALSE),
+  ('10:00:00', '19:00:00', FALSE),
+  ('10:00:00', '22:00:00', FALSE),
+  ('13:00:00', '22:00:00', FALSE),
+  ('13:00:00', '22:00:00', FALSE);
 INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
 VALUES
   (5, 29, 'MONDAY'),
@@ -248,15 +248,15 @@ VALUES
   (5, 34, 'SATURDAY'),
   (5, 35, 'SUNDAY');
 
-INSERT INTO public.business_hour (open_time, close_time)
+INSERT INTO public.business_hour (open_time, close_time, is_closed)
 VALUES
-  ('10:00:00', '21:00:00'),
-  ('10:00:00', '21:00:00'),
-  ('10:00:00', '21:00:00'),
-  ('10:00:00', '21:00:00'),
-  ('10:00:00', '23:00:00'),
-  ('10:00:00', '23:00:00'),
-  ('10:00:00', '23:00:00');
+  ('10:00:00', '21:00:00', FALSE),
+  ('10:00:00', '21:00:00', FALSE),
+  ('10:00:00', '21:00:00', FALSE),
+  ('10:00:00', '21:00:00', FALSE),
+  ('10:00:00', '23:00:00', FALSE),
+  ('10:00:00', '23:00:00', FALSE),
+  ('10:00:00', '23:00:00', FALSE);
 INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
 VALUES
   (6, 36, 'MONDAY'),
@@ -267,15 +267,15 @@ VALUES
   (6, 41, 'SATURDAY'),
   (6, 42, 'SUNDAY');
 
-INSERT INTO public.business_hour (open_time, close_time)
+INSERT INTO public.business_hour (open_time, close_time, is_closed)
 VALUES
-  ('10:00:00', '21:00:00'),
-  ('10:00:00', '21:00:00'),
-  ('10:00:00', '21:00:00'),
-  ('10:00:00', '21:00:00'),
-  ('10:00:00', '23:00:00'),
-  ('10:00:00', '23:00:00'),
-  ('10:00:00', '23:00:00');
+  ('10:00:00', '21:00:00', FALSE),
+  ('10:00:00', '21:00:00', FALSE),
+  ('10:00:00', '21:00:00', FALSE),
+  ('10:00:00', '21:00:00', FALSE),
+  ('10:00:00', '23:00:00', FALSE),
+  ('10:00:00', '23:00:00', FALSE),
+  ('10:00:00', '23:00:00', FALSE);
 INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
 VALUES
   (7, 43, 'MONDAY'),
