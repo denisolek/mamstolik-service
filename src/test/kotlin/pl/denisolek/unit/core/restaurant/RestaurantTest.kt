@@ -8,6 +8,7 @@ import org.mockito.runners.MockitoJUnitRunner
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.stubs.RestaurantStub
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -22,6 +23,15 @@ class RestaurantTest {
         val actual = restaurant.isOpenAt(LocalDateTime.of(LocalDate.of(2017, 10, 3), LocalTime.of(15, 0)))
 
         Assert.assertTrue(actual)
+    }
+
+    @Test
+    fun `isOpenAt_ date inside businessHours, isClosed is true`() {
+        val restaurant = RestaurantStub.getRestaurant()
+        restaurant.businessHours[DayOfWeek.TUESDAY]?.isClosed = true
+        val actual = restaurant.isOpenAt(LocalDateTime.of(LocalDate.of(2017, 10, 3), LocalTime.of(15, 0)))
+
+        Assert.assertFalse(actual)
     }
 
     @Test
