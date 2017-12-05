@@ -1,6 +1,5 @@
 package pl.denisolek.panel.restaurant.DTO.details
 
-import pl.denisolek.core.address.Address
 import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.Restaurant.RestaurantType
@@ -8,6 +7,7 @@ import pl.denisolek.core.restaurant.Settings
 import pl.denisolek.guest.restaurant.DTO.MenuCategoryDTO
 import pl.denisolek.panel.image.DTO.ImageDTO
 import pl.denisolek.panel.restaurant.DTO.SpecialDateDTO
+import pl.denisolek.panel.restaurant.DTO.baseInfo.AddressDTO
 import java.time.DayOfWeek
 
 data class PanelRestaurantDetailsDTO(
@@ -17,7 +17,7 @@ data class PanelRestaurantDetailsDTO(
         var email: String,
         var phoneNumber: String,
         var type: RestaurantType,
-        var address: Address? = null,
+        var address: AddressDTO,
         var businessHours: MutableMap<DayOfWeek, BusinessHour>,
         var specialDates: List<SpecialDateDTO>,
         var cuisineTypes: List<Restaurant.CuisineType>,
@@ -35,8 +35,8 @@ data class PanelRestaurantDetailsDTO(
                         email = restaurant.email,
                         phoneNumber = restaurant.phoneNumber,
                         type = restaurant.type,
-                        address = restaurant.address,
-                        businessHours = restaurant.businessHours,
+                        address = AddressDTO.fromAddress(restaurant.address),
+                        businessHours = restaurant.businessHours, // todo add for not exising days of week
                         specialDates = restaurant.specialDates.map { SpecialDateDTO.fromSpecialDate(it) },
                         cuisineTypes = restaurant.cuisineTypes.toList(),
                         facilities = restaurant.facilities.toList(),
