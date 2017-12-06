@@ -28,12 +28,14 @@ import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.infrastructure.util.convertJsonBytesToObject
 import pl.denisolek.infrastructure.util.convertObjectToJsonBytes
+import pl.denisolek.panel.restaurant.DTO.SpecialDateDTO
 import pl.denisolek.panel.restaurant.DTO.baseInfo.AddressDTO
 import pl.denisolek.panel.restaurant.DTO.details.PanelRestaurantDetailsDTO
 import pl.denisolek.panel.restaurant.PanelRestaurantApi
 import pl.denisolek.stubs.dto.BaseInfoDTOStub
 import pl.denisolek.stubs.dto.PanelRestaurantDetailsDTOStub
 import java.time.DayOfWeek
+import java.time.LocalDate
 import java.time.LocalTime
 import javax.transaction.Transactional
 
@@ -478,5 +480,61 @@ class PanelRestaurantControllerTests {
         assertEquals(LocalTime.of(4, 0), actual.businessHours[DayOfWeek.MONDAY]!!.openTime)
         assertEquals(LocalTime.of(5, 0), actual.businessHours[DayOfWeek.MONDAY]!!.closeTime)
         assertEquals(false, actual.businessHours[DayOfWeek.MONDAY]!!.isClosed)
+    }
+
+    @Test
+    fun `updateBaseInfo_ specialDate update existing`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.specialDates.first { it.id == 1 }.let {
+            it.businessHour.openTime = LocalTime.of(20,20)
+            it.businessHour.closeTime = LocalTime.of(21,21)
+            it.businessHour.isClosed = true
+            it.date = LocalDate.of(2017, 10, 11)
+        }
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        val actualSpecialDate = actual.specialDates.first { it.id == 1 }
+        assertEquals(LocalDate.of(2017, 10, 11), actualSpecialDate.date)
+        assertEquals(LocalTime.of(20,20), actualSpecialDate.businessHour.openTime)
+        assertEquals(LocalTime.of(21,21), actualSpecialDate.businessHour.closeTime)
+        assertEquals(true, actualSpecialDate.businessHour.isClosed)
+    }
+
+    @Test
+    fun `updateBaseInfo_ specialDate add new for existing date`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.specialDates.toMutableList().add(
+                SpecialDateDTO(
+                        id = null,
+                        date = LocalDate.of(2017, 10, 10),
+                        businessHour = BusinessHour(
+                                id = 50,
+                                openTime = LocalTime.of(17,20),
+                                closeTime = LocalTime.of(18, 20),
+                                isClosed = false
+                        )
+                )
+        )
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        val actualSpecialDate = actual.specialDates.first { it.id == 1 }
+        assertEquals(LocalDate.of(2017, 10, 10), actualSpecialDate.date)
+        assertEquals(LocalTime.of(17,20), actualSpecialDate.businessHour.openTime)
+        assertEquals(LocalTime.of(18,21), actualSpecialDate.businessHour.closeTime)
+        assertEquals(false, actualSpecialDate.businessHour.isClosed)
     }
 }
