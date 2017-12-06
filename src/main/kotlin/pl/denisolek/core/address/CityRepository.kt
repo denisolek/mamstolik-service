@@ -11,4 +11,6 @@ interface CityRepository : JpaRepository<City, Int> {
             "or (lower(a.name) like lower(CONCAT(:name, '%'))) " +
             "order by c.name asc")
     fun findPartlyByNameOrAlias(@Param(value = "name") name: String): List<City>
+
+    fun findByNameIgnoreCase(name: String): City?
 }

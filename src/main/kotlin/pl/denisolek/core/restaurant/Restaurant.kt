@@ -43,7 +43,7 @@ data class Restaurant(
         var employees: MutableList<User> = mutableListOf(),
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        var address: Address? = null,
+        var address: Address = Address(),
 
         @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         var reservations: MutableList<Reservation> = mutableListOf(),
@@ -82,7 +82,9 @@ data class Restaurant(
         @JoinTable(name = "restaurant_business_hour", joinColumns = arrayOf(JoinColumn(name = "restaurant_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "business_hour_id")))
         @MapKeyEnumerated(EnumType.STRING)
         @MapKeyColumn(name = "day_of_week")
-        var businessHours: MutableMap<DayOfWeek, BusinessHour> = mutableMapOf(),
+        var businessHours: Map<DayOfWeek, BusinessHour> = DayOfWeek.values().map { dayOfWeek ->
+            Pair(dayOfWeek, BusinessHour())
+        }.toMap(),
 
         @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         var specialDates: MutableList<SpecialDate> = mutableListOf()

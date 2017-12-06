@@ -18,7 +18,7 @@ data class PanelRestaurantDetailsDTO(
         var phoneNumber: String,
         var type: RestaurantType,
         var address: AddressDTO,
-        var businessHours: MutableMap<DayOfWeek, BusinessHour>,
+        var businessHours: Map<DayOfWeek, BusinessHour>,
         var specialDates: List<SpecialDateDTO>,
         var cuisineTypes: List<Restaurant.CuisineType>,
         var facilities: List<Restaurant.Facilities>,
@@ -36,7 +36,7 @@ data class PanelRestaurantDetailsDTO(
                         phoneNumber = restaurant.phoneNumber,
                         type = restaurant.type,
                         address = AddressDTO.fromAddress(restaurant.address),
-                        businessHours = restaurant.businessHours, // todo add for not exising days of week
+                        businessHours = restaurant.businessHours,
                         specialDates = restaurant.specialDates.map { SpecialDateDTO.fromSpecialDate(it) },
                         cuisineTypes = restaurant.cuisineTypes.toList(),
                         facilities = restaurant.facilities.toList(),

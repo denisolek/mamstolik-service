@@ -56,7 +56,7 @@ class RestaurantTest {
     @Test
     fun `isOpenAt_ specialDate, date inside businessHours, isClosed is false`() {
         val restaurant = RestaurantStub.getRestaurant()
-        restaurant.businessHours.remove(DayOfWeek.TUESDAY)
+        restaurant.businessHours.toMutableMap().remove(DayOfWeek.TUESDAY)
         restaurant.specialDates.add(SpecialDate(
                 date = LocalDate.of(2017, 10, 10),
                 businessHour = BusinessHour(
@@ -73,7 +73,7 @@ class RestaurantTest {
     @Test
     fun `isOpenAt_ specialDate, date inside businessHours, isClosed is true`() {
         val restaurant = RestaurantStub.getRestaurant()
-        restaurant.businessHours.remove(DayOfWeek.TUESDAY)
+        restaurant.businessHours.toMutableMap().remove(DayOfWeek.TUESDAY)
         restaurant.specialDates.add(SpecialDate(
                 date = LocalDate.of(2017, 10, 10),
                 businessHour = BusinessHour(
