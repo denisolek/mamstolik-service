@@ -2,8 +2,8 @@ package pl.denisolek.integration.panel
 
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.whenever
-import org.junit.Assert
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -129,5 +129,53 @@ class PanelRestaurantControllerTests {
         assertEquals(expected.address, actual.address)
         assertEquals(expected.specialDates, actual.specialDates)
         assertEquals(expected.settings, actual.settings)
+    }
+
+    @Test
+    fun `updateBaseInfo_ empty name`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.name = ""
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(MockMvcResultMatchers.status().isBadRequest)
+    }
+
+    @Test
+    fun `updateBaseInfo_ name with multiple dashes`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.name = "test--name"
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(MockMvcResultMatchers.status().isBadRequest)
+    }
+
+    @Test
+    fun `updateBaseInfo_ name with dash at the beggining and ending`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.name = "-test-"
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(MockMvcResultMatchers.status().isBadRequest)
+    }
+
+    @Test
+    fun `updateBaseInfo_ name with special characters`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.name = "test%:"
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(MockMvcResultMatchers.status().isBadRequest)
     }
 }
