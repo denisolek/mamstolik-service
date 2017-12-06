@@ -257,4 +257,86 @@ class PanelRestaurantControllerTests {
 
         result.andExpect(status().isBadRequest)
     }
+
+    @Test
+    fun `updateBaseInfo_ empty city name`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.address.city = ""
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateBaseInfo_ city name with multiple dashes`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.address.city = "test--name"
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateBaseInfo_ city name with dash at the beggining and ending`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.address.city = "-test-"
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateBaseInfo_ city name with special characters`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.address.city = "test%:"
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateBaseInfo_ existing city`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.address.city = "WARSZAWA"
+        val body = convertObjectToJsonBytes(baseInfoStub)
+
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals("Warszawa", actual.address.city)
+    }
+
+    @Test
+    fun `updateBaseInfo_ not existing city`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.address.city = "SuperCity"
+        val body = convertObjectToJsonBytes(baseInfoStub)
+
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals("SuperCity", actual.address.city)
+    }
 }
