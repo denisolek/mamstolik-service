@@ -178,4 +178,26 @@ class PanelRestaurantControllerTests {
 
         result.andExpect(MockMvcResultMatchers.status().isBadRequest)
     }
+
+    @Test
+    fun `updateBaseInfo_ type is empty`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        val body = convertObjectToJsonBytes(baseInfoStub).replace("\"type\":\"BAR\"", "\"type\":\"\"")
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(MockMvcResultMatchers.status().isBadRequest)
+    }
+
+    @Test
+    fun `updateBaseInfo_ type is invalid`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        val body = convertObjectToJsonBytes(baseInfoStub).replace("\"type\":\"BAR\"", "\"type\":\"INVALID_TYPE\"")
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(MockMvcResultMatchers.status().isBadRequest)
+    }
 }
