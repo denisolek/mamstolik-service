@@ -3,7 +3,6 @@ package pl.denisolek.panel.restaurant.DTO.baseInfo
 import pl.denisolek.core.address.Address
 
 data class AddressDTO(
-        var id: Int? = null,
         var streetName: String = "",
         var buildingNumber: String = "",
         var postalCode: String = "",
@@ -13,7 +12,6 @@ data class AddressDTO(
 ) {
     companion object {
         fun fromAddress(address: Address?) = AddressDTO(
-                id = address?.id,
                 streetName = address?.streetName ?: "",
                 buildingNumber = address?.buildingNumber ?: "",
                 postalCode = address?.postalCode ?: "",

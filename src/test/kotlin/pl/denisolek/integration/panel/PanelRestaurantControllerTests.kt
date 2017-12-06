@@ -1,16 +1,16 @@
 package pl.denisolek.integration.panel
 
-import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
-import com.nhaarman.mockito_kotlin.isNotNull
 import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.SpyBean
+import org.springframework.http.MediaType
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
@@ -20,17 +20,18 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
-import pl.denisolek.core.address.Address
-import pl.denisolek.core.address.City
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.Settings
 import pl.denisolek.core.user.UserRepository
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.infrastructure.util.convertJsonBytesToObject
+import pl.denisolek.infrastructure.util.convertObjectToJsonBytes
 import pl.denisolek.panel.restaurant.DTO.baseInfo.AddressDTO
 import pl.denisolek.panel.restaurant.DTO.details.PanelRestaurantDetailsDTO
 import pl.denisolek.panel.restaurant.PanelRestaurantApi
+import pl.denisolek.stubs.dto.BaseInfoDTOStub
+import pl.denisolek.stubs.dto.PanelRestaurantDetailsDTOStub
 import javax.transaction.Transactional
 
 @RunWith(SpringRunner::class)
@@ -50,6 +51,7 @@ class PanelRestaurantControllerTests {
     lateinit var mvc: MockMvc
 
     val DETAILS_PATH = "$PANEL_BASE_PATH${PanelRestaurantApi.DETAILS_PATH}"
+    val BASE_INFO_PATH = "$PANEL_BASE_PATH${PanelRestaurantApi.BASE_INFO_PATH}"
 
     @Before
     fun setup() {
@@ -58,7 +60,6 @@ class PanelRestaurantControllerTests {
                 .apply<DefaultMockMvcBuilder>(SecurityMockMvcConfigurers.springSecurity())
                 .build()
     }
-
 
     @Test
     fun `getRestaurantDetails_`() {
@@ -71,7 +72,6 @@ class PanelRestaurantControllerTests {
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
         val expectedAddress = AddressDTO(
-                id = 1,
                 streetName = "Półwiejska 42",
                 buildingNumber = "1A",
                 postalCode = "60-681",
@@ -80,7 +80,7 @@ class PanelRestaurantControllerTests {
                 city = "Poznań"
         )
 
-        val expectedSettings = Settings (
+        val expectedSettings = Settings(
                 id = 1,
                 localization = true,
                 specialDates = true,
@@ -90,19 +90,44 @@ class PanelRestaurantControllerTests {
                 schema = true
         )
 
-        Assert.assertEquals("Piano Bar Restaurant & Cafe", actual.name)
-        Assert.assertEquals("piano.bar.restaurant.&.cafe", actual.urlName)
-        Assert.assertNotNull(actual.description)
-        Assert.assertEquals("pianobar@gmail.com", actual.email)
-        Assert.assertEquals("780199283", actual.phoneNumber)
-        Assert.assertEquals(Restaurant.RestaurantType.RESTAURANT, actual.type)
-        Assert.assertEquals(expectedAddress, actual.address)
-        Assert.assertEquals(7, actual.businessHours.count())
-        Assert.assertEquals(2, actual.specialDates.count())
-        Assert.assertEquals(2, actual.cuisineTypes.count())
-        Assert.assertEquals(2, actual.facilities.count())
-        Assert.assertEquals(5, actual.menu.count())
-        Assert.assertEquals(0, actual.images.count())
-        Assert.assertEquals(expectedSettings, actual.settings)
+        assertEquals("Piano Bar Restaurant & Cafe", actual.name)
+        assertEquals("piano.bar.restaurant.&.cafe", actual.urlName)
+        assertNotNull(actual.description)
+        assertEquals("pianobar@gmail.com", actual.email)
+        assertEquals("780199283", actual.phoneNumber)
+        assertEquals(Restaurant.RestaurantType.RESTAURANT, actual.type)
+        assertEquals(expectedAddress, actual.address)
+        assertEquals(7, actual.businessHours.count())
+        assertEquals(2, actual.specialDates.count())
+        assertEquals(2, actual.cuisineTypes.count())
+        assertEquals(2, actual.facilities.count())
+        assertEquals(5, actual.menu.count())
+        assertEquals(0, actual.images.count())
+        assertEquals(expectedSettings, actual.settings)
+    }
+
+    @Test
+    fun `updateBaseInfo_ correct data`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        val body = convertObjectToJsonBytes(baseInfoStub)
+
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        val expected = PanelRestaurantDetailsDTOStub.getUpdatedBaseInfo()
+
+        assertEquals(expected.name, actual.name)
+        assertEquals(expected.urlName, actual.urlName)
+        assertEquals(expected.phoneNumber, actual.phoneNumber)
+        assertEquals(expected.type, actual.type)
+        assertEquals(expected.businessHours, actual.businessHours)
+        assertEquals(expected.address, actual.address)
+        assertEquals(expected.specialDates, actual.specialDates)
+        assertEquals(expected.settings, actual.settings)
     }
 }

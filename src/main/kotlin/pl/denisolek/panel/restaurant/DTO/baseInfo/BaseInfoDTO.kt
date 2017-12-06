@@ -3,7 +3,6 @@ package pl.denisolek.panel.restaurant.DTO.baseInfo
 import org.hibernate.validator.constraints.NotBlank
 import org.springframework.http.HttpStatus
 import pl.denisolek.Exception.ServiceException
-import pl.denisolek.core.address.Address
 import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.SpecialDate
@@ -41,8 +40,8 @@ data class BaseInfoDTO(
             restaurant.name = baseInfoDTO.name
             restaurant.phoneNumber = baseInfoDTO.phoneNumber
             restaurant.type = baseInfoDTO.type
-            restaurant.address = getUpdatedAddress(restaurant, baseInfoDTO)
 
+            updateAddress(restaurant, baseInfoDTO)
             updateSpecialDates(restaurant, baseInfoDTO)
             updateBusinessHours(restaurant, baseInfoDTO)
             return restaurant
@@ -58,15 +57,12 @@ data class BaseInfoDTO(
             }
         }
 
-        private fun getUpdatedAddress(restaurant: Restaurant, baseInfoDTO: BaseInfoDTO): Address {
-            return Address(
-                    id = restaurant.address.id,
-                    streetName = baseInfoDTO.address.streetName,
-                    buildingNumber = baseInfoDTO.address.buildingNumber,
-                    postalCode = baseInfoDTO.address.postalCode,
-                    latitude = baseInfoDTO.address.latitude,
-                    longitude = baseInfoDTO.address.longitude
-            )
+        private fun updateAddress(restaurant: Restaurant, baseInfoDTO: BaseInfoDTO) {
+            restaurant.address.streetName = baseInfoDTO.address.streetName
+            restaurant.address.buildingNumber = baseInfoDTO.address.buildingNumber
+            restaurant.address.postalCode = baseInfoDTO.address.postalCode
+            restaurant.address.latitude = baseInfoDTO.address.latitude
+            restaurant.address.longitude = baseInfoDTO.address.longitude
         }
 
         private fun updateSpecialDates(restaurant: Restaurant, baseInfoDTO: BaseInfoDTO) {
