@@ -16,11 +16,11 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
+import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.Settings
 import pl.denisolek.core.user.UserRepository
@@ -33,6 +33,8 @@ import pl.denisolek.panel.restaurant.DTO.details.PanelRestaurantDetailsDTO
 import pl.denisolek.panel.restaurant.PanelRestaurantApi
 import pl.denisolek.stubs.dto.BaseInfoDTOStub
 import pl.denisolek.stubs.dto.PanelRestaurantDetailsDTOStub
+import java.time.DayOfWeek
+import java.time.LocalTime
 import javax.transaction.Transactional
 
 @RunWith(SpringRunner::class)
@@ -338,5 +340,143 @@ class PanelRestaurantControllerTests {
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
         assertEquals("SuperCity", actual.address.city)
+    }
+
+    @Test
+    fun `updateBaseInfo_ businessHour no id`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.businessHours[DayOfWeek.MONDAY] = BusinessHour(
+                openTime = LocalTime.of(4, 0),
+                closeTime = LocalTime.of(5, 0),
+                isClosed = false
+        )
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals(1, actual.businessHours[DayOfWeek.MONDAY]!!.id)
+        assertEquals(LocalTime.of(4, 0), actual.businessHours[DayOfWeek.MONDAY]!!.openTime)
+        assertEquals(LocalTime.of(5, 0), actual.businessHours[DayOfWeek.MONDAY]!!.closeTime)
+        assertEquals(false, actual.businessHours[DayOfWeek.MONDAY]!!.isClosed)
+    }
+
+    @Test
+    fun `updateBaseInfo_ businessHour not existing id`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.businessHours[DayOfWeek.MONDAY] = BusinessHour(
+                id = 5000,
+                openTime = LocalTime.of(4, 0),
+                closeTime = LocalTime.of(5, 0),
+                isClosed = false
+        )
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals(1, actual.businessHours[DayOfWeek.MONDAY]!!.id)
+        assertEquals(LocalTime.of(4, 0), actual.businessHours[DayOfWeek.MONDAY]!!.openTime)
+        assertEquals(LocalTime.of(5, 0), actual.businessHours[DayOfWeek.MONDAY]!!.closeTime)
+        assertEquals(false, actual.businessHours[DayOfWeek.MONDAY]!!.isClosed)
+    }
+
+    @Test
+    fun `updateBaseInfo_ businessHour removed`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.businessHours.remove(DayOfWeek.MONDAY)
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateBaseInfo_ businessHour closeTime before openTime`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.businessHours[DayOfWeek.MONDAY] = BusinessHour(
+                id = 5000,
+                openTime = LocalTime.of(5, 0),
+                closeTime = LocalTime.of(4, 0),
+                isClosed = false
+        )
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateBaseInfo_ businessHour no openTime`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.businessHours[DayOfWeek.MONDAY] = BusinessHour(
+                id = 5000,
+                closeTime = LocalTime.of(5, 0),
+                isClosed = false
+        )
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals(1, actual.businessHours[DayOfWeek.MONDAY]!!.id)
+        assertEquals(LocalTime.of(0, 0), actual.businessHours[DayOfWeek.MONDAY]!!.openTime)
+        assertEquals(LocalTime.of(5, 0), actual.businessHours[DayOfWeek.MONDAY]!!.closeTime)
+        assertEquals(false, actual.businessHours[DayOfWeek.MONDAY]!!.isClosed)
+    }
+
+    @Test
+    fun `updateBaseInfo_ businessHour no closeTime`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.businessHours[DayOfWeek.MONDAY] = BusinessHour(
+                id = 5000,
+                openTime = LocalTime.of(5, 0),
+                isClosed = false
+        )
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateBaseInfo_ businessHour no isClosed`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.businessHours[DayOfWeek.MONDAY] = BusinessHour(
+                id = 5000,
+                openTime = LocalTime.of(4, 0),
+                closeTime = LocalTime.of(5, 0)
+        )
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals(1, actual.businessHours[DayOfWeek.MONDAY]!!.id)
+        assertEquals(LocalTime.of(4, 0), actual.businessHours[DayOfWeek.MONDAY]!!.openTime)
+        assertEquals(LocalTime.of(5, 0), actual.businessHours[DayOfWeek.MONDAY]!!.closeTime)
+        assertEquals(false, actual.businessHours[DayOfWeek.MONDAY]!!.isClosed)
     }
 }
