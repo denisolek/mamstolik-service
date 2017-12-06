@@ -41,9 +41,15 @@ data class BaseInfoDTO(
             restaurant.name = baseInfoDTO.name
             restaurant.phoneNumber = baseInfoDTO.phoneNumber
             restaurant.type = baseInfoDTO.type
-            restaurant.businessHours = getUpdatedBusinessHours(restaurant, baseInfoDTO)
-            restaurant.specialDates = getUpdatedSpecialDates(baseInfoDTO, restaurant).toMutableList()
             restaurant.address = getUpdatedAddress(restaurant, baseInfoDTO)
+
+            updateSpecialDates(restaurant, baseInfoDTO)
+
+            restaurant.businessHours.forEach {
+                it.value.openTime = baseInfoDTO.businessHours[it.key]?.openTime ?: throw ServiceException(HttpStatus.BAD_REQUEST, "Invalid openTime for ${it.key}")
+                it.value.closeTime = baseInfoDTO.businessHours[it.key]?.closeTime ?: throw ServiceException(HttpStatus.BAD_REQUEST, "Invalid closeTime for ${it.key}")
+                it.value.isClosed = baseInfoDTO.businessHours[it.key]?.isClosed ?: throw ServiceException(HttpStatus.BAD_REQUEST, "Invalid isClosed for ${it.key}")
+            }
             return restaurant
         }
 
@@ -58,25 +64,27 @@ data class BaseInfoDTO(
             )
         }
 
-        private fun getUpdatedBusinessHours(restaurant: Restaurant, baseInfoDTO: BaseInfoDTO): Map<DayOfWeek, BusinessHour> {
-            return DayOfWeek.values().map {
-                restaurant.businessHours[it]?.openTime = baseInfoDTO.businessHours[it]?.openTime ?: throw ServiceException(HttpStatus.BAD_REQUEST, "Invalid openTime for $it")
-                restaurant.businessHours[it]?.closeTime = baseInfoDTO.businessHours[it]?.closeTime ?: throw ServiceException(HttpStatus.BAD_REQUEST, "Invalid closeTime for $it")
-                restaurant.businessHours[it]?.isClosed = baseInfoDTO.businessHours[it]?.isClosed ?: throw ServiceException(HttpStatus.BAD_REQUEST, "Invalid isClosed for $it")
-                Pair(it, restaurant.businessHours[it]!!)
-            }.toMap()
-        }
+        private fun updateSpecialDates(restaurant: Restaurant, baseInfoDTO: BaseInfoDTO) {
+            restaurant.specialDates.removeIf { specialDate ->
+                !baseInfoDTO.specialDates.any { it.id == specialDate.id }
+            }
 
-        private fun getUpdatedSpecialDates(baseInfoDTO: BaseInfoDTO, restaurant: Restaurant): List<SpecialDate> {
-            return baseInfoDTO.specialDates.map { (id, date, businessHour) ->
-                restaurant.specialDates.find { it.id == id }?.let {
-                    it.businessHour = businessHour
+            baseInfoDTO.specialDates.forEach { (id, date, businessHour) ->
+                if (businessHour.closeTime.isBefore(businessHour.openTime)) throw ServiceException(HttpStatus.BAD_REQUEST, "Close time must be greater than open time.")
+                restaurant.specialDates.firstOrNull { it.id == id || it.date == date }?.let {
+                    it.businessHour.openTime = businessHour.openTime
+                    it.businessHour.closeTime = businessHour.closeTime
+                    it.businessHour.isClosed = businessHour.isClosed
                     it.date = date
                     it
-                } ?: SpecialDate(
-                        businessHour = businessHour,
+                } ?: restaurant.specialDates.add(SpecialDate(
                         date = date,
-                        restaurant = restaurant
+                        restaurant = restaurant,
+                        businessHour = BusinessHour(
+                                openTime = businessHour.openTime,
+                                closeTime = businessHour.closeTime,
+                                isClosed = businessHour.isClosed
+                        ))
                 )
             }
         }

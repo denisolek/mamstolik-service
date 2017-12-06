@@ -78,8 +78,7 @@ data class Restaurant(
         @Column(name = "facility", nullable = false)
         var facilities: MutableSet<Facilities> = mutableSetOf(),
 
-        @OneToMany(cascade = arrayOf(CascadeType.ALL))
-        @JoinTable(name = "restaurant_business_hour", joinColumns = arrayOf(JoinColumn(name = "restaurant_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "business_hour_id")))
+        @OneToMany(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         @MapKeyEnumerated(EnumType.STRING)
         @MapKeyColumn(name = "day_of_week")
         var businessHours: Map<DayOfWeek, BusinessHour> = DayOfWeek.values().map { dayOfWeek ->

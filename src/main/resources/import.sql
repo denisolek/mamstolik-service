@@ -162,7 +162,7 @@ VALUES
   ('13:00:00', '23:00:00', FALSE),
   ('13:00:00', '20:00:00', FALSE);
 
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
+INSERT INTO public.restaurant_business_hours (restaurant_id, business_hours_id, day_of_week)
 VALUES
   (1, 1, 'MONDAY'),
   (1, 2, 'TUESDAY'),
@@ -181,7 +181,7 @@ VALUES
   ('10:00:00', '22:00:00', FALSE),
   ('13:00:00', '22:00:00', FALSE),
   ('13:00:00', '22:00:00', FALSE);
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
+INSERT INTO public.restaurant_business_hours (restaurant_id, business_hours_id, day_of_week)
 VALUES
   (2, 8, 'MONDAY'),
   (2, 9, 'TUESDAY'),
@@ -200,7 +200,7 @@ VALUES
   ('10:00:00', '22:00:00', FALSE),
   ('13:00:00', '22:00:00', FALSE),
   ('13:00:00', '22:00:00', FALSE);
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
+INSERT INTO public.restaurant_business_hours (restaurant_id, business_hours_id, day_of_week)
 VALUES
   (3, 15, 'MONDAY'),
   (3, 16, 'TUESDAY'),
@@ -219,7 +219,7 @@ VALUES
   ('10:00:00', '22:00:00', FALSE),
   ('13:00:00', '22:00:00', FALSE),
   ('13:00:00', '22:00:00', FALSE);
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
+INSERT INTO public.restaurant_business_hours (restaurant_id, business_hours_id, day_of_week)
 VALUES
   (4, 22, 'MONDAY'),
   (4, 23, 'TUESDAY'),
@@ -238,7 +238,7 @@ VALUES
   ('10:00:00', '22:00:00', FALSE),
   ('13:00:00', '22:00:00', FALSE),
   ('13:00:00', '22:00:00', FALSE);
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
+INSERT INTO public.restaurant_business_hours (restaurant_id, business_hours_id, day_of_week)
 VALUES
   (5, 29, 'MONDAY'),
   (5, 30, 'TUESDAY'),
@@ -257,7 +257,7 @@ VALUES
   ('10:00:00', '23:00:00', FALSE),
   ('10:00:00', '23:00:00', FALSE),
   ('10:00:00', '23:00:00', FALSE);
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
+INSERT INTO public.restaurant_business_hours (restaurant_id, business_hours_id, day_of_week)
 VALUES
   (6, 36, 'MONDAY'),
   (6, 37, 'TUESDAY'),
@@ -276,7 +276,7 @@ VALUES
   ('10:00:00', '23:00:00', FALSE),
   ('10:00:00', '23:00:00', FALSE),
   ('10:00:00', '23:00:00', FALSE);
-INSERT INTO public.restaurant_business_hour (restaurant_id, business_hour_id, day_of_week)
+INSERT INTO public.restaurant_business_hours (restaurant_id, business_hours_id, day_of_week)
 VALUES
   (7, 43, 'MONDAY'),
   (7, 44, 'TUESDAY'),
