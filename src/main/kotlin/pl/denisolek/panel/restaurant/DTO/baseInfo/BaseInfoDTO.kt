@@ -8,6 +8,7 @@ import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.SpecialDate
 import pl.denisolek.panel.restaurant.DTO.SpecialDateDTO
 import java.time.DayOfWeek
+import javax.validation.Valid
 import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
 
@@ -25,6 +26,7 @@ data class BaseInfoDTO(
 
         var type: Restaurant.RestaurantType,
 
+        @field:Valid
         var address: AddressDTO,
 
         var businessHours: MutableMap<DayOfWeek, BusinessHour>,
