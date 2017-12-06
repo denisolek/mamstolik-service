@@ -28,6 +28,7 @@ import pl.denisolek.core.user.UserRepository
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.infrastructure.util.convertJsonBytesToObject
+import pl.denisolek.panel.restaurant.DTO.baseInfo.AddressDTO
 import pl.denisolek.panel.restaurant.DTO.details.PanelRestaurantDetailsDTO
 import pl.denisolek.panel.restaurant.PanelRestaurantApi
 import javax.transaction.Transactional
@@ -69,14 +70,14 @@ class PanelRestaurantControllerTests {
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
-        val expectedAddress = Address(
+        val expectedAddress = AddressDTO(
                 id = 1,
                 streetName = "Półwiejska 42",
                 buildingNumber = "1A",
                 postalCode = "60-681",
                 latitude = 52.40764f,
                 longitude = 16.93201f,
-                city = City(name = "Poznań", aliases = null)
+                city = "Poznań"
         )
 
         val expectedSettings = Settings (
