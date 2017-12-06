@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
@@ -66,7 +67,7 @@ class PanelRestaurantControllerTests {
         val user = userRepository.findOne(1)
         doReturn(user).whenever(authorizationService).getCurrentUser()
         val result = mvc.perform(MockMvcRequestBuilders.get(DETAILS_PATH, 1))
-                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andExpect(status().isOk)
                 .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
@@ -114,7 +115,7 @@ class PanelRestaurantControllerTests {
         val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body))
-                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andExpect(status().isOk)
                 .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
@@ -140,7 +141,7 @@ class PanelRestaurantControllerTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body))
 
-        result.andExpect(MockMvcResultMatchers.status().isBadRequest)
+        result.andExpect(status().isBadRequest)
     }
 
     @Test
@@ -152,7 +153,7 @@ class PanelRestaurantControllerTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body))
 
-        result.andExpect(MockMvcResultMatchers.status().isBadRequest)
+        result.andExpect(status().isBadRequest)
     }
 
     @Test
@@ -164,7 +165,7 @@ class PanelRestaurantControllerTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body))
 
-        result.andExpect(MockMvcResultMatchers.status().isBadRequest)
+        result.andExpect(status().isBadRequest)
     }
 
     @Test
@@ -176,7 +177,7 @@ class PanelRestaurantControllerTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body))
 
-        result.andExpect(MockMvcResultMatchers.status().isBadRequest)
+        result.andExpect(status().isBadRequest)
     }
 
     @Test
@@ -187,7 +188,7 @@ class PanelRestaurantControllerTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body))
 
-        result.andExpect(MockMvcResultMatchers.status().isBadRequest)
+        result.andExpect(status().isBadRequest)
     }
 
     @Test
@@ -198,6 +199,62 @@ class PanelRestaurantControllerTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body))
 
-        result.andExpect(MockMvcResultMatchers.status().isBadRequest)
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateBaseInfo_ phoneNumber is empty`() {
+        var baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.phoneNumber = ""
+
+        val body = convertObjectToJsonBytes(baseInfoStub)
+
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateBaseInfo_ phoneNumber with letters`() {
+        var baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.phoneNumber = "111222ccc"
+
+        val body = convertObjectToJsonBytes(baseInfoStub)
+
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateBaseInfo_ phoneNumber wrong length`() {
+        var baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.phoneNumber = "111 222 33"
+
+        val body = convertObjectToJsonBytes(baseInfoStub)
+
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateBaseInfo_ phoneNumber with not allowed chars`() {
+        var baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.phoneNumber = "+48 111*222*333"
+
+        val body = convertObjectToJsonBytes(baseInfoStub)
+
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
     }
 }
