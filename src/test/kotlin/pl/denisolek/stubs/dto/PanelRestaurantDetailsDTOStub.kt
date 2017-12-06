@@ -32,13 +32,21 @@ class PanelRestaurantDetailsDTOStub {
                         longitude = 1000f
                 ),
                 businessHours = DayOfWeek.values().map { dayOfWeek ->
-                    Pair(dayOfWeek, BusinessHour())
+                    Pair(dayOfWeek, BusinessHour(id = dayOfWeek.ordinal + 1))
                 }.toMap().toMutableMap(),
                 cuisineTypes = listOf(POLISH, ITALIAN),
                 facilities = listOf(SMOKING_ROOM, AIR_CONDITIONING),
                 menu = listOf(),
                 images = listOf(),
-                settings = Settings(localization = false, specialDates = false),
+                settings = Settings(
+                        id = 1,
+                        localization = false,
+                        specialDates = false,
+                        description = true,
+                        photos = true,
+                        menu = true,
+                        schema = true
+                ),
                 specialDates = listOf(
                         SpecialDateDTO(
                                 id = 1,
