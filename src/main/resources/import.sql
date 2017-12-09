@@ -289,12 +289,14 @@ VALUES
 INSERT INTO public.business_hour (close_time, open_time, is_closed)
 VALUES
   ('12:00:00', '14:00:00', FALSE),
-  ('00:00:00', '00:00:00', TRUE);
+  ('00:00:00', '00:00:00', TRUE),
+  ('01:00:00', '06:00:00', FALSE);
 
 INSERT INTO public.special_date (date, description, business_hour_id, restaurant_id)
 VALUES
   ('2017-10-10', '', 50, 1),
-  ('2017-10-17', 'Remont', 51, 1);
+  ('2017-10-17', 'Remont', 51, 1),
+  ('2018-10-23', '', 52, 1);
 
 -- add customers
 INSERT INTO public.customer (email, phone_number, first_name, last_name)
@@ -433,7 +435,8 @@ VALUES
   (2, '2017-10-18 15:30:00.000', '2017-10-18 16:30:00.000', 3600, 0, 2, 1, 314251, TRUE),
   (3, '2018-10-18 15:30:00.000', '2018-10-18 16:30:00.000', 3600, 0, 2, 1, 314251, TRUE),
   (3, '2018-10-19 15:30:00.000', '2018-10-19 16:30:00.000', 3600, 0, 2, 1, 314251, TRUE),
-  (3, '2018-10-20 15:30:00.000', '2018-10-20 16:30:00.000', 3600, 0, 2, 1, 314251, TRUE);
+  (3, '2018-10-20 15:30:00.000', '2018-10-20 16:30:00.000', 3600, 0, 2, 1, 314251, TRUE),
+  (3, '2018-10-23 03:30:00.000', '2018-10-23 04:00:00.000', 3600, 0, 2, 1, 314251, TRUE);
 
 -- reservation spots
 INSERT INTO public.reservation_spots (reservation_id, spot_id)

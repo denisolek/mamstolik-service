@@ -80,26 +80,41 @@ data class BaseInfoDTO(
 
         private fun updateSpecialDates(restaurant: Restaurant, baseInfoDTO: BaseInfoDTO) {
             restaurant.specialDates.removeIf { specialDate ->
-                !baseInfoDTO.specialDates.any { it.id == specialDate.id }
+                !baseInfoDTO.specialDates.any {
+                    it.id == specialDate.id
+                } && specialDate.canBeRemoved()
             }
 
-            baseInfoDTO.specialDates.forEach { (id, date, businessHour) ->
-                if (businessHour.closeTime.isBefore(businessHour.openTime)) throw ServiceException(HttpStatus.BAD_REQUEST, "Close time must be greater than open time.")
-                restaurant.specialDates.firstOrNull { it.id == id || it.date == date }?.let {
-                    it.businessHour.openTime = businessHour.openTime
-                    it.businessHour.closeTime = businessHour.closeTime
-                    it.businessHour.isClosed = businessHour.isClosed
-                    it.date = date
-                    it
-                } ?: restaurant.specialDates.add(SpecialDate(
-                        date = date,
-                        restaurant = restaurant,
-                        businessHour = BusinessHour(
-                                openTime = businessHour.openTime,
-                                closeTime = businessHour.closeTime,
-                                isClosed = businessHour.isClosed
-                        ))
-                )
+            baseInfoDTO.specialDates.forEach { specialDate ->
+                var existing = false
+                if (specialDate.businessHour.closeTime.isBefore(specialDate.businessHour.openTime))
+                    throw ServiceException(HttpStatus.BAD_REQUEST, "Close time must be greater than open time.")
+
+                restaurant.specialDates.map {
+                    when {
+                        it.id != specialDate.id || it.date != specialDate.date -> if (it.id == specialDate.id && it.date != specialDate.date) throw ServiceException(HttpStatus.BAD_REQUEST, "You can't edit date of existing special day.")
+                        else if (it.id != specialDate.id && it.date == specialDate.date) throw ServiceException(HttpStatus.CONFLICT, "Special day for that date already exists.")
+                        specialDate.canBeAdded(restaurant) -> {
+                            it.businessHour.openTime = specialDate.businessHour.openTime
+                            it.businessHour.closeTime = specialDate.businessHour.closeTime
+                            it.businessHour.isClosed = specialDate.businessHour.isClosed
+                            it.date = specialDate.date
+                            existing = true
+                        }
+                    }
+                }
+
+                if (!existing && specialDate.canBeAdded(restaurant)) {
+                    restaurant.specialDates.add(SpecialDate(
+                            date = specialDate.date,
+                            restaurant = restaurant,
+                            businessHour = BusinessHour(
+                                    openTime = specialDate.businessHour.openTime,
+                                    closeTime = specialDate.businessHour.closeTime,
+                                    isClosed = specialDate.businessHour.isClosed
+                            ))
+                    )
+                }
             }
         }
     }

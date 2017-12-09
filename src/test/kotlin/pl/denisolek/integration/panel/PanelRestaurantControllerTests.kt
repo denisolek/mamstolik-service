@@ -2,10 +2,8 @@ package pl.denisolek.integration.panel
 
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.whenever
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.*
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -104,7 +102,7 @@ class PanelRestaurantControllerTests {
         assertEquals(Restaurant.RestaurantType.RESTAURANT, actual.type)
         assertEquals(expectedAddress, actual.address)
         assertEquals(7, actual.businessHours.count())
-        assertEquals(2, actual.specialDates.count())
+        assertEquals(3, actual.specialDates.count())
         assertEquals(2, actual.cuisineTypes.count())
         assertEquals(2, actual.facilities.count())
         assertEquals(5, actual.menu.count())
@@ -506,7 +504,6 @@ class PanelRestaurantControllerTests {
             it.businessHour.openTime = LocalTime.of(20, 20)
             it.businessHour.closeTime = LocalTime.of(21, 21)
             it.businessHour.isClosed = true
-            it.date = LocalDate.of(2017, 10, 11)
         }
         val body = convertObjectToJsonBytes(baseInfoStub)
         val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
@@ -518,14 +515,30 @@ class PanelRestaurantControllerTests {
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
         val actualSpecialDate = actual.specialDates.first { it.id == 1 }
-        assertEquals(LocalDate.of(2017, 10, 11), actualSpecialDate.date)
+        assertEquals(LocalDate.of(2017, 10, 10), actualSpecialDate.date)
         assertEquals(LocalTime.of(20, 20), actualSpecialDate.businessHour.openTime)
         assertEquals(LocalTime.of(21, 21), actualSpecialDate.businessHour.closeTime)
         assertEquals(true, actualSpecialDate.businessHour.isClosed)
     }
 
     @Test
-    @Ignore
+    fun `updateBaseInfo_ specialDate update existing, change date`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.specialDates.first { it.id == 1 }.let {
+            it.businessHour.openTime = LocalTime.of(20, 20)
+            it.businessHour.closeTime = LocalTime.of(21, 21)
+            it.businessHour.isClosed = true
+            it.date = LocalDate.of(2017, 10, 11)
+        }
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
     fun `updateBaseInfo_ specialDate add new for existing date`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.specialDates.toMutableList().add(
@@ -544,15 +557,136 @@ class PanelRestaurantControllerTests {
         val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body))
+
+        result.andExpect(status().isConflict)
+    }
+
+    @Test
+    fun `updateBaseInfo_ specialDate add new for existing date and different day id`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.specialDates.toMutableList().add(
+                SpecialDateDTO(
+                        id = 2,
+                        date = LocalDate.of(2017, 10, 10),
+                        businessHour = BusinessHour(
+                                id = null,
+                                openTime = LocalTime.of(17, 20),
+                                closeTime = LocalTime.of(18, 20),
+                                isClosed = false
+                        )
+                )
+        )
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isConflict)
+    }
+
+    @Test
+    fun `updateBaseInfo_ specialDate add new`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.specialDates.toMutableList().add(SpecialDateDTO(
+                id = null,
+                date = LocalDate.of(2017, 10, 12),
+                businessHour = BusinessHour(
+                        id = null,
+                        openTime = LocalTime.of(10, 0),
+                        closeTime = LocalTime.of(11, 0),
+                        isClosed = false
+                )
+        ))
+
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
                 .andExpect(status().isOk)
                 .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
-        val actualSpecialDate = actual.specialDates.first { it.id == 1 }
-        assertEquals(LocalDate.of(2017, 10, 10), actualSpecialDate.date)
-        assertEquals(LocalTime.of(17, 20), actualSpecialDate.businessHour.openTime)
-        assertEquals(LocalTime.of(18, 21), actualSpecialDate.businessHour.closeTime)
+        val actualSpecialDate = actual.specialDates.find { it.date == LocalDate.of(2017, 10, 12) }!!
+        assertEquals(LocalTime.of(10, 0), actualSpecialDate.businessHour.openTime)
+        assertEquals(LocalTime.of(11, 0), actualSpecialDate.businessHour.closeTime)
         assertEquals(false, actualSpecialDate.businessHour.isClosed)
+    }
+
+    @Test
+    fun `updateBaseInfo_ specialDate remove existing`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.specialDates.toMutableList().removeIf { it.id == 2 }
+
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        val exists = actual.specialDates.any { it.id == 2 }
+        assertFalse(exists)
+    }
+
+    @Test
+    fun `updateBaseInfo_ specialDate add new close time before open time`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.specialDates.toMutableList().add(
+                SpecialDateDTO(
+                        id = null,
+                        date = LocalDate.of(2018, 10, 22),
+                        businessHour = BusinessHour(
+                                id = null,
+                                openTime = LocalTime.of(17, 20),
+                                closeTime = LocalTime.of(13, 20),
+                                isClosed = false
+                        )
+                )
+        )
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateBaseInfo_ specialDate remove one with future reservation`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.specialDates.toMutableList().removeIf { it.id == 3 }
+
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateBaseInfo_ specialDate add new for day with reservations`() {
+        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
+        baseInfoStub.specialDates.toMutableList().add(
+                SpecialDateDTO(
+                        id = null,
+                        date = LocalDate.of(2018, 10, 20),
+                        businessHour = BusinessHour(
+                                id = null,
+                                openTime = LocalTime.of(18, 20),
+                                closeTime = LocalTime.of(22, 20),
+                                isClosed = false
+                        )
+                )
+        )
+        val body = convertObjectToJsonBytes(baseInfoStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
     }
 }
