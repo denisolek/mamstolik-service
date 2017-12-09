@@ -181,7 +181,6 @@ data class Restaurant(
             null
     }
 
-
     enum class AvailabilityType {
         AVAILABLE,
         POSSIBLE,

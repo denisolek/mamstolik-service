@@ -12,7 +12,7 @@ import springfox.documentation.annotations.ApiIgnore
 import javax.validation.Valid
 
 @RestController
-class PanelRestaurantController(val panelRestaurantService: PanelRestaurantService): PanelRestaurantApi {
+class PanelRestaurantController(val panelRestaurantService: PanelRestaurantService) : PanelRestaurantApi {
     companion object {
         val API = PanelRestaurantApi.Companion
     }

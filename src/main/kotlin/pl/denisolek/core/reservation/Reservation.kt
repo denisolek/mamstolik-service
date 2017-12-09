@@ -1,10 +1,13 @@
 package pl.denisolek.core.reservation
 
 import pl.denisolek.core.customer.Customer
+import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.core.user.User
 import pl.denisolek.infrastructure.util.DateTimeInterval
+import pl.denisolek.infrastructure.util.isAfterOrEqual
+import pl.denisolek.infrastructure.util.isBeforeOrEqual
 import pl.denisolek.panel.reservation.DTO.PanelCreateReservationDTO
 import java.time.Duration
 import java.time.LocalDateTime
@@ -54,6 +57,10 @@ data class Reservation(
             approvedBy = approvedBy,
             spots = spots
     )
+
+    fun isInsideBusinessHours(businessHour: BusinessHour) = !businessHour.isClosed &&
+            this.startDateTime.toLocalTime().isAfterOrEqual(businessHour.openTime) &&
+            this.endDateTime.toLocalTime().isBeforeOrEqual(businessHour.closeTime)
 
     enum class ReservationState {
         PENDING,

@@ -61,7 +61,7 @@ class RestaurantTest {
                 date = LocalDate.of(2017, 10, 10),
                 businessHour = BusinessHour(
                         openTime = LocalTime.of(10, 0),
-                        closeTime = LocalTime.of(12,0),
+                        closeTime = LocalTime.of(12, 0),
                         isClosed = false
                 ),
                 restaurant = restaurant
@@ -78,7 +78,7 @@ class RestaurantTest {
                 date = LocalDate.of(2017, 10, 10),
                 businessHour = BusinessHour(
                         openTime = LocalTime.of(10, 0),
-                        closeTime = LocalTime.of(12,0),
+                        closeTime = LocalTime.of(12, 0),
                         isClosed = true
                 ),
                 restaurant = restaurant

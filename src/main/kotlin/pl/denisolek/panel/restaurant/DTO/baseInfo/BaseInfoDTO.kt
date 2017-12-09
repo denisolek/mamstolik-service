@@ -51,11 +51,22 @@ data class BaseInfoDTO(
 
         private fun updateBusinessHours(restaurant: Restaurant, baseInfoDTO: BaseInfoDTO) {
             restaurant.businessHours.forEach {
-                if (baseInfoDTO.businessHours[it.key]?.closeTime?.isBefore(baseInfoDTO.businessHours[it.key]?.openTime) ?: throw ServiceException(HttpStatus.BAD_REQUEST, "Invalid businessHours for ${it.key}"))
+                val dtoBusinessHour = baseInfoDTO.businessHours[it.key] ?: throw ServiceException(HttpStatus.BAD_REQUEST, "Invalid businessHours for ${it.key}")
+                if (dtoBusinessHour.closeTime.isBefore(dtoBusinessHour.openTime))
                     throw ServiceException(HttpStatus.BAD_REQUEST, "Close time for ${it.key} must be greater than open time.")
-                it.value.openTime = baseInfoDTO.businessHours[it.key]?.openTime ?: throw ServiceException(HttpStatus.BAD_REQUEST, "Invalid openTime for ${it.key}")
-                it.value.closeTime = baseInfoDTO.businessHours[it.key]?.closeTime ?: throw ServiceException(HttpStatus.BAD_REQUEST, "Invalid closeTime for ${it.key}")
-                it.value.isClosed = baseInfoDTO.businessHours[it.key]?.isClosed ?: throw ServiceException(HttpStatus.BAD_REQUEST, "Invalid isClosed for ${it.key}")
+                validateFutureReservations(restaurant, it, dtoBusinessHour)
+                it.value.openTime = dtoBusinessHour.openTime
+                it.value.closeTime = dtoBusinessHour.closeTime
+                it.value.isClosed = dtoBusinessHour.isClosed
+            }
+        }
+
+        private fun validateFutureReservations(restaurant: Restaurant, it: Map.Entry<DayOfWeek, BusinessHour>, dtoBusinessHour: BusinessHour) {
+            restaurant.reservations.filter { reservation ->
+                reservation.startDateTime.dayOfWeek == it.key
+            }.forEach { reservation ->
+                if (!reservation.isInsideBusinessHours(dtoBusinessHour))
+                    throw ServiceException(HttpStatus.BAD_REQUEST, "Reservation ${reservation.id} doesn't fit in ${it.key} new business hours")
             }
         }
 

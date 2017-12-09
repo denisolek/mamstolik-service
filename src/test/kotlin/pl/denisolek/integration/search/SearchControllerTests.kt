@@ -49,10 +49,10 @@ class SearchControllerTests {
 
         val expected = CitiesRestaurantsDTO(
                 cities = listOf(
-                        City( name = "Pogorzela", aliases = null),
-                        City( name = "Poręba", aliases = null),
-                        City( name = "Poznań", aliases = null),
-                        City( name = "Płock", aliases = null)),
+                        City(name = "Pogorzela", aliases = null),
+                        City(name = "Poręba", aliases = null),
+                        City(name = "Poznań", aliases = null),
+                        City(name = "Płock", aliases = null)),
                 restaurants = listOf(
                         RestaurantSearchDTO(7, "Pasja"),
                         RestaurantSearchDTO(1, "Piano Bar Restaurant & Cafe"))
@@ -71,9 +71,9 @@ class SearchControllerTests {
 
         val expected = CitiesRestaurantsDTO(
                 cities = listOf(
-                        City( name = "Pogorzela", aliases = null),
-                        City( name = "Poręba", aliases = null),
-                        City( name = "Poznań", aliases = null)),
+                        City(name = "Pogorzela", aliases = null),
+                        City(name = "Poręba", aliases = null),
+                        City(name = "Poznań", aliases = null)),
                 restaurants = listOf()
         )
 
@@ -90,8 +90,8 @@ class SearchControllerTests {
 
         val expected = CitiesRestaurantsDTO(
                 cities = listOf(
-                        City( name = "Gorzów Wielkopolski", aliases = null),
-                        City( name = "Gorzów Śląski", aliases = null)),
+                        City(name = "Gorzów Wielkopolski", aliases = null),
+                        City(name = "Gorzów Śląski", aliases = null)),
                 restaurants = listOf()
         )
 
@@ -108,7 +108,7 @@ class SearchControllerTests {
 
         val expected = CitiesRestaurantsDTO(
                 cities = listOf(
-                        City( name = "Gorzów Wielkopolski", aliases = null)),
+                        City(name = "Gorzów Wielkopolski", aliases = null)),
                 restaurants = listOf()
         )
 
@@ -125,7 +125,7 @@ class SearchControllerTests {
 
         val expected = CitiesRestaurantsDTO(
                 cities = listOf(
-                        City( name = "Poznań", aliases = null)),
+                        City(name = "Poznań", aliases = null)),
                 restaurants = listOf()
         )
 
