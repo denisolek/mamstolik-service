@@ -1,6 +1,6 @@
 package pl.denisolek.integration.panel
 
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -275,6 +275,33 @@ class PanelReservationControllerTests {
         assertEquals(LocalTime.of(21, 0), actual.closeTime)
         assertEquals(2, actual.reservations.count())
     }
+
+    @Test
+    fun `getReservation_ not existing`() {
+        mvc.perform(MockMvcRequestBuilders.get(RESERVATIONS_ID_PATH, 1, 100))
+                .andExpect(MockMvcResultMatchers.status().isNotFound)
+    }
+
+    @Test
+    fun `getReservation_ correct data`() {
+        val result = mvc.perform(MockMvcRequestBuilders.get(RESERVATIONS_ID_PATH, 1, 1))
+                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelReservationDTO::class.java)
+        assertEquals("Karola", actual.customer.firstName)
+        assertEquals("Szafrańska", actual.customer.lastName)
+        assertEquals("karola.szafranska@gmail.pl", actual.customer.email)
+        assertEquals("666894323", actual.customer.phoneNumber)
+        assertNotNull(actual.customer)
+        assertEquals(5, actual.peopleNumber)
+        assertEquals(LocalTime.of(14, 45), actual.time)
+        assertEquals(3, actual.spots[0].id)
+        assertEquals("Parter", actual.spots[0].floorName)
+        assertNull(actual.note)
+        assertEquals(Reservation.ReservationState.PENDING, actual.state)
+    }
+
 
     @Test
     fun `editReservation_ correct data`() {
