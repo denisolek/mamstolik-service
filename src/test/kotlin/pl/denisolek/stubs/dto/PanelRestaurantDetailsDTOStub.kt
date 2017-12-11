@@ -53,7 +53,7 @@ class PanelRestaurantDetailsDTOStub {
                         menu = true,
                         schema = true
                 ),
-                specialDates = listOf(
+                specialDates = mutableListOf(
                         SpecialDateDTO(
                                 id = 1,
                                 date = LocalDate.of(2017, 10, 10),
@@ -71,6 +71,16 @@ class PanelRestaurantDetailsDTOStub {
                                         id = 51,
                                         openTime = LocalTime.of(15, 20),
                                         closeTime = LocalTime.of(15, 20),
+                                        isClosed = false
+                                )
+                        ),
+                        SpecialDateDTO(
+                                id = 3,
+                                date = LocalDate.of(2018, 10, 23),
+                                businessHour = BusinessHour(
+                                        id = 52,
+                                        openTime = LocalTime.of(1, 0),
+                                        closeTime = LocalTime.of(6, 0),
                                         isClosed = false
                                 )
                         )

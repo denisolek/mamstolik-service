@@ -541,7 +541,7 @@ class PanelRestaurantControllerTests {
     @Test
     fun `updateBaseInfo_ specialDate add new for existing date`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
-        baseInfoStub.specialDates.toMutableList().add(
+        baseInfoStub.specialDates.add(
                 SpecialDateDTO(
                         id = null,
                         date = LocalDate.of(2017, 10, 10),
@@ -564,7 +564,7 @@ class PanelRestaurantControllerTests {
     @Test
     fun `updateBaseInfo_ specialDate add new for existing date and different day id`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
-        baseInfoStub.specialDates.toMutableList().add(
+        baseInfoStub.specialDates.add(
                 SpecialDateDTO(
                         id = 2,
                         date = LocalDate.of(2017, 10, 10),
@@ -587,7 +587,7 @@ class PanelRestaurantControllerTests {
     @Test
     fun `updateBaseInfo_ specialDate add new`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
-        baseInfoStub.specialDates.toMutableList().add(SpecialDateDTO(
+        baseInfoStub.specialDates.add(SpecialDateDTO(
                 id = null,
                 date = LocalDate.of(2017, 10, 12),
                 businessHour = BusinessHour(
@@ -616,7 +616,7 @@ class PanelRestaurantControllerTests {
     @Test
     fun `updateBaseInfo_ specialDate remove existing`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
-        baseInfoStub.specialDates.toMutableList().removeIf { it.id == 2 }
+        baseInfoStub.specialDates.removeIf { it.id == 2 }
 
         val body = convertObjectToJsonBytes(baseInfoStub)
         val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
@@ -634,7 +634,7 @@ class PanelRestaurantControllerTests {
     @Test
     fun `updateBaseInfo_ specialDate add new close time before open time`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
-        baseInfoStub.specialDates.toMutableList().add(
+        baseInfoStub.specialDates.add(
                 SpecialDateDTO(
                         id = null,
                         date = LocalDate.of(2018, 10, 22),
@@ -657,7 +657,7 @@ class PanelRestaurantControllerTests {
     @Test
     fun `updateBaseInfo_ specialDate remove one with future reservation`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
-        baseInfoStub.specialDates.toMutableList().removeIf { it.id == 3 }
+        baseInfoStub.specialDates.removeIf { it.id == 3 }
 
         val body = convertObjectToJsonBytes(baseInfoStub)
         val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
@@ -670,7 +670,7 @@ class PanelRestaurantControllerTests {
     @Test
     fun `updateBaseInfo_ specialDate add new for day with reservations`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
-        baseInfoStub.specialDates.toMutableList().add(
+        baseInfoStub.specialDates.add(
                 SpecialDateDTO(
                         id = null,
                         date = LocalDate.of(2018, 10, 20),

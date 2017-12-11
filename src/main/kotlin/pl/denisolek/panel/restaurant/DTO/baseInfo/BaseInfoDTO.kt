@@ -31,7 +31,7 @@ data class BaseInfoDTO(
 
         var businessHours: MutableMap<DayOfWeek, BusinessHour>,
 
-        var specialDates: List<SpecialDateDTO>
+        var specialDates: MutableList<SpecialDateDTO>
 ) {
     companion object {
         internal const val PHONE_MATCHER = "(\\(?\\+[\\d]{2}\\(?)?([ .-]?)([0-9]{3})([ .-]?)([0-9]{3})\\4([0-9]{3})"
@@ -46,28 +46,8 @@ data class BaseInfoDTO(
             updateAddress(restaurant, baseInfoDTO)
             updateSpecialDates(restaurant, baseInfoDTO)
             updateBusinessHours(restaurant, baseInfoDTO)
+            validateReservations(restaurant)
             return restaurant
-        }
-
-        private fun updateBusinessHours(restaurant: Restaurant, baseInfoDTO: BaseInfoDTO) {
-            restaurant.businessHours.forEach {
-                val dtoBusinessHour = baseInfoDTO.businessHours[it.key] ?: throw ServiceException(HttpStatus.BAD_REQUEST, "Invalid businessHours for ${it.key}")
-                if (dtoBusinessHour.closeTime.isBefore(dtoBusinessHour.openTime))
-                    throw ServiceException(HttpStatus.BAD_REQUEST, "Close time for ${it.key} must be greater than open time.")
-                validateFutureReservations(restaurant, it, dtoBusinessHour)
-                it.value.openTime = dtoBusinessHour.openTime
-                it.value.closeTime = dtoBusinessHour.closeTime
-                it.value.isClosed = dtoBusinessHour.isClosed
-            }
-        }
-
-        private fun validateFutureReservations(restaurant: Restaurant, it: Map.Entry<DayOfWeek, BusinessHour>, dtoBusinessHour: BusinessHour) {
-            restaurant.reservations.filter { reservation ->
-                reservation.startDateTime.dayOfWeek == it.key
-            }.forEach { reservation ->
-                if (!reservation.isInsideBusinessHours(dtoBusinessHour))
-                    throw ServiceException(HttpStatus.BAD_REQUEST, "Reservation ${reservation.id} doesn't fit in ${it.key} new business hours")
-            }
         }
 
         private fun updateAddress(restaurant: Restaurant, baseInfoDTO: BaseInfoDTO) {
@@ -82,39 +62,56 @@ data class BaseInfoDTO(
             restaurant.specialDates.removeIf { specialDate ->
                 !baseInfoDTO.specialDates.any {
                     it.id == specialDate.id
-                } && specialDate.canBeRemoved()
+                }
             }
 
-            baseInfoDTO.specialDates.forEach { specialDate ->
+            baseInfoDTO.specialDates.forEach { (id, date, businessHour) ->
                 var existing = false
-                if (specialDate.businessHour.closeTime.isBefore(specialDate.businessHour.openTime))
+                if (businessHour.closeTime.isBefore(businessHour.openTime))
                     throw ServiceException(HttpStatus.BAD_REQUEST, "Close time must be greater than open time.")
 
                 restaurant.specialDates.map {
                     when {
-                        it.id != specialDate.id || it.date != specialDate.date -> if (it.id == specialDate.id && it.date != specialDate.date) throw ServiceException(HttpStatus.BAD_REQUEST, "You can't edit date of existing special day.")
-                        else if (it.id != specialDate.id && it.date == specialDate.date) throw ServiceException(HttpStatus.CONFLICT, "Special day for that date already exists.")
-                        specialDate.canBeAdded(restaurant) -> {
-                            it.businessHour.openTime = specialDate.businessHour.openTime
-                            it.businessHour.closeTime = specialDate.businessHour.closeTime
-                            it.businessHour.isClosed = specialDate.businessHour.isClosed
-                            it.date = specialDate.date
+                        (id == it.id && date != it.date) -> throw ServiceException(HttpStatus.BAD_REQUEST, "You can't edit date ($date) of existing special day (id ${it.id}).")
+                        (id != it.id && date == it.date) -> throw ServiceException(HttpStatus.CONFLICT, "Special date for that day already exists (id ${it.id})")
+                        (id == it.id && date == it.date) -> {
+                            it.businessHour.openTime = businessHour.openTime
+                            it.businessHour.closeTime = businessHour.closeTime
+                            it.businessHour.isClosed = businessHour.isClosed
+                            it.date = date
                             existing = true
                         }
                     }
                 }
 
-                if (!existing && specialDate.canBeAdded(restaurant)) {
+                if (!existing) {
                     restaurant.specialDates.add(SpecialDate(
-                            date = specialDate.date,
+                            date = date,
                             restaurant = restaurant,
                             businessHour = BusinessHour(
-                                    openTime = specialDate.businessHour.openTime,
-                                    closeTime = specialDate.businessHour.closeTime,
-                                    isClosed = specialDate.businessHour.isClosed
+                                    openTime = businessHour.openTime,
+                                    closeTime = businessHour.closeTime,
+                                    isClosed = businessHour.isClosed
                             ))
                     )
                 }
+            }
+        }
+
+        private fun updateBusinessHours(restaurant: Restaurant, baseInfoDTO: BaseInfoDTO) {
+            restaurant.businessHours.forEach {
+                val dtoBusinessHour = baseInfoDTO.businessHours[it.key] ?: throw ServiceException(HttpStatus.BAD_REQUEST, "Invalid businessHours for ${it.key}")
+                if (dtoBusinessHour.closeTime.isBefore(dtoBusinessHour.openTime))
+                    throw ServiceException(HttpStatus.BAD_REQUEST, "Close time for ${it.key} must be greater than open time.")
+                it.value.openTime = dtoBusinessHour.openTime
+                it.value.closeTime = dtoBusinessHour.closeTime
+                it.value.isClosed = dtoBusinessHour.isClosed
+            }
+        }
+
+        private fun validateReservations(restaurant: Restaurant) {
+            restaurant.reservations.forEach {
+                it.validate()
             }
         }
     }

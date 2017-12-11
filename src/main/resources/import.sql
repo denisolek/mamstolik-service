@@ -445,7 +445,8 @@ VALUES
   (2, 4),
   (3, 3),
   (4, 4),
-  (5, 3);
+  (5, 3),
+  (6, 3);
 
 -- add menu category
 INSERT INTO public.menu_category (menu_id, position, description, name)
