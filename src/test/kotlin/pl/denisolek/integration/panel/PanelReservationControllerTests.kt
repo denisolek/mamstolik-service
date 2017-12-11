@@ -79,7 +79,7 @@ class PanelReservationControllerTests {
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelReservationsDTO::class.java)
 
         val expectedReservation = PanelReservationDTO(
-                id = 6,
+                id = 7,
                 customer = ReservationCustomerDTO(
                         firstName = "NameStub",
                         lastName = "SurnameStub",
@@ -122,7 +122,7 @@ class PanelReservationControllerTests {
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelReservationsDTO::class.java)
 
         val expectedReservation = PanelReservationDTO(
-                id = 7,
+                id = 8,
                 customer = ReservationCustomerDTO(
                         firstName = "Tomasz",
                         lastName = "Jabłoński",
@@ -213,7 +213,7 @@ class PanelReservationControllerTests {
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelReservationsDTO::class.java)
 
         val expectedReservation = PanelReservationDTO(
-                id = 8,
+                id = 9,
                 customer = ReservationCustomerDTO(
                         firstName = "Karola",
                         lastName = "Szafrańska",
