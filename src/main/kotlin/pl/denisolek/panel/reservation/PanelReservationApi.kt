@@ -46,19 +46,17 @@ interface PanelReservationApi {
     fun getReservation(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
                        @ApiIgnore @PathVariable(RESERVATION_ID) reservationId: Reservation): PanelReservationDTO
 
-    // TODO response PanelReservationDTO
+
     @PutMapping(RESERVATIONS_ID_PATH)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun editReservation(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
                         @ApiIgnore @PathVariable(RESERVATION_ID) reservationId: Reservation,
-                        @RequestBody @Valid createReservationDTO: PanelCreateReservationDTO): PanelReservationDTO
+                        @RequestBody @Valid createReservationDTO: PanelCreateReservationDTO): PanelReservationsDTO
 
-
-    // TODO response PanelReservationDTO
     @DeleteMapping(RESERVATIONS_ID_PATH)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun cancelReservation(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                          @ApiIgnore @PathVariable(RESERVATION_ID) reservationId: Reservation)
+                          @ApiIgnore @PathVariable(RESERVATION_ID) reservationId: Reservation): PanelReservationsDTO
 }

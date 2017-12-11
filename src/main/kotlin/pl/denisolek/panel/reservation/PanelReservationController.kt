@@ -38,7 +38,7 @@ class PanelReservationController(val panelReservationService: PanelReservationSe
     )
     override fun editReservation(@ApiIgnore @PathVariable(PanelReservationApi.RESTAURANT_ID) restaurantId: Restaurant,
                                  @ApiIgnore @PathVariable(PanelReservationApi.RESERVATION_ID) reservationId: Reservation,
-                                 @RequestBody @Valid createReservationDTO: PanelCreateReservationDTO): PanelReservationDTO =
+                                 @RequestBody @Valid createReservationDTO: PanelCreateReservationDTO): PanelReservationsDTO =
             panelReservationService.editReservation(restaurantId, reservationId, createReservationDTO)
 
     @ApiImplicitParams(
@@ -46,7 +46,7 @@ class PanelReservationController(val panelReservationService: PanelReservationSe
             ApiImplicitParam(name = "reservationId", value = "Reservation Id", paramType = "path", dataType = "int", required = true)
     )
     override fun cancelReservation(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
-                                   @ApiIgnore @PathVariable(API.RESERVATION_ID) reservationId: Reservation) =
+                                   @ApiIgnore @PathVariable(API.RESERVATION_ID) reservationId: Reservation): PanelReservationsDTO =
             panelReservationService.cancelReservation(restaurantId, reservationId)
 
     @ApiImplicitParams(

@@ -65,7 +65,7 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
     fun getReservations(restaurant: Restaurant, date: LocalDate): PanelReservationsDTO =
             PanelReservationsDTO.createPanelReservationDTO(restaurant, date)
 
-    fun editReservation(restaurant: Restaurant, reservation: Reservation, createReservationDTO: PanelCreateReservationDTO): PanelReservationDTO {
+    fun editReservation(restaurant: Restaurant, reservation: Reservation, createReservationDTO: PanelCreateReservationDTO): PanelReservationsDTO {
         validateReservationTime(createReservationDTO)
         validateReservationAssignment(reservation, restaurant)
         val reservationSpots = findReservationSpots(createReservationDTO, restaurant)
@@ -81,7 +81,7 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
         ))
         restaurant.reservations.removeIf { it.id == reservation.id }
         restaurant.reservations.add(reservation)
-        return PanelReservationDTO.fromReservation(reservation)
+        return PanelReservationsDTO.createPanelReservationDTO(restaurant, createReservationDTO.dateTime.toLocalDate())
     }
 
     private fun validateReservationAssignment(reservation: Reservation, restaurant: Restaurant) {
@@ -89,10 +89,11 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
             throw ServiceException(HttpStatus.BAD_REQUEST, "This reservation is assigned to another restaurant.")
     }
 
-    fun cancelReservation(restaurant: Restaurant, reservation: Reservation) {
+    fun cancelReservation(restaurant: Restaurant, reservation: Reservation): PanelReservationsDTO {
         validateReservationAssignment(reservation, restaurant)
         restaurant.reservations.find { it == reservation }.let { it?.state = CANCELED }
-        restaurantService.save(restaurant)
+        val updatedRestaurant = restaurantService.save(restaurant)
+        return PanelReservationsDTO.createPanelReservationDTO(updatedRestaurant, reservation.startDateTime.toLocalDate())
     }
 
     fun getReservation(restaurant: Restaurant, reservation: Reservation): PanelReservationDTO =
