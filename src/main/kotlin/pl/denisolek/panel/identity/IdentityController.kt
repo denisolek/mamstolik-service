@@ -52,7 +52,7 @@ class IdentityController(val identityService: IdentityService) : IdentityApi {
         return identityService.getEmployees()
     }
 
-    override fun createRestaurant(@RequestBody @Valid createRestaurantDTO: CreateRestaurantDTO) {
+    override fun createRestaurant(@RequestBody @Valid createRestaurantDTO: CreateRestaurantDTO): UserRestaurantDTO {
         return identityService.createRestaurant(createRestaurantDTO)
     }
 }

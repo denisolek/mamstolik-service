@@ -101,7 +101,7 @@ class IdentityService(private val userService: UserService,
         ).flatten()
     }
 
-    fun createRestaurant(createRestaurantDTO: CreateRestaurantDTO) {
+    fun createRestaurant(createRestaurantDTO: CreateRestaurantDTO): UserRestaurantDTO {
         val restaurant = Restaurant(
                 name = createRestaurantDTO.name,
                 urlName = restaurantService.generateUrlName(createRestaurantDTO.name),
@@ -118,6 +118,7 @@ class IdentityService(private val userService: UserService,
                 accountState = User.AccountState.ACTIVE,
                 restaurant = restaurant
         ))
+        return UserRestaurantDTO.fromRestaurant(restaurant)
     }
 
     fun getRestaurant(urlName: String): RestaurantLoginDTO {
