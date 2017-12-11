@@ -25,5 +25,16 @@ data class PanelReservationDTO(
                             state = it.state
                     )
                 }
+
+        fun fromReservation(reservation: Reservation) =
+                PanelReservationDTO(
+                        id = reservation.id!!,
+                        customer = ReservationCustomerDTO.fromCustomer(reservation.customer),
+                        peopleNumber = reservation.peopleNumber,
+                        time = reservation.startDateTime.toLocalTime(),
+                        spots = ReservationSpotInfoDTO.fromSpots(reservation.spots),
+                        note = reservation.note,
+                        state = reservation.state
+                )
     }
 }
