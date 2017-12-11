@@ -24,3 +24,9 @@ spring:
         username: test.mamstolik@gmail.com
     rabbitmq:
         host: localhost
+
+front-web:
+    rsq-id:
+         protocol: http
+         hostname: localhost
+         port: 4000

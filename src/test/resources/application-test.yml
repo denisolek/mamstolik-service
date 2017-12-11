@@ -31,3 +31,9 @@ security:
 management:
   security:
     enabled: false
+
+front-web:
+    rsq-id:
+         protocol: http
+         hostname: localhost
+         port: 4000
