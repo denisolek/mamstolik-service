@@ -10,6 +10,7 @@ import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.reservation.Reservation.ReservationState.CANCELED
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.core.user.User
+import pl.denisolek.guest.restaurant.DTO.MenuCategoryDTO
 import pl.denisolek.infrastructure.util.DateTimeInterval
 import pl.denisolek.infrastructure.util.isAfterOrEqual
 import pl.denisolek.infrastructure.util.isBeforeOrEqual
@@ -25,6 +26,7 @@ data class Restaurant(
         var urlName: String,
         var description: String = "",
         var phoneNumber: String,
+        var email: String,
         var avgReservationTime: Duration = Duration.ofHours(1),
         var rate: Float = 0f,
         var service_rate: Float = 0f,
@@ -41,7 +43,7 @@ data class Restaurant(
         var employees: MutableList<User> = mutableListOf(),
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        var address: Address? = null,
+        var address: Address = Address(),
 
         @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         var reservations: MutableList<Reservation> = mutableListOf(),
@@ -62,7 +64,7 @@ data class Restaurant(
         var menu: Menu? = null,
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        var settings: Settings? = null,
+        var settings: Settings? = Settings(),
 
         @ElementCollection(fetch = FetchType.EAGER)
         @Enumerated(EnumType.STRING)
@@ -76,19 +78,23 @@ data class Restaurant(
         @Column(name = "facility", nullable = false)
         var facilities: MutableSet<Facilities> = mutableSetOf(),
 
-        @OneToMany(cascade = arrayOf(CascadeType.ALL))
-        @JoinTable(name = "restaurant_business_hour", joinColumns = arrayOf(JoinColumn(name = "restaurant_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "business_hour_id")))
+        @OneToMany(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         @MapKeyEnumerated(EnumType.STRING)
         @MapKeyColumn(name = "day_of_week")
-        var businessHours: MutableMap<DayOfWeek, BusinessHour> = mutableMapOf()
+        var businessHours: Map<DayOfWeek, BusinessHour> = DayOfWeek.values().map { dayOfWeek ->
+            Pair(dayOfWeek, BusinessHour())
+        }.toMap(),
+
+        @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+        var specialDates: MutableList<SpecialDate> = mutableListOf()
 ) {
 
     fun isOpenAt(date: LocalDateTime): Boolean {
-        val businessHour = getBusinessHoursForDate(date.toLocalDate()) ?: return false
+        val businessHour = this.specialDates.find { it.date == date.toLocalDate() }?.businessHour ?: getBusinessHoursForDate(date.toLocalDate()) ?: return false
 
-        if (date.toLocalTime().isAfterOrEqual(businessHour.openTime) && date.toLocalTime().isBeforeOrEqual(businessHour.closeTime.minusMinutes(this.avgReservationTime.toMinutes())))
-            return true
-        return false
+        return !businessHour.isClosed &&
+                date.toLocalTime().isAfterOrEqual(businessHour.openTime) &&
+                date.toLocalTime().isBeforeOrEqual(businessHour.closeTime.minusMinutes(this.avgReservationTime.toMinutes()))
     }
 
     fun getBusinessHoursForDate(date: LocalDate) = this.businessHours[date.dayOfWeek]
@@ -167,6 +173,13 @@ data class Restaurant(
             } catch (e: NoSuchElementException) {
                 throw ServiceException(HttpStatus.BAD_REQUEST, "Trying to assign item to not existing floor.")
             }
+
+    fun getMenu(): List<MenuCategoryDTO>? {
+        return if (this.settings!!.menu)
+            this.menu?.categories?.map { MenuCategoryDTO.fromMenuCategory(it) }?.sortedBy { it.position }!!
+        else
+            null
+    }
 
     enum class AvailabilityType {
         AVAILABLE,
@@ -262,11 +275,12 @@ data class Restaurant(
         SPORTS_BROADCAST
     }
 
-    enum class RestaurantType(val value: String) {
-        RESTAURANT("Restauracja"),
-        BAR("Bar"),
-        PUB("Pub"),
-        CAFETERIA("Kawiarnia"),
-        EATING_HOUSE("Jadłodajnia")
+    enum class RestaurantType {
+        RESTAURANT,
+        BAR,
+        PUB,
+        CAFETERIA,
+        EATING_HOUSE,
+        OTHER
     }
 }

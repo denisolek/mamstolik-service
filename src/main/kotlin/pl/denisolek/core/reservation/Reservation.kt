@@ -1,10 +1,15 @@
 package pl.denisolek.core.reservation
 
+import org.springframework.http.HttpStatus
+import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.customer.Customer
+import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.core.user.User
 import pl.denisolek.infrastructure.util.DateTimeInterval
+import pl.denisolek.infrastructure.util.isAfterOrEqual
+import pl.denisolek.infrastructure.util.isBeforeOrEqual
 import pl.denisolek.panel.reservation.DTO.PanelCreateReservationDTO
 import java.time.Duration
 import java.time.LocalDateTime
@@ -62,4 +67,27 @@ data class Reservation(
         DURING,
         FINISHED
     }
+
+    fun validate() {
+        val haveSpecialDates = this.restaurant.specialDates.any { it.date == this.startDateTime.toLocalDate() }
+
+        val validSpecialDates = this.restaurant.specialDates.find { it.date == this.startDateTime.toLocalDate() }?.let {
+            this.isInsideBusinessHours(it.businessHour)
+        } ?: true
+
+        val validBusinessHours = this.restaurant.getBusinessHoursForDate(this.startDateTime.toLocalDate())?.let {
+            this.isInsideBusinessHours(it)
+        } ?: false
+
+        when {
+            haveSpecialDates && !validSpecialDates ->
+                throw ServiceException(HttpStatus.BAD_REQUEST, "Reservation (id ${this.id}, date ${this.startDateTime.toLocalDate()}, day ${this.startDateTime.toLocalDate().dayOfWeek}) doesn't fit any special dates.")
+            !haveSpecialDates && !validBusinessHours ->
+                throw ServiceException(HttpStatus.BAD_REQUEST, "Reservation (id ${this.id}, date ${this.startDateTime.toLocalDate()}, day ${this.startDateTime.toLocalDate().dayOfWeek}) doesn't fit any business hour.")
+        }
+    }
+
+    private fun isInsideBusinessHours(businessHour: BusinessHour) = !businessHour.isClosed &&
+            this.startDateTime.toLocalTime().isAfterOrEqual(businessHour.openTime) &&
+            this.endDateTime.toLocalTime().isBeforeOrEqual(businessHour.closeTime)
 }

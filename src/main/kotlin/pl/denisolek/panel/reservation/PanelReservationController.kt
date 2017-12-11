@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.panel.reservation.DTO.PanelCreateReservationDTO
+import pl.denisolek.panel.reservation.DTO.PanelReservationDTO
 import pl.denisolek.panel.reservation.DTO.PanelReservationsDTO
 import springfox.documentation.annotations.ApiIgnore
 import java.time.LocalDate
@@ -47,4 +48,12 @@ class PanelReservationController(val panelReservationService: PanelReservationSe
     override fun cancelReservation(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
                                    @ApiIgnore @PathVariable(API.RESERVATION_ID) reservationId: Reservation): PanelReservationsDTO =
             panelReservationService.cancelReservation(restaurantId, reservationId)
+
+    @ApiImplicitParams(
+            ApiImplicitParam(name = "restaurantId", value = "Restaurant Id", paramType = "path", dataType = "int", required = true),
+            ApiImplicitParam(name = "reservationId", value = "Reservation Id", paramType = "path", dataType = "int", required = true)
+    )
+    override fun getReservation(@ApiIgnore @PathVariable(PanelReservationApi.RESTAURANT_ID) restaurantId: Restaurant,
+                                @ApiIgnore @PathVariable(PanelReservationApi.RESERVATION_ID) reservationId: Reservation): PanelReservationDTO =
+            panelReservationService.getReservation(restaurantId, reservationId)
 }

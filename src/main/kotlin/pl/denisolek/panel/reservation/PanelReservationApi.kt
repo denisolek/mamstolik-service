@@ -9,6 +9,7 @@ import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.panel.reservation.DTO.PanelCreateReservationDTO
+import pl.denisolek.panel.reservation.DTO.PanelReservationDTO
 import pl.denisolek.panel.reservation.DTO.PanelReservationsDTO
 import springfox.documentation.annotations.ApiIgnore
 import java.time.LocalDate
@@ -38,6 +39,13 @@ interface PanelReservationApi {
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun getReservations(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
                         @RequestParam(required = true, value = DATE) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate): PanelReservationsDTO
+
+    @GetMapping(RESERVATIONS_ID_PATH)
+    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+            "@authorizationService.currentUser.workPlace == #restaurantId")
+    fun getReservation(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+                       @ApiIgnore @PathVariable(RESERVATION_ID) reservationId: Reservation): PanelReservationDTO
+
 
     @PutMapping(RESERVATIONS_ID_PATH)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +

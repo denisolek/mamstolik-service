@@ -68,6 +68,7 @@ class FloorStub {
                                 verificationCode = 111111
                         )
                 ),
+                email = "stubbed.restaurant@gmail.com",
                 phoneNumber = "123123123"
         )
 
@@ -81,6 +82,7 @@ class FloorStub {
                 urlName = "stubbed.restaurant",
                 type = Restaurant.RestaurantType.RESTAURANT,
                 spots = getSpots(),
+                email = "stubbed.restaurant@gmail.com",
                 phoneNumber = "123123123"
         )
 
@@ -109,6 +111,6 @@ class FloorStub {
         )
 
         private fun getStubbedRestaurant() =
-                Restaurant(name = "Stubbed Restaurant", urlName = "stubbed.restaurant", type = Restaurant.RestaurantType.RESTAURANT, phoneNumber = "123123123")
+                Restaurant(name = "Stubbed Restaurant", urlName = "stubbed.restaurant", type = Restaurant.RestaurantType.RESTAURANT, email = "stubbed.restaurant@gmail.com", phoneNumber = "123123123")
     }
 }

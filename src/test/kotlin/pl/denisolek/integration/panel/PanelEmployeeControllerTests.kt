@@ -52,8 +52,8 @@ class PanelEmployeeControllerTests {
 
     lateinit var mvc: MockMvc
 
-    val EMPLOYEES_PATH = "${PANEL_BASE_PATH}${PanelEmployeeApi.EMPLOYEES_PATH}"
-    val EMPLOYEES_ID_PATH = "${PANEL_BASE_PATH}${PanelEmployeeApi.EMPLOYEES_ID_PATH}"
+    val EMPLOYEES_PATH = "$PANEL_BASE_PATH${PanelEmployeeApi.EMPLOYEES_PATH}"
+    val EMPLOYEES_ID_PATH = "$PANEL_BASE_PATH${PanelEmployeeApi.EMPLOYEES_ID_PATH}"
 
     @Before
     fun setup() {

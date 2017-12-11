@@ -16,7 +16,7 @@ data class RestaurantDetailsDTO(
         var address: Address,
         var menu: List<MenuCategoryDTO>?,
         var tags: List<Any>,
-        var businessHours: MutableMap<DayOfWeek, BusinessHour>
+        var businessHours: Map<DayOfWeek, BusinessHour>
 ) {
     companion object {
         fun fromRestaurant(restaurant: Restaurant): RestaurantDetailsDTO =
@@ -27,7 +27,7 @@ data class RestaurantDetailsDTO(
                         type = restaurant.type,
                         description = setDescription(restaurant),
                         rate = setRate(restaurant),
-                        address = restaurant.address!!,
+                        address = restaurant.address,
                         menu = setMenu(restaurant),
                         businessHours = restaurant.businessHours,
                         tags = listOf(restaurant.cuisineTypes, restaurant.facilities)
