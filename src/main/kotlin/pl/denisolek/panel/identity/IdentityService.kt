@@ -127,7 +127,7 @@ class IdentityService(private val userService: UserService,
         return RestaurantLoginDTO(
                 name = restaurant.name,
                 username = user.username!!,
-                avatar = "avatar link"
+                avatar = restaurant.mainImage?.uuid
         )
     }
 }
