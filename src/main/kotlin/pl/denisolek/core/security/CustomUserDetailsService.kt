@@ -20,8 +20,9 @@ class CustomUserDetailsService(private val userRepository: UserRepository) : org
 
         val userByEmail: User? = userRepository.findByEmail(lowercaseLogin)
         val userByUsername: User? = userRepository.findByUsername(lowercaseLogin)
+        val userByUrlName: User? = userRepository.findByUrlName(lowercaseLogin)
 
-        val userFromDatabase: User = (userByEmail ?: userByUsername) ?: throw ServiceException(HttpStatus.NOT_FOUND, "User not found")
+        val userFromDatabase: User = (userByEmail ?: userByUsername ?: userByUrlName) ?: throw ServiceException(HttpStatus.NOT_FOUND, "User not found")
 
         val grantedAuthorities = ArrayList<GrantedAuthority>()
 
