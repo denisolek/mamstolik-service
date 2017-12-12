@@ -26,7 +26,6 @@ spring:
         host: localhost
 
 front-web:
-    rsq-id:
-         protocol: http
-         hostname: localhost
-         port: 4000
+    protocol: http
+    hostname: localhost
+    port: 4000

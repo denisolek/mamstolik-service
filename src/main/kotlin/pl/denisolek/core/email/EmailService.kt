@@ -1,5 +1,6 @@
 package pl.denisolek.core.email
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.thymeleaf.TemplateEngine
 import org.thymeleaf.context.Context
@@ -8,6 +9,9 @@ import pl.denisolek.core.user.User
 
 @Component
 class EmailService(private val emailSender: EmailSender, private val templateEngine: TemplateEngine) {
+
+    @Value("\${front-web.protocol}://\${front-web.hostname}:\${front-web.port}")
+    val WEB: String? = null
 
     fun reservationAccepted(reservation: Reservation) {
         val context = Context()
@@ -31,22 +35,26 @@ class EmailService(private val emailSender: EmailSender, private val templateEng
     }
 
     fun registerOwner(user: User) {
+        val link = "$WEB/set-password?username=${user.username}&activationKey=${user.activationKey}"
         val context = Context()
         context.setVariable("name", user.firstName)
         context.setVariable("username", user.username)
         context.setVariable("activationKey", user.activationKey)
+        context.setVariable("link", link)
 
         val body = templateEngine.process("register-owner", context)
-        emailSender.sendEmail(user.email!!, "Rejestracja", body)
+        emailSender.sendEmail(user.email, "Rejestracja", body)
     }
 
     fun lostPassword(user: User, resetKey: String) {
+        val link = "$WEB/set-password?username=${user.username}&resetKey=${user.resetPasswordKey}"
         val context = Context()
         context.setVariable("name", user.firstName)
         context.setVariable("username", user.username)
         context.setVariable("resetKey", resetKey)
+        context.setVariable("link", link)
 
         val body = templateEngine.process("lost-password", context)
-        emailSender.sendEmail(user.email!!, "Reset hasła", body)
+        emailSender.sendEmail(user.email, "Reset hasła", body)
     }
 }
