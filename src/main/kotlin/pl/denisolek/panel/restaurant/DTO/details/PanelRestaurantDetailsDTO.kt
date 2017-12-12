@@ -40,7 +40,7 @@ data class PanelRestaurantDetailsDTO(
                         specialDates = restaurant.specialDates.map { SpecialDateDTO.fromSpecialDate(it) },
                         cuisineTypes = restaurant.cuisineTypes.toList(),
                         facilities = restaurant.facilities.toList(),
-                        menu = restaurant.getMenu() ?: listOf(),
+                        menu = restaurant.menu?.categories?.map { MenuCategoryDTO.fromMenuCategory(it) }?.sortedBy { it.position } ?: listOf(),
                         images = restaurant.images.map { ImageDTO.fromImage(it) },
                         settings = restaurant.settings ?: Settings()
                 )

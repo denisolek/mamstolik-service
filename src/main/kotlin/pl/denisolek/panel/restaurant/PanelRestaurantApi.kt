@@ -7,6 +7,7 @@ import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.panel.restaurant.DTO.baseInfo.BaseInfoDTO
 import pl.denisolek.panel.restaurant.DTO.details.PanelRestaurantDetailsDTO
+import pl.denisolek.panel.restaurant.DTO.profile.ProfileDTO
 import springfox.documentation.annotations.ApiIgnore
 import javax.validation.Valid
 
@@ -31,4 +32,10 @@ interface PanelRestaurantApi {
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun updateBaseInfo(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
                        @RequestBody @Valid baseInfoDTO: BaseInfoDTO): PanelRestaurantDetailsDTO
+
+    @PutMapping(PROFILE_PATH)
+    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+            "@authorizationService.currentUser.workPlace == #restaurantId")
+    fun updateProfile(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+                      @RequestBody @Valid profileDTO: ProfileDTO): PanelRestaurantDetailsDTO
 }

@@ -7,6 +7,7 @@ import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.panel.restaurant.DTO.baseInfo.BaseInfoDTO
 import pl.denisolek.panel.restaurant.DTO.details.PanelRestaurantDetailsDTO
+import pl.denisolek.panel.restaurant.DTO.profile.ProfileDTO
 
 @Service
 class PanelRestaurantService(private val restaurantService: RestaurantService,
@@ -18,6 +19,11 @@ class PanelRestaurantService(private val restaurantService: RestaurantService,
         BaseInfoDTO.mapToExistingRestaurant(restaurant, baseInfoDTO)
         restaurant.urlName = restaurantService.generateUrlName(baseInfoDTO.name)
         restaurant.address.city = cityService.findByNameIgnoreCase(baseInfoDTO.address.city) ?: City(name = baseInfoDTO.address.city)
+        return PanelRestaurantDetailsDTO.fromRestaurant(restaurantService.save(restaurant))
+    }
+
+    fun updateProfile(restaurant: Restaurant, profileDTO: ProfileDTO): PanelRestaurantDetailsDTO {
+        ProfileDTO.mapToExistingRestaurant(restaurant, profileDTO)
         return PanelRestaurantDetailsDTO.fromRestaurant(restaurantService.save(restaurant))
     }
 }

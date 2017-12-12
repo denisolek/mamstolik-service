@@ -2,6 +2,7 @@ package pl.denisolek.integration.panel
 
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.whenever
+import org.apache.commons.lang3.RandomStringUtils
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -21,8 +22,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.restaurant.Restaurant.CuisineType.AMERICAN
+import pl.denisolek.core.restaurant.Restaurant.CuisineType.ASIAN
+import pl.denisolek.core.restaurant.Restaurant.Facilities.BABY_CORNER
+import pl.denisolek.core.restaurant.Restaurant.Facilities.BABY_TOILET
 import pl.denisolek.core.restaurant.Settings
 import pl.denisolek.core.user.UserRepository
+import pl.denisolek.guest.restaurant.DTO.MenuCategoryDTO
+import pl.denisolek.guest.restaurant.DTO.MenuItemDTO
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.infrastructure.util.convertJsonBytesToObject
@@ -33,6 +40,7 @@ import pl.denisolek.panel.restaurant.DTO.details.PanelRestaurantDetailsDTO
 import pl.denisolek.panel.restaurant.PanelRestaurantApi
 import pl.denisolek.stubs.dto.BaseInfoDTOStub
 import pl.denisolek.stubs.dto.PanelRestaurantDetailsDTOStub
+import pl.denisolek.stubs.dto.ProfileDTOStub
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
@@ -56,6 +64,8 @@ class PanelRestaurantControllerTests {
 
     val DETAILS_PATH = "$PANEL_BASE_PATH${PanelRestaurantApi.DETAILS_PATH}"
     val BASE_INFO_PATH = "$PANEL_BASE_PATH${PanelRestaurantApi.BASE_INFO_PATH}"
+    val PROFILE_PATH = "$PANEL_BASE_PATH${PanelRestaurantApi.PROFILE_PATH}"
+
 
     @Before
     fun setup() {
@@ -688,5 +698,172 @@ class PanelRestaurantControllerTests {
                 .content(body))
 
         result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateProfile_ correct data`() {
+        val profileDTOStub = ProfileDTOStub.getProfileDTO()
+        val body = convertObjectToJsonBytes(profileDTOStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals("Updated profile", actual.description)
+        assertEquals(2, actual.cuisineTypes.size)
+        assertTrue(actual.cuisineTypes.contains(ASIAN))
+        assertTrue(actual.cuisineTypes.contains(AMERICAN))
+        assertEquals(2, actual.facilities.size)
+        assertTrue(actual.facilities.contains(BABY_TOILET))
+        assertTrue(actual.facilities.contains(BABY_CORNER))
+        assertFalse(actual.settings.menu)
+        assertFalse(actual.settings.description)
+        assertFalse(actual.settings.photos)
+        assertEquals(1, actual.menu.size)
+        assertEquals(4, actual.menu[0].items.size)
+    }
+
+    @Test
+    fun `updateProfile_ description is too long`() {
+        val profileDTOStub = ProfileDTOStub.getProfileDTO()
+        profileDTOStub.description = RandomStringUtils.random(1001)
+        val body = convertObjectToJsonBytes(profileDTOStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateProfile_ add menu category`() {
+        val profileDTOStub = ProfileDTOStub.getProfileDTO()
+        profileDTOStub.menu.add(
+                MenuCategoryDTO(
+                        name = "new category",
+                        description = "description",
+                        position = 1,
+                        items = mutableListOf()
+                )
+        )
+        val body = convertObjectToJsonBytes(profileDTOStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals(2, actual.menu.size)
+        assertEquals("new category", actual.menu[1].name)
+        assertEquals(0, actual.menu[1].items.size)
+    }
+
+    @Test
+    fun `updateProfile_ add menu category with items`() {
+        val profileDTOStub = ProfileDTOStub.getProfileDTO()
+        profileDTOStub.menu.add(
+                MenuCategoryDTO(
+                        name = "new category",
+                        description = "description",
+                        position = 1,
+                        items = mutableListOf(MenuItemDTO(
+                                name = "new item",
+                                description = "new item description",
+                                price = 100f,
+                                position = 0
+                        ))
+                )
+        )
+        val body = convertObjectToJsonBytes(profileDTOStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals(2, actual.menu.size)
+        assertEquals("new category", actual.menu[1].name)
+        assertEquals(1, actual.menu[1].items.size)
+        assertNotNull(actual.menu[1].items[0].id)
+        assertEquals("new item", actual.menu[1].items[0].name)
+    }
+
+    @Test
+    fun `updateProfile_ remove items from category`() {
+        val profileDTOStub = ProfileDTOStub.getProfileDTO()
+        profileDTOStub.menu[0].items.removeIf { it.id == 1 }
+
+        val body = convertObjectToJsonBytes(profileDTOStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals(1, actual.menu.size)
+        assertEquals(3, actual.menu[0].items.size)
+        assertFalse(actual.menu[0].items.any { it.id == 1 })
+    }
+
+    @Test
+    fun `updateProfile_ remove category`() {
+        val profileDTOStub = ProfileDTOStub.getProfileDTO()
+        profileDTOStub.menu.clear()
+
+        val body = convertObjectToJsonBytes(profileDTOStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals(0, actual.menu.size)
+    }
+
+    @Test
+    fun `updateProfile_ update category`() {
+        val profileDTOStub = ProfileDTOStub.getProfileDTO()
+        profileDTOStub.menu[0].name = "Updated category name"
+
+        val body = convertObjectToJsonBytes(profileDTOStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals(1, actual.menu.size)
+        assertEquals("Updated category name", actual.menu[0].name)
+    }
+
+    @Test
+    fun `updateProfile_ update category item`() {
+        val profileDTOStub = ProfileDTOStub.getProfileDTO()
+        profileDTOStub.menu[0].items[0].name = "Updated category item name"
+
+        val body = convertObjectToJsonBytes(profileDTOStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals(1, actual.menu.size)
+        assertEquals("Updated category item name", actual.menu[0].items[0].name)
     }
 }
