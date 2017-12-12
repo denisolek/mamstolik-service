@@ -5,6 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
+import pl.denisolek.panel.identity.DTO.ChangePasswordDTO
 import pl.denisolek.panel.restaurant.DTO.baseInfo.BaseInfoDTO
 import pl.denisolek.panel.restaurant.DTO.details.PanelRestaurantDetailsDTO
 import pl.denisolek.panel.restaurant.DTO.profile.ProfileDTO
@@ -20,6 +21,7 @@ interface PanelRestaurantApi {
         const val DETAILS_PATH = "/{$RESTAURANT_ID}/details"
         const val BASE_INFO_PATH = "/{$RESTAURANT_ID}/baseInfo"
         const val PROFILE_PATH = "/{$RESTAURANT_ID}/profile"
+        const val RESTAURANT_PASSWORD_PATH = "/{$RESTAURANT_ID}/password"
     }
 
     @GetMapping(DETAILS_PATH)
@@ -38,4 +40,10 @@ interface PanelRestaurantApi {
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun updateProfile(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
                       @RequestBody @Valid profileDTO: ProfileDTO): PanelRestaurantDetailsDTO
+
+    @PutMapping(RESTAURANT_PASSWORD_PATH)
+    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+            "@authorizationService.currentUser.workPlace == #restaurantId")
+    fun changeRestaurantPassword(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+                                 @RequestBody @Valid changePasswordDTO: ChangePasswordDTO)
 }
