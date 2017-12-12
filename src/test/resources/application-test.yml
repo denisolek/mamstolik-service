@@ -31,3 +31,8 @@ security:
 management:
   security:
     enabled: false
+
+front-web:
+    protocol: http
+    hostname: localhost
+    port: 4000

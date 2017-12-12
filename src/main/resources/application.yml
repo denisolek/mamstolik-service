@@ -50,3 +50,8 @@ springfox:
         swagger:
             v2:
                 path: /documentation/swagger
+
+front-web:
+    protocol: ${WEB_PROTOCOL}
+    hostname: ${WEB_HOSTNAME}
+    port: ${WEB_PORT}

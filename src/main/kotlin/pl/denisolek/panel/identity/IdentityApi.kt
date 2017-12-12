@@ -51,7 +51,7 @@ interface IdentityApi {
 
     @PostMapping(RESTAURANTS_BASE_PATH)
     @ResponseStatus(HttpStatus.CREATED)
-    fun createRestaurant(@RequestBody @Valid createRestaurantDTO: CreateRestaurantDTO)
+    fun createRestaurant(@RequestBody @Valid createRestaurantDTO: CreateRestaurantDTO): UserRestaurantDTO
 
     @GetMapping(EMPLOYEES_BASE_PATH)
     fun getEmployees(): List<RestaurantEmployeeDTO>

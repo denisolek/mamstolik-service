@@ -25,3 +25,8 @@ services:
     environment:
       SEND_SMS: "false"
     entrypoint: dockerize -wait tcp://rabbitmq:5672 -timeout 40s node receive.js
+
+  mamstolikWeb:
+      image: mamstolik/panel:0.0.3
+      ports:
+        - "4000:80"
