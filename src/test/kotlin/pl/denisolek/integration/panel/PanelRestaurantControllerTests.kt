@@ -791,6 +791,26 @@ class PanelRestaurantControllerTests {
         assertEquals(2, actual.menu.size)
         assertEquals("new category", actual.menu[1].name)
         assertEquals(1, actual.menu[1].items.size)
+        assertNotNull(actual.menu[1].items[0].id)
         assertEquals("new item", actual.menu[1].items[0].name)
+    }
+
+    @Test
+    fun `updateProfile_ remove items from category`() {
+        val profileDTOStub = ProfileDTOStub.getProfileDTO()
+        profileDTOStub.menu[0].items.removeIf { it.id == 1 }
+
+        val body = convertObjectToJsonBytes(profileDTOStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals(1, actual.menu.size)
+        assertEquals(3, actual.menu[0].items.size)
+        assertFalse(actual.menu[0].items.any { it.id == 1 })
     }
 }
