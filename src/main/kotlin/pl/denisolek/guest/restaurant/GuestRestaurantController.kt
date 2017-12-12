@@ -11,6 +11,8 @@ import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.guest.restaurant.DTO.RestaurantDetailsDTO
 import pl.denisolek.guest.restaurant.DTO.SearchDTO
 import pl.denisolek.guest.restaurant.DTO.SpotInfoDTO
+import pl.denisolek.panel.reservation.DTO.PanelReservationDTO
+import pl.denisolek.panel.reservation.PanelReservationController
 import springfox.documentation.annotations.ApiIgnore
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -18,7 +20,6 @@ import java.time.LocalTime
 
 @RestController
 class GuestRestaurantController(val guestRestaurantService: GuestRestaurantService) : GuestRestaurantApi {
-
     companion object {
         val API = GuestRestaurantApi.Companion
     }
@@ -48,4 +49,8 @@ class GuestRestaurantController(val guestRestaurantService: GuestRestaurantServi
                                              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam date: LocalDateTime,
                                              @RequestParam peopleNumber: Int): List<SpotInfoDTO> =
             guestRestaurantService.getRestaurantAvailableSpots(restaurantId, date, peopleNumber)
+
+    @ApiImplicitParam(name = PanelReservationController.API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "integer")
+    override fun getRestaurantQueue(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant): List<PanelReservationDTO> =
+            guestRestaurantService.getRestaurantQueue(restaurantId)
 }
