@@ -830,4 +830,22 @@ class PanelRestaurantControllerTests {
 
         assertEquals(0, actual.menu.size)
     }
+
+    @Test
+    fun `updateProfile_ update category`() {
+        val profileDTOStub = ProfileDTOStub.getProfileDTO()
+        profileDTOStub.menu[0].name = "Updated category name"
+
+        val body = convertObjectToJsonBytes(profileDTOStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals(1, actual.menu.size)
+        assertEquals("Updated category name", actual.menu[0].name)
+    }
 }
