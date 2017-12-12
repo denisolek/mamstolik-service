@@ -17,8 +17,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 @Service
-class GuestRestaurantService(val restaurantService: RestaurantService,
-                             val reservationService: ReservationService) {
+class GuestRestaurantService(val restaurantService: RestaurantService) {
 
     fun searchRestaurants(city: City, date: LocalDateTime, peopleNumber: Int): SearchDTO {
         val output: SearchDTO = SearchDTO.initSearchDTO()
