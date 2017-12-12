@@ -17,7 +17,7 @@ data class ProfileDTO(
 
         var cuisineTypes: List<CuisineType> = listOf(),
         var facilities: List<Facilities> = listOf(),
-        var menu: List<MenuCategoryDTO> = listOf()
+        var menu: MutableList<MenuCategoryDTO> = mutableListOf()
 ) {
     companion object {
         fun mapToExistingRestaurant(restaurant: Restaurant, profileDTO: ProfileDTO) {

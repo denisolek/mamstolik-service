@@ -20,13 +20,13 @@ class ProfileDTOStub {
                         description = false,
                         photos = false
                 ),
-                menu = listOf(
+                menu = mutableListOf(
                         MenuCategoryDTO(
                                 id = 1,
                                 name = "Śniadania",
                                 description = "Tylko do godziny 12.00",
                                 position = 0,
-                                items = listOf(
+                                items = mutableListOf(
                                         MenuItemDTO(
                                                 id = 1,
                                                 name = "Jajecznica z trzech jaj",

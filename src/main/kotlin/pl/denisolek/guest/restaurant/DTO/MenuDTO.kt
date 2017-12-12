@@ -9,7 +9,7 @@ data class MenuCategoryDTO(
         var name: String,
         var description: String? = "",
         var position: Int,
-        var items: List<MenuItemDTO>
+        var items: MutableList<MenuItemDTO>
 ) {
     companion object {
         fun fromMenuCategory(menuCategory: MenuCategory): MenuCategoryDTO =
@@ -18,7 +18,7 @@ data class MenuCategoryDTO(
                         description = menuCategory.description,
                         name = menuCategory.name,
                         position = menuCategory.position,
-                        items = menuCategory.items.map { MenuItemDTO.fromMenuItem(it) }.sortedBy { it.position }
+                        items = menuCategory.items.map { MenuItemDTO.fromMenuItem(it) }.sortedBy { it.position }.toMutableList()
                 )
 
         fun toNewCategory(dtoCategory: MenuCategoryDTO, menu: Menu): MenuCategory {
