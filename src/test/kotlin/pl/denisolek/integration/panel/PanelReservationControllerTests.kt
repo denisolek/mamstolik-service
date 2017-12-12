@@ -24,10 +24,7 @@ import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.infrastructure.util.convertJsonBytesToObject
 import pl.denisolek.infrastructure.util.convertObjectToJsonBytes
-import pl.denisolek.panel.reservation.DTO.PanelReservationDTO
-import pl.denisolek.panel.reservation.DTO.PanelReservationsDTO
-import pl.denisolek.panel.reservation.DTO.ReservationCustomerDTO
-import pl.denisolek.panel.reservation.DTO.ReservationSpotInfoDTO
+import pl.denisolek.panel.reservation.DTO.*
 import pl.denisolek.panel.reservation.PanelReservationApi
 import pl.denisolek.panel.reservation.PanelReservationController
 import pl.denisolek.stubs.dto.PanelCreateReservationDTOStub
@@ -57,6 +54,7 @@ class PanelReservationControllerTests {
 
     val RESERVATIONS_PATH = "$PANEL_BASE_PATH${PanelReservationApi.RESERVATIONS_PATH}"
     val RESERVATIONS_ID_PATH = "$PANEL_BASE_PATH${PanelReservationApi.RESERVATIONS_ID_PATH}"
+    val RESERVATIONS_ID_CHANGE_STATE_PATH = "$PANEL_BASE_PATH${PanelReservationApi.RESERVATIONS_ID_CHANGE_STATE_PATH}"
 
     @Before
     fun setup() {
@@ -87,10 +85,11 @@ class PanelReservationControllerTests {
                         phoneNumber = "123123123"
                 ),
                 peopleNumber = 3,
-                time = LocalTime.of(14, 0),
+                dateTime = LocalDateTime.of(LocalDate.of(2018, 3, 30), LocalTime.of(14, 0)),
                 spots = listOf(ReservationSpotInfoDTO(
                         id = 1,
                         number = 1,
+                        floorId = 1,
                         floorName = "Parter"
                 )),
                 note = "NoteStub",
@@ -130,10 +129,11 @@ class PanelReservationControllerTests {
                         phoneNumber = "780199283"
                 ),
                 peopleNumber = 3,
-                time = LocalTime.of(14, 0),
+                dateTime = LocalDateTime.of(LocalDate.of(2018, 3, 30), LocalTime.of(14, 0)),
                 spots = listOf(ReservationSpotInfoDTO(
                         id = 1,
                         number = 1,
+                        floorId = 1,
                         floorName = "Parter"
                 )),
                 note = "NoteStub",
@@ -221,10 +221,11 @@ class PanelReservationControllerTests {
                         phoneNumber = "666894323"
                 ),
                 peopleNumber = 3,
-                time = LocalTime.of(14, 0),
+                dateTime = LocalDateTime.of(LocalDate.of(2018, 3, 30), LocalTime.of(14, 0)),
                 spots = listOf(ReservationSpotInfoDTO(
                         id = 1,
                         number = 1,
+                        floorId = 1,
                         floorName = "Parter"
                 )),
                 note = "NoteStub",
@@ -295,7 +296,7 @@ class PanelReservationControllerTests {
         assertEquals("666894323", actual.customer.phoneNumber)
         assertNotNull(actual.customer)
         assertEquals(5, actual.peopleNumber)
-        assertEquals(LocalTime.of(14, 45), actual.time)
+        assertEquals(LocalTime.of(14, 45), actual.dateTime.toLocalTime())
         assertEquals(3, actual.spots[0].id)
         assertEquals("Parter", actual.spots[0].floorName)
         assertNull(actual.note)
@@ -324,10 +325,11 @@ class PanelReservationControllerTests {
                         phoneNumber = "123123123"
                 ),
                 peopleNumber = 3,
-                time = LocalTime.of(14, 0),
+                dateTime = LocalDateTime.of(LocalDate.of(2018, 3, 30), LocalTime.of(14, 0)),
                 spots = listOf(ReservationSpotInfoDTO(
                         id = 1,
                         number = 1,
+                        floorId = 1,
                         floorName = "Parter"
                 )),
                 note = "NoteStub",
@@ -367,10 +369,11 @@ class PanelReservationControllerTests {
                         phoneNumber = "780199283"
                 ),
                 peopleNumber = 3,
-                time = LocalTime.of(14, 0),
+                dateTime = LocalDateTime.of(LocalDate.of(2018, 3, 30), LocalTime.of(14, 0)),
                 spots = listOf(ReservationSpotInfoDTO(
                         id = 1,
                         number = 1,
+                        floorId = 1,
                         floorName = "Parter"
                 )),
                 note = "NoteStub",
@@ -458,10 +461,11 @@ class PanelReservationControllerTests {
                         phoneNumber = "666894323"
                 ),
                 peopleNumber = 3,
-                time = LocalTime.of(14, 0),
+                dateTime = LocalDateTime.of(LocalDate.of(2018, 3, 30), LocalTime.of(14, 0)),
                 spots = listOf(ReservationSpotInfoDTO(
                         id = 1,
                         number = 1,
+                        floorId = 1,
                         floorName = "Parter"
                 )),
                 note = "NoteStub",
@@ -488,5 +492,52 @@ class PanelReservationControllerTests {
     fun `cancelReservation_ not existing reservation`() {
         mvc.perform(MockMvcRequestBuilders.delete(RESERVATIONS_ID_PATH, 1, 500))
                 .andExpect(MockMvcResultMatchers.status().isNotFound)
+    }
+
+    @Test
+    fun `changeReservationState not existing reservation`() {
+        val stateDTOStub = ReservationStateDTO(Reservation.ReservationState.ACCEPTED)
+        val body = convertObjectToJsonBytes(stateDTOStub)
+        mvc.perform(MockMvcRequestBuilders.put(RESERVATIONS_ID_CHANGE_STATE_PATH, 1, 500)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(MockMvcResultMatchers.status().isNotFound)
+                .andReturn()
+    }
+
+    @Test
+    fun `changeReservationState correct data`() {
+        val stateDTOStub = ReservationStateDTO(Reservation.ReservationState.CANCELED)
+        val body = convertObjectToJsonBytes(stateDTOStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(RESERVATIONS_ID_CHANGE_STATE_PATH, 1, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelReservationDTO::class.java)
+        assertEquals(Reservation.ReservationState.CANCELED, actual.state)
+    }
+
+    @Test
+    fun `changeReservationState empty state`() {
+        val stateDTOStub = ReservationStateDTO(Reservation.ReservationState.CANCELED)
+        val body = convertObjectToJsonBytes(stateDTOStub).replace("\"state\":\"CANCELED\"", "\"state\":\"\"")
+        mvc.perform(MockMvcRequestBuilders.put(RESERVATIONS_ID_CHANGE_STATE_PATH, 1, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest)
+                .andReturn()
+    }
+
+    @Test
+    fun `changeReservationState not a ReservationState`() {
+        val stateDTOStub = ReservationStateDTO(Reservation.ReservationState.CANCELED)
+        val body = convertObjectToJsonBytes(stateDTOStub).replace("\"state\":\"CANCELED\"", "\"state\":\"CANCELEDs\"")
+        mvc.perform(MockMvcRequestBuilders.put(RESERVATIONS_ID_CHANGE_STATE_PATH, 1, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest)
+                .andReturn()
     }
 }
