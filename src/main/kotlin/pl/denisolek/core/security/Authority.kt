@@ -10,11 +10,11 @@ class Authority(@Id
                 @Enumerated(EnumType.STRING)
                 val role: Role) {
 
-    enum class Role(val title: String? = null) {
+    enum class Role {
         ROLE_ADMIN,
-        ROLE_OWNER("Właściciel"),
-        ROLE_EMPLOYEE("Pracownik"),
-        ROLE_MANAGER("Menedżer"),
+        ROLE_OWNER,
+        ROLE_EMPLOYEE,
+        ROLE_MANAGER,
         ROLE_RESTAURANT
     }
 
