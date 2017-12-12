@@ -17,6 +17,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		http.headers().frameOptions().disable().and()
 				.authorizeRequests()
 				.antMatchers("/users").authenticated()
+				.antMatchers("/api/restaurants/*/queue").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER", "ROLE_EMPLOYEE")
 				.antMatchers("/api").permitAll()
 				.antMatchers(HttpMethod.PUT, "/panel/users/password").hasAuthority("ROLE_OWNER")
 				.antMatchers("/panel/restaurants").hasAuthority("ROLE_OWNER")
