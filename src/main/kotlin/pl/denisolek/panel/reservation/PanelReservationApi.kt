@@ -11,6 +11,7 @@ import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.panel.reservation.DTO.PanelCreateReservationDTO
 import pl.denisolek.panel.reservation.DTO.PanelReservationDTO
 import pl.denisolek.panel.reservation.DTO.PanelReservationsDTO
+import pl.denisolek.panel.reservation.DTO.ReservationStateDTO
 import springfox.documentation.annotations.ApiIgnore
 import java.time.LocalDate
 import javax.validation.Valid
@@ -25,6 +26,7 @@ interface PanelReservationApi {
 
         const val RESERVATIONS_PATH = "/{$RESTAURANT_ID}/reservations"
         const val RESERVATIONS_ID_PATH = "$RESERVATIONS_PATH/{$RESERVATION_ID}"
+        const val RESERVATIONS_ID_CHANGE_STATE_PATH = "$RESERVATIONS_ID_PATH/change-state"
     }
 
     @PostMapping(RESERVATIONS_PATH)
@@ -59,4 +61,11 @@ interface PanelReservationApi {
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun cancelReservation(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
                           @ApiIgnore @PathVariable(RESERVATION_ID) reservationId: Reservation): PanelReservationsDTO
+
+    @PutMapping(RESERVATIONS_ID_CHANGE_STATE_PATH)
+    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+            "@authorizationService.currentUser.workPlace == #restaurantId")
+    fun changeReservationState(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+                               @ApiIgnore @PathVariable(RESERVATION_ID) reservationId: Reservation,
+                               @RequestBody @Valid stateDTO: ReservationStateDTO): PanelReservationDTO
 }

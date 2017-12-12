@@ -12,6 +12,7 @@ import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.panel.reservation.DTO.PanelCreateReservationDTO
 import pl.denisolek.panel.reservation.DTO.PanelReservationDTO
 import pl.denisolek.panel.reservation.DTO.PanelReservationsDTO
+import pl.denisolek.panel.reservation.DTO.ReservationStateDTO
 import springfox.documentation.annotations.ApiIgnore
 import java.time.LocalDate
 import javax.validation.Valid
@@ -56,4 +57,13 @@ class PanelReservationController(val panelReservationService: PanelReservationSe
     override fun getReservation(@ApiIgnore @PathVariable(PanelReservationApi.RESTAURANT_ID) restaurantId: Restaurant,
                                 @ApiIgnore @PathVariable(PanelReservationApi.RESERVATION_ID) reservationId: Reservation): PanelReservationDTO =
             panelReservationService.getReservation(restaurantId, reservationId)
+
+    @ApiImplicitParams(
+            ApiImplicitParam(name = "restaurantId", value = "Restaurant Id", paramType = "path", dataType = "int", required = true),
+            ApiImplicitParam(name = "reservationId", value = "Reservation Id", paramType = "path", dataType = "int", required = true)
+    )
+    override fun changeReservationState(@ApiIgnore @PathVariable(PanelReservationApi.RESTAURANT_ID) restaurantId: Restaurant,
+                                        @ApiIgnore @PathVariable(PanelReservationApi.RESERVATION_ID) reservationId: Reservation,
+                                        @RequestBody @Valid stateDTO: ReservationStateDTO): PanelReservationDTO =
+            panelReservationService.changeReservationState(restaurantId, reservationId, stateDTO)
 }

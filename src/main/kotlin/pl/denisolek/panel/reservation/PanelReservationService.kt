@@ -12,10 +12,7 @@ import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.infrastructure.config.security.AuthorizationService
-import pl.denisolek.panel.reservation.DTO.PanelCreateReservationDTO
-import pl.denisolek.panel.reservation.DTO.PanelReservationDTO
-import pl.denisolek.panel.reservation.DTO.PanelReservationsDTO
-import pl.denisolek.panel.reservation.DTO.ReservationCustomerDTO
+import pl.denisolek.panel.reservation.DTO.*
 import java.time.LocalDate
 
 @Service
@@ -98,4 +95,9 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
 
     fun getReservation(restaurant: Restaurant, reservation: Reservation): PanelReservationDTO =
             PanelReservationDTO.fromReservation(reservation)
+
+    fun changeReservationState(restaurant: Restaurant, reservation: Reservation, stateDTO: ReservationStateDTO): PanelReservationDTO {
+        reservation.state = stateDTO.state
+        return PanelReservationDTO.fromReservation(reservationService.save(reservation))
+    }
 }
