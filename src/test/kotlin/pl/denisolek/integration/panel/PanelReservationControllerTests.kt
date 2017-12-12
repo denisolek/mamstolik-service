@@ -2,7 +2,6 @@ package pl.denisolek.integration.panel
 
 import org.junit.Assert.*
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,10 +24,7 @@ import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.infrastructure.util.convertJsonBytesToObject
 import pl.denisolek.infrastructure.util.convertObjectToJsonBytes
-import pl.denisolek.panel.reservation.DTO.PanelReservationDTO
-import pl.denisolek.panel.reservation.DTO.PanelReservationsDTO
-import pl.denisolek.panel.reservation.DTO.ReservationCustomerDTO
-import pl.denisolek.panel.reservation.DTO.ReservationSpotInfoDTO
+import pl.denisolek.panel.reservation.DTO.*
 import pl.denisolek.panel.reservation.PanelReservationApi
 import pl.denisolek.panel.reservation.PanelReservationController
 import pl.denisolek.stubs.dto.PanelCreateReservationDTOStub
@@ -499,9 +495,13 @@ class PanelReservationControllerTests {
     }
 
     @Test
-    @Ignore
     fun `changeReservationState not existing reservation`() {
-        mvc.perform(MockMvcRequestBuilders.put(RESERVATIONS_ID_CHANGE_STATE_PATH, 1, 500))
+        val stateDTOStub = ReservationStateDTO(Reservation.ReservationState.ACCEPTED)
+        val body = convertObjectToJsonBytes(stateDTOStub)
+        mvc.perform(MockMvcRequestBuilders.put(RESERVATIONS_ID_CHANGE_STATE_PATH, 1, 500)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
                 .andExpect(MockMvcResultMatchers.status().isNotFound)
+                .andReturn()
     }
 }
