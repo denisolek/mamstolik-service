@@ -1,13 +1,13 @@
 package pl.denisolek.panel.reservation.DTO
 
 import pl.denisolek.core.reservation.Reservation
-import java.time.LocalTime
+import java.time.LocalDateTime
 
 data class PanelReservationDTO(
         var id: Int,
         var customer: ReservationCustomerDTO,
         var peopleNumber: Int,
-        var time: LocalTime,
+        var dateTime: LocalDateTime,
         var spots: List<ReservationSpotInfoDTO>,
         var note: String? = null,
         var state: Reservation.ReservationState
@@ -19,7 +19,7 @@ data class PanelReservationDTO(
                             id = it.id!!,
                             customer = ReservationCustomerDTO.fromCustomer(it.customer),
                             peopleNumber = it.peopleNumber,
-                            time = it.startDateTime.toLocalTime(),
+                            dateTime = it.startDateTime,
                             spots = ReservationSpotInfoDTO.fromSpots(it.spots),
                             note = it.note,
                             state = it.state
@@ -31,7 +31,7 @@ data class PanelReservationDTO(
                         id = reservation.id!!,
                         customer = ReservationCustomerDTO.fromCustomer(reservation.customer),
                         peopleNumber = reservation.peopleNumber,
-                        time = reservation.startDateTime.toLocalTime(),
+                        dateTime = reservation.startDateTime,
                         spots = ReservationSpotInfoDTO.fromSpots(reservation.spots),
                         note = reservation.note,
                         state = reservation.state
