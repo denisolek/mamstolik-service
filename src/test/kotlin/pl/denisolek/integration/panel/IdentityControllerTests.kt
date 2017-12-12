@@ -820,7 +820,7 @@ class IdentityControllerTests {
                 .andExpect(status().isOk)
                 .andExpect(jsonPath("$.name", `is`("Piano Bar Restaurant & Cafe")))
                 .andExpect(jsonPath("$.username", `is`("ms100001")))
-                .andExpect(jsonPath("$.avatar", `is`("avatar link")))
+                .andExpect(jsonPath("$.avatar", isEmptyOrNullString()))
     }
 
     @Test
