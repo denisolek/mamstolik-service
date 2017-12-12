@@ -1,10 +1,12 @@
 package pl.denisolek.panel.restaurant.DTO.profile
 
+import pl.denisolek.core.menu.category.MenuCategory
 import pl.denisolek.core.menu.item.MenuItem
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.Restaurant.CuisineType
 import pl.denisolek.core.restaurant.Restaurant.Facilities
 import pl.denisolek.guest.restaurant.DTO.MenuCategoryDTO
+import pl.denisolek.guest.restaurant.DTO.MenuItemDTO
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
@@ -27,7 +29,6 @@ data class ProfileDTO(
             restaurant.settings?.menu = profileDTO.settings.menu
             restaurant.cuisineTypes = profileDTO.cuisineTypes.toMutableSet()
             restaurant.facilities = profileDTO.facilities.toMutableSet()
-
             updateMenu(restaurant, profileDTO)
         }
 
@@ -43,25 +44,41 @@ data class ProfileDTO(
                     existingCategory.name = dtoCategory.name
                     existingCategory.description = dtoCategory.description
                     existingCategory.position = dtoCategory.position
-                    existingCategory.items.removeIf { existingItem ->
-                        !dtoCategory.items.any { it.id == existingItem.id }
-                    }
-                    dtoCategory.items.forEach { dtoItem ->
-                        existingCategory.items.find { it.id == dtoItem.id }?.let {
-                            it.name = dtoItem.name
-                            it.description = dtoItem.description
-                            it.price = dtoItem.price
-                            it.position = dtoItem.position
-                        } ?: existingCategory.items.add(MenuItem(
-                                name = dtoItem.name,
-                                description = dtoItem.description,
-                                position = dtoItem.position,
-                                price = dtoItem.price,
-                                category = existingCategory
-                        ))
-                    }
-                } ?: restaurant.menu?.categories?.add(MenuCategoryDTO.toNewCategory(dtoCategory, restaurant.menu!!))
+                    updateCategoryItems(existingCategory, dtoCategory)
+                } ?: addNewMenuCategory(restaurant, dtoCategory)
             }
+        }
+
+        private fun updateCategoryItems(existingCategory: MenuCategory, dtoCategory: MenuCategoryDTO) {
+            existingCategory.items.removeIf { (id) ->
+                !dtoCategory.items.any { it.id == id }
+            }
+            dtoCategory.items.forEach { dtoItem ->
+                existingCategory.items.find { it.id == dtoItem.id }?.let {
+                    updateExistingMenuItem(it, dtoItem)
+                } ?: addNewMenuItem(existingCategory, dtoItem)
+            }
+        }
+
+        private fun addNewMenuCategory(restaurant: Restaurant, dtoCategory: MenuCategoryDTO) {
+            restaurant.menu?.categories?.add(MenuCategoryDTO.toNewCategory(dtoCategory, restaurant.menu!!))
+        }
+
+        private fun addNewMenuItem(existingCategory: MenuCategory, dtoItem: MenuItemDTO) {
+            existingCategory.items.add(MenuItem(
+                    name = dtoItem.name,
+                    description = dtoItem.description,
+                    position = dtoItem.position,
+                    price = dtoItem.price,
+                    category = existingCategory
+            ))
+        }
+
+        private fun updateExistingMenuItem(it: MenuItem, dtoItem: MenuItemDTO) {
+            it.name = dtoItem.name
+            it.description = dtoItem.description
+            it.price = dtoItem.price
+            it.position = dtoItem.position
         }
     }
 }
