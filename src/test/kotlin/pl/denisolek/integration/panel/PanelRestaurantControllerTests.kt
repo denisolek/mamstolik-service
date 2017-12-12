@@ -2,6 +2,7 @@ package pl.denisolek.integration.panel
 
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.whenever
+import org.apache.commons.lang3.RandomStringUtils
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -33,6 +34,7 @@ import pl.denisolek.panel.restaurant.DTO.details.PanelRestaurantDetailsDTO
 import pl.denisolek.panel.restaurant.PanelRestaurantApi
 import pl.denisolek.stubs.dto.BaseInfoDTOStub
 import pl.denisolek.stubs.dto.PanelRestaurantDetailsDTOStub
+import pl.denisolek.stubs.dto.ProfileDTOStub
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
@@ -56,6 +58,8 @@ class PanelRestaurantControllerTests {
 
     val DETAILS_PATH = "$PANEL_BASE_PATH${PanelRestaurantApi.DETAILS_PATH}"
     val BASE_INFO_PATH = "$PANEL_BASE_PATH${PanelRestaurantApi.BASE_INFO_PATH}"
+    val PROFILE_PATH = "$PANEL_BASE_PATH${PanelRestaurantApi.PROFILE_PATH}"
+
 
     @Before
     fun setup() {
@@ -684,6 +688,18 @@ class PanelRestaurantControllerTests {
         )
         val body = convertObjectToJsonBytes(baseInfoStub)
         val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateProfile_ description is too long`() {
+        val profileDTOStub = ProfileDTOStub.getProfileDTO()
+        profileDTOStub.description = RandomStringUtils.random(1001)
+        val body = convertObjectToJsonBytes(profileDTOStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body))
 
