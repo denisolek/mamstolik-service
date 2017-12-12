@@ -29,6 +29,7 @@ import pl.denisolek.core.restaurant.Restaurant.Facilities.BABY_TOILET
 import pl.denisolek.core.restaurant.Settings
 import pl.denisolek.core.user.UserRepository
 import pl.denisolek.guest.restaurant.DTO.MenuCategoryDTO
+import pl.denisolek.guest.restaurant.DTO.MenuItemDTO
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.infrastructure.util.convertJsonBytesToObject
@@ -760,5 +761,36 @@ class PanelRestaurantControllerTests {
         assertEquals(2, actual.menu.size)
         assertEquals("new category", actual.menu[1].name)
         assertEquals(0, actual.menu[1].items.size)
+    }
+
+    @Test
+    fun `updateProfile_ add menu category with items`() {
+        val profileDTOStub = ProfileDTOStub.getProfileDTO()
+        profileDTOStub.menu.add(
+                MenuCategoryDTO(
+                        name = "new category",
+                        description = "description",
+                        position = 1,
+                        items = mutableListOf(MenuItemDTO(
+                                name = "new item",
+                                description = "new item description",
+                                price = 100f,
+                                position = 0
+                        ))
+                )
+        )
+        val body = convertObjectToJsonBytes(profileDTOStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals(2, actual.menu.size)
+        assertEquals("new category", actual.menu[1].name)
+        assertEquals(1, actual.menu[1].items.size)
+        assertEquals("new item", actual.menu[1].items[0].name)
     }
 }
