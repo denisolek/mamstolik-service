@@ -813,4 +813,21 @@ class PanelRestaurantControllerTests {
         assertEquals(3, actual.menu[0].items.size)
         assertFalse(actual.menu[0].items.any { it.id == 1 })
     }
+
+    @Test
+    fun `updateProfile_ remove category`() {
+        val profileDTOStub = ProfileDTOStub.getProfileDTO()
+        profileDTOStub.menu.clear()
+
+        val body = convertObjectToJsonBytes(profileDTOStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals(0, actual.menu.size)
+    }
 }
