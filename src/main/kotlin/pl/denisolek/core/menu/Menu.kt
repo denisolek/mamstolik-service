@@ -10,5 +10,5 @@ data class Menu(
         var id: Int? = null,
 
         @OneToMany(mappedBy = "menu", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var categories: List<MenuCategory> = listOf()
+        var categories: MutableList<MenuCategory> = mutableListOf()
 )

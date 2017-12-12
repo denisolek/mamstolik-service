@@ -23,8 +23,7 @@ class PanelRestaurantService(private val restaurantService: RestaurantService,
     }
 
     fun updateProfile(restaurant: Restaurant, profileDTO: ProfileDTO): PanelRestaurantDetailsDTO {
-        ProfileDTO.mapToExisitingRestaurant(restaurant, profileDTO)
-
+        ProfileDTO.mapToExistingRestaurant(restaurant, profileDTO)
         return PanelRestaurantDetailsDTO.fromRestaurant(restaurantService.save(restaurant))
     }
 }

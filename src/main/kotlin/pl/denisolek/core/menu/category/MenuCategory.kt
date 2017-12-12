@@ -14,7 +14,7 @@ data class MenuCategory(
         var position: Int,
 
         @OneToMany(mappedBy = "category", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var items: List<MenuItem> = listOf(),
+        var items: MutableList<MenuItem> = mutableListOf(),
 
         @ManyToOne
         var menu: Menu
