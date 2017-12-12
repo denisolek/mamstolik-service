@@ -22,6 +22,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.restaurant.Restaurant.CuisineType.AMERICAN
+import pl.denisolek.core.restaurant.Restaurant.CuisineType.ASIAN
+import pl.denisolek.core.restaurant.Restaurant.Facilities.BABY_CORNER
+import pl.denisolek.core.restaurant.Restaurant.Facilities.BABY_TOILET
 import pl.denisolek.core.restaurant.Settings
 import pl.denisolek.core.user.UserRepository
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
@@ -692,6 +696,32 @@ class PanelRestaurantControllerTests {
                 .content(body))
 
         result.andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `updateProfile_ correct data`() {
+        val profileDTOStub = ProfileDTOStub.getProfileDTO()
+        val body = convertObjectToJsonBytes(profileDTOStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
+
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals("Updated profile", actual.description)
+        assertEquals(2, actual.cuisineTypes.size)
+        assertTrue(actual.cuisineTypes.contains(ASIAN))
+        assertTrue(actual.cuisineTypes.contains(AMERICAN))
+        assertEquals(2, actual.facilities.size)
+        assertTrue(actual.facilities.contains(BABY_TOILET))
+        assertTrue(actual.facilities.contains(BABY_CORNER))
+        assertFalse(actual.settings.menu)
+        assertFalse(actual.settings.description)
+        assertFalse(actual.settings.photos)
+        assertEquals(1, actual.menu.size)
+        assertEquals(4, actual.menu[0].items.size)
     }
 
     @Test

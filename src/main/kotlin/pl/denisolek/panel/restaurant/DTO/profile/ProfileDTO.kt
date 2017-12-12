@@ -1,6 +1,5 @@
 package pl.denisolek.panel.restaurant.DTO.profile
 
-import org.hibernate.validator.constraints.NotBlank
 import pl.denisolek.core.menu.item.MenuItem
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.Restaurant.CuisineType
