@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import pl.denisolek.core.address.City
 import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.spot.Spot
 import pl.denisolek.guest.restaurant.DTO.RestaurantDetailsDTO
 import pl.denisolek.guest.restaurant.DTO.SearchDTO
+import pl.denisolek.guest.restaurant.DTO.SpotDTO
 import pl.denisolek.guest.restaurant.DTO.SpotInfoDTO
 import pl.denisolek.infrastructure.API_BASE_PATH
 import pl.denisolek.panel.reservation.DTO.PanelReservationDTO
@@ -24,11 +26,13 @@ import java.time.LocalTime
 interface GuestRestaurantApi {
     companion object {
         const val RESTAURANT_ID: String = "restaurantId"
+        const val SPOT_ID: String = "spotId"
 
         const val RESTAURANTS_BASE_PATH = "/restaurants"
         const val RESTAURANTS_ID_PATH = "$RESTAURANTS_BASE_PATH/{$RESTAURANT_ID}"
         const val RESTAURANTS_ID_DATES_PATH = "$RESTAURANTS_ID_PATH/dates"
         const val RESTAURANTS_ID_SPOTS_PATH = "$RESTAURANTS_ID_PATH/spots"
+        const val RESTAURANTS_ID_SPOTS_ID_PATH = "$RESTAURANTS_ID_SPOTS_PATH/{$SPOT_ID}"
         const val RESTAURANTS_ID_QUEUE_PATH = "$RESTAURANTS_ID_PATH/queue"
     }
 
@@ -50,6 +54,10 @@ interface GuestRestaurantApi {
                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam date: LocalDateTime,
                                     @RequestParam peopleNumber: Int): List<SpotInfoDTO>
 
+    @GetMapping(RESTAURANTS_ID_SPOTS_ID_PATH)
+    fun getSpot(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+                @ApiIgnore @PathVariable(SPOT_ID) spotId: Spot,
+                @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam date: LocalDate): SpotDTO
 
     @GetMapping(RESTAURANTS_ID_QUEUE_PATH)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
