@@ -518,4 +518,26 @@ class PanelReservationControllerTests {
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelReservationDTO::class.java)
         assertEquals(Reservation.ReservationState.CANCELED, actual.state)
     }
+
+    @Test
+    fun `changeReservationState empty state`() {
+        val stateDTOStub = ReservationStateDTO(Reservation.ReservationState.CANCELED)
+        val body = convertObjectToJsonBytes(stateDTOStub).replace("\"state\":\"CANCELED\"", "\"state\":\"\"")
+        mvc.perform(MockMvcRequestBuilders.put(RESERVATIONS_ID_CHANGE_STATE_PATH, 1, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest)
+                .andReturn()
+    }
+
+    @Test
+    fun `changeReservationState not a ReservationState`() {
+        val stateDTOStub = ReservationStateDTO(Reservation.ReservationState.CANCELED)
+        val body = convertObjectToJsonBytes(stateDTOStub).replace("\"state\":\"CANCELED\"", "\"state\":\"CANCELEDs\"")
+        mvc.perform(MockMvcRequestBuilders.put(RESERVATIONS_ID_CHANGE_STATE_PATH, 1, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest)
+                .andReturn()
+    }
 }
