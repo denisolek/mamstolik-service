@@ -6,13 +6,14 @@ import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.Restaurant.CuisineType
 import pl.denisolek.core.restaurant.Restaurant.Facilities
 import pl.denisolek.guest.restaurant.DTO.MenuCategoryDTO
+import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
 data class ProfileDTO(
         var settings: ProfileSettingsDTO,
 
         @field:Size(max = 1000)
-        @field:NotBlank
+        @field:NotNull
         var description: String,
 
         var cuisineTypes: List<CuisineType> = listOf(),
