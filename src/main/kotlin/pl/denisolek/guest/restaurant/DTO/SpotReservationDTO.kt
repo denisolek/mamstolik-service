@@ -12,4 +12,16 @@ data class SpotReservationDTO(
         var endTime: LocalTime,
         var note: String? = null,
         var state: Reservation.ReservationState
-)
+) {
+    companion object {
+        fun fromReservation(reservation: Reservation) = SpotReservationDTO(
+                id = reservation.id!!,
+                customer = ReservationCustomerDTO.fromCustomer(reservation.customer),
+                peopleNumber = reservation.peopleNumber,
+                startTime = reservation.startDateTime.toLocalTime(),
+                endTime = reservation.endDateTime.toLocalTime(),
+                note = reservation.note,
+                state = reservation.state
+        )
+    }
+}
