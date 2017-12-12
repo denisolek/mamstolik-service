@@ -54,5 +54,5 @@ class GuestRestaurantService(val restaurantService: RestaurantService) {
                         it.state == Reservation.ReservationState.PENDING
             }.map {
                 PanelReservationDTO.fromReservation(it)
-            }
+            }.sortedBy { it.dateTime }
 }
