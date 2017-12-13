@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus
 import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.address.Address
 import pl.denisolek.core.floor.Floor
+import pl.denisolek.core.comment.Comment
 import pl.denisolek.core.image.Image
 import pl.denisolek.core.menu.Menu
 import pl.denisolek.core.reservation.Reservation
@@ -47,6 +48,9 @@ data class Restaurant(
 
         @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         var reservations: MutableList<Reservation> = mutableListOf(),
+
+        @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+        var comments: MutableList<Comment> = mutableListOf(),
 
         @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         var images: MutableList<Image> = mutableListOf(),
