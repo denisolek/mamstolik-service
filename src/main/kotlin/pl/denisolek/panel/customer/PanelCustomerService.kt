@@ -6,7 +6,9 @@ import pl.denisolek.panel.customer.DTO.BaseCustomerInfoDTO
 
 @Service
 class PanelCustomerService {
-    fun getCustomers(restaurant: Restaurant): List<BaseCustomerInfoDTO> {
-        return listOf()
-    }
+    fun getCustomers(restaurant: Restaurant): List<BaseCustomerInfoDTO> =
+            restaurant.reservations
+                    .map { BaseCustomerInfoDTO.fromCustomer(it.customer) }
+                    .distinct()
+                    .sortedBy { it.lastName }
 }
