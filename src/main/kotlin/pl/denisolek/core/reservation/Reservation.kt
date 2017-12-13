@@ -2,6 +2,7 @@ package pl.denisolek.core.reservation
 
 import org.springframework.http.HttpStatus
 import pl.denisolek.Exception.ServiceException
+import pl.denisolek.core.comment.Comment
 import pl.denisolek.core.customer.Customer
 import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
@@ -30,7 +31,7 @@ data class Reservation(
 
         @Enumerated(EnumType.STRING)
         var state: ReservationState,
-        
+
         @ManyToOne
         var restaurant: Restaurant,
 
@@ -44,7 +45,10 @@ data class Reservation(
 
         @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(name = "reservation_spots", joinColumns = arrayOf(JoinColumn(name = "reservation_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "spot_id")))
-        var spots: MutableList<Spot> = mutableListOf()
+        var spots: MutableList<Spot> = mutableListOf(),
+
+        @OneToMany(mappedBy = "customer", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+        var comments: MutableList<Comment> = mutableListOf()
 ) : DateTimeInterval {
     constructor(id: Int? = null, panelCreateReservationDTO: PanelCreateReservationDTO, restaurant: Restaurant, customer: Customer, approvedBy: User, spots: MutableList<Spot>) : this(
             id = id,

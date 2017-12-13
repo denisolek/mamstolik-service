@@ -482,4 +482,9 @@ VALUES
   (5, 0, 10, 'Lody czekoladowe z owocami i bitą śmietaną', NULL),
   (5, 1, 7, 'Suflet czekoladowy z malinami', NULL),
   (5, 2, 9, 'Sernik z brzoskwinią', NULL);
+
+INSERT INTO public.comment(date_time, food_rate, price_quality_rate, service_rate, rate, customer_id, restaurant_id, reservation_id)
+VALUES
+  ('2017-10-19 23:45:00.000', 2.5, 2.5, 2.5, 2.5, 1, 1, 1),
+  ('2017-11-03 11:45:00.000', 3, 5, 4, 4, 2, 1, 2);
 /* @formatter:on */
