@@ -12,6 +12,7 @@ data class Customer(
         var phoneNumber: String,
         var firstName: String,
         var lastName: String,
+        var isVip: Boolean,
         @OneToMany(mappedBy = "customer", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
         var comments: MutableList<Comment> = mutableListOf()
 )

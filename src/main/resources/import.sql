@@ -299,13 +299,13 @@ VALUES
   ('2018-10-23', '', 52, 1);
 
 -- add customers
-INSERT INTO public.customer (email, phone_number, first_name, last_name)
+INSERT INTO public.customer (email, phone_number, first_name, last_name, is_vip)
 VALUES
-  ('karola.szafranska@gmail.pl', '666894323', 'Karola', 'Szafrańska'),
-  ('maciej.wlodarczyk@gmail.pl', '883991105', 'Maciej', 'Włodarczyk'),
-  ('sergiusz.malecki@gmail.pl', '739354158', 'Sergiusz', 'Małecki'),
-  ('jagoda.fabisiak@gmail.pl', '789000731', 'Jagoda', 'Fabisiak'),
-  ('maurycy.lisowski@gmail.pl', '729712835', 'Maurycy', 'Lisowski');
+  ('karola.szafranska@gmail.pl', '666894323', 'Karola', 'Szafrańska', FALSE),
+  ('maciej.wlodarczyk@gmail.pl', '883991105', 'Maciej', 'Włodarczyk', TRUE),
+  ('sergiusz.malecki@gmail.pl', '739354158', 'Sergiusz', 'Małecki', FALSE),
+  ('jagoda.fabisiak@gmail.pl', '789000731', 'Jagoda', 'Fabisiak', FALSE),
+  ('maurycy.lisowski@gmail.pl', '729712835', 'Maurycy', 'Lisowski', FALSE);
 
 -- add spots
 INSERT INTO public.spot (capacity, number,restaurant_id, min_people_number)
