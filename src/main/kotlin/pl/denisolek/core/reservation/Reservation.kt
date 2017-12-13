@@ -23,12 +23,14 @@ data class Reservation(
         override var startDateTime: LocalDateTime,
         override var endDateTime: LocalDateTime,
         var peopleNumber: Int,
-        var state: ReservationState,
         var verificationCode: Int? = null,
         var duration: Duration,
         var isVerified: Boolean? = false,
         var note: String? = "",
 
+        @Enumerated(EnumType.STRING)
+        var state: ReservationState,
+        
         @ManyToOne
         var restaurant: Restaurant,
 
