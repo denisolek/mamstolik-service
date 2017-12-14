@@ -71,7 +71,8 @@ data class Reservation(
         ACCEPTED,
         CANCELED,
         DURING,
-        FINISHED
+        FINISHED,
+        NOT_APPEARED
     }
 
     fun validate() {
