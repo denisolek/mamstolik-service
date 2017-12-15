@@ -70,7 +70,6 @@ data class Reservation(
         PENDING,
         ACCEPTED,
         CANCELED,
-        DURING,
         FINISHED,
         NOT_APPEARED
     }
