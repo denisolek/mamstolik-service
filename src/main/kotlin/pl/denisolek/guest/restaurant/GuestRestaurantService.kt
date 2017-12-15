@@ -2,7 +2,6 @@ package pl.denisolek.guest.restaurant
 
 import org.springframework.stereotype.Service
 import pl.denisolek.core.address.City
-import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.core.spot.Spot
@@ -10,7 +9,6 @@ import pl.denisolek.guest.restaurant.DTO.RestaurantSearchDTO
 import pl.denisolek.guest.restaurant.DTO.SearchDTO
 import pl.denisolek.guest.restaurant.DTO.SpotDTO
 import pl.denisolek.guest.restaurant.DTO.SpotInfoDTO
-import pl.denisolek.panel.reservation.DTO.PanelReservationDTO
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -49,14 +47,6 @@ class GuestRestaurantService(val restaurantService: RestaurantService) {
             }
         }
     }
-
-    fun getRestaurantQueue(restaurant: Restaurant): List<PanelReservationDTO> =
-            restaurant.reservations.filter {
-                it.startDateTime.isAfter(LocalDateTime.now()) &&
-                        it.state == Reservation.ReservationState.PENDING
-            }.map {
-                PanelReservationDTO.fromReservation(it)
-            }.sortedBy { it.dateTime }
 
     fun getSpot(restaurant: Restaurant, spot: Spot, date: LocalDate): SpotDTO = SpotDTO.fromSpotDateReservations(
             spot = spot,

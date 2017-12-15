@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.panel.identity.DTO.ChangePasswordDTO
+import pl.denisolek.panel.reservation.DTO.PanelReservationDTO
 import pl.denisolek.panel.reservation.PanelReservationController
 import pl.denisolek.panel.restaurant.DTO.baseInfo.BaseInfoDTO
 import pl.denisolek.panel.restaurant.DTO.details.PanelRestaurantDetailsDTO
@@ -37,4 +38,8 @@ class PanelRestaurantController(val panelRestaurantService: PanelRestaurantServi
     override fun changeRestaurantPassword(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
                                           @RequestBody @Valid changePasswordDTO: ChangePasswordDTO) =
             panelRestaurantService.changeRestaurantPassword(restaurantId, changePasswordDTO)
+
+    @ApiImplicitParam(name = API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "integer")
+    override fun getRestaurantQueue(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant): List<PanelReservationDTO> =
+            panelRestaurantService.getRestaurantQueue(restaurantId)
 }
