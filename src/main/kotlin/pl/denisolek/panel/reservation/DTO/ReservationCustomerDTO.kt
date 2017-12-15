@@ -18,7 +18,8 @@ data class ReservationCustomerDTO(
                         email = reservationCustomerDTO.email ?: user.email,
                         firstName = reservationCustomerDTO.firstName ?: user.firstName ?: restaurant.name,
                         lastName = reservationCustomerDTO.lastName ?: user.lastName ?: "",
-                        phoneNumber = reservationCustomerDTO.phoneNumber ?: restaurant.phoneNumber
+                        phoneNumber = reservationCustomerDTO.phoneNumber ?: restaurant.phoneNumber,
+                        isVip = false
                 )
 
         fun fromCustomer(customer: Customer) = ReservationCustomerDTO(

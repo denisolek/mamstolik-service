@@ -299,13 +299,13 @@ VALUES
   ('2018-10-23', '', 52, 1);
 
 -- add customers
-INSERT INTO public.customer (email, phone_number, first_name, last_name)
+INSERT INTO public.customer (email, phone_number, first_name, last_name, is_vip)
 VALUES
-  ('karola.szafranska@gmail.pl', '666894323', 'Karola', 'Szafrańska'),
-  ('maciej.wlodarczyk@gmail.pl', '883991105', 'Maciej', 'Włodarczyk'),
-  ('sergiusz.malecki@gmail.pl', '739354158', 'Sergiusz', 'Małecki'),
-  ('jagoda.fabisiak@gmail.pl', '789000731', 'Jagoda', 'Fabisiak'),
-  ('maurycy.lisowski@gmail.pl', '729712835', 'Maurycy', 'Lisowski');
+  ('karola.szafranska@gmail.pl', '666894323', 'Karola', 'Szafrańska', FALSE),
+  ('maciej.wlodarczyk@gmail.pl', '883991105', 'Maciej', 'Włodarczyk', TRUE),
+  ('sergiusz.malecki@gmail.pl', '739354158', 'Sergiusz', 'Małecki', FALSE),
+  ('jagoda.fabisiak@gmail.pl', '789000731', 'Jagoda', 'Fabisiak', FALSE),
+  ('maurycy.lisowski@gmail.pl', '729712835', 'Maurycy', 'Lisowski', FALSE);
 
 -- add spots
 INSERT INTO public.spot (capacity, number,restaurant_id, min_people_number)
@@ -431,12 +431,15 @@ VALUES
 -- add reservations
 INSERT INTO public.reservation (people_number, start_date_time, end_date_time, duration, state, customer_id, restaurant_id, verification_code, is_verified)
 VALUES
-  (5, '2017-10-18 14:45:00.000', '2017-10-18 15:15:00.000', 1800, 0, 1, 1, 314251, TRUE),
-  (2, '2017-10-18 15:30:00.000', '2017-10-18 16:30:00.000', 3600, 0, 2, 1, 314251, TRUE),
-  (3, '2018-10-18 15:30:00.000', '2018-10-18 16:30:00.000', 3600, 0, 2, 1, 314251, TRUE),
-  (3, '2018-10-19 15:30:00.000', '2018-10-19 16:30:00.000', 3600, 0, 2, 1, 314251, TRUE),
-  (3, '2018-10-20 15:30:00.000', '2018-10-20 16:30:00.000', 3600, 0, 2, 1, 314251, TRUE),
-  (3, '2018-10-23 03:30:00.000', '2018-10-23 04:00:00.000', 3600, 0, 2, 1, 314251, TRUE);
+  (5, '2017-10-18 14:45:00.000', '2017-10-18 15:15:00.000', 1800, 'FINISHED', 1, 1, 314251, TRUE),
+  (2, '2017-10-18 15:30:00.000', '2017-10-18 16:30:00.000', 3600, 'FINISHED', 2, 1, 314251, TRUE),
+  (3, '2018-10-18 15:30:00.000', '2018-10-18 16:30:00.000', 3600, 'ACCEPTED', 2, 1, 314251, TRUE),
+  (3, '2018-10-19 15:30:00.000', '2018-10-19 16:30:00.000', 3600, 'CANCELED', 2, 1, 314251, TRUE),
+  (3, '2018-10-20 15:30:00.000', '2018-10-20 16:30:00.000', 3600, 'PENDING', 2, 1, 314251, TRUE),
+  (3, '2018-10-23 03:30:00.000', '2018-10-23 04:00:00.000', 3600, 'ACCEPTED', 2, 1, 314251, TRUE),
+  (3, '2018-10-24 15:30:00.000', '2018-10-23 16:00:00.000', 3600, 'ACCEPTED', 3, 1, 314251, TRUE),
+  (3, '2018-10-25 15:30:00.000', '2018-10-23 16:00:00.000', 3600, 'CANCELED', 4, 1, 314251, TRUE),
+  (3, '2018-10-26 15:30:00.000', '2018-10-23 16:00:00.000', 3600, 'PENDING', 5, 1, 314251, TRUE);
 
 -- reservation spots
 INSERT INTO public.reservation_spots (reservation_id, spot_id)
@@ -446,7 +449,10 @@ VALUES
   (3, 3),
   (4, 4),
   (5, 3),
-  (6, 3);
+  (6, 3),
+  (7, 3),
+  (8, 3),
+  (9, 3);
 
 -- add menu category
 INSERT INTO public.menu_category (menu_id, position, description, name)
@@ -476,4 +482,9 @@ VALUES
   (5, 0, 10, 'Lody czekoladowe z owocami i bitą śmietaną', NULL),
   (5, 1, 7, 'Suflet czekoladowy z malinami', NULL),
   (5, 2, 9, 'Sernik z brzoskwinią', NULL);
+
+INSERT INTO public.comment(date_time, food_rate, price_quality_rate, service_rate, rate, customer_id, restaurant_id, reservation_id)
+VALUES
+  ('2017-10-19 23:45:00.000', 2.5, 2.5, 2.5, 2.5, 1, 1, 1),
+  ('2017-11-03 11:45:00.000', 3, 5, 4, 4, 2, 1, 2);
 /* @formatter:on */

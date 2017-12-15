@@ -2,6 +2,7 @@ package pl.denisolek.core.reservation
 
 import org.springframework.http.HttpStatus
 import pl.denisolek.Exception.ServiceException
+import pl.denisolek.core.comment.Comment
 import pl.denisolek.core.customer.Customer
 import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
@@ -23,11 +24,13 @@ data class Reservation(
         override var startDateTime: LocalDateTime,
         override var endDateTime: LocalDateTime,
         var peopleNumber: Int,
-        var state: ReservationState,
         var verificationCode: Int? = null,
         var duration: Duration,
         var isVerified: Boolean? = false,
         var note: String? = "",
+
+        @Enumerated(EnumType.STRING)
+        var state: ReservationState,
 
         @ManyToOne
         var restaurant: Restaurant,
@@ -42,7 +45,10 @@ data class Reservation(
 
         @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(name = "reservation_spots", joinColumns = arrayOf(JoinColumn(name = "reservation_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "spot_id")))
-        var spots: MutableList<Spot> = mutableListOf()
+        var spots: MutableList<Spot> = mutableListOf(),
+
+        @OneToMany(mappedBy = "customer", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+        var comments: MutableList<Comment> = mutableListOf()
 ) : DateTimeInterval {
     constructor(id: Int? = null, panelCreateReservationDTO: PanelCreateReservationDTO, restaurant: Restaurant, customer: Customer, approvedBy: User, spots: MutableList<Spot>) : this(
             id = id,
@@ -64,8 +70,8 @@ data class Reservation(
         PENDING,
         ACCEPTED,
         CANCELED,
-        DURING,
-        FINISHED
+        FINISHED,
+        NOT_APPEARED
     }
 
     fun validate() {

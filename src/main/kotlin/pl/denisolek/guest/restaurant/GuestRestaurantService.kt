@@ -3,7 +3,6 @@ package pl.denisolek.guest.restaurant
 import org.springframework.stereotype.Service
 import pl.denisolek.core.address.City
 import pl.denisolek.core.reservation.Reservation
-import pl.denisolek.core.reservation.ReservationService
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.core.spot.Spot
