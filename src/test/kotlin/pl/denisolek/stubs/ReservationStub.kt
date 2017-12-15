@@ -25,7 +25,7 @@ class ReservationStub {
         fun createReservation(): Reservation =
                 Reservation(
                         restaurant = RestaurantStub.getRestaurantForStubs(),
-                        customer = Customer(email = "reservation@test.pl", firstName = "Rezerwator", lastName = "Rezerwujący", phoneNumber = "123123123"),
+                        customer = Customer(email = "reservation@test.pl", firstName = "Rezerwator", lastName = "Rezerwujący", phoneNumber = "123123123", isVip = true),
                         startDateTime = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(14, 0)),
                         duration = Duration.ofHours(1),
                         endDateTime = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(14, 30)),

@@ -9,7 +9,8 @@ class CustomerStub {
                         email = "testcustomer@test.pl",
                         firstName = "Test",
                         lastName = "Testowy",
-                        phoneNumber = "999999999"
+                        phoneNumber = "999999999",
+                        isVip = true
                 )
     }
 }
