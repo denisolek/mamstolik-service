@@ -14,7 +14,7 @@ data class CustomerReservationsDTO(
     companion object {
         fun fromCustomerReservations(reservations: Map<ReservationStateDTO, List<CustomerReservationDTO>>): CustomerReservationsDTO =
                 CustomerReservationsDTO(
-                        totalCount = reservations.size,
+                        totalCount = reservations.flatMap { it.value }.groupBy { it }.size,
                         finishedCount = reservations[FINISHED]?.size ?: 0,
                         upcomingCount = reservations[UPCOMING]?.size ?: 0,
                         canceledCount = reservations[CANCELED]?.size ?: 0,
