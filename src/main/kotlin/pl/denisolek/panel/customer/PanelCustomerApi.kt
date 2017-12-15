@@ -20,7 +20,7 @@ interface PanelCustomerApi {
         const val CUSTOMER_ID: String = "customerId"
 
         const val CUSTOMERS_PATH = "/{$RESTAURANT_ID}/customers"
-        const val CUSTOMERS_ID_PATH = "/{$CUSTOMERS_PATH}/{$CUSTOMER_ID}"
+        const val CUSTOMERS_ID_PATH = "$CUSTOMERS_PATH/{$CUSTOMER_ID}"
     }
 
     @GetMapping(CUSTOMERS_PATH)
@@ -28,7 +28,7 @@ interface PanelCustomerApi {
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun getCustomers(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant): List<BaseCustomerInfoDTO>
 
-    @GetMapping(CUSTOMER_ID)
+    @GetMapping(CUSTOMERS_ID_PATH)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun getCustomer(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
