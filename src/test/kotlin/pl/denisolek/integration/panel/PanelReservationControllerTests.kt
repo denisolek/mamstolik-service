@@ -77,7 +77,7 @@ class PanelReservationControllerTests {
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelReservationsDTO::class.java)
 
         val expectedReservation = PanelReservationDTO(
-                id = 7,
+                id = 10,
                 customer = ReservationCustomerDTO(
                         firstName = "NameStub",
                         lastName = "SurnameStub",
@@ -121,7 +121,7 @@ class PanelReservationControllerTests {
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelReservationsDTO::class.java)
 
         val expectedReservation = PanelReservationDTO(
-                id = 8,
+                id = 11,
                 customer = ReservationCustomerDTO(
                         firstName = "Tomasz",
                         lastName = "Jabłoński",
@@ -171,6 +171,18 @@ class PanelReservationControllerTests {
     }
 
     @Test
+    fun `addReservation_ date in the past`() {
+        val createReservationStub = PanelCreateReservationDTOStub.getPanelCreateReservationDTOStub()
+        createReservationStub.dateTime = LocalDateTime.of(LocalDate.of(2016, 1, 1), LocalTime.of(12, 0))
+        val body = convertObjectToJsonBytes(createReservationStub)
+        val result = mvc.perform(MockMvcRequestBuilders.post(RESERVATIONS_PATH, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(MockMvcResultMatchers.status().isBadRequest)
+    }
+
+    @Test
     fun `addReservation_ time is indivisible by 15`() {
         val createReservationStub = PanelCreateReservationDTOStub.getPanelCreateReservationDTOStub()
         createReservationStub.dateTime = LocalDateTime.of(LocalDate.of(2018, 3, 30), LocalTime.of(14, 1))
@@ -213,7 +225,7 @@ class PanelReservationControllerTests {
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelReservationsDTO::class.java)
 
         val expectedReservation = PanelReservationDTO(
-                id = 9,
+                id = 12,
                 customer = ReservationCustomerDTO(
                         firstName = "Karola",
                         lastName = "Szafrańska",
@@ -300,7 +312,7 @@ class PanelReservationControllerTests {
         assertEquals(3, actual.spots[0].id)
         assertEquals("Parter", actual.spots[0].floorName)
         assertNull(actual.note)
-        assertEquals(Reservation.ReservationState.PENDING, actual.state)
+        assertEquals(Reservation.ReservationState.FINISHED, actual.state)
     }
 
 
@@ -408,6 +420,18 @@ class PanelReservationControllerTests {
                 .content(body))
 
         result.andExpect(MockMvcResultMatchers.status().isNotFound)
+    }
+
+    @Test
+    fun `editReservation_ date in the past`() {
+        val createReservationStub = PanelCreateReservationDTOStub.getPanelCreateReservationDTOStub()
+        createReservationStub.dateTime = LocalDateTime.of(LocalDate.of(2016, 1, 1), LocalTime.of(12, 0))
+        val body = convertObjectToJsonBytes(createReservationStub)
+        val result = mvc.perform(MockMvcRequestBuilders.put(RESERVATIONS_ID_PATH, 1, 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+
+        result.andExpect(MockMvcResultMatchers.status().isBadRequest)
     }
 
     @Test

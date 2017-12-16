@@ -48,7 +48,7 @@ class GuestRestaurantController(val guestRestaurantService: GuestRestaurantServi
     )
     override fun getRestaurantAvailableSpots(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
                                              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam date: LocalDateTime,
-                                             @RequestParam peopleNumber: Int): List<SpotInfoDTO> =
+                                             @RequestParam(required = false, defaultValue = "0") peopleNumber: Int): List<SpotInfoDTO> =
             guestRestaurantService.getRestaurantAvailableSpots(restaurantId, date, peopleNumber)
 
     @ApiImplicitParams(

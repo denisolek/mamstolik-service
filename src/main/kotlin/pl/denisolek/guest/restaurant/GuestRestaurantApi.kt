@@ -51,7 +51,7 @@ interface GuestRestaurantApi {
     @GetMapping(RESTAURANTS_ID_SPOTS_PATH)
     fun getRestaurantAvailableSpots(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam date: LocalDateTime,
-                                    @RequestParam peopleNumber: Int): List<SpotInfoDTO>
+                                    @RequestParam(required = false, defaultValue = "0") peopleNumber: Int): List<SpotInfoDTO>
 
     @GetMapping(RESTAURANTS_ID_SPOTS_ID_PATH)
     fun getSpot(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,

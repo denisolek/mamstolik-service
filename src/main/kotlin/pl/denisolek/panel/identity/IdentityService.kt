@@ -124,10 +124,6 @@ class IdentityService(private val userService: UserService,
     fun getRestaurant(urlName: String): RestaurantLoginDTO {
         val restaurant = restaurantService.findByUrlName(urlName) ?: throw ServiceException(HttpStatus.NOT_FOUND, "Restaurant not found")
         val user = userService.findByRestaurant(restaurant) ?: throw ServiceException(HttpStatus.NOT_FOUND, "Restaurant user not found")
-        return RestaurantLoginDTO(
-                name = restaurant.name,
-                username = user.username!!,
-                avatar = restaurant.mainImage?.uuid
-        )
+        return RestaurantLoginDTO.fromRestaurantUser(user, restaurant)
     }
 }

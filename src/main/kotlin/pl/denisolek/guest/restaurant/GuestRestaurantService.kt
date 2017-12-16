@@ -38,11 +38,21 @@ class GuestRestaurantService(val restaurantService: RestaurantService) {
 
         val takenSpots = restaurant.getTakenSpotsAt(date)
         return restaurant.spots.map {
-            when {
-                takenSpots.contains(it) -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.NOT_AVAILABLE)
-                it.capacity >= peopleNumber && it.minPeopleNumber <= peopleNumber -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.AVAILABLE)
-                it.capacity >= peopleNumber && it.minPeopleNumber > peopleNumber -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.POSSIBLE)
-                else -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.NOT_AVAILABLE)
+            when (peopleNumber) {
+                0 -> {
+                    when {
+                        takenSpots.contains(it) -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.NOT_AVAILABLE)
+                        else -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.AVAILABLE)
+                    }
+                }
+                else -> {
+                    when {
+                        takenSpots.contains(it) -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.NOT_AVAILABLE)
+                        it.capacity >= peopleNumber && it.minPeopleNumber <= peopleNumber -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.AVAILABLE)
+                        it.capacity >= peopleNumber && it.minPeopleNumber > peopleNumber -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.POSSIBLE)
+                        else -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.NOT_AVAILABLE)
+                    }
+                }
             }
         }
     }
