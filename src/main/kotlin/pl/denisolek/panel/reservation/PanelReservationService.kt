@@ -12,8 +12,10 @@ import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.infrastructure.config.security.AuthorizationService
+import pl.denisolek.infrastructure.util.isBeforeOrEqual
 import pl.denisolek.panel.reservation.DTO.*
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Service
 class PanelReservationService(private val authorizationService: AuthorizationService,
@@ -38,6 +40,8 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
     }
 
     private fun validateReservationTime(createReservationDTO: PanelCreateReservationDTO) {
+        if (createReservationDTO.dateTime.isBeforeOrEqual(LocalDateTime.now()))
+            throw ServiceException(HttpStatus.BAD_REQUEST, "You can't make reservations in the past.")
         if (createReservationDTO.dateTime.toLocalTime().minute % 15 != 0)
             throw ServiceException(HttpStatus.BAD_REQUEST, "You can make only at 0, 15, 30, 45.")
     }
