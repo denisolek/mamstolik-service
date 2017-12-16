@@ -30,8 +30,8 @@ class GuestRestaurantController(val guestRestaurantService: GuestRestaurantServi
                                    @RequestParam peopleNumber: Int): SearchDTO =
             guestRestaurantService.searchRestaurants(city, date, peopleNumber)
 
-    override fun getRestaurant(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant): RestaurantDetailsDTO =
-            RestaurantDetailsDTO.fromRestaurant(restaurantId)
+    override fun getRestaurant(@ApiIgnore @PathVariable(API.URL_NAME) urlName: String): RestaurantDetailsDTO =
+            guestRestaurantService.getRestaurant(urlName)
 
     @ApiImplicitParams(
             ApiImplicitParam(name = "restaurantId", value = "Restaurant Id", paramType = "path", dataType = "int", required = true),

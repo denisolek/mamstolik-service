@@ -24,10 +24,12 @@ import java.time.LocalTime
 interface GuestRestaurantApi {
     companion object {
         const val RESTAURANT_ID: String = "restaurantId"
+        const val URL_NAME: String = "urlName"
         const val SPOT_ID: String = "spotId"
 
         const val RESTAURANTS_BASE_PATH = "/restaurants"
-        const val RESTAURANTS_ID_PATH = "$RESTAURANTS_BASE_PATH/{$RESTAURANT_ID}"
+        const val RESTAURANTS_URL_NAME_PATH = "$RESTAURANTS_BASE_PATH/{$URL_NAME:.+}"
+        private const val RESTAURANTS_ID_PATH = "$RESTAURANTS_BASE_PATH/{$RESTAURANT_ID}"
         const val RESTAURANTS_ID_DATES_PATH = "$RESTAURANTS_ID_PATH/dates"
         const val RESTAURANTS_ID_SPOTS_PATH = "$RESTAURANTS_ID_PATH/spots"
         const val RESTAURANTS_ID_SPOTS_ID_PATH = "$RESTAURANTS_ID_SPOTS_PATH/{$SPOT_ID}"
@@ -38,8 +40,8 @@ interface GuestRestaurantApi {
                           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam date: LocalDateTime,
                           @RequestParam peopleNumber: Int): SearchDTO
 
-    @GetMapping(RESTAURANTS_ID_PATH)
-    fun getRestaurant(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant): RestaurantDetailsDTO
+    @GetMapping(RESTAURANTS_URL_NAME_PATH)
+    fun getRestaurant(@ApiIgnore @PathVariable(URL_NAME) urlName: String): RestaurantDetailsDTO
 
     @GetMapping(RESTAURANTS_ID_DATES_PATH)
     fun getRestaurantAvailableDates(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
