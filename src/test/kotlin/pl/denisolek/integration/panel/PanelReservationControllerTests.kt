@@ -77,7 +77,7 @@ class PanelReservationControllerTests {
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelReservationsDTO::class.java)
 
         val expectedReservation = PanelReservationDTO(
-                id = 7,
+                id = 10,
                 customer = ReservationCustomerDTO(
                         firstName = "NameStub",
                         lastName = "SurnameStub",
@@ -121,7 +121,7 @@ class PanelReservationControllerTests {
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelReservationsDTO::class.java)
 
         val expectedReservation = PanelReservationDTO(
-                id = 8,
+                id = 11,
                 customer = ReservationCustomerDTO(
                         firstName = "Tomasz",
                         lastName = "Jabłoński",
@@ -213,7 +213,7 @@ class PanelReservationControllerTests {
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelReservationsDTO::class.java)
 
         val expectedReservation = PanelReservationDTO(
-                id = 9,
+                id = 12,
                 customer = ReservationCustomerDTO(
                         firstName = "Karola",
                         lastName = "Szafrańska",
@@ -300,7 +300,7 @@ class PanelReservationControllerTests {
         assertEquals(3, actual.spots[0].id)
         assertEquals("Parter", actual.spots[0].floorName)
         assertNull(actual.note)
-        assertEquals(Reservation.ReservationState.PENDING, actual.state)
+        assertEquals(Reservation.ReservationState.FINISHED, actual.state)
     }
 
 
