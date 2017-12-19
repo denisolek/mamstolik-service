@@ -8,8 +8,8 @@ spring:
             ddl-auto: create-drop
         properties:
             hibernate:
-                format_sql: true
-        show-sql: true
+                format_sql: false
+        show-sql: false
     mail:
         host: smtp.gmail.com
         password: 43:-_/deYwNC
