@@ -1,0 +1,55 @@
+<configuration>
+    <springProperty name="APP_NAME" source="spring.application.name"/>
+    <springProperty name="APP_VERSION" source="spring.application.version"/>
+    <springProperty name="LOG_SERVER" source="spring.application.logServer"/>
+
+    <appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>${LOG_SERVER}</destination>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <mdc/>
+                <context/> <!--Outputs entries from logback's context -->
+                <version/> <!-- Logstash json format version, the @version field in the output-->
+                <logLevel/>
+                <loggerName/>
+
+                <pattern>
+                    <pattern> <!-- we can add some custom fields to be sent with all the log entries.    -->
+                        {
+                        "appName": "${APP_NAME}",
+                        "host" : "${HOSTNAME}",
+                        "appVersions": "${APP_VERSION}"
+                        }
+                    </pattern>
+                </pattern>
+
+                <threadName/>
+                <message/>
+
+                <logstashMarkers/> <!-- Useful so we can add extra information for specific log lines as Markers-->
+                <arguments/> <!--or through StructuredArguments-->
+
+                <stackTrace/>
+            </providers>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- @formatter:off -->
+            <pattern>[%thread] %highlight(%-5level) %cyan(%logger{15}) - %X{session.id} %X{user.ipAddress} %X{user.rsqId} %X{request.method} %X{request.ipAddress} %X{request.path} %X{request.protocol}%X{request.user-agent} %X{response.status} %msg %n</pattern>
+            <!-- @formatter:on -->
+
+        </encoder>
+    </appender>
+
+    Add a comment to this line
+    <!-- Our logger writes to file, console and sends the data to Logstash -->
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <springProfile name="!test">
+            <appender-ref ref="STASH"/>
+        </springProfile>
+    </root>
+</configuration>
