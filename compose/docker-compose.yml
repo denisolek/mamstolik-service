@@ -17,7 +17,7 @@ services:
       - "15672:15672"
 
   mamstolikService:
-    image: mamstolik/service:0.17.0
+    image: mamstolik/service:0.22.0
     ports:
       - "8080:8080"
     environment:
@@ -29,6 +29,10 @@ services:
       DATABASE_DDL: create-drop
       MAIL_HOST: smtp.gmail.com
       MAIL_USERNAME: test.mamstolik@gmail.com
+      WEB_PROTOCOL: http
+      WEB_HOSTNAME: test.mamstolik.pl
+      WEB_PORT: 80
+      LOG_HOST_PORT: logstash.mamstolik.pl
     links:
       - mamstolikDb
       - rabbitmq
@@ -46,7 +50,17 @@ services:
       SEND_SMS: "false"
     entrypoint: dockerize -wait tcp://rabbitmq:5672 -timeout 40s node receive.js
 
-  mamstolikWeb:
-    image: mamstolik/web
+  mamstolikWebGuest:
+    image: mamstolik/guest:0.0.6
     ports:
-      - "4000:80"
+      - "81:80"
+
+  mamstolikWebPanel:
+    image: mamstolik/panel:0.0.6
+    ports:
+      - "82:80"
+
+  mamstolikWebLogin:
+    image: mamstolik/employee:0.0.6
+    ports:
+      - "83:80"

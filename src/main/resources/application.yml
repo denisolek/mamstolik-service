@@ -1,11 +1,3 @@
-# Database
-#logging:
-#    level:
-#        org:
-#            hibernate:
-#                type:
-#                    descriptor:
-#                        sql: trace
 spring:
     application:
         name: mamstolik
