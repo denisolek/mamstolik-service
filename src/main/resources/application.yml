@@ -1,12 +1,8 @@
-# Database
-logging:
-    level:
-        org:
-            hibernate:
-                type:
-                    descriptor:
-                        sql: trace
 spring:
+    application:
+        name: mamstolik
+        version: 0.22.0
+        logServer: ${LOG_HOST_PORT}
     datasource:
         url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
         username: ${DATABASE_USERNAME}
@@ -55,3 +51,22 @@ front-web:
     protocol: ${WEB_PROTOCOL}
     hostname: ${WEB_HOSTNAME}
     port: ${WEB_PORT}
+
+logbook:
+    exclude:
+        - /health
+        - /admin/**
+    filter.enabled: true
+    format.style: json
+    obfuscate:
+        headers:
+            - Authorization
+            - X-Secret
+        parameters:
+            - access_token
+            - password
+            - newPassword
+    write:
+        category: http.wire-log
+        level: INFO
+        chunk-size: 3000
