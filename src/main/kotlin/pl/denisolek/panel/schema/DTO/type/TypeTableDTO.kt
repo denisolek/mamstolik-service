@@ -10,6 +10,7 @@ import pl.denisolek.core.spot.Spot
 
 data class TypeTableDTO(
         var id: Int? = null,
+        var uuid: String? = null,
         var floorId: Int,
         var subType: TableType? = null,
         var position: SchemaPositionDTO? = null,
@@ -18,6 +19,7 @@ data class TypeTableDTO(
 ) {
     constructor(item: SchemaItem) : this(
             id = item.id,
+            uuid = item.uuid,
             floorId = item.floor.id!!,
             subType = item.tableType!!,
             details = SchemaDetailsDTO(
@@ -49,6 +51,7 @@ data class TypeTableDTO(
                 throw ServiceException(HttpStatus.BAD_REQUEST, "You can't assign exisiting spot to the new table.")
             return SchemaItem(
                     id = if (restaurantContainsTable(table, restaurant)) table.id else null,
+                    uuid = table.uuid,
                     x = table.position?.x ?: DEFAULT_X,
                     y = table.position?.y ?: DEFAULT_Y,
                     width = table.details?.width ?: DEFAULT_WIDTH,
