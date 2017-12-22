@@ -1,4 +1,6 @@
 spring:
+    application:
+        logServer: logstash.mamstolik.pl
     datasource:
         password: 1
         url: jdbc:postgresql://localhost:5432/mamstolik
