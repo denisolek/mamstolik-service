@@ -63,8 +63,8 @@ class GuestRestaurantServiceTests {
                 peopleNumber = 2
         )
 
-        Assert.assertEquals(SpotInfoDTO.SpotState.NOT_AVAILABLE, actual[0].state)
-        Assert.assertEquals(SpotInfoDTO.SpotState.NOT_AVAILABLE, actual[1].state)
+        Assert.assertEquals(SpotInfoDTO.SpotState.TAKEN, actual[0].state)
+        Assert.assertEquals(SpotInfoDTO.SpotState.TAKEN, actual[1].state)
     }
 
     @Test
@@ -79,6 +79,6 @@ class GuestRestaurantServiceTests {
         )
 
         Assert.assertEquals(SpotInfoDTO.SpotState.AVAILABLE, actual.find { it.id == 1 }!!.state)
-        Assert.assertEquals(SpotInfoDTO.SpotState.NOT_AVAILABLE, actual.find { it.id == 2 }!!.state)
+        Assert.assertEquals(SpotInfoDTO.SpotState.TAKEN, actual.find { it.id == 2 }!!.state)
     }
 }
