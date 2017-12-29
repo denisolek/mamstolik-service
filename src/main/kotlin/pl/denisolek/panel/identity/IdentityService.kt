@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import pl.denisolek.Exception.ServiceException
+import pl.denisolek.core.address.Address
 import pl.denisolek.core.email.EmailService
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
@@ -108,7 +109,8 @@ class IdentityService(private val userService: UserService,
                 type = createRestaurantDTO.type,
                 owner = authorizationService.getCurrentUser(),
                 phoneNumber = createRestaurantDTO.phoneNumber,
-                email = createRestaurantDTO.email
+                email = createRestaurantDTO.email,
+                address = Address(latitude = 52.4004458f, longitude = 16.7615836f)
         )
         userService.save(User(
                 username = userService.generateUsername(),

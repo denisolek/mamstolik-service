@@ -286,11 +286,11 @@ VALUES
   (7, 48, 'SATURDAY'),
   (7, 49, 'SUNDAY');
 
-INSERT INTO public.business_hour (close_time, open_time, is_closed)
+INSERT INTO public.business_hour (open_time, close_time, is_closed)
 VALUES
   ('12:00:00', '14:00:00', FALSE),
   ('00:00:00', '00:00:00', TRUE),
-  ('01:00:00', '06:00:00', FALSE);
+  ('03:00:00', '16:00:00', FALSE);
 
 INSERT INTO public.special_date (date, description, business_hour_id, restaurant_id)
 VALUES
