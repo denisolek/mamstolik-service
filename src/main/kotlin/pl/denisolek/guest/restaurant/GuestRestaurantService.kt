@@ -41,13 +41,13 @@ class GuestRestaurantService(val restaurantService: RestaurantService) {
             when (peopleNumber) {
                 0 -> {
                     when {
-                        takenSpots.contains(it) -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.NOT_AVAILABLE)
+                        takenSpots.contains(it) -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.TAKEN)
                         else -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.AVAILABLE)
                     }
                 }
                 else -> {
                     when {
-                        takenSpots.contains(it) -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.NOT_AVAILABLE)
+                        takenSpots.contains(it) -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.TAKEN)
                         it.capacity >= peopleNumber && it.minPeopleNumber <= peopleNumber -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.AVAILABLE)
                         it.capacity >= peopleNumber && it.minPeopleNumber > peopleNumber -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.POSSIBLE)
                         else -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.NOT_AVAILABLE)

@@ -5,6 +5,7 @@ data class SpotInfoDTO(
         var state: SpotState
 ) {
     enum class SpotState {
+        TAKEN,
         POSSIBLE,
         AVAILABLE,
         NOT_AVAILABLE
