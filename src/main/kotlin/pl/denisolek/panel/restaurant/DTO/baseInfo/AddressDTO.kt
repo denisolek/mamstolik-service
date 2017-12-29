@@ -9,7 +9,7 @@ data class AddressDTO(
         var postalCode: String = "",
         var latitude: Float = 0f,
         var longitude: Float = 0f,
-        @field:Pattern(regexp = "^[a-z A-Z0-9]+(-[a-z A-Z0-9]+)?\$", message = "Name accepts a-z A-Z 0-9 - and spaces.")
+        @field:Pattern(regexp = "^[a-z A-Z0-9żźćńółęąśŻŹĆĄŚĘŁÓŃ]+(-[a-z A-Z0-9żźćńółęąśŻŹĆĄŚĘŁÓŃ]+)?\$", message = "Name accepts a-z A-Z 0-9 - and spaces.")
         var city: String = ""
 ) {
     companion object {
