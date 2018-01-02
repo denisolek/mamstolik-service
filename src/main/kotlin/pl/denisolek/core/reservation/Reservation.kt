@@ -8,6 +8,7 @@ import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.core.user.User
+import pl.denisolek.guest.reservation.DTO.CreateReservationGuestDTO
 import pl.denisolek.infrastructure.util.DateTimeInterval
 import pl.denisolek.infrastructure.util.isAfterOrEqual
 import pl.denisolek.infrastructure.util.isBeforeOrEqual
@@ -24,7 +25,7 @@ data class Reservation(
         override var startDateTime: LocalDateTime,
         override var endDateTime: LocalDateTime,
         var peopleNumber: Int,
-        var verificationCode: Int? = null,
+        var verificationCode: String? = null,
         var duration: Duration,
         var isVerified: Boolean? = false,
         var note: String? = "",
@@ -63,6 +64,21 @@ data class Reservation(
             restaurant = restaurant,
             customer = customer,
             approvedBy = approvedBy,
+            spots = spots
+    )
+
+    constructor(id: Int? = null, panelCreateReservationGuestDTO: CreateReservationGuestDTO, restaurant: Restaurant, customer: Customer, spots: MutableList<Spot>, verificationCode: String) : this(
+            id = id,
+            startDateTime = panelCreateReservationGuestDTO.dateTime.withSecond(0).withNano(0),
+            endDateTime = panelCreateReservationGuestDTO.dateTime.plus(restaurant.avgReservationTime).withSecond(0).withNano(0),
+            peopleNumber = panelCreateReservationGuestDTO.peopleNumber,
+            state = ReservationState.PENDING,
+            verificationCode = verificationCode,
+            duration = restaurant.avgReservationTime,
+            isVerified = false,
+            note = panelCreateReservationGuestDTO.note,
+            restaurant = restaurant,
+            customer = customer,
             spots = spots
     )
 
