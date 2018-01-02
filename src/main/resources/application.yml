@@ -1,7 +1,7 @@
 spring:
     application:
         name: mamstolik
-        version: 0.22.0
+        version: 0.24.0
         logServer: ${LOG_HOST_PORT}
     datasource:
         url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}

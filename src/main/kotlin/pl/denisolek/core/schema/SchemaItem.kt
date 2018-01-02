@@ -10,6 +10,7 @@ data class SchemaItem(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Int? = null,
+        var uuid: String? = "",
         var x: Float = 0.0f,
         var y: Float = 0.0f,
         var width: Float = 0.0f,

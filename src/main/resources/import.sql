@@ -286,11 +286,11 @@ VALUES
   (7, 48, 'SATURDAY'),
   (7, 49, 'SUNDAY');
 
-INSERT INTO public.business_hour (close_time, open_time, is_closed)
+INSERT INTO public.business_hour (open_time, close_time, is_closed)
 VALUES
   ('12:00:00', '14:00:00', FALSE),
   ('00:00:00', '00:00:00', TRUE),
-  ('01:00:00', '06:00:00', FALSE);
+  ('03:00:00', '16:00:00', FALSE);
 
 INSERT INTO public.special_date (date, description, business_hour_id, restaurant_id)
 VALUES
@@ -483,8 +483,8 @@ VALUES
   (5, 1, 7, 'Suflet czekoladowy z malinami', NULL),
   (5, 2, 9, 'Sernik z brzoskwinią', NULL);
 
-INSERT INTO public.comment(date_time, food_rate, price_quality_rate, service_rate, rate, customer_id, restaurant_id, reservation_id)
+INSERT INTO public.comment(text, date_time, food_rate, price_quality_rate, service_rate, rate, customer_id, restaurant_id, reservation_id)
 VALUES
-  ('2017-10-19 23:45:00.000', 2.5, 2.5, 2.5, 2.5, 1, 1, 1),
-  ('2017-11-03 11:45:00.000', 3, 5, 4, 4, 2, 1, 2);
+  ('Niesamowity stek sous-vide, przepyszne aromatyczne sosy, warzywa aldente i rozpływające się w ustach foie gras.', '2017-10-19 23:45:00.000', 2.5, 2.5, 2.5, 2.5, 1, 1, 1),
+  ('Wyśmienity nastrój, przemiła i profesjonalna obsługa, potrwa wyśmienite, kucharz mistrz, gorąco polecamaa', '2017-11-03 11:45:00.000', 3, 5, 4, 4, 2, 1, 2);
 /* @formatter:on */
