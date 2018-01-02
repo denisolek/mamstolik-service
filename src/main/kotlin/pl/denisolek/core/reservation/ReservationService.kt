@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service
 import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.customer.Customer
 import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.spot.Spot
 import pl.denisolek.infrastructure.util.isBeforeOrEqual
 import pl.denisolek.panel.reservation.DTO.PanelCreateReservationDTO
 import java.time.LocalDateTime
@@ -17,10 +18,16 @@ class ReservationService(private val reservationRepository: ReservationRepositor
     fun getRestaurantCustomerReservations(restaurant: Restaurant, customer: Customer): List<Reservation> =
             reservationRepository.findByRestaurantAndCustomer(restaurant, customer)
 
-    fun validateReservationTime(createReservationDTO: PanelCreateReservationDTO) {
-        if (createReservationDTO.dateTime.isBeforeOrEqual(LocalDateTime.now()))
+    fun validateReservationTime(dateTime: LocalDateTime) {
+        if (dateTime.isBeforeOrEqual(LocalDateTime.now()))
             throw ServiceException(HttpStatus.BAD_REQUEST, "You can't make reservations in the past.")
-        if (createReservationDTO.dateTime.toLocalTime().minute % 15 != 0)
+        if (dateTime.toLocalTime().minute % 15 != 0)
             throw ServiceException(HttpStatus.BAD_REQUEST, "You can make only at 0, 15, 30, 45.")
+    }
+
+    fun findReservationSpots(spots: List<Int>, restaurant: Restaurant): MutableList<Spot> {
+        return spots.map { spotId ->
+            restaurant.spots.find { it.id == spotId } ?: throw ServiceException(HttpStatus.NOT_FOUND, "Spot id $spotId doesn't exist or doesn't belong to the restaurant.")
+        }.toMutableList()
     }
 }
