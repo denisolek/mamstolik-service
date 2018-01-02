@@ -8,7 +8,7 @@ import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
 
 data class CreateRestaurantDTO(
-        @field:Pattern(regexp = "^[a-z A-Z0-9żźćńółęąśŻŹĆĄŚĘŁÓŃ]+(-[a-z A-Z0-9żźćńółęąśŻŹĆĄŚĘŁÓŃ]+)?\$", message = "Name accepts a-z A-Z 0-9 - & and spaces.")
+        @field:Pattern(regexp = "^[a-z A-Z0-9&żźćńółęąśŻŹĆĄŚĘŁÓŃ]+(-[a-z A-Z0-9&żźćńółęąśŻŹĆĄŚĘŁÓŃ]+)?", message = "Name accepts a-z A-Z 0-9 - & and spaces.")
         @field:NotBlank
         var name: String,
 
