@@ -26,7 +26,7 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
     fun addReservation(restaurant: Restaurant, createReservationDTO: PanelCreateReservationDTO): PanelReservationsDTO {
         reservationService.validateReservationTime(createReservationDTO.dateTime)
         val reservationSpots = reservationService.findReservationSpots(createReservationDTO.spots, restaurant)
-        if (!allSpotsAvailable(restaurant, createReservationDTO, reservationSpots))
+        if (!reservationService.allSpotsAvailable(restaurant, createReservationDTO.dateTime, reservationSpots))
             throw ServiceException(HttpStatus.BAD_REQUEST, "Some of provided spots at taken at ${createReservationDTO.dateTime}.")
         val reservation = reservationService.save(Reservation(
                 panelCreateReservationDTO = createReservationDTO,
@@ -38,9 +38,6 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
         restaurant.reservations.add(reservation)
         return PanelReservationsDTO.createPanelReservationDTO(restaurant, createReservationDTO.dateTime.toLocalDate())
     }
-
-    private fun allSpotsAvailable(restaurant: Restaurant, createReservationDTO: PanelCreateReservationDTO, reservationSpots: MutableList<Spot>) =
-            restaurant.getAvailableSpotsAt(createReservationDTO.dateTime).containsAll(reservationSpots)
 
     private fun prepareReservationCustomer(createReservationDTO: PanelCreateReservationDTO, restaurant: Restaurant): Customer {
         return if (createReservationDTO.customer.phoneNumber.isNullOrBlank())
@@ -64,7 +61,7 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
         reservationService.validateReservationTime(createReservationDTO.dateTime)
         validateReservationAssignment(reservation, restaurant)
         val reservationSpots = reservationService.findReservationSpots(createReservationDTO.spots, restaurant)
-        if (!allSpotsAvailable(restaurant, createReservationDTO, reservationSpots))
+        if (!reservationService.allSpotsAvailable(restaurant, createReservationDTO.dateTime, reservationSpots))
             throw ServiceException(HttpStatus.BAD_REQUEST, "Some of provided spots at taken at ${createReservationDTO.dateTime}.")
         val reservation = reservationService.save(Reservation(
                 id = reservation.id,

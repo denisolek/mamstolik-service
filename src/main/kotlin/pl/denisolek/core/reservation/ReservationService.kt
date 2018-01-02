@@ -7,7 +7,6 @@ import pl.denisolek.core.customer.Customer
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.infrastructure.util.isBeforeOrEqual
-import pl.denisolek.panel.reservation.DTO.PanelCreateReservationDTO
 import java.time.LocalDateTime
 
 @Service
@@ -30,4 +29,7 @@ class ReservationService(private val reservationRepository: ReservationRepositor
             restaurant.spots.find { it.id == spotId } ?: throw ServiceException(HttpStatus.NOT_FOUND, "Spot id $spotId doesn't exist or doesn't belong to the restaurant.")
         }.toMutableList()
     }
+
+    fun allSpotsAvailable(restaurant: Restaurant, dateTime: LocalDateTime, reservationSpots: MutableList<Spot>) =
+            restaurant.getAvailableSpotsAt(dateTime).containsAll(reservationSpots)
 }
