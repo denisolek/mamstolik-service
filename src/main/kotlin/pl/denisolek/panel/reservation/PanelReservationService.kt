@@ -10,12 +10,9 @@ import pl.denisolek.core.reservation.Reservation.ReservationState.CANCELED
 import pl.denisolek.core.reservation.ReservationService
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
-import pl.denisolek.core.spot.Spot
 import pl.denisolek.infrastructure.config.security.AuthorizationService
-import pl.denisolek.infrastructure.util.isBeforeOrEqual
 import pl.denisolek.panel.reservation.DTO.*
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 @Service
 class PanelReservationService(private val authorizationService: AuthorizationService,
