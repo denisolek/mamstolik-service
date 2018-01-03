@@ -27,7 +27,7 @@ data class Reservation(
         var peopleNumber: Int,
         var verificationCode: String? = null,
         var duration: Duration,
-        var isVerified: Boolean? = false,
+        var isVerified: Boolean = false,
         var note: String? = "",
 
         @Enumerated(EnumType.STRING)

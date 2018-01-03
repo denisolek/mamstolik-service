@@ -19,7 +19,7 @@ class GuestReservationService(private val reservationService: ReservationService
                               private val customerService: CustomerService,
                               private val smsService: SmsService) {
 
-    fun addReservation(dto: CreateReservationGuestDTO) {
+    fun addReservation(dto: CreateReservationGuestDTO): Int {
         val restaurant = restaurantService.findById(dto.restaurantId) ?: throw ServiceException(HttpStatus.NOT_FOUND, "Restaurant not found.")
         val reservationSpots = reservationService.findReservationSpots(dto.spots, restaurant)
         if (!reservationService.allSpotsAvailable(restaurant, dto.dateTime, reservationSpots))
@@ -34,11 +34,21 @@ class GuestReservationService(private val reservationService: ReservationService
         ))
         restaurant.reservations.add(reservation)
         smsService.sendCode(verificationCode, dto.customer.phoneNumber)
+        return reservation.id!!
     }
 
     private fun prepareReservationCustomer(dto: CreateReservationGuestDTO): Customer {
         return customerService.findOrCreate(ReservationCustomerGuestDTO.createCustomer(
                 reservationCustomerDTO = dto.customer
         ))
+    }
+
+    fun submitCode(reservation: Reservation, code: String) {
+        when {
+            reservation.isVerified -> throw ServiceException(HttpStatus.CONFLICT, "Reservation already verified.")
+            reservation.verificationCode != code -> throw ServiceException(HttpStatus.BAD_REQUEST, "Invalid verification code.")
+        }
+        reservation.isVerified = true
+        reservationService.save(reservation)
     }
 }
