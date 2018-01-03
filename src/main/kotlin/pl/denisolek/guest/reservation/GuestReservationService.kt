@@ -9,13 +9,15 @@ import pl.denisolek.core.customer.CustomerService
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.reservation.ReservationService
 import pl.denisolek.core.restaurant.RestaurantService
+import pl.denisolek.core.sms.SmsService
 import pl.denisolek.guest.reservation.DTO.CreateReservationGuestDTO
 import pl.denisolek.guest.reservation.DTO.ReservationCustomerGuestDTO
 
 @Service
 class GuestReservationService(private val reservationService: ReservationService,
                               private val restaurantService: RestaurantService,
-                              private val customerService: CustomerService) {
+                              private val customerService: CustomerService,
+                              private val smsService: SmsService) {
 
     fun addReservation(dto: CreateReservationGuestDTO) {
         val restaurant = restaurantService.findById(dto.restaurantId) ?: throw ServiceException(HttpStatus.NOT_FOUND, "Restaurant not found.")
@@ -31,6 +33,7 @@ class GuestReservationService(private val reservationService: ReservationService
                 verificationCode = verificationCode
         ))
         restaurant.reservations.add(reservation)
+        smsService.sendCode(verificationCode, dto.customer.phoneNumber)
     }
 
     private fun prepareReservationCustomer(dto: CreateReservationGuestDTO): Customer {

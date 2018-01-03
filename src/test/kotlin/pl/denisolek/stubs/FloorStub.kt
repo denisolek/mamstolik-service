@@ -54,7 +54,7 @@ class FloorStub {
                                 duration = Duration.ofMinutes(30),
                                 peopleNumber = 3,
                                 state = PENDING,
-                                verificationCode = 111111
+                                verificationCode = "111111"
                         ),
                         Reservation(
                                 startDateTime = LocalDateTime.now().plusDays(2),
@@ -65,7 +65,7 @@ class FloorStub {
                                 duration = Duration.ofMinutes(30),
                                 peopleNumber = 3,
                                 state = PENDING,
-                                verificationCode = 111111
+                                verificationCode = "111111"
                         )
                 ),
                 email = "stubbed.restaurant@gmail.com",

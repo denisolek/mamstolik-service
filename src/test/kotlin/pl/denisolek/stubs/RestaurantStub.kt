@@ -154,13 +154,13 @@ class RestaurantStub {
                                 spots = mutableListOf(Spot(id = 2, capacity = 5, restaurant = getRestaurantForStubs(), number = 2)),
                                 startDateTime = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(15, 0)),
                                 endDateTime = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(15, 30)),
-                                verificationCode = 222222),
+                                verificationCode = "222222"),
                         ReservationStub.createReservation().copy(
                                 peopleNumber = 2,
                                 spots = mutableListOf(Spot(id = 5, capacity = 2, restaurant = getRestaurantForStubs(), number = 5)),
                                 startDateTime = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(16, 0)),
                                 endDateTime = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(16, 30)),
-                                verificationCode = 333333)
+                                verificationCode = "333333")
                 )
 
         private fun getAvailabilitySpots(): MutableList<Spot> =
@@ -176,13 +176,13 @@ class RestaurantStub {
                                 spots = mutableListOf(Spot(id = 1, capacity = 5, minPeopleNumber = 5, restaurant = getRestaurantForStubs(), number = 1)),
                                 startDateTime = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(14, 0)),
                                 endDateTime = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(14, 30)),
-                                verificationCode = 111111),
+                                verificationCode = "111111"),
                         ReservationStub.createReservation().copy(
                                 peopleNumber = 2,
                                 spots = mutableListOf(Spot(id = 2, capacity = 2, minPeopleNumber = 2, restaurant = getRestaurantForStubs(), number = 2)),
                                 startDateTime = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(14, 0)),
                                 endDateTime = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(14, 30)),
-                                verificationCode = 222222)
+                                verificationCode = "222222")
                 )
     }
 }

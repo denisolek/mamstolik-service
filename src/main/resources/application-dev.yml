@@ -31,3 +31,11 @@ front-web:
     protocol: http
     hostname: localhost
     port: 4000
+
+logbook:
+    filter.enabled: true
+    format.style: http
+    write:
+        category: http.wire-log
+        level: INFO
+        chunk-size: 3000

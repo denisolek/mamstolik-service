@@ -15,11 +15,11 @@ class ReservationStub {
                         createReservation().copy(
                                 startDateTime = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(15, 0)),
                                 endDateTime = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(15, 30)),
-                                verificationCode = 222222),
+                                verificationCode = "222222"),
                         createReservation().copy(
                                 startDateTime = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(16, 0)),
                                 endDateTime = LocalDateTime.of(LocalDate.of(2017, 11, 1), LocalTime.of(16, 30)),
-                                verificationCode = 333333)
+                                verificationCode = "333333")
                 )
 
         fun createReservation(): Reservation =
@@ -32,7 +32,7 @@ class ReservationStub {
                         peopleNumber = 5,
                         state = Reservation.ReservationState.ACCEPTED,
                         isVerified = true,
-                        verificationCode = 111111,
+                        verificationCode = "111111",
                         spots = mutableListOf()
                 )
     }
