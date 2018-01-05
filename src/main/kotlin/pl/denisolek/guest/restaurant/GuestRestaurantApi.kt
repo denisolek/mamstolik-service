@@ -32,7 +32,6 @@ interface GuestRestaurantApi {
         private const val RESTAURANTS_ID_PATH = "$RESTAURANTS_BASE_PATH/{$RESTAURANT_ID}"
         const val RESTAURANTS_ID_DATES_PATH = "$RESTAURANTS_ID_PATH/dates"
         const val RESTAURANTS_ID_SPOTS_PATH = "$RESTAURANTS_ID_PATH/spots"
-        const val RESTAURANTS_ID_SPOTS_ID_PATH = "$RESTAURANTS_ID_SPOTS_PATH/{$SPOT_ID}"
     }
 
     @GetMapping(RESTAURANTS_BASE_PATH)
@@ -52,9 +51,4 @@ interface GuestRestaurantApi {
     fun getRestaurantAvailableSpots(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam date: LocalDateTime,
                                     @RequestParam(required = false, defaultValue = "0") peopleNumber: Int): List<SpotInfoDTO>
-
-    @GetMapping(RESTAURANTS_ID_SPOTS_ID_PATH)
-    fun getSpot(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                @ApiIgnore @PathVariable(SPOT_ID) spotId: Spot,
-                @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam date: LocalDate): SpotDTO
 }
