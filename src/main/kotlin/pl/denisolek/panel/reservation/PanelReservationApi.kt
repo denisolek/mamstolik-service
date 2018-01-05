@@ -7,11 +7,9 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.restaurant.Restaurant
+import pl.denisolek.core.spot.Spot
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
-import pl.denisolek.panel.reservation.DTO.PanelCreateReservationDTO
-import pl.denisolek.panel.reservation.DTO.PanelReservationDTO
-import pl.denisolek.panel.reservation.DTO.PanelReservationsDTO
-import pl.denisolek.panel.reservation.DTO.ReservationStateDTO
+import pl.denisolek.panel.reservation.DTO.*
 import springfox.documentation.annotations.ApiIgnore
 import java.time.LocalDate
 import javax.validation.Valid
@@ -22,9 +20,11 @@ interface PanelReservationApi {
     companion object {
         const val RESTAURANT_ID: String = "restaurantId"
         const val RESERVATION_ID: String = "reservationId"
+        const val SPOT_ID: String = "spotId"
         const val DATE = "date"
 
         const val RESERVATIONS_PATH = "/{$RESTAURANT_ID}/reservations"
+        const val SPOT_ID_RESERVATIONS = "/{$RESTAURANT_ID}/spots/{$SPOT_ID}/reservations"
         const val RESERVATIONS_ID_PATH = "$RESERVATIONS_PATH/{$RESERVATION_ID}"
         const val RESERVATIONS_ID_CHANGE_STATE_PATH = "$RESERVATIONS_ID_PATH/change-state"
     }
@@ -41,6 +41,13 @@ interface PanelReservationApi {
             "@authorizationService.currentUser.workPlace == #restaurantId")
     fun getReservations(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
                         @RequestParam(required = true, value = DATE) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate): PanelReservationsDTO
+
+    @GetMapping(SPOT_ID_RESERVATIONS)
+    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+            "@authorizationService.currentUser.workPlace == #restaurantId")
+    fun getSpotReservations(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+                            @ApiIgnore @PathVariable(SPOT_ID) spotId: Spot,
+                            @RequestParam(required = true, value = DATE) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate): SpotReservationsDTO
 
     @GetMapping(RESERVATIONS_ID_PATH)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +

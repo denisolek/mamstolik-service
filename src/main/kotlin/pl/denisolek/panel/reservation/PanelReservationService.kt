@@ -10,6 +10,7 @@ import pl.denisolek.core.reservation.Reservation.ReservationState.CANCELED
 import pl.denisolek.core.reservation.ReservationService
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
+import pl.denisolek.core.spot.Spot
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.panel.reservation.DTO.*
 import java.time.LocalDate
@@ -91,5 +92,9 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
     fun changeReservationState(restaurant: Restaurant, reservation: Reservation, stateDTO: ReservationStateDTO): PanelReservationDTO {
         reservation.state = stateDTO.state
         return PanelReservationDTO.fromReservation(reservationService.save(reservation))
+    }
+
+    fun getSpotReservations(restaurant: Restaurant, spot: Spot, date: LocalDate): SpotReservationsDTO {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
