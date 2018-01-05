@@ -95,6 +95,11 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
     }
 
     fun getSpotReservations(restaurant: Restaurant, spot: Spot, date: LocalDate): SpotReservationsDTO {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (spot.restaurant != restaurant) throw ServiceException(HttpStatus.FORBIDDEN, "Access denied.")
+        return SpotReservationsDTO.fromSpotDateReservations(
+                spot = spot,
+                date = date,
+                reservations = restaurant.reservations.filter { it.startDateTime.toLocalDate() == date }
+        )
     }
 }
