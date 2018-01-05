@@ -1,10 +1,11 @@
-package pl.denisolek.guest.restaurant.DTO
+package pl.denisolek.panel.reservation.DTO
 
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.spot.Spot
+import pl.denisolek.guest.restaurant.DTO.SpotReservationDTO
 import java.time.LocalDate
 
-data class SpotDTO(
+data class SpotReservationsDTO(
         var id: Int,
         var number: Int,
         var floorId: Int,
@@ -14,7 +15,7 @@ data class SpotDTO(
 ) {
     companion object {
         fun fromSpotDateReservations(spot: Spot, date: LocalDate, reservations: List<Reservation>?) =
-                SpotDTO(
+                SpotReservationsDTO(
                         id = spot.id!!,
                         number = spot.number,
                         floorId = spot.schemaItem?.floor?.id!!,

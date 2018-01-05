@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.restaurant.Restaurant
-import pl.denisolek.panel.reservation.DTO.PanelCreateReservationDTO
-import pl.denisolek.panel.reservation.DTO.PanelReservationDTO
-import pl.denisolek.panel.reservation.DTO.PanelReservationsDTO
-import pl.denisolek.panel.reservation.DTO.ReservationStateDTO
+import pl.denisolek.core.spot.Spot
+import pl.denisolek.panel.reservation.DTO.*
 import springfox.documentation.annotations.ApiIgnore
 import java.time.LocalDate
 import javax.validation.Valid
@@ -32,6 +30,15 @@ class PanelReservationController(val panelReservationService: PanelReservationSe
     override fun getReservations(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
                                  @RequestParam(required = true, value = PanelReservationApi.DATE) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate): PanelReservationsDTO =
             panelReservationService.getReservations(restaurantId, date)
+
+    @ApiImplicitParams(
+            ApiImplicitParam(name = "restaurantId", value = "Restaurant Id", paramType = "path", dataType = "int", required = true),
+            ApiImplicitParam(name = "spotId", value = "Spot Id", paramType = "path", dataType = "int", required = true)
+    )
+    override fun getSpotReservations(@ApiIgnore @PathVariable(PanelReservationApi.RESTAURANT_ID) restaurantId: Restaurant,
+                                     @ApiIgnore @PathVariable(PanelReservationApi.SPOT_ID) spotId: Spot,
+                                     @RequestParam(required = true, value = PanelReservationApi.DATE) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate): SpotReservationsDTO =
+            panelReservationService.getSpotReservations(restaurantId, spotId, date)
 
     @ApiImplicitParams(
             ApiImplicitParam(name = "restaurantId", value = "Restaurant Id", paramType = "path", dataType = "int", required = true),

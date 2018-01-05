@@ -57,12 +57,6 @@ class GuestRestaurantService(val restaurantService: RestaurantService) {
         }
     }
 
-    fun getSpot(restaurant: Restaurant, spot: Spot, date: LocalDate): SpotDTO = SpotDTO.fromSpotDateReservations(
-            spot = spot,
-            date = date,
-            reservations = restaurant.reservations.filter { it.startDateTime.toLocalDate() == date }
-    )
-
     fun getRestaurant(urlName: String): RestaurantDetailsDTO {
         val restaurant = restaurantService.findByUrlName(urlName) ?: throw ServiceException(HttpStatus.NOT_FOUND, "Restaurant not found")
         return RestaurantDetailsDTO.fromRestaurant(restaurant)
