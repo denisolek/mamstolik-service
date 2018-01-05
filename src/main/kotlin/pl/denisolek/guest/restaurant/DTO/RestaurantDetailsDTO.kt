@@ -11,6 +11,8 @@ data class RestaurantDetailsDTO(
         var settings: GuestRestaurantSettingsDTO,
         var name: String,
         var type: RestaurantType,
+        var phoneNumber: String,
+        var email: String,
         var description: String?,
         var rate: RestaurantRateDTO,
         var address: Address,
@@ -25,6 +27,8 @@ data class RestaurantDetailsDTO(
                         settings = setSettings(restaurant),
                         name = restaurant.name,
                         type = restaurant.type,
+                        phoneNumber = restaurant.phoneNumber,
+                        email = restaurant.email,
                         description = setDescription(restaurant),
                         rate = setRate(restaurant),
                         address = restaurant.address,
@@ -46,6 +50,7 @@ data class RestaurantDetailsDTO(
 
         private fun setRate(restaurant: Restaurant): RestaurantRateDTO {
             return RestaurantRateDTO(
+                    count = restaurant.comments.count(),
                     total = restaurant.rate,
                     food_rate = restaurant.food_rate,
                     price_quality_rate = restaurant.price_quality_rate,
