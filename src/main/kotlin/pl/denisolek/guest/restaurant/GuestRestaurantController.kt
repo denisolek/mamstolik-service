@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import pl.denisolek.core.address.City
 import pl.denisolek.core.restaurant.Restaurant
-import pl.denisolek.core.spot.Spot
 import pl.denisolek.guest.restaurant.DTO.RestaurantDetailsDTO
 import pl.denisolek.guest.restaurant.DTO.SearchDTO
-import pl.denisolek.guest.restaurant.DTO.SpotDTO
 import pl.denisolek.guest.restaurant.DTO.SpotInfoDTO
 import springfox.documentation.annotations.ApiIgnore
 import java.time.LocalDate

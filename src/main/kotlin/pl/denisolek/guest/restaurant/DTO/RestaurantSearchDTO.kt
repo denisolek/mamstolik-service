@@ -6,6 +6,7 @@ import pl.denisolek.core.restaurant.Restaurant
 data class RestaurantSearchDTO(
         val id: Int?,
         val name: String,
+        val type: Restaurant.RestaurantType,
         val urlName: String,
         val rate: Float,
         val service_rate: Float,
@@ -20,6 +21,7 @@ data class RestaurantSearchDTO(
                 RestaurantSearchDTO(
                         id = restaurant.id,
                         name = restaurant.name,
+                        type = restaurant.type,
                         urlName = restaurant.urlName,
                         rate = restaurant.rate,
                         service_rate = restaurant.service_rate,
