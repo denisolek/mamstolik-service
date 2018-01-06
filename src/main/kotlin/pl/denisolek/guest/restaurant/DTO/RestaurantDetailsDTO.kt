@@ -5,6 +5,8 @@ import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.Restaurant.RestaurantType
 import java.time.DayOfWeek
+import java.time.LocalDate
+
 
 data class RestaurantDetailsDTO(
         var id: Int? = null,
@@ -18,7 +20,8 @@ data class RestaurantDetailsDTO(
         var address: Address,
         var menu: List<MenuCategoryDTO>?,
         var tags: List<Any>,
-        var businessHours: Map<DayOfWeek, BusinessHour>
+        var businessHours: Map<DayOfWeek, BusinessHour>,
+        var openHours: Map<LocalDate, OpenHoursDTO>
 ) {
     companion object {
         fun fromRestaurant(restaurant: Restaurant): RestaurantDetailsDTO =
@@ -34,8 +37,32 @@ data class RestaurantDetailsDTO(
                         address = restaurant.address,
                         menu = setMenu(restaurant),
                         businessHours = restaurant.businessHours,
-                        tags = listOf(restaurant.cuisineTypes, restaurant.facilities)
+                        tags = listOf(restaurant.cuisineTypes, restaurant.facilities),
+                        openHours = setOpenHours(restaurant)
                 )
+
+        private fun setOpenHours(restaurant: Restaurant): Map<LocalDate, OpenHoursDTO> {
+            var firstMonday = LocalDate.now().minusDays(LocalDate.now().dayOfWeek.ordinal.toLong())
+            val dates = getDates(firstMonday)
+
+            return dates?.map { date ->
+                val specialDate = restaurant.specialDates.find { it.date == date }
+                when (specialDate) {
+                    null -> Pair(date, OpenHoursDTO.fromBusinessHour(restaurant.getBusinessHoursForDate(date)!!))
+                    else -> Pair(date, OpenHoursDTO.fromSpecialDate(specialDate))
+                }
+            }?.toMap() ?: mapOf()
+        }
+
+        private fun getDates(firstMonday: LocalDate): List<LocalDate>? {
+            var date = firstMonday
+            val dates = mutableListOf<LocalDate>()
+            while (date != firstMonday.plusDays(21)) {
+                dates.add(date)
+                date = date.plusDays(1)
+            }
+            return dates.toList()
+        }
 
         private fun setSettings(restaurant: Restaurant): GuestRestaurantSettingsDTO {
             return GuestRestaurantSettingsDTO(
