@@ -7,14 +7,14 @@ import java.time.LocalTime
 data class OpenHoursDTO(
         var openTime: LocalTime,
         var closeTime: LocalTime,
-        var isSpecialDate: Boolean = false
+        var specialDate: SpecialDateDTO? = null
 ) {
     companion object {
         fun fromSpecialDate(specialDate: SpecialDate): OpenHoursDTO =
                 OpenHoursDTO(
                         openTime = specialDate.businessHour.openTime,
                         closeTime = specialDate.businessHour.closeTime,
-                        isSpecialDate = true
+                        specialDate = SpecialDateDTO.fromSpecialDate(specialDate)
                 )
 
         fun fromBusinessHour(businessHour: BusinessHour): OpenHoursDTO =
