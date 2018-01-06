@@ -40,7 +40,7 @@ data class ProfileDTO(
             }
 
             profileDTO.menu.forEach { dtoCategory ->
-                restaurant.menu?.categories?.find { it.id == dtoCategory.id }?.let { existingCategory ->
+                restaurant.menu?.categories?.find { it.id == dtoCategory.id && it.id != null }?.let { existingCategory ->
                     existingCategory.name = dtoCategory.name
                     existingCategory.description = dtoCategory.description
                     existingCategory.position = dtoCategory.position
@@ -54,7 +54,7 @@ data class ProfileDTO(
                 !dtoCategory.items.any { it.id == id }
             }
             dtoCategory.items.forEach { dtoItem ->
-                existingCategory.items.find { it.id == dtoItem.id }?.let {
+                existingCategory.items.find { it.id == dtoItem.id && it.id != null }?.let {
                     updateExistingMenuItem(it, dtoItem)
                 } ?: addNewMenuItem(existingCategory, dtoItem)
             }

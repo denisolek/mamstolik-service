@@ -99,7 +99,7 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
         return SpotReservationsDTO.fromSpotDateReservations(
                 spot = spot,
                 date = date,
-                reservations = restaurant.reservations.filter { it.startDateTime.toLocalDate() == date }
+                reservations = restaurant.reservations.filter { it.startDateTime.toLocalDate() == date && it.spots.contains(spot) }
         )
     }
 }
