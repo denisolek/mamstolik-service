@@ -2,7 +2,6 @@ package pl.denisolek.unit.core.restaurant
 
 import org.hamcrest.Matchers.`is`
 import org.junit.Assert
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.runners.MockitoJUnitRunner
@@ -255,7 +254,7 @@ class RestaurantTest {
                 peopleNumber = 5
         )
 
-        Assert.assertEquals(1, actual.size)
+        Assert.assertEquals(2, actual.size)
         val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
         Assert.assertEquals(36, actualValues.size)
         Assert.assertFalse(actualValues.contains(LocalTime.of(13, 45)))
@@ -273,7 +272,7 @@ class RestaurantTest {
                 peopleNumber = 2
         )
 
-        Assert.assertEquals(1, actual.size)
+        Assert.assertEquals(2, actual.size)
         val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
         Assert.assertEquals(39, actualValues.size)
     }
@@ -288,7 +287,7 @@ class RestaurantTest {
                 peopleNumber = 5
         )
 
-        Assert.assertEquals(1, actual.size)
+        Assert.assertEquals(2, actual.size)
         val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
         Assert.assertEquals(39, actualValues.size)
     }
@@ -303,7 +302,7 @@ class RestaurantTest {
                 peopleNumber = 5
         )
 
-        Assert.assertEquals(1, actual.size)
+        Assert.assertEquals(2, actual.size)
         val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
         Assert.assertEquals(39, actualValues.size)
     }
@@ -318,7 +317,7 @@ class RestaurantTest {
                 peopleNumber = 5
         )
 
-        Assert.assertEquals(1, actual.size)
+        Assert.assertEquals(2, actual.size)
         val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
         Assert.assertEquals(39, actualValues.size)
     }
@@ -333,7 +332,16 @@ class RestaurantTest {
                 peopleNumber = 5
         )
 
-        Assert.assertEquals(25, actual.size)
+        Assert.assertEquals(30, actual.size)
+
+        actual.map { entry ->
+            when {
+                entry.key.dayOfWeek == DayOfWeek.FRIDAY -> Assert.assertTrue(entry.value.isEmpty())
+                entry.key.dayOfWeek == DayOfWeek.SATURDAY -> Assert.assertEquals(23, entry.value.size)
+                entry.key.dayOfWeek == DayOfWeek.SUNDAY -> Assert.assertEquals(23, entry.value.size)
+                else -> Assert.assertEquals(39, entry.value.size)
+            }
+        }
     }
 
     @Test
@@ -346,6 +354,7 @@ class RestaurantTest {
                 peopleNumber = 6
         )
 
-        Assert.assertEquals(0, actual.size)
+        Assert.assertEquals(30, actual.size)
+        actual.map { Assert.assertTrue(it.value.isEmpty()) }
     }
 }
