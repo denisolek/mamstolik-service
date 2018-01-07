@@ -2,6 +2,7 @@ package pl.denisolek.unit.core.restaurant
 
 import org.hamcrest.Matchers.`is`
 import org.junit.Assert
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.runners.MockitoJUnitRunner
@@ -250,6 +251,7 @@ class RestaurantTest {
         val restaurant = RestaurantStub.getRestaurantForAvailability()
         val actual = restaurant.getAvailableDates(
                 date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
+                currentDate = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
                 peopleNumber = 5
         )
 
@@ -267,6 +269,7 @@ class RestaurantTest {
         restaurant.reservations.removeIf { it.peopleNumber == 2 }
         val actual = restaurant.getAvailableDates(
                 date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
+                currentDate = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
                 peopleNumber = 2
         )
 
@@ -281,6 +284,7 @@ class RestaurantTest {
         restaurant.reservations.clear()
         val actual = restaurant.getAvailableDates(
                 date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
+                currentDate = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
                 peopleNumber = 5
         )
 
@@ -295,6 +299,7 @@ class RestaurantTest {
         restaurant.reservations.clear()
         val actual = restaurant.getAvailableDates(
                 date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
+                currentDate = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
                 peopleNumber = 5
         )
 
@@ -309,6 +314,7 @@ class RestaurantTest {
         restaurant.reservations.removeIf { it.peopleNumber == 5 }
         val actual = restaurant.getAvailableDates(
                 date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
+                currentDate = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
                 peopleNumber = 5
         )
 
@@ -323,6 +329,7 @@ class RestaurantTest {
         restaurant.reservations.removeIf { it.peopleNumber == 5 }
         val actual = restaurant.getAvailableDates(
                 date = LocalDateTime.of(LocalDate.of(2018, 11, 1), LocalTime.of(8, 0)),
+                currentDate = LocalDateTime.of(LocalDate.of(2018, 11, 1), LocalTime.of(8, 0)),
                 peopleNumber = 5
         )
 
@@ -335,6 +342,7 @@ class RestaurantTest {
         restaurant.reservations.removeIf { it.peopleNumber == 5 }
         val actual = restaurant.getAvailableDates(
                 date = LocalDateTime.of(LocalDate.of(2018, 11, 1), LocalTime.of(8, 0)),
+                currentDate = LocalDateTime.of(LocalDate.of(2018, 11, 1), LocalTime.of(8, 0)),
                 peopleNumber = 6
         )
 

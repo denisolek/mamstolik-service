@@ -450,7 +450,7 @@ class PanelRestaurantControllerTests {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.businessHours[DayOfWeek.MONDAY] = BusinessHour(
                 id = 5000,
-                closeTime = LocalTime.of(5, 0),
+                closeTime = LocalTime.of(15, 0),
                 isClosed = false
         )
         val body = convertObjectToJsonBytes(baseInfoStub)
@@ -463,8 +463,8 @@ class PanelRestaurantControllerTests {
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
         assertEquals(1, actual.businessHours[DayOfWeek.MONDAY]!!.id)
-        assertEquals(LocalTime.of(0, 0), actual.businessHours[DayOfWeek.MONDAY]!!.openTime)
-        assertEquals(LocalTime.of(5, 0), actual.businessHours[DayOfWeek.MONDAY]!!.closeTime)
+        assertEquals(LocalTime.of(8, 0), actual.businessHours[DayOfWeek.MONDAY]!!.openTime)
+        assertEquals(LocalTime.of(15, 0), actual.businessHours[DayOfWeek.MONDAY]!!.closeTime)
         assertEquals(false, actual.businessHours[DayOfWeek.MONDAY]!!.isClosed)
     }
 
@@ -480,8 +480,15 @@ class PanelRestaurantControllerTests {
         val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body))
+                .andExpect(status().isOk)
+                .andReturn()
 
-        result.andExpect(status().isBadRequest)
+        val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
+
+        assertEquals(1, actual.businessHours[DayOfWeek.MONDAY]!!.id)
+        assertEquals(LocalTime.of(5, 0), actual.businessHours[DayOfWeek.MONDAY]!!.openTime)
+        assertEquals(LocalTime.of(20, 0), actual.businessHours[DayOfWeek.MONDAY]!!.closeTime)
+        assertEquals(false, actual.businessHours[DayOfWeek.MONDAY]!!.isClosed)
     }
 
     @Test
