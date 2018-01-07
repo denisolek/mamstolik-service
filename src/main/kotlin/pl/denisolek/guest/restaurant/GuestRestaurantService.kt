@@ -29,8 +29,8 @@ class GuestRestaurantService(val restaurantService: RestaurantService) {
         return output
     }
 
-    fun getRestaurantAvailableDates(restaurant: Restaurant, date: LocalDateTime, peopleNumber: Int): Map<LocalDate, List<LocalTime>> =
-            restaurant.getAvailableDates(date, peopleNumber)
+    fun getRestaurantAvailableDates(restaurant: Restaurant, date: LocalDateTime, currentDate: LocalDateTime, peopleNumber: Int): Map<LocalDate, List<LocalTime>> =
+            restaurant.getAvailableDates(date, currentDate, peopleNumber)
 
     fun getRestaurantAvailableSpots(restaurant: Restaurant, date: LocalDateTime, peopleNumber: Int): List<SpotInfoDTO> {
         if (!restaurant.isOpenAt(date))

@@ -42,6 +42,7 @@ interface GuestRestaurantApi {
     @GetMapping(RESTAURANTS_ID_DATES_PATH)
     fun getRestaurantAvailableDates(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam date: LocalDateTime,
+                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam currentDate: LocalDateTime,
                                     @RequestParam peopleNumber: Int): Map<LocalDate, List<LocalTime>>
 
     @GetMapping(RESTAURANTS_ID_SPOTS_PATH)
