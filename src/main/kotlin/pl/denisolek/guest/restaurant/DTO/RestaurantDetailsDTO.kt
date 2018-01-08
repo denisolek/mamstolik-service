@@ -69,14 +69,14 @@ data class RestaurantDetailsDTO(
 
         private fun setSettings(restaurant: Restaurant): GuestRestaurantSettingsDTO {
             return GuestRestaurantSettingsDTO(
-                    description = restaurant.settings!!.description,
-                    localization = restaurant.settings!!.localization,
-                    menu = restaurant.settings!!.menu
+                    description = restaurant.settings.description,
+                    localization = restaurant.settings.localization,
+                    menu = restaurant.settings.menu
             )
         }
 
         private fun setDescription(restaurant: Restaurant) =
-                if (restaurant.settings!!.description) restaurant.description else null
+                if (restaurant.settings.description) restaurant.description else null
 
         private fun setRate(restaurant: Restaurant): RestaurantRateDTO {
             return RestaurantRateDTO(
@@ -89,8 +89,8 @@ data class RestaurantDetailsDTO(
         }
 
         private fun setMenu(restaurant: Restaurant): List<MenuCategoryDTO>? {
-            return if (restaurant.settings!!.menu)
-                restaurant.menu?.categories?.map { MenuCategoryDTO.fromMenuCategory(it) }?.sortedBy { it.position }!!
+            return if (restaurant.settings.menu)
+                restaurant.menu?.categories?.map { MenuCategoryDTO.fromMenuCategory(it) }?.sortedBy { it.position } ?: listOf()
             else
                 null
         }

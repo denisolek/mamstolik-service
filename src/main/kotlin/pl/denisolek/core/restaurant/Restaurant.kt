@@ -68,7 +68,7 @@ data class Restaurant(
         var menu: Menu? = null,
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        var settings: Settings? = Settings(),
+        var settings: Settings = Settings(),
 
         @ElementCollection(fetch = FetchType.EAGER)
         @Enumerated(EnumType.STRING)
@@ -180,8 +180,8 @@ data class Restaurant(
             }
 
     fun getMenu(): List<MenuCategoryDTO>? {
-        return if (this.settings!!.menu)
-            this.menu?.categories?.map { MenuCategoryDTO.fromMenuCategory(it) }?.sortedBy { it.position }!!
+        return if (this.settings.menu)
+            this.menu?.categories?.map { MenuCategoryDTO.fromMenuCategory(it) }?.sortedBy { it.position } ?: listOf()
         else
             null
     }

@@ -13,7 +13,7 @@ data class SchemaDTO(
         var wallItems: MutableList<TypeWallItemDTO>
 ) {
     constructor(restaurant: Restaurant) : this(
-            isGridEnabled = restaurant.settings!!.schema,
+            isGridEnabled = restaurant.settings.schema,
             floors = restaurant.floors.map { SchemaFloorDTO(it) },
             tables = restaurant.floors.flatMap { it.schemaItems.filter { it.type == SchemaItem.Type.TABLE }.map { TypeTableDTO(it) } }.toMutableList(),
             walls = restaurant.floors.flatMap { it.schemaItems.filter { it.type == SchemaItem.Type.WALL }.map { TypeWallDTO(it) } }.toMutableList(),
