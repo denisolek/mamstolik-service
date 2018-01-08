@@ -1,7 +1,7 @@
 spring:
     application:
         name: mamstolik
-        version: 0.34.0_dev
+        version: 0.36.0_dev
         type: DEV
     datasource:
         password: 1
@@ -9,7 +9,7 @@ spring:
         username: postgres
     jpa:
         hibernate:
-            ddl-auto: update
+            ddl-auto: create-drop
         properties:
             hibernate:
                 format_sql: false
