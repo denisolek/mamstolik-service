@@ -1,7 +1,7 @@
 spring:
     application:
         name: mamstolik
-        version: 0.32.0_dev
+        version: 0.34.0_dev
         type: DEV
     datasource:
         password: 1
@@ -28,6 +28,7 @@ spring:
         username: test.mamstolik@gmail.com
     rabbitmq:
         host: localhost
+        port: 5672
 
 front-web:
     protocol: http

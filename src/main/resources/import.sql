@@ -298,6 +298,25 @@ VALUES
   ('2017-10-17', 'Remont', 51, 1),
   ('2018-10-23', '', 52, 1);
 
+INSERT INTO public.business_hour (open_time, close_time, is_closed)
+VALUES
+  ('10:00:00', '21:00:00', FALSE),
+  ('10:00:00', '21:00:00', FALSE),
+  ('10:00:00', '21:00:00', FALSE),
+  ('10:00:00', '21:00:00', FALSE),
+  ('10:00:00', '23:00:00', FALSE),
+  ('10:00:00', '23:00:00', FALSE),
+  ('10:00:00', '23:00:00', FALSE);
+INSERT INTO public.restaurant_business_hours (restaurant_id, business_hours_id, day_of_week)
+VALUES
+  (8, 53, 'MONDAY'),
+  (8, 54, 'TUESDAY'),
+  (8, 55, 'WEDNESDAY'),
+  (8, 56, 'THURSDAY'),
+  (8, 57, 'FRIDAY'),
+  (8, 58, 'SATURDAY'),
+  (8, 59, 'SUNDAY');
+
 -- add customers
 INSERT INTO public.customer (email, phone_number, first_name, last_name, is_vip)
 VALUES

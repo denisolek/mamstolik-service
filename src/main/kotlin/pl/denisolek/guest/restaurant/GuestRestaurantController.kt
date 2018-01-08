@@ -11,6 +11,8 @@ import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.guest.restaurant.DTO.RestaurantDetailsDTO
 import pl.denisolek.guest.restaurant.DTO.SearchDTO
 import pl.denisolek.guest.restaurant.DTO.SpotInfoDTO
+import pl.denisolek.panel.schema.DTO.SchemaDTO
+import pl.denisolek.panel.schema.PanelSchemaController
 import springfox.documentation.annotations.ApiIgnore
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -49,4 +51,7 @@ class GuestRestaurantController(val guestRestaurantService: GuestRestaurantServi
                                              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam date: LocalDateTime,
                                              @RequestParam(required = false, defaultValue = "0") peopleNumber: Int): List<SpotInfoDTO> =
             guestRestaurantService.getRestaurantAvailableSpots(restaurantId, date, peopleNumber)
+
+    override fun getSchema(@ApiIgnore @PathVariable(PanelSchemaController.API.RESTAURANT_ID) restaurantId: Restaurant): SchemaDTO =
+            guestRestaurantService.getSchema(restaurantId)
 }

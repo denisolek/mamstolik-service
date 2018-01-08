@@ -18,9 +18,6 @@ import pl.denisolek.panel.schema.DTO.type.SchemaSpotInfoDTO
 class PanelSchemaService(val restaurantService: RestaurantService,
                          val floorService: FloorService,
                          val spotService: SpotService) {
-    fun getSchema(restaurant: Restaurant): SchemaDTO {
-        return SchemaDTO(restaurant)
-    }
 
     fun addFloor(restaurant: Restaurant, floorDTO: FloorDTO): FloorDTO {
         val floor = floorService.save(Floor(

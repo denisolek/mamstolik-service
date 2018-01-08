@@ -28,11 +28,6 @@ interface PanelSchemaApi {
         const val SPOTS_ID_PATH = "$SCHEMAS_PATH/spots/{$SPOT_ID}"
     }
 
-    @GetMapping(SCHEMAS_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun getSchema(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant): SchemaDTO
-
     @PutMapping(SCHEMAS_PATH)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
             "@authorizationService.currentUser.workPlace == #restaurantId")

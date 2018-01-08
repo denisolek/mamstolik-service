@@ -175,7 +175,7 @@ class IdentityServiceTests {
     @Test
     fun `getRestaurants_ one restaurant`() {
         val expectedUser = UserStub.getUserOwner()
-        expectedUser.ownedRestaurants?.add(RestaurantStub.getRestaurant().copy(id = 1, name = "NameStub1"))
+        expectedUser.ownedRestaurants.add(RestaurantStub.getRestaurant().copy(id = 1, name = "NameStub1"))
         Mockito.`when`(authorizationService.getCurrentUser()).thenReturn(expectedUser)
 
         val restaurants = identityService.getRestaurants()
@@ -187,8 +187,8 @@ class IdentityServiceTests {
     @Test
     fun `getRestaurants_ many restaurants`() {
         val expectedUser = UserStub.getUserOwner()
-        expectedUser.ownedRestaurants?.add(RestaurantStub.getRestaurant().copy(id = 1, name = "NameStub1"))
-        expectedUser.ownedRestaurants?.add(RestaurantStub.getRestaurant().copy(id = 2, name = "NameStub2"))
+        expectedUser.ownedRestaurants.add(RestaurantStub.getRestaurant().copy(id = 1, name = "NameStub1"))
+        expectedUser.ownedRestaurants.add(RestaurantStub.getRestaurant().copy(id = 2, name = "NameStub2"))
         Mockito.`when`(authorizationService.getCurrentUser()).thenReturn(expectedUser)
 
         val restaurants = identityService.getRestaurants()

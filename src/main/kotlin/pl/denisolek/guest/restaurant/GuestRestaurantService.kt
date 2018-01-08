@@ -10,6 +10,7 @@ import pl.denisolek.guest.restaurant.DTO.RestaurantDetailsDTO
 import pl.denisolek.guest.restaurant.DTO.RestaurantSearchDTO
 import pl.denisolek.guest.restaurant.DTO.SearchDTO
 import pl.denisolek.guest.restaurant.DTO.SpotInfoDTO
+import pl.denisolek.panel.schema.DTO.SchemaDTO
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -62,5 +63,9 @@ class GuestRestaurantService(val restaurantService: RestaurantService) {
     fun getRestaurant(urlName: String): RestaurantDetailsDTO {
         val restaurant = restaurantService.findByUrlName(urlName) ?: throw ServiceException(HttpStatus.NOT_FOUND, "Restaurant not found")
         return RestaurantDetailsDTO.fromRestaurant(restaurant)
+    }
+
+    fun getSchema(restaurant: Restaurant): SchemaDTO {
+        return SchemaDTO(restaurant)
     }
 }
