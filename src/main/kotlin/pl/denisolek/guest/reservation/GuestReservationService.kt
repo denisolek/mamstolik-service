@@ -33,7 +33,7 @@ class GuestReservationService(private val reservationService: ReservationService
                 verificationCode = verificationCode
         ))
         restaurant.reservations.add(reservation)
-        smsService.sendCode(verificationCode, dto.customer.phoneNumber)
+        smsService.sendCode(verificationCode, dto.customer.phoneNumber, reservation.customer)
         return reservation.id!!
     }
 

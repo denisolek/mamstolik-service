@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.thymeleaf.TemplateEngine
 import org.thymeleaf.context.Context
+import pl.denisolek.core.customer.Customer
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.user.User
 
@@ -51,5 +52,13 @@ class EmailService(private val emailSender: EmailSender, private val templateEng
 
         val body = templateEngine.process("lost-password", context)
         emailSender.sendEmail(user.email, "Reset hasła", body)
+    }
+
+    fun smsCode(customer: Customer, code: String) {
+        val context = Context()
+        context.setVariable("code", code)
+
+        val body = templateEngine.process("sms-code", context)
+        emailSender.sendEmail(customer.email, "Kod weryfikacyjny", body)
     }
 }
