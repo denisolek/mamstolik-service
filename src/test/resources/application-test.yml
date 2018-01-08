@@ -26,6 +26,7 @@ spring:
         username: test.mamstolik@gmail.com
     rabbitmq:
         host: localhost
+        port: 5672
 
 security:
   basic:

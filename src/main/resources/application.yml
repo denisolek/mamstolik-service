@@ -36,6 +36,7 @@ spring:
         username: ${MAIL_USERNAME}
     rabbitmq:
         host: rabbitmq
+        port: ${RABBITMQ_PORT}
     http:
         multipart:
             max-file-size: 3Mb
