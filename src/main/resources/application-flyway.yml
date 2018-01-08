@@ -1,18 +1,19 @@
 spring:
     application:
         name: mamstolik
-        type: TESTS
+        version: 0.34.0_dev
+        type: DEV
     datasource:
         password: 1
         url: jdbc:postgresql://localhost:5432/mamstolik
         username: postgres
     jpa:
         hibernate:
-            ddl-auto: create-drop
+            ddl-auto: validate
         properties:
             hibernate:
-                format_sql: true
-        show-sql: true
+                format_sql: false
+        show-sql: false
     mail:
         host: smtp.gmail.com
         password: 43:-_/deYwNC
@@ -29,18 +30,20 @@ spring:
         host: localhost
         port: 5672
 
-security:
-  basic:
-    enabled: false
-management:
-  security:
-    enabled: false
-
 front-web:
     protocol: http
     hostname: localhost
     port: 4000
 
+logbook:
+    filter.enabled: true
+    format.style: http
+    write:
+        category: http.wire-log
+        level: INFO
+        chunk-size: 8000
+
 flyway:
-    enabled: false
+    enabled: true
     locations: classpath:/db/migration
+    baseline-on-migrate: true

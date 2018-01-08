@@ -72,3 +72,7 @@ logbook:
         category: http.wire-log
         level: INFO
         chunk-size: 8000
+
+flyway:
+    enabled: ${FLYWAY_ENABLED}
+    locations: classpath:/db/migration

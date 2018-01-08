@@ -9,7 +9,7 @@ spring:
         username: postgres
     jpa:
         hibernate:
-            ddl-auto: create-drop
+            ddl-auto: update
         properties:
             hibernate:
                 format_sql: false
@@ -42,3 +42,7 @@ logbook:
         category: http.wire-log
         level: INFO
         chunk-size: 8000
+
+flyway:
+    enabled: false
+    locations: classpath:/db/migration
