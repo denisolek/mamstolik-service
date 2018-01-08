@@ -38,8 +38,6 @@ class EmailService(private val emailSender: EmailSender, private val templateEng
         val link = "$WEB/set-password?username=${user.username}&activationKey=${user.activationKey}"
         val context = Context()
         context.setVariable("name", user.firstName)
-        context.setVariable("username", user.username)
-        context.setVariable("activationKey", user.activationKey)
         context.setVariable("link", link)
 
         val body = templateEngine.process("register-owner", context)
@@ -49,9 +47,6 @@ class EmailService(private val emailSender: EmailSender, private val templateEng
     fun lostPassword(user: User, resetKey: String) {
         val link = "$WEB/set-password?username=${user.username}&resetKey=${user.resetPasswordKey}"
         val context = Context()
-        context.setVariable("name", user.firstName)
-        context.setVariable("username", user.username)
-        context.setVariable("resetKey", resetKey)
         context.setVariable("link", link)
 
         val body = templateEngine.process("lost-password", context)
