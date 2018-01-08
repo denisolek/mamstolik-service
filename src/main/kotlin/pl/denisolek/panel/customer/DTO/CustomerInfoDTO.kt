@@ -24,7 +24,7 @@ data class CustomerInfoDTO(
                         phoneNumber = customer.phoneNumber,
                         email = customer.email,
                         isVip = customer.isVip,
-                        comments = comments.map { CommentDTO.fromComment(it) },
+                        comments = comments.map { CommentDTO.fromComment(it) }.sortedByDescending { it.dateTime },
                         reservations = CustomerReservationsDTO.fromCustomerReservations(reservations.map { CustomerReservationDTO.fromReservation(it) }.groupBy { it.state })
                 )
     }
