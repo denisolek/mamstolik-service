@@ -42,7 +42,7 @@ task buildDocker(type: Docker) {
 
 buildDocker.dependsOn(build)
 
-version = '0.33.0'
+version = '0.34.0'
 sourceCompatibility = 1.8
 
 repositories {

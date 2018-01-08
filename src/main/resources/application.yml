@@ -1,7 +1,7 @@
 spring:
     application:
         name: mamstolik
-        version: 0.33.0
+        version: 0.34.0
         logServer: 54.37.138.131:5000
         type: ${TYPE}
     datasource:
@@ -13,12 +13,12 @@ spring:
             ddl-auto: ${DATABASE_DDL}
         properties:
             hibernate:
-                format_sql: true
+                format_sql: false
                 connection:
                     char_set: UTF-8
                 hbm2ddl:
                     import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
-        show-sql: true
+        show-sql: false
     jackson:
         serialization:
             write_dates_as_timestamps: false
