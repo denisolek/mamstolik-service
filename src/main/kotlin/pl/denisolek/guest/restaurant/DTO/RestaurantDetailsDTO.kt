@@ -70,7 +70,8 @@ data class RestaurantDetailsDTO(
             return GuestRestaurantSettingsDTO(
                     description = restaurant.settings.description,
                     localization = restaurant.settings.localization,
-                    menu = restaurant.settings.menu
+                    menu = restaurant.settings.menu,
+                    photos = restaurant.settings.photos
             )
         }
 
