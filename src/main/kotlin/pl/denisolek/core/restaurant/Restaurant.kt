@@ -103,15 +103,16 @@ data class Restaurant(
 
     fun getBusinessHoursForDate(date: LocalDate) = this.businessHours[date.dayOfWeek]
 
-    fun getAvailableDates(date: LocalDateTime, peopleNumber: Int): Map<LocalDate, List<LocalTime>> {
+    fun getAvailableDates(date: LocalDateTime, currentDate: LocalDateTime, peopleNumber: Int): Map<LocalDate, List<LocalTime>> {
         var searchDate = date
         val result = mutableMapOf<LocalDate, List<LocalTime>>()
         while (date.month == searchDate.month) {
-            var hours = getAvailableHours(searchDate, peopleNumber)
-            if (!hours.isEmpty()) {
-                if (date == searchDate) hours = hours.filter { it.isAfter(date.toLocalTime()) }
-                result.put(searchDate.toLocalDate(), hours)
+            var hours = listOf<LocalTime>()
+            if (!searchDate.toLocalDate().isBefore(currentDate.toLocalDate())) {
+                hours = getAvailableHours(searchDate, peopleNumber)
             }
+            if (currentDate.toLocalDate() == searchDate.toLocalDate()) hours = hours.filter { it.isAfter(currentDate.toLocalTime()) }
+            result.put(searchDate.toLocalDate(), hours)
             searchDate = searchDate.plusDays(1)
         }
         return result

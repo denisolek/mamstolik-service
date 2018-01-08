@@ -1,5 +1,6 @@
 package pl.denisolek.panel.restaurant.DTO.baseInfo
 
+import org.hibernate.validator.constraints.Email
 import org.hibernate.validator.constraints.NotBlank
 import org.springframework.http.HttpStatus
 import pl.denisolek.Exception.ServiceException
@@ -18,6 +19,11 @@ data class BaseInfoDTO(
         @field:Pattern(regexp = "^[a-z A-Z0-9żźćńółęąśŻŹĆĄŚĘŁÓŃ]+(-[a-z A-Z0-9żźćńółęąśŻŹĆĄŚĘŁÓŃ]+)?\$", message = "Name accepts a-z A-Z 0-9 - & and spaces.")
         @field:NotBlank
         var name: String,
+
+        @field:Size(max = 100, message = "Email too long.")
+        @field:NotBlank
+        @field:Email
+        var email: String,
 
         @field:NotBlank
         @field:Size(min = 5)
@@ -42,6 +48,7 @@ data class BaseInfoDTO(
             restaurant.name = baseInfoDTO.name
             restaurant.phoneNumber = baseInfoDTO.phoneNumber
             restaurant.type = baseInfoDTO.type
+            restaurant.email = baseInfoDTO.email
 
             updateAddress(restaurant, baseInfoDTO)
             updateSpecialDates(restaurant, baseInfoDTO)

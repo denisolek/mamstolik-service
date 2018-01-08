@@ -54,8 +54,8 @@ class SearchControllerTests {
                         City(name = "Poznań", aliases = null),
                         City(name = "Płock", aliases = null)),
                 restaurants = listOf(
-                        RestaurantSearchDTO(7, "Pasja"),
-                        RestaurantSearchDTO(1, "Piano Bar Restaurant & Cafe"))
+                        RestaurantSearchDTO(7, "Pasja", "pasja"),
+                        RestaurantSearchDTO(1, "Piano Bar Restaurant & Cafe", "piano.bar.restaurant.&.cafe"))
         )
 
         Assert.assertEquals(expected, actual)
@@ -142,7 +142,7 @@ class SearchControllerTests {
 
         val expected = CitiesRestaurantsDTO(
                 cities = listOf(),
-                restaurants = listOf(RestaurantSearchDTO(3, "Manekin"))
+                restaurants = listOf(RestaurantSearchDTO(3, "Manekin", "manekin"))
         )
 
         Assert.assertEquals(expected, actual)

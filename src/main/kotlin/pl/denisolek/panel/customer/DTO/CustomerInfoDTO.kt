@@ -16,7 +16,7 @@ data class CustomerInfoDTO(
         var reservations: CustomerReservationsDTO
 ) {
     companion object {
-        fun getCustomerInfoDTO(restaurant: Restaurant, customer: Customer, comments: List<Comment>, reservations: List<Reservation>): CustomerInfoDTO =
+        fun getCustomerInfoDTO(customer: Customer, comments: List<Comment>, reservations: List<Reservation>): CustomerInfoDTO =
                 CustomerInfoDTO(
                         id = customer.id!!,
                         firstName = customer.firstName,
@@ -24,7 +24,7 @@ data class CustomerInfoDTO(
                         phoneNumber = customer.phoneNumber,
                         email = customer.email,
                         isVip = customer.isVip,
-                        comments = comments.map { CommentDTO.fromComment(it) },
+                        comments = comments.map { CommentDTO.fromComment(it) }.sortedByDescending { it.dateTime },
                         reservations = CustomerReservationsDTO.fromCustomerReservations(reservations.map { CustomerReservationDTO.fromReservation(it) }.groupBy { it.state })
                 )
     }

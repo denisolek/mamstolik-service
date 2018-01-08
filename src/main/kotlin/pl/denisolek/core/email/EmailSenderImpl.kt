@@ -1,5 +1,6 @@
 package pl.denisolek.core.email
 
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
@@ -13,7 +14,9 @@ class EmailSenderImpl(private val javaMailSender: JavaMailSender) : EmailSender 
     @Value("\${spring.mail.username}")
     internal lateinit var MAIL_USERNAME: String
 
-    override fun sendEmail(target: String, subject: String, content: String) {
+    private val log = LoggerFactory.getLogger(EmailSenderImpl::class.java)
+
+    override fun sendEmail(target: String, subject: String, content: String, emailType: EmailType) {
         val mail = javaMailSender.createMimeMessage()
         try {
             val helper = MimeMessageHelper(mail, true)
@@ -29,5 +32,6 @@ class EmailSenderImpl(private val javaMailSender: JavaMailSender) : EmailSender 
         }
 
         javaMailSender.send(mail)
+        log.info(" [EmailService] Send type '$emailType' to '$target'")
     }
 }

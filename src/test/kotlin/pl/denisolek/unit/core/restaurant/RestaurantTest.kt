@@ -250,10 +250,11 @@ class RestaurantTest {
         val restaurant = RestaurantStub.getRestaurantForAvailability()
         val actual = restaurant.getAvailableDates(
                 date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
+                currentDate = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
                 peopleNumber = 5
         )
 
-        Assert.assertEquals(1, actual.size)
+        Assert.assertEquals(2, actual.size)
         val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
         Assert.assertEquals(36, actualValues.size)
         Assert.assertFalse(actualValues.contains(LocalTime.of(13, 45)))
@@ -267,10 +268,11 @@ class RestaurantTest {
         restaurant.reservations.removeIf { it.peopleNumber == 2 }
         val actual = restaurant.getAvailableDates(
                 date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
+                currentDate = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
                 peopleNumber = 2
         )
 
-        Assert.assertEquals(1, actual.size)
+        Assert.assertEquals(2, actual.size)
         val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
         Assert.assertEquals(39, actualValues.size)
     }
@@ -281,10 +283,11 @@ class RestaurantTest {
         restaurant.reservations.clear()
         val actual = restaurant.getAvailableDates(
                 date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
+                currentDate = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
                 peopleNumber = 5
         )
 
-        Assert.assertEquals(1, actual.size)
+        Assert.assertEquals(2, actual.size)
         val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
         Assert.assertEquals(39, actualValues.size)
     }
@@ -295,10 +298,11 @@ class RestaurantTest {
         restaurant.reservations.clear()
         val actual = restaurant.getAvailableDates(
                 date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
+                currentDate = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
                 peopleNumber = 5
         )
 
-        Assert.assertEquals(1, actual.size)
+        Assert.assertEquals(2, actual.size)
         val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
         Assert.assertEquals(39, actualValues.size)
     }
@@ -309,10 +313,11 @@ class RestaurantTest {
         restaurant.reservations.removeIf { it.peopleNumber == 5 }
         val actual = restaurant.getAvailableDates(
                 date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
+                currentDate = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(8, 0)),
                 peopleNumber = 5
         )
 
-        Assert.assertEquals(1, actual.size)
+        Assert.assertEquals(2, actual.size)
         val actualValues = actual[LocalDate.of(2018, 11, 29)]!!
         Assert.assertEquals(39, actualValues.size)
     }
@@ -323,10 +328,20 @@ class RestaurantTest {
         restaurant.reservations.removeIf { it.peopleNumber == 5 }
         val actual = restaurant.getAvailableDates(
                 date = LocalDateTime.of(LocalDate.of(2018, 11, 1), LocalTime.of(8, 0)),
+                currentDate = LocalDateTime.of(LocalDate.of(2018, 11, 1), LocalTime.of(8, 0)),
                 peopleNumber = 5
         )
 
-        Assert.assertEquals(25, actual.size)
+        Assert.assertEquals(30, actual.size)
+
+        actual.map { entry ->
+            when {
+                entry.key.dayOfWeek == DayOfWeek.FRIDAY -> Assert.assertTrue(entry.value.isEmpty())
+                entry.key.dayOfWeek == DayOfWeek.SATURDAY -> Assert.assertEquals(23, entry.value.size)
+                entry.key.dayOfWeek == DayOfWeek.SUNDAY -> Assert.assertEquals(23, entry.value.size)
+                else -> Assert.assertEquals(39, entry.value.size)
+            }
+        }
     }
 
     @Test
@@ -335,9 +350,11 @@ class RestaurantTest {
         restaurant.reservations.removeIf { it.peopleNumber == 5 }
         val actual = restaurant.getAvailableDates(
                 date = LocalDateTime.of(LocalDate.of(2018, 11, 1), LocalTime.of(8, 0)),
+                currentDate = LocalDateTime.of(LocalDate.of(2018, 11, 1), LocalTime.of(8, 0)),
                 peopleNumber = 6
         )
 
-        Assert.assertEquals(0, actual.size)
+        Assert.assertEquals(30, actual.size)
+        actual.map { Assert.assertTrue(it.value.isEmpty()) }
     }
 }

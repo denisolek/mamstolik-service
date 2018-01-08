@@ -16,6 +16,7 @@ class BaseInfoDTOStub {
                 settings = BaseInfoSettingsDTO(false, false),
                 name = "Updated Name",
                 phoneNumber = "333222111",
+                email = "updatedEmail",
                 type = Restaurant.RestaurantType.BAR,
                 businessHours = mutableMapOf(
                         Pair(DayOfWeek.MONDAY, BusinessHour(1, LocalTime.of(13, 0), LocalTime.of(21, 0), false)),
