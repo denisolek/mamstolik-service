@@ -870,7 +870,7 @@ class PanelSchemaControllerTests {
 
     @Test
     fun `deleteSpot_ correct data`() {
-        val result = mvc.perform(delete(SPOTS_ID_PATH, 1, 2)
+        mvc.perform(delete(SPOTS_ID_PATH, 1, 2)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent)
                 .andReturn()
