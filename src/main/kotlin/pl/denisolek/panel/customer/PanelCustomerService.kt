@@ -26,7 +26,7 @@ class PanelCustomerService(private val commentService: CommentService,
         val customerComments = commentService.getRestaurantCustomerComments(restaurant, customer)
         val customerReservations = reservationService.getRestaurantCustomerReservations(restaurant, customer)
         if (customerReservations.isEmpty()) throw ServiceException(HttpStatus.FORBIDDEN, "Access denied.")
-        return CustomerInfoDTO.getCustomerInfoDTO(restaurant, customer, customerComments, customerReservations)
+        return CustomerInfoDTO.getCustomerInfoDTO(customer, customerComments, customerReservations)
     }
 
     fun changeVipStatus(restaurant: Restaurant, customer: Customer, vipDTO: VipDTO): VipDTO {

@@ -16,7 +16,7 @@ data class CustomerInfoDTO(
         var reservations: CustomerReservationsDTO
 ) {
     companion object {
-        fun getCustomerInfoDTO(restaurant: Restaurant, customer: Customer, comments: List<Comment>, reservations: List<Reservation>): CustomerInfoDTO =
+        fun getCustomerInfoDTO(customer: Customer, comments: List<Comment>, reservations: List<Reservation>): CustomerInfoDTO =
                 CustomerInfoDTO(
                         id = customer.id!!,
                         firstName = customer.firstName,
