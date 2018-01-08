@@ -4,6 +4,7 @@ import pl.denisolek.core.address.Address
 import pl.denisolek.core.restaurant.BusinessHour
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.Restaurant.RestaurantType
+import pl.denisolek.panel.customer.DTO.CommentDTO
 import java.time.DayOfWeek
 import java.time.LocalDate
 
@@ -21,7 +22,8 @@ data class RestaurantDetailsDTO(
         var menu: List<MenuCategoryDTO>?,
         var tags: List<Any>,
         var businessHours: Map<DayOfWeek, BusinessHour>,
-        var openHours: Map<LocalDate, OpenHoursDTO>
+        var openHours: Map<LocalDate, OpenHoursDTO>,
+        var comments: List<CommentDTO>
 ) {
     companion object {
         fun fromRestaurant(restaurant: Restaurant): RestaurantDetailsDTO =
@@ -38,7 +40,8 @@ data class RestaurantDetailsDTO(
                         menu = setMenu(restaurant),
                         businessHours = restaurant.businessHours,
                         tags = listOf(restaurant.cuisineTypes, restaurant.facilities),
-                        openHours = setOpenHours(restaurant)
+                        openHours = setOpenHours(restaurant),
+                        comments = restaurant.comments.map { CommentDTO.fromComment(it) }.sortedByDescending { it.dateTime }
                 )
 
         private fun setOpenHours(restaurant: Restaurant): Map<LocalDate, OpenHoursDTO> {
