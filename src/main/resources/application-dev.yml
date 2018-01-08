@@ -1,6 +1,7 @@
 spring:
     application:
-        logServer: logstash.mamstolik.pl
+        name: mamstolik
+        version: 0.30.0_dev
     datasource:
         password: 1
         url: jdbc:postgresql://localhost:5432/mamstolik
@@ -38,4 +39,4 @@ logbook:
     write:
         category: http.wire-log
         level: INFO
-        chunk-size: 3000
+        chunk-size: 8000

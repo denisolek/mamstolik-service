@@ -1,8 +1,8 @@
 spring:
     application:
         name: mamstolik
-        version: 0.29.0
-        logServer: ${LOG_HOST_PORT}
+        version: 0.30.0
+        logServer: 54.37.138.131:5000
     datasource:
         url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
         username: ${DATABASE_USERNAME}
@@ -69,4 +69,4 @@ logbook:
     write:
         category: http.wire-log
         level: INFO
-        chunk-size: 3000
+        chunk-size: 8000

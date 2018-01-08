@@ -17,7 +17,7 @@
                     <pattern> <!-- we can add some custom fields to be sent with all the log entries.    -->
                         {
                         "appName": "${APP_NAME}",
-                        "host" : "${HOSTNAME}",
+                        "host" : "${LOG_SERVER}",
                         "appVersions": "${APP_VERSION}"
                         }
                     </pattern>
