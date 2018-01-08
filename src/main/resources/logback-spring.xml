@@ -1,6 +1,7 @@
 <configuration>
     <springProperty name="APP_NAME" source="spring.application.name"/>
     <springProperty name="APP_VERSION" source="spring.application.version"/>
+    <springProperty name="APP_TYPE" source="spring.application.type"/>
     <springProperty name="LOG_SERVER" source="spring.application.logServer"/>
 
     <appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
@@ -18,7 +19,8 @@
                         {
                         "appName": "${APP_NAME}",
                         "host" : "${LOG_SERVER}",
-                        "appVersions": "${APP_VERSION}"
+                        "appVersions": "${APP_VERSION}",
+                        "appType": "${APP_TYPE}"
                         }
                     </pattern>
                 </pattern>

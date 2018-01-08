@@ -1,7 +1,8 @@
 spring:
     application:
         name: mamstolik
-        version: 0.30.0_dev
+        version: 0.31.0_dev
+        type: DEV
     datasource:
         password: 1
         url: jdbc:postgresql://localhost:5432/mamstolik

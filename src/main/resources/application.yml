@@ -1,8 +1,9 @@
 spring:
     application:
         name: mamstolik
-        version: 0.30.0
+        version: 0.31.0
         logServer: 54.37.138.131:5000
+        type: ${TYPE}
     datasource:
         url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
         username: ${DATABASE_USERNAME}
