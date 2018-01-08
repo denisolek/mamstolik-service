@@ -18,9 +18,6 @@ class PanelSchemaController(val panelSchemaService: PanelSchemaService) : PanelS
         val API = PanelSchemaApi.Companion
     }
 
-    override fun getSchema(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant): SchemaDTO =
-            panelSchemaService.getSchema(restaurantId)
-
     override fun updateSchema(@ApiIgnore @PathVariable(PanelSchemaApi.RESTAURANT_ID) restaurantId: Restaurant,
                               @RequestBody schemaDTO: SchemaDTO): SchemaDTO =
             panelSchemaService.updateSchema(restaurantId, schemaDTO)
@@ -41,5 +38,4 @@ class PanelSchemaController(val panelSchemaService: PanelSchemaService) : PanelS
     override fun deleteSpot(@ApiIgnore @PathVariable(PanelSchemaApi.RESTAURANT_ID) restaurantId: Restaurant,
                             @ApiIgnore @PathVariable(PanelSchemaApi.SPOT_ID) spotId: Spot) =
             panelSchemaService.deleteSpot(restaurantId, spotId)
-
 }

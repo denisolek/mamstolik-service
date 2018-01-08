@@ -12,6 +12,7 @@ import pl.denisolek.guest.restaurant.DTO.RestaurantDetailsDTO
 import pl.denisolek.guest.restaurant.DTO.SearchDTO
 import pl.denisolek.guest.restaurant.DTO.SpotInfoDTO
 import pl.denisolek.infrastructure.API_BASE_PATH
+import pl.denisolek.panel.schema.DTO.SchemaDTO
 import springfox.documentation.annotations.ApiIgnore
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -27,6 +28,7 @@ interface GuestRestaurantApi {
         const val RESTAURANTS_BASE_PATH = "/restaurants"
         const val RESTAURANTS_URL_NAME_PATH = "$RESTAURANTS_BASE_PATH/{$URL_NAME:.+}"
         private const val RESTAURANTS_ID_PATH = "$RESTAURANTS_BASE_PATH/{$RESTAURANT_ID}"
+        const val RESTAURANTS_ID_PATH_SCHEMAS = "$RESTAURANTS_BASE_PATH/{$RESTAURANT_ID}/schemas"
         const val RESTAURANTS_ID_DATES_PATH = "$RESTAURANTS_ID_PATH/dates"
         const val RESTAURANTS_ID_SPOTS_PATH = "$RESTAURANTS_ID_PATH/spots"
     }
@@ -49,4 +51,7 @@ interface GuestRestaurantApi {
     fun getRestaurantAvailableSpots(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam date: LocalDateTime,
                                     @RequestParam(required = false, defaultValue = "0") peopleNumber: Int): List<SpotInfoDTO>
+
+    @GetMapping(RESTAURANTS_ID_PATH_SCHEMAS)
+    fun getSchema(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant): SchemaDTO
 }
