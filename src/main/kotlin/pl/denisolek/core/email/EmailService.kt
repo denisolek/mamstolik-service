@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component
 import org.thymeleaf.TemplateEngine
 import org.thymeleaf.context.Context
 import pl.denisolek.core.customer.Customer
-import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.user.User
 
 @Component
