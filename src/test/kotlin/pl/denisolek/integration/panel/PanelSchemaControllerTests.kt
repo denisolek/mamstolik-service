@@ -29,6 +29,8 @@ import pl.denisolek.core.schema.SchemaItem.ItemType.TOILET
 import pl.denisolek.core.schema.SchemaItem.TableType.EIGHT_ROUND
 import pl.denisolek.core.schema.SchemaItem.WallItemType.WINDOW
 import pl.denisolek.core.user.UserRepository
+import pl.denisolek.guest.restaurant.GuestRestaurantApi
+import pl.denisolek.infrastructure.API_BASE_PATH
 import pl.denisolek.infrastructure.PANEL_BASE_PATH
 import pl.denisolek.infrastructure.config.security.AuthorizationService
 import pl.denisolek.infrastructure.util.convertJsonBytesToObject
@@ -59,6 +61,7 @@ class PanelSchemaControllerTests {
 
     lateinit var mvc: MockMvc
 
+    val API_SCHEMA_PATH = "$API_BASE_PATH${GuestRestaurantApi.RESTAURANTS_ID_PATH_SCHEMAS}"
     val SCHEMAS_PATH = "$PANEL_BASE_PATH${PanelSchemaApi.SCHEMAS_PATH}"
     val FLOORS_PATH = "$PANEL_BASE_PATH${PanelSchemaApi.FLOORS_PATH}"
     val FLOORS_ID_PATH = "$PANEL_BASE_PATH${PanelSchemaApi.FLOORS_ID_PATH}"
@@ -76,7 +79,7 @@ class PanelSchemaControllerTests {
     fun `getSchema_`() {
         val user = userRepository.findOne(1)
         doReturn(user).whenever(authorizationService).getCurrentUser()
-        val result = mvc.perform(get(SCHEMAS_PATH, 1))
+        val result = mvc.perform(get(API_SCHEMA_PATH, 1))
                 .andExpect(status().isOk)
                 .andReturn()
 
@@ -615,7 +618,7 @@ class PanelSchemaControllerTests {
     private fun prepareUpdateSchemaDTO(): SchemaDTO {
         val user = userRepository.findOne(1)
         doReturn(user).whenever(authorizationService).getCurrentUser()
-        val schemas = mvc.perform(get(SCHEMAS_PATH, 1))
+        val schemas = mvc.perform(get(API_SCHEMA_PATH, 1))
                 .andExpect(status().isOk)
                 .andReturn()
 
