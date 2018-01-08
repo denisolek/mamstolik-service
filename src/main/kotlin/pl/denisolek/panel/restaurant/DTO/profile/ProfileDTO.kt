@@ -24,9 +24,9 @@ data class ProfileDTO(
     companion object {
         fun mapToExistingRestaurant(restaurant: Restaurant, profileDTO: ProfileDTO) {
             restaurant.description = profileDTO.description
-            restaurant.settings?.description = profileDTO.settings.description
-            restaurant.settings?.photos = profileDTO.settings.photos
-            restaurant.settings?.menu = profileDTO.settings.menu
+            restaurant.settings.description = profileDTO.settings.description
+            restaurant.settings.photos = profileDTO.settings.photos
+            restaurant.settings.menu = profileDTO.settings.menu
             restaurant.cuisineTypes = profileDTO.cuisineTypes.toMutableSet()
             restaurant.facilities = profileDTO.facilities.toMutableSet()
             updateMenu(restaurant, profileDTO)

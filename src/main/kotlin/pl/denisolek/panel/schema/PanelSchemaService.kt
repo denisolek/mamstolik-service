@@ -47,7 +47,7 @@ class PanelSchemaService(val restaurantService: RestaurantService,
                 .toMutableList()
         val updatedItems = getUpdatedItems(items, restaurantTables)
         assignItemsToRestaurant(restaurant, updatedItems)
-        restaurant.settings!!.schema = schemaDTO.isGridEnabled
+        restaurant.settings.schema = schemaDTO.isGridEnabled
         return SchemaDTO(restaurantService.save(restaurant))
     }
 

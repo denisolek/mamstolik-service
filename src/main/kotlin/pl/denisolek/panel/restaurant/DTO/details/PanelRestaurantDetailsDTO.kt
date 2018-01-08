@@ -42,7 +42,7 @@ data class PanelRestaurantDetailsDTO(
                         facilities = restaurant.facilities.toList(),
                         menu = restaurant.menu?.categories?.map { MenuCategoryDTO.fromMenuCategory(it) }?.sortedBy { it.position } ?: listOf(),
                         images = restaurant.images.map { ImageDTO.fromImage(it) },
-                        settings = restaurant.settings ?: Settings()
+                        settings = restaurant.settings
                 )
     }
 }

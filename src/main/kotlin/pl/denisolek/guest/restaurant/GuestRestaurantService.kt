@@ -6,8 +6,10 @@ import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.address.City
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
-import pl.denisolek.core.spot.Spot
-import pl.denisolek.guest.restaurant.DTO.*
+import pl.denisolek.guest.restaurant.DTO.RestaurantDetailsDTO
+import pl.denisolek.guest.restaurant.DTO.RestaurantSearchDTO
+import pl.denisolek.guest.restaurant.DTO.SearchDTO
+import pl.denisolek.guest.restaurant.DTO.SpotInfoDTO
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

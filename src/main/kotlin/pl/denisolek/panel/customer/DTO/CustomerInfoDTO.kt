@@ -3,7 +3,6 @@ package pl.denisolek.panel.customer.DTO
 import pl.denisolek.core.comment.Comment
 import pl.denisolek.core.customer.Customer
 import pl.denisolek.core.reservation.Reservation
-import pl.denisolek.core.restaurant.Restaurant
 
 data class CustomerInfoDTO(
         var id: Int,

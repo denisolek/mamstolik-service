@@ -43,8 +43,8 @@ data class BaseInfoDTO(
         internal const val PHONE_MATCHER = "(\\(?\\+[\\d]{2}\\(?)?([ .-]?)([0-9]{3})([ .-]?)([0-9]{3})\\4([0-9]{3})"
 
         fun mapToExistingRestaurant(restaurant: Restaurant, baseInfoDTO: BaseInfoDTO): Restaurant {
-            restaurant.settings?.localization = baseInfoDTO.settings.localization
-            restaurant.settings?.specialDates = baseInfoDTO.settings.specialDates
+            restaurant.settings.localization = baseInfoDTO.settings.localization
+            restaurant.settings.specialDates = baseInfoDTO.settings.specialDates
             restaurant.name = baseInfoDTO.name
             restaurant.phoneNumber = baseInfoDTO.phoneNumber
             restaurant.type = baseInfoDTO.type
