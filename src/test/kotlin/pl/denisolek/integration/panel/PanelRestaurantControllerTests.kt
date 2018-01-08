@@ -158,30 +158,6 @@ class PanelRestaurantControllerTests {
     }
 
     @Test
-    fun `updateBaseInfo_ name with multiple dashes`() {
-        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
-        baseInfoStub.name = "test--name"
-        val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-
-        result.andExpect(status().isBadRequest)
-    }
-
-    @Test
-    fun `updateBaseInfo_ name with dash at the beggining and ending`() {
-        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
-        baseInfoStub.name = "-test-"
-        val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-
-        result.andExpect(status().isBadRequest)
-    }
-
-    @Test
     fun `updateBaseInfo_ name with special characters`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.name = "test%:"
@@ -197,17 +173,6 @@ class PanelRestaurantControllerTests {
     fun `updateBaseInfo_ type is empty`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         val body = convertObjectToJsonBytes(baseInfoStub).replace("\"type\":\"BAR\"", "\"type\":\"\"")
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-
-        result.andExpect(status().isBadRequest)
-    }
-
-    @Test
-    fun `updateBaseInfo_ type is invalid`() {
-        val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
-        val body = convertObjectToJsonBytes(baseInfoStub).replace("\"type\":\"BAR\"", "\"type\":\"INVALID_TYPE\"")
         val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body))
