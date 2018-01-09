@@ -864,62 +864,6 @@ class IdentityControllerTests {
     }
 
     @Test
-    fun `createRestaurant_ name with multiple dashes`() {
-        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
-        createRestaurantDTO.name = "test--name"
-
-        val body = convertObjectToJsonBytes(createRestaurantDTO)
-
-        val result = mvc.perform(post(RESTAURANTS_PATH)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-
-        result.andExpect(status().isBadRequest)
-    }
-
-    @Test
-    fun `createRestaurant_ name with dash at the beggining and ending`() {
-        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
-        createRestaurantDTO.name = "-test-"
-
-        val body = convertObjectToJsonBytes(createRestaurantDTO)
-
-        val result = mvc.perform(post(RESTAURANTS_PATH)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-
-        result.andExpect(status().isBadRequest)
-    }
-
-    @Test
-    fun `createRestaurant_ name with special characters`() {
-        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
-        createRestaurantDTO.name = "test%:"
-
-        val body = convertObjectToJsonBytes(createRestaurantDTO)
-
-        val result = mvc.perform(post(RESTAURANTS_PATH)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-
-        result.andExpect(status().isBadRequest)
-    }
-
-    @Test
-    fun `createRestaurant_ email already exists`() {
-        var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
-        createRestaurantDTO.email = "test@test.pl"
-
-        val body = convertObjectToJsonBytes(createRestaurantDTO)
-
-        val result = mvc.perform(post(RESTAURANTS_PATH)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-
-        result.andExpect(status().isConflict)
-    }
-
-    @Test
     fun `createRestaurant_ email is empty`() {
         var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
         createRestaurantDTO.email = ""

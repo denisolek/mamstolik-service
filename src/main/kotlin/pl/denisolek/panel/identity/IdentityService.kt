@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.address.Address
+import pl.denisolek.core.address.CityService
 import pl.denisolek.core.email.EmailService
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
@@ -20,7 +21,8 @@ class IdentityService(private val userService: UserService,
                       private val emailService: EmailService,
                       private val authorizationService: AuthorizationService,
                       private val passwordEncoder: PasswordEncoder,
-                      private val restaurantService: RestaurantService) {
+                      private val restaurantService: RestaurantService,
+                      private val cityService: CityService) {
     fun registerOwner(registerDTO: RegisterDTO) {
         val username = userService.generateUsername()
         val newUser = userService.save(registerDTO.toUser().copy(
@@ -110,7 +112,8 @@ class IdentityService(private val userService: UserService,
                 owner = authorizationService.getCurrentUser(),
                 phoneNumber = createRestaurantDTO.phoneNumber,
                 email = createRestaurantDTO.email,
-                address = Address(latitude = 52.4004458f, longitude = 16.7615836f)
+                address = Address(latitude = 52.402675f, longitude = 16.923123f, city = cityService.findByNameIgnoreCase("poznań")),
+                isActive = true // TODO it shouldnt be active as default
         )
         userService.save(User(
                 username = userService.generateUsername(),

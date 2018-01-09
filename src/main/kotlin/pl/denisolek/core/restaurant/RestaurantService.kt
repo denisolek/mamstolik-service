@@ -1,5 +1,6 @@
 package pl.denisolek.core.restaurant
 
+import org.apache.commons.lang3.StringUtils
 import org.springframework.stereotype.Service
 import pl.denisolek.core.address.City
 
@@ -21,6 +22,8 @@ class RestaurantService(private val restaurantRepository: RestaurantRepository) 
 
     fun generateUrlName(name: String): String {
         var urlName = name.replace(" ", ".").toLowerCase()
+        urlName = StringUtils.stripAccents(urlName)
+        urlName = replaceUmlaut(urlName)
         var urlNameIdentifier = 1
         var exists = when (restaurantRepository.countByUrlName(urlName)) {
             0 -> false
@@ -39,5 +42,21 @@ class RestaurantService(private val restaurantRepository: RestaurantRepository) 
             }
         }
         return urlName
+    }
+
+    private fun replaceUmlaut(input: String): String {
+        var output = input.replace("ü", "ue")
+                .replace("ö", "oe")
+                .replace("ä", "ae")
+                .replace("ß", "ss")
+
+        output = output.replace("Ü(?=[a-zäöüß ])", "Ue")
+                .replace("Ö(?=[a-zäöüß ])", "Oe")
+                .replace("Ä(?=[a-zäöüß ])", "Ae")
+
+        output = output.replace("Ü", "UE")
+                .replace("Ö", "OE")
+                .replace("Ä", "AE")
+        return output
     }
 }

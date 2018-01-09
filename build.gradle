@@ -42,7 +42,7 @@ task buildDocker(type: Docker) {
 
 buildDocker.dependsOn(build)
 
-version = '0.34.0'
+version = '0.38.0'
 sourceCompatibility = 1.8
 
 repositories {
@@ -84,6 +84,8 @@ dependencies {
     compile group: 'org.zalando', name: 'logbook-servlet', version: '1.5.0'
     compile group: 'org.zalando', name: 'logbook-httpclient', version: '1.5.0'
     compile('net.logstash.logback:logstash-logback-encoder:4.9')
+
+    compile group: 'org.flywaydb', name: 'flyway-core', version: '4.2.0'
 }
 
 dependencies {
