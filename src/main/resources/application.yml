@@ -1,7 +1,7 @@
 spring:
     application:
         name: mamstolik
-        version: 0.36.0
+        version: 0.38.0
         logServer: 54.37.138.131:5000
         type: ${TYPE}
     datasource:
