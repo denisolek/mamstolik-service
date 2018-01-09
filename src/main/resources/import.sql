@@ -90,9 +90,7 @@ VALUES
   ('Whiskey in the Jar', 'whiskey.in.the.jar', 4, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, NULL, 4, 4, 'PUB', '536412108', 'whiskeyjar@gmail.com', 'Whiskey in the Jar to steakhouse, wzorowany na najlepszych amerykańskich lokalach tego typu. W menu znajdują się głównie dania mięsne – specjalnością są steki, przyrządzane z najwyższej jakości wołowiny, a także burgery i dania grillowane, dostępne pod nazwą Grill Rockersa. Wszystkie potrawy przygotowywane są na najdłuższym w Poznaniu grillu lawowym. Ogromnym powodzeniem cieszą się również autorskie drinki na bazie Jacka Daniels’a, zgodnie z nazwą lokalu podawane w designerskich słojach – jarach.'),
   ('Chmielnik Pub', 'chmielnik.pub',5, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, NULL, 5, 5, 'RESTAURANT', '881084469', 'kontakt@chmielnik.pl', 'Ambasador polskiego piwa w Poznaniu. Największy wybór piw z polskich browarów rzemieślniczych w samym sercu Poznania.  Zapewniamy wyjątkowy wystrój, profesjonalną obsługę, niepowtarzalny klimat. W sezonie letnim zapraszamy do magicznego ogrodu piwnego dla 200 osób, w którym główną atrakcją jest rosnący chmiel w odmianie SYBILLA oraz działająca kuchnia oferująca dania dopasowane do piwa.'),
   ('Rapudei Berek', 'rapudei.berek',6, 4.8, 4.0, 4.4, 4.7, 1800, TRUE, NULL, 6, 6, 'RESTAURANT', '727000890', 'berekrestaurant@gmail.com', 'Berek to rodzaj pocztówki z wakacji. Radość śródziemnomorskiego jedzenia i gorący klimat telawiwskich ulic, którego wspomnienie przeniesione zostało do Warszawy. Tworząc menu w Berku starałem się poznać lokalnych producentów i wykorzystywać jak najświeższe składniki. Wychowałem się w końcu w miejscu, gdzie owoce zjada się prosto z drzewa. Nasza pita jest wypiekana na miejscu i podawana na gorąco, hummus robimy taki, jaki sami jemy, korzystamy przede wszystkim z sezonowych warzyw. W Berku dzielę się moimi ulubionymi smakami domu, we wdzięcznym, współczesnym wydaniu.'),
-  ('Pasja', 'pasja', 7, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, NULL, 7, 8, 'RESTAURANT', '575718545', 'pasja@pasja.com', 'Zapewniamy wyjątkowy wystrój, profesjonalną obsługę, niepowtarzalny klimat. W sezonie letnim zapraszamy do magicznego ogrodu piwnego dla 200 osób, w którym główną atrakcją jest rosnący chmiel w odmianie SYBILLA oraz działająca kuchnia oferująca dania dopasowane do piwa.'),
-  ('Cien', 'cien',7, 4.5, 5.0, 5.0, 5.0, 1800, FALSE, NULL, 8, 9, 'RESTAURANT', '666897683', 'cien@cien.pl', 'Nie aktywna, bez miejsc, bez niczego');
-
+  ('Pasja', 'pasja', 7, 4.5, 5.0, 5.0, 5.0, 1800, TRUE, NULL, 7, 8, 'RESTAURANT', '575718545', 'pasja@pasja.com', 'Zapewniamy wyjątkowy wystrój, profesjonalną obsługę, niepowtarzalny klimat. W sezonie letnim zapraszamy do magicznego ogrodu piwnego dla 200 osób, w którym główną atrakcją jest rosnący chmiel w odmianie SYBILLA oraz działająca kuchnia oferująca dania dopasowane do piwa.');
 INSERT INTO public.user (username, email, password, account_state, restaurant_id)
 VALUES
   ('ms100001', 'ms100001@mamstolik.pl', '$2a$10$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG', 'ACTIVE', 1);
@@ -297,25 +295,6 @@ VALUES
   ('2017-10-10', '', 50, 1),
   ('2017-10-17', 'Remont', 51, 1),
   ('2018-10-23', '', 52, 1);
-
-INSERT INTO public.business_hour (open_time, close_time, is_closed)
-VALUES
-  ('10:00:00', '21:00:00', FALSE),
-  ('10:00:00', '21:00:00', FALSE),
-  ('10:00:00', '21:00:00', FALSE),
-  ('10:00:00', '21:00:00', FALSE),
-  ('10:00:00', '23:00:00', FALSE),
-  ('10:00:00', '23:00:00', FALSE),
-  ('10:00:00', '23:00:00', FALSE);
-INSERT INTO public.restaurant_business_hours (restaurant_id, business_hours_id, day_of_week)
-VALUES
-  (8, 53, 'MONDAY'),
-  (8, 54, 'TUESDAY'),
-  (8, 55, 'WEDNESDAY'),
-  (8, 56, 'THURSDAY'),
-  (8, 57, 'FRIDAY'),
-  (8, 58, 'SATURDAY'),
-  (8, 59, 'SUNDAY');
 
 -- add customers
 INSERT INTO public.customer (email, phone_number, first_name, last_name, is_vip)
