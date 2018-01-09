@@ -1,7 +1,7 @@
 spring:
     application:
         name: mamstolik
-        version: 0.38.0_dev
+        version: 0.43.0_dev
         type: DEV
     datasource:
         password: 1

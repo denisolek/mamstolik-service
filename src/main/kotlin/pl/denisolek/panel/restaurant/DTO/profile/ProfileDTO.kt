@@ -33,14 +33,14 @@ data class ProfileDTO(
         }
 
         private fun updateMenu(restaurant: Restaurant, profileDTO: ProfileDTO) {
-            restaurant.menu?.categories?.removeIf { (id) ->
+            restaurant.menu.categories.removeIf { (id) ->
                 !profileDTO.menu.any {
                     it.id == id
                 }
             }
 
             profileDTO.menu.forEach { dtoCategory ->
-                restaurant.menu?.categories?.find { it.id == dtoCategory.id && it.id != null }?.let { existingCategory ->
+                restaurant.menu.categories.find { it.id == dtoCategory.id && it.id != null }?.let { existingCategory ->
                     existingCategory.name = dtoCategory.name
                     existingCategory.description = dtoCategory.description
                     existingCategory.position = dtoCategory.position
@@ -61,7 +61,7 @@ data class ProfileDTO(
         }
 
         private fun addNewMenuCategory(restaurant: Restaurant, dtoCategory: MenuCategoryDTO) {
-            restaurant.menu?.categories?.add(MenuCategoryDTO.toNewCategory(dtoCategory, restaurant.menu!!))
+            restaurant.menu.categories.add(MenuCategoryDTO.toNewCategory(dtoCategory, restaurant.menu))
         }
 
         private fun addNewMenuItem(existingCategory: MenuCategory, dtoItem: MenuItemDTO) {

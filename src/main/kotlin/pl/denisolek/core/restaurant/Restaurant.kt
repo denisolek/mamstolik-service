@@ -65,7 +65,7 @@ data class Restaurant(
         var floors: MutableList<Floor> = mutableListOf(),
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        var menu: Menu? = null,
+        var menu: Menu = Menu(),
 
         @OneToOne(cascade = arrayOf(CascadeType.ALL))
         var settings: Settings = Settings(),

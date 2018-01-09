@@ -8,9 +8,12 @@ import pl.denisolek.Exception.ServiceException
 import pl.denisolek.core.address.Address
 import pl.denisolek.core.address.CityService
 import pl.denisolek.core.email.EmailService
+import pl.denisolek.core.floor.Floor
 import pl.denisolek.core.restaurant.Restaurant
 import pl.denisolek.core.restaurant.RestaurantService
+import pl.denisolek.core.schema.SchemaItem
 import pl.denisolek.core.security.Authority
+import pl.denisolek.core.spot.Spot
 import pl.denisolek.core.user.User
 import pl.denisolek.core.user.UserService
 import pl.denisolek.infrastructure.config.security.AuthorizationService
@@ -115,6 +118,8 @@ class IdentityService(private val userService: UserService,
                 address = Address(latitude = 52.402675f, longitude = 16.923123f, city = cityService.findByNameIgnoreCase("poznań")),
                 isActive = true // TODO it shouldnt be active as default
         )
+        restaurant.floors = createDefaultFloor(restaurant)
+        restaurant.settings.schema = true
         userService.save(User(
                 username = userService.generateUsername(),
                 email = createRestaurantDTO.email,
@@ -126,9 +131,208 @@ class IdentityService(private val userService: UserService,
         return UserRestaurantDTO.fromRestaurant(restaurant)
     }
 
+    fun createDefaultFloor(restaurant: Restaurant): MutableList<Floor> {
+        val floor = Floor(
+                name = "Parter",
+                restaurant = restaurant
+        )
+        floor.schemaItems = mutableListOf(
+                createDefaultTables(floor, restaurant),
+                createDefaultWalls(floor),
+                createDefaultItems(floor),
+                createDefaultWallItems(floor)
+        ).flatten().toMutableList()
+        return mutableListOf(floor)
+    }
+
     fun getRestaurant(urlName: String): RestaurantLoginDTO {
         val restaurant = restaurantService.findByUrlName(urlName) ?: throw ServiceException(HttpStatus.NOT_FOUND, "Restaurant not found")
         val user = userService.findByRestaurant(restaurant) ?: throw ServiceException(HttpStatus.NOT_FOUND, "Restaurant user not found")
         return RestaurantLoginDTO.fromRestaurantUser(user, restaurant)
+    }
+
+    private fun createDefaultTables(floor: Floor, restaurant: Restaurant): MutableList<SchemaItem> {
+        return mutableListOf(
+                SchemaItem(
+                        x = 837.999966666667f,
+                        y = 1008.0000000000002f,
+                        floor = floor,
+                        spot = Spot(
+                                restaurant = restaurant,
+                                minPeopleNumber = 1,
+                                capacity = 2,
+                                number = 1
+                        ),
+                        width = 200f,
+                        height = 200f,
+                        rotation = 0f,
+                        tableType = SchemaItem.TableType.TWO,
+                        type = SchemaItem.Type.TABLE
+                ),
+                SchemaItem(
+                        x = 833f,
+                        y = 533.6666666666666f,
+                        floor = floor,
+                        spot = Spot(
+                                restaurant = restaurant,
+                                minPeopleNumber = 3,
+                                capacity = 5,
+                                number = 2
+                        ),
+                        width = 200f,
+                        height = 200f,
+                        rotation = 0f,
+                        tableType = SchemaItem.TableType.FIVE_RECT_2,
+                        type = SchemaItem.Type.TABLE
+                ),
+                SchemaItem(
+                        x = 1974.9999333333335f,
+                        y = 878.6667333333335f,
+                        floor = floor,
+                        spot = Spot(
+                                restaurant = restaurant,
+                                minPeopleNumber = 3,
+                                capacity = 4,
+                                number = 3
+                        ),
+                        width = 200f,
+                        height = 200f,
+                        rotation = 0f,
+                        tableType = SchemaItem.TableType.FOUR_RECT,
+                        type = SchemaItem.Type.TABLE
+                ),
+                SchemaItem(
+                        x = 1725.3332666666665f,
+                        y = 1107f,
+                        floor = floor,
+                        spot = Spot(
+                                restaurant = restaurant,
+                                minPeopleNumber = 2,
+                                capacity = 4,
+                                number = 4
+                        ),
+                        width = 200f,
+                        height = 200f,
+                        rotation = 0f,
+                        tableType = SchemaItem.TableType.FOUR_RECT,
+                        type = SchemaItem.Type.TABLE
+                ))
+    }
+
+    private fun createDefaultWallItems(floor: Floor): MutableList<SchemaItem> {
+        return mutableListOf(
+                SchemaItem(
+                        floor = floor,
+                        x = 967.3333666666665f,
+                        y = 1371.6666f,
+                        width = 450f,
+                        height = 48f,
+                        rotation = 0f,
+                        type = SchemaItem.Type.WALL_ITEM,
+                        wallItemType = SchemaItem.WallItemType.DOOR
+                ),
+                SchemaItem(
+                        floor = floor,
+                        x = 1614.3334f,
+                        y = 1373f,
+                        width = 450f,
+                        height = 48f,
+                        rotation = 0f,
+                        type = SchemaItem.Type.WALL_ITEM,
+                        wallItemType = SchemaItem.WallItemType.WINDOW
+                )
+        )
+    }
+
+    private fun createDefaultItems(floor: Floor): MutableList<SchemaItem> {
+        return mutableListOf(
+                SchemaItem(
+                        floor = floor,
+                        x = 1489.3334f,
+                        y = 499.33334f,
+                        width = 200f,
+                        height = 200f,
+                        rotation = 0f,
+                        type = SchemaItem.Type.ITEM,
+                        itemType = SchemaItem.ItemType.TOILET
+                )
+        )
+    }
+
+    private fun createDefaultWalls(floor: Floor): MutableList<SchemaItem> {
+        return mutableListOf(
+                SchemaItem(
+                        floor = floor,
+                        x = 671.3333f,
+                        y = 1371.6666f,
+                        width = 1606.6666f,
+                        height = 50f,
+                        rotation = 0f,
+                        type = SchemaItem.Type.WALL
+                ),
+                SchemaItem(
+                        floor = floor,
+                        x = 671f,
+                        y = 366f,
+                        width = 1173.3334f,
+                        height = 50f,
+                        rotation = 0f,
+                        type = SchemaItem.Type.WALL
+                ),
+                SchemaItem(
+                        floor = floor,
+                        x = 187.66527515908192f,
+                        y = 892.6378742659563f,
+                        width = 1050.0000666666667f,
+                        height = 50f,
+                        rotation = 90f,
+                        type = SchemaItem.Type.WALL
+                ),
+                SchemaItem(
+                        floor = floor,
+                        x = 1650.3793f,
+                        y = 569.986f,
+                        width = 410f,
+                        height = 50f,
+                        rotation = 90f,
+                        type = SchemaItem.Type.WALL
+                ),
+                SchemaItem(
+                        floor = floor,
+                        x = 1338.6666f,
+                        y = 756.3333f,
+                        width = 520f,
+                        height = 50f,
+                        rotation = 0f,
+                        type = SchemaItem.Type.WALL
+                ),
+                SchemaItem(
+                        floor = floor,
+                        x = 1858.3334f,
+                        y = 757.3333f,
+                        width = 396.66666f,
+                        height = 50f,
+                        rotation = 0f,
+                        type = SchemaItem.Type.WALL
+                ),
+                SchemaItem(
+                        floor = floor,
+                        x = 1949.3334f,
+                        y = 1089.3334f,
+                        width = 666.6667f,
+                        height = 50f,
+                        rotation = 90f,
+                        type = SchemaItem.Type.WALL
+                ),
+                SchemaItem(
+                        floor = floor,
+                        x = 1195.6705f,
+                        y = 572.95074f,
+                        width = 383.33334f,
+                        height = 50f,
+                        rotation = 90f,
+                        type = SchemaItem.Type.WALL
+                )
+        )
     }
 }
