@@ -38,18 +38,17 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
     }
 
     private fun prepareReservationCustomer(createReservationDTO: PanelCreateReservationDTO, restaurant: Restaurant): Customer {
-        return if (createReservationDTO.customer.phoneNumber.isNullOrBlank())
-            ReservationCustomerDTO.createCustomer(
-                    reservationCustomerDTO = createReservationDTO.customer,
-                    user = authorizationService.getCurrentUser(),
-                    restaurant = restaurant
-            )
-        else
-            customerService.findOrCreate(ReservationCustomerDTO.createCustomer(
-                    reservationCustomerDTO = createReservationDTO.customer,
-                    user = authorizationService.getCurrentUser(),
-                    restaurant = restaurant
-            ))
+        if (createReservationDTO.customer.phoneNumber.isNullOrBlank()) {
+            createReservationDTO.customer.phoneNumber = restaurant.phoneNumber
+            createReservationDTO.customer.firstName = restaurant.name
+            createReservationDTO.customer.email = restaurant.email
+        }
+
+        return customerService.findOrCreate(ReservationCustomerDTO.createCustomer(
+                reservationCustomerDTO = createReservationDTO.customer,
+                user = authorizationService.getCurrentUser(),
+                restaurant = restaurant
+        ))
     }
 
     fun getReservations(restaurant: Restaurant, date: LocalDate): PanelReservationsDTO =
