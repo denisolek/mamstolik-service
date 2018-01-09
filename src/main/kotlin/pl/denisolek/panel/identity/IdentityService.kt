@@ -191,14 +191,14 @@ class IdentityService(private val userService: UserService,
                         floor = floor,
                         spot = Spot(
                                 restaurant = restaurant,
-                                minPeopleNumber = 5,
-                                capacity = 6,
+                                minPeopleNumber = 3,
+                                capacity = 4,
                                 number = 3
                         ),
                         width = 200f,
                         height = 200f,
                         rotation = 0f,
-                        tableType = SchemaItem.TableType.SIX_RECT_2,
+                        tableType = SchemaItem.TableType.FOUR_RECT,
                         type = SchemaItem.Type.TABLE
                 ),
                 SchemaItem(
@@ -285,7 +285,7 @@ class IdentityService(private val userService: UserService,
                         y = 892.6378742659563f,
                         width = 1050.0000666666667f,
                         height = 50f,
-                        rotation = 89.52029335370797f,
+                        rotation = 90f,
                         type = SchemaItem.Type.WALL
                 ),
                 SchemaItem(
@@ -294,7 +294,7 @@ class IdentityService(private val userService: UserService,
                         y = 569.986f,
                         width = 410f,
                         height = 50f,
-                        rotation = 89.06547f,
+                        rotation = 90f,
                         type = SchemaItem.Type.WALL
                 ),
                 SchemaItem(
@@ -303,7 +303,7 @@ class IdentityService(private val userService: UserService,
                         y = 756.3333f,
                         width = 520f,
                         height = 50f,
-                        rotation = 89.06547f,
+                        rotation = 0f,
                         type = SchemaItem.Type.WALL
                 ),
                 SchemaItem(
@@ -312,7 +312,7 @@ class IdentityService(private val userService: UserService,
                         y = 757.3333f,
                         width = 396.66666f,
                         height = 50f,
-                        rotation = 89.06547f,
+                        rotation = 0f,
                         type = SchemaItem.Type.WALL
                 ),
                 SchemaItem(
@@ -321,7 +321,7 @@ class IdentityService(private val userService: UserService,
                         y = 1089.3334f,
                         width = 666.6667f,
                         height = 50f,
-                        rotation = 89.99999f,
+                        rotation = 90f,
                         type = SchemaItem.Type.WALL
                 ),
                 SchemaItem(
@@ -330,7 +330,7 @@ class IdentityService(private val userService: UserService,
                         y = 572.95074f,
                         width = 383.33334f,
                         height = 50f,
-                        rotation = 89.773285f,
+                        rotation = 90f,
                         type = SchemaItem.Type.WALL
                 )
         )
