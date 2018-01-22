@@ -42,12 +42,11 @@ class PanelReservationService(private val authorizationService: AuthorizationSer
             createReservationDTO.customer.phoneNumber = restaurant.phoneNumber
             createReservationDTO.customer.firstName = restaurant.name
             createReservationDTO.customer.email = restaurant.email
+            createReservationDTO.customer.lastName = null
         }
 
         return customerService.findOrCreate(ReservationCustomerDTO.createCustomer(
-                reservationCustomerDTO = createReservationDTO.customer,
-                user = authorizationService.getCurrentUser(),
-                restaurant = restaurant
+                reservationCustomerDTO = createReservationDTO.customer
         ))
     }
 

@@ -123,10 +123,10 @@ class PanelReservationControllerTests {
         val expectedReservation = PanelReservationDTO(
                 id = 11,
                 customer = ReservationCustomerDTO(
-                        firstName = "Tomasz",
-                        lastName = "Jabłoński",
-                        email = "test@test.pl",
-                        phoneNumber = "780199283"
+                    firstName = "Piano Bar Restaurant & Cafe",
+                    lastName = "",
+                    email = "pianobar@gmail.com",
+                    phoneNumber = "780199283"
                 ),
                 peopleNumber = 3,
                 dateTime = LocalDateTime.of(LocalDate.of(2018, 3, 30), LocalTime.of(14, 0)),
@@ -375,9 +375,9 @@ class PanelReservationControllerTests {
         val expectedReservation = PanelReservationDTO(
                 id = 1,
                 customer = ReservationCustomerDTO(
-                        firstName = "Tomasz",
-                        lastName = "Jabłoński",
-                        email = "test@test.pl",
+                        firstName = "Piano Bar Restaurant & Cafe",
+                        lastName = "",
+                        email = "pianobar@gmail.com",
                         phoneNumber = "780199283"
                 ),
                 peopleNumber = 3,

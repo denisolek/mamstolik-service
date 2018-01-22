@@ -13,12 +13,12 @@ data class ReservationCustomerDTO(
         var phoneNumber: String? = null
 ) {
     companion object {
-        fun createCustomer(reservationCustomerDTO: ReservationCustomerDTO, user: User, restaurant: Restaurant): Customer =
+        fun createCustomer(reservationCustomerDTO: ReservationCustomerDTO): Customer =
                 Customer(
-                        email = reservationCustomerDTO.email ?: user.email,
-                        firstName = reservationCustomerDTO.firstName ?: user.firstName ?: restaurant.name,
-                        lastName = reservationCustomerDTO.lastName ?: user.lastName ?: "",
-                        phoneNumber = reservationCustomerDTO.phoneNumber ?: restaurant.phoneNumber,
+                        email = reservationCustomerDTO.email ?: "",
+                        firstName = reservationCustomerDTO.firstName ?: "",
+                        lastName = reservationCustomerDTO.lastName ?: "",
+                        phoneNumber = reservationCustomerDTO.phoneNumber ?: "",
                         isVip = false
                 )
 
