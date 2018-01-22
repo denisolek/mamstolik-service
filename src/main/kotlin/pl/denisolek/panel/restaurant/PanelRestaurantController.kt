@@ -20,26 +20,52 @@ class PanelRestaurantController(val panelRestaurantService: PanelRestaurantServi
         val API = PanelRestaurantApi.Companion
     }
 
-    @ApiImplicitParam(name = PanelReservationController.API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "integer")
+    @ApiImplicitParam(
+        name = PanelReservationController.API.RESTAURANT_ID,
+        value = "Restaurant Id",
+        paramType = "path",
+        dataType = "integer"
+    )
     override fun getRestaurantDetails(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant): PanelRestaurantDetailsDTO =
-            panelRestaurantService.getRestaurantDetails(restaurantId)
+        panelRestaurantService.getRestaurantDetails(restaurantId)
 
-    @ApiImplicitParam(name = PanelReservationController.API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "integer")
-    override fun updateBaseInfo(@ApiIgnore @PathVariable(PanelRestaurantApi.RESTAURANT_ID) restaurantId: Restaurant,
-                                @RequestBody @Valid baseInfoDTO: BaseInfoDTO): PanelRestaurantDetailsDTO =
-            panelRestaurantService.updateBaseInfo(restaurantId, baseInfoDTO)
+    @ApiImplicitParam(
+        name = PanelReservationController.API.RESTAURANT_ID,
+        value = "Restaurant Id",
+        paramType = "path",
+        dataType = "integer"
+    )
+    override fun updateBaseInfo(
+        @ApiIgnore @PathVariable(PanelRestaurantApi.RESTAURANT_ID) restaurantId: Restaurant,
+        @RequestBody @Valid baseInfoDTO: BaseInfoDTO
+    ): PanelRestaurantDetailsDTO =
+        panelRestaurantService.updateBaseInfo(restaurantId, baseInfoDTO)
 
-    @ApiImplicitParam(name = PanelReservationController.API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "integer")
-    override fun updateProfile(@ApiIgnore @PathVariable(PanelRestaurantApi.RESTAURANT_ID) restaurantId: Restaurant,
-                               @RequestBody @Valid profileDTO: ProfileDTO): PanelRestaurantDetailsDTO =
-            panelRestaurantService.updateProfile(restaurantId, profileDTO)
+    @ApiImplicitParam(
+        name = PanelReservationController.API.RESTAURANT_ID,
+        value = "Restaurant Id",
+        paramType = "path",
+        dataType = "integer"
+    )
+    override fun updateProfile(
+        @ApiIgnore @PathVariable(PanelRestaurantApi.RESTAURANT_ID) restaurantId: Restaurant,
+        @RequestBody @Valid profileDTO: ProfileDTO
+    ): PanelRestaurantDetailsDTO =
+        panelRestaurantService.updateProfile(restaurantId, profileDTO)
 
-    @ApiImplicitParam(name = PanelReservationController.API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "integer")
-    override fun changeRestaurantPassword(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
-                                          @RequestBody @Valid changePasswordDTO: ChangePasswordDTO) =
-            panelRestaurantService.changeRestaurantPassword(restaurantId, changePasswordDTO)
+    @ApiImplicitParam(
+        name = PanelReservationController.API.RESTAURANT_ID,
+        value = "Restaurant Id",
+        paramType = "path",
+        dataType = "integer"
+    )
+    override fun changeRestaurantPassword(
+        @ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
+        @RequestBody @Valid changePasswordDTO: ChangePasswordDTO
+    ) =
+        panelRestaurantService.changeRestaurantPassword(restaurantId, changePasswordDTO)
 
     @ApiImplicitParam(name = API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "integer")
     override fun getRestaurantQueue(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant): List<PanelReservationDTO> =
-            panelRestaurantService.getRestaurantQueue(restaurantId)
+        panelRestaurantService.getRestaurantQueue(restaurantId)
 }

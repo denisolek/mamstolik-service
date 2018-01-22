@@ -7,8 +7,10 @@ import pl.denisolek.shared.search.dto.CitiesRestaurantsDTO
 import pl.denisolek.shared.search.dto.RestaurantSearchDTO
 
 @Service
-class SearchService(private val cityService: CityService,
-                    private val restaurantService: RestaurantService) {
+class SearchService(
+    private val cityService: CityService,
+    private val restaurantService: RestaurantService
+) {
     fun findCitiesAndRestaurants(name: String): CitiesRestaurantsDTO {
         val cities = cityService.findPartlyByNameOrAlias(name)
         val restaurants = RestaurantSearchDTO.fromRestaurantList(restaurantService.findPartlyByName(name))

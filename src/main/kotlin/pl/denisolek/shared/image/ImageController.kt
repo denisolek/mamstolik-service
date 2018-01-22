@@ -16,15 +16,17 @@ class ImageController(val imageService: ImageService) : ImageApi {
     }
 
     @ApiImplicitParams(
-            ApiImplicitParam(name = API.IMAGE_TYPE, value = "Image type", paramType = "path", dataType = "string"),
-            ApiImplicitParam(name = API.UUID, value = "Image uuid", paramType = "path", dataType = "string")
+        ApiImplicitParam(name = API.IMAGE_TYPE, value = "Image type", paramType = "path", dataType = "string"),
+        ApiImplicitParam(name = API.UUID, value = "Image uuid", paramType = "path", dataType = "string")
     )
-    override fun getImage(@PathVariable(ImageApi.IMAGE_TYPE) imageType: String,
-                          @PathVariable(ImageApi.UUID) uuid: String): ResponseEntity<Resource> {
+    override fun getImage(
+        @PathVariable(ImageApi.IMAGE_TYPE) imageType: String,
+        @PathVariable(ImageApi.UUID) uuid: String
+    ): ResponseEntity<Resource> {
         val file = imageService.loadAsResource(imageType, uuid)
         return ResponseEntity
-                .ok()
-                .header(HttpHeaders.CONTENT_TYPE, "image/png")
-                .body(file)
+            .ok()
+            .header(HttpHeaders.CONTENT_TYPE, "image/png")
+            .body(file)
     }
 }

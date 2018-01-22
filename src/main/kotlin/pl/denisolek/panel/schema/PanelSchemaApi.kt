@@ -29,36 +29,56 @@ interface PanelSchemaApi {
     }
 
     @PutMapping(SCHEMAS_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun updateSchema(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                     @RequestBody @Valid schemaDTO: SchemaDTO): SchemaDTO
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun updateSchema(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @RequestBody @Valid schemaDTO: SchemaDTO
+    ): SchemaDTO
 
     @PostMapping(FLOORS_PATH)
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun addFloor(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                 @RequestBody @Valid floorDTO: FloorDTO): FloorDTO
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun addFloor(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @RequestBody @Valid floorDTO: FloorDTO
+    ): FloorDTO
 
     @DeleteMapping(FLOORS_ID_PATH)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun deleteFloor(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                    @ApiIgnore @PathVariable(FLOOR_ID) floorId: Floor)
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun deleteFloor(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(FLOOR_ID) floorId: Floor
+    )
 
     @PutMapping(SPOTS_ID_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun updateSpot(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                   @ApiIgnore @PathVariable(SPOT_ID) spotId: Spot,
-                   @RequestBody @Valid spotInfoDTO: SchemaSpotInfoDTO): SchemaSpotInfoDTO
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun updateSpot(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(SPOT_ID) spotId: Spot,
+        @RequestBody @Valid spotInfoDTO: SchemaSpotInfoDTO
+    ): SchemaSpotInfoDTO
 
     @DeleteMapping(SPOTS_ID_PATH)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun deleteSpot(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                   @ApiIgnore @PathVariable(SPOT_ID) spotId: Spot)
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun deleteSpot(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(SPOT_ID) spotId: Spot
+    )
 }

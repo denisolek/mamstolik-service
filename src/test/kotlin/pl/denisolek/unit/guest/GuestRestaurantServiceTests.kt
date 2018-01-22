@@ -29,9 +29,9 @@ class GuestRestaurantServiceTests {
         restaurant.spots[0].minPeopleNumber = 2
 
         val actual = guestRestaurantService.getRestaurantAvailableSpots(
-                restaurant = restaurant,
-                date = LocalDateTime.of(LocalDate.of(2020, 10, 1), LocalTime.of(14, 0)),
-                peopleNumber = 2
+            restaurant = restaurant,
+            date = LocalDateTime.of(LocalDate.of(2020, 10, 1), LocalTime.of(14, 0)),
+            peopleNumber = 2
         )
 
         actual.forEach {
@@ -44,9 +44,9 @@ class GuestRestaurantServiceTests {
         val restaurant = RestaurantStub.getRestaurantForAvailability()
 
         val actual = guestRestaurantService.getRestaurantAvailableSpots(
-                restaurant = restaurant,
-                date = LocalDateTime.of(LocalDate.of(2020, 10, 1), LocalTime.of(14, 0)),
-                peopleNumber = 2
+            restaurant = restaurant,
+            date = LocalDateTime.of(LocalDate.of(2020, 10, 1), LocalTime.of(14, 0)),
+            peopleNumber = 2
         )
 
         Assert.assertEquals(SpotInfoDTO.SpotState.POSSIBLE, actual[0].state)
@@ -58,9 +58,9 @@ class GuestRestaurantServiceTests {
         val restaurant = RestaurantStub.getRestaurantForAvailability()
 
         val actual = guestRestaurantService.getRestaurantAvailableSpots(
-                restaurant = restaurant,
-                date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(13, 45)),
-                peopleNumber = 2
+            restaurant = restaurant,
+            date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(13, 45)),
+            peopleNumber = 2
         )
 
         Assert.assertEquals(SpotInfoDTO.SpotState.TAKEN, actual[0].state)
@@ -73,9 +73,9 @@ class GuestRestaurantServiceTests {
         restaurant.reservations.removeIf { it.peopleNumber == 5 }
 
         val actual = guestRestaurantService.getRestaurantAvailableSpots(
-                restaurant = restaurant,
-                date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(13, 45)),
-                peopleNumber = 5
+            restaurant = restaurant,
+            date = LocalDateTime.of(LocalDate.of(2018, 11, 29), LocalTime.of(13, 45)),
+            peopleNumber = 5
         )
 
         Assert.assertEquals(SpotInfoDTO.SpotState.AVAILABLE, actual.find { it.id == 1 }!!.state)

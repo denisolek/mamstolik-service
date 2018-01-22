@@ -32,8 +32,8 @@ class RestaurantServiceTests {
     @Test
     fun `generateUrlName_ existing without identifier`() {
         Mockito.`when`(restaurantRepositoryMock.countByUrlName(any()))
-                .thenReturn(1)
-                .thenReturn(0)
+            .thenReturn(1)
+            .thenReturn(0)
 
         val actual = restaurantService.generateUrlName("url name")
         Assert.assertEquals("url.name.1", actual)
@@ -42,9 +42,9 @@ class RestaurantServiceTests {
     @Test
     fun `generateUrlName_ existing with identifier 1`() {
         Mockito.`when`(restaurantRepositoryMock.countByUrlName(any()))
-                .thenReturn(1)
-                .thenReturn(1)
-                .thenReturn(0)
+            .thenReturn(1)
+            .thenReturn(1)
+            .thenReturn(0)
 
         val actual = restaurantService.generateUrlName("url name")
         Assert.assertEquals("url.name.2", actual)
@@ -53,10 +53,10 @@ class RestaurantServiceTests {
     @Test
     fun `generateUrlName_ existing with identifier 2`() {
         Mockito.`when`(restaurantRepositoryMock.countByUrlName(any()))
-                .thenReturn(1)
-                .thenReturn(1)
-                .thenReturn(1)
-                .thenReturn(0)
+            .thenReturn(1)
+            .thenReturn(1)
+            .thenReturn(1)
+            .thenReturn(0)
 
         val actual = restaurantService.generateUrlName("url name")
         Assert.assertEquals("url.name.3", actual)
@@ -65,11 +65,11 @@ class RestaurantServiceTests {
     @Test
     fun `generateUrlName_ existing with identifier 3`() {
         Mockito.`when`(restaurantRepositoryMock.countByUrlName(any()))
-                .thenReturn(1)
-                .thenReturn(1)
-                .thenReturn(1)
-                .thenReturn(1)
-                .thenReturn(0)
+            .thenReturn(1)
+            .thenReturn(1)
+            .thenReturn(1)
+            .thenReturn(1)
+            .thenReturn(0)
 
         val actual = restaurantService.generateUrlName("url name")
         Assert.assertEquals("url.name.4", actual)

@@ -11,15 +11,15 @@ import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
 data class ProfileDTO(
-        var settings: ProfileSettingsDTO,
+    var settings: ProfileSettingsDTO,
 
-        @field:Size(max = 1000)
-        @field:NotNull
-        var description: String,
+    @field:Size(max = 1000)
+    @field:NotNull
+    var description: String,
 
-        var cuisineTypes: List<CuisineType> = listOf(),
-        var facilities: List<Facilities> = listOf(),
-        var menu: MutableList<MenuCategoryDTO> = mutableListOf()
+    var cuisineTypes: List<CuisineType> = listOf(),
+    var facilities: List<Facilities> = listOf(),
+    var menu: MutableList<MenuCategoryDTO> = mutableListOf()
 ) {
     companion object {
         fun mapToExistingRestaurant(restaurant: Restaurant, profileDTO: ProfileDTO) {
@@ -65,13 +65,15 @@ data class ProfileDTO(
         }
 
         private fun addNewMenuItem(existingCategory: MenuCategory, dtoItem: MenuItemDTO) {
-            existingCategory.items.add(MenuItem(
+            existingCategory.items.add(
+                MenuItem(
                     name = dtoItem.name,
                     description = dtoItem.description,
                     position = dtoItem.position,
                     price = dtoItem.price,
                     category = existingCategory
-            ))
+                )
+            )
         }
 
         private fun updateExistingMenuItem(it: MenuItem, dtoItem: MenuItemDTO) {

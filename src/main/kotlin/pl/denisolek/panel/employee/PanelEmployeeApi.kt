@@ -34,18 +34,24 @@ interface PanelEmployeeApi {
     @PostMapping(EMPLOYEES_PATH)
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId)")
-    fun addEmployee(@ApiIgnore @PathVariable(PanelEmployeeController.API.RESTAURANT_ID) restaurantId: Restaurant,
-                    @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO): EmployeeDTO
+    fun addEmployee(
+        @ApiIgnore @PathVariable(PanelEmployeeController.API.RESTAURANT_ID) restaurantId: Restaurant,
+        @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO
+    ): EmployeeDTO
 
     @PutMapping(EMPLOYEES_ID_PATH)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId)")
-    fun updateEmployee(@ApiIgnore @PathVariable(PanelEmployeeController.API.RESTAURANT_ID) restaurantId: Restaurant,
-                       @ApiIgnore @PathVariable(PanelEmployeeController.API.EMPLOYEE_ID) employeeId: User,
-                       @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO): EmployeeDTO
+    fun updateEmployee(
+        @ApiIgnore @PathVariable(PanelEmployeeController.API.RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(PanelEmployeeController.API.EMPLOYEE_ID) employeeId: User,
+        @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO
+    ): EmployeeDTO
 
     @PostMapping(EMPLOYEES_ID_AVATARS_PATH)
     @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId)")
-    fun uploadAvatar(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                     @ApiIgnore @PathVariable(EMPLOYEE_ID) employeeId: User,
-                     @RequestParam(value = IMAGE, required = true) avatar: MultipartFile): AvatarDTO
+    fun uploadAvatar(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(EMPLOYEE_ID) employeeId: User,
+        @RequestParam(value = IMAGE, required = true) avatar: MultipartFile
+    ): AvatarDTO
 }

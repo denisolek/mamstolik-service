@@ -5,10 +5,10 @@ import pl.denisolek.panel.identity.DTO.ResetPasswordDTO
 class ResetPasswordDTOStub {
     companion object {
         fun getResetPasswordDTO(): ResetPasswordDTO =
-                ResetPasswordDTO(
-                        username = "ms900000",
-                        password = "TestPassword123",
-                        resetKey = "reestKeyTest"
-                )
+            ResetPasswordDTO(
+                username = "ms900000",
+                password = "TestPassword123",
+                resetKey = "reestKeyTest"
+            )
     }
 }

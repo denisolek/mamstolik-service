@@ -9,9 +9,11 @@ import pl.denisolek.core.email.EmailService
 
 
 @Service
-class SmsService(val template: RabbitTemplate,
-                 val emailService: EmailService,
-                 val smsQueue: Queue) {
+class SmsService(
+    val template: RabbitTemplate,
+    val emailService: EmailService,
+    val smsQueue: Queue
+) {
 
     private val log = LoggerFactory.getLogger(SmsService::class.java)
 

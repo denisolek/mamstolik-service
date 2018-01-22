@@ -17,6 +17,8 @@ interface ImageApi {
     }
 
     @GetMapping(IMAGES_UUID_PATH)
-    fun getImage(@PathVariable(IMAGE_TYPE) imageType: String,
-                 @PathVariable(UUID) uuid: String): ResponseEntity<Resource>
+    fun getImage(
+        @PathVariable(IMAGE_TYPE) imageType: String,
+        @PathVariable(UUID) uuid: String
+    ): ResponseEntity<Resource>
 }

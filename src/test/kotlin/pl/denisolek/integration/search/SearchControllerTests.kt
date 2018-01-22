@@ -42,20 +42,22 @@ class SearchControllerTests {
     @Test
     fun `findCitiesAndRestaurants_ name = p`() {
         val result = mvc.perform(get(SEARCH_PATH).param("name", "p"))
-                .andExpect(MockMvcResultMatchers.status().isOk)
-                .andReturn()
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, CitiesRestaurantsDTO::class.java)
 
         val expected = CitiesRestaurantsDTO(
-                cities = listOf(
-                        City(name = "Pogorzela", aliases = null),
-                        City(name = "Poręba", aliases = null),
-                        City(name = "Poznań", aliases = null),
-                        City(name = "Płock", aliases = null)),
-                restaurants = listOf(
-                        RestaurantSearchDTO(7, "Pasja", "pasja"),
-                        RestaurantSearchDTO(1, "Piano Bar Restaurant & Cafe", "piano.bar.restaurant.&.cafe"))
+            cities = listOf(
+                City(name = "Pogorzela", aliases = null),
+                City(name = "Poręba", aliases = null),
+                City(name = "Poznań", aliases = null),
+                City(name = "Płock", aliases = null)
+            ),
+            restaurants = listOf(
+                RestaurantSearchDTO(7, "Pasja", "pasja"),
+                RestaurantSearchDTO(1, "Piano Bar Restaurant & Cafe", "piano.bar.restaurant.&.cafe")
+            )
         )
 
         Assert.assertEquals(expected, actual)
@@ -64,17 +66,18 @@ class SearchControllerTests {
     @Test
     fun `findCitiesAndRestaurants_ name = po`() {
         val result = mvc.perform(get(SEARCH_PATH).param("name", "po"))
-                .andExpect(MockMvcResultMatchers.status().isOk)
-                .andReturn()
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, CitiesRestaurantsDTO::class.java)
 
         val expected = CitiesRestaurantsDTO(
-                cities = listOf(
-                        City(name = "Pogorzela", aliases = null),
-                        City(name = "Poręba", aliases = null),
-                        City(name = "Poznań", aliases = null)),
-                restaurants = listOf()
+            cities = listOf(
+                City(name = "Pogorzela", aliases = null),
+                City(name = "Poręba", aliases = null),
+                City(name = "Poznań", aliases = null)
+            ),
+            restaurants = listOf()
         )
 
         Assert.assertEquals(expected, actual)
@@ -83,16 +86,17 @@ class SearchControllerTests {
     @Test
     fun `findCitiesAndRestaurants_ name = gorzow`() {
         val result = mvc.perform(get(SEARCH_PATH).param("name", "gorzow"))
-                .andExpect(MockMvcResultMatchers.status().isOk)
-                .andReturn()
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, CitiesRestaurantsDTO::class.java)
 
         val expected = CitiesRestaurantsDTO(
-                cities = listOf(
-                        City(name = "Gorzów Wielkopolski", aliases = null),
-                        City(name = "Gorzów Śląski", aliases = null)),
-                restaurants = listOf()
+            cities = listOf(
+                City(name = "Gorzów Wielkopolski", aliases = null),
+                City(name = "Gorzów Śląski", aliases = null)
+            ),
+            restaurants = listOf()
         )
 
         Assert.assertEquals(expected, actual)
@@ -101,15 +105,16 @@ class SearchControllerTests {
     @Test
     fun `findCitiesAndRestaurants_ name = gw`() {
         val result = mvc.perform(get(SEARCH_PATH).param("name", "gw"))
-                .andExpect(MockMvcResultMatchers.status().isOk)
-                .andReturn()
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, CitiesRestaurantsDTO::class.java)
 
         val expected = CitiesRestaurantsDTO(
-                cities = listOf(
-                        City(name = "Gorzów Wielkopolski", aliases = null)),
-                restaurants = listOf()
+            cities = listOf(
+                City(name = "Gorzów Wielkopolski", aliases = null)
+            ),
+            restaurants = listOf()
         )
 
         Assert.assertEquals(expected, actual)
@@ -118,15 +123,16 @@ class SearchControllerTests {
     @Test
     fun `findCitiesAndRestaurants_ name = pzn`() {
         val result = mvc.perform(get(SEARCH_PATH).param("name", "pzn"))
-                .andExpect(MockMvcResultMatchers.status().isOk)
-                .andReturn()
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, CitiesRestaurantsDTO::class.java)
 
         val expected = CitiesRestaurantsDTO(
-                cities = listOf(
-                        City(name = "Poznań", aliases = null)),
-                restaurants = listOf()
+            cities = listOf(
+                City(name = "Poznań", aliases = null)
+            ),
+            restaurants = listOf()
         )
 
         Assert.assertEquals(expected, actual)
@@ -135,14 +141,14 @@ class SearchControllerTests {
     @Test
     fun `findCitiesAndRestaurants_ name = man`() {
         val result = mvc.perform(get(SEARCH_PATH).param("name", "man"))
-                .andExpect(MockMvcResultMatchers.status().isOk)
-                .andReturn()
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, CitiesRestaurantsDTO::class.java)
 
         val expected = CitiesRestaurantsDTO(
-                cities = listOf(),
-                restaurants = listOf(RestaurantSearchDTO(3, "Manekin", "manekin"))
+            cities = listOf(),
+            restaurants = listOf(RestaurantSearchDTO(3, "Manekin", "manekin"))
         )
 
         Assert.assertEquals(expected, actual)

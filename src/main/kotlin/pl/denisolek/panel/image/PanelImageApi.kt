@@ -25,16 +25,24 @@ interface PanelImageApi {
     }
 
     @PostMapping(IMAGES_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun uploadImage(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                    @RequestParam(value = IMAGE_TYPE, required = false, defaultValue = "regular") imageType: String,
-                    @RequestParam(value = IMAGE, required = true) image: MultipartFile): ImageDTO
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun uploadImage(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @RequestParam(value = IMAGE_TYPE, required = false, defaultValue = "regular") imageType: String,
+        @RequestParam(value = IMAGE, required = true) image: MultipartFile
+    ): ImageDTO
 
     @DeleteMapping(IMAGES_ID_PATH)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun removeImage(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                    @ApiIgnore @PathVariable(IMAGE_ID) imageId: Image)
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun removeImage(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(IMAGE_ID) imageId: Image
+    )
 }

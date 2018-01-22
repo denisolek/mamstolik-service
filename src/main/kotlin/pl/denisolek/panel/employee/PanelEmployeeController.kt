@@ -23,32 +23,44 @@ class PanelEmployeeController(val panelEmployeeService: PanelEmployeeService) : 
 
     @ApiImplicitParam(name = API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "integer")
     override fun getEmployees(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant): List<EmployeeDTO> =
-            panelEmployeeService.getEmployees(restaurantId)
+        panelEmployeeService.getEmployees(restaurantId)
 
 
     @ApiImplicitParam(name = API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "integer")
-    override fun addEmployee(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
-                             @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO): EmployeeDTO =
-            panelEmployeeService.addEmployee(createEmployeeDTO, restaurantId)
+    override fun addEmployee(
+        @ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
+        @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO
+    ): EmployeeDTO =
+        panelEmployeeService.addEmployee(createEmployeeDTO, restaurantId)
 
 
     @ApiImplicitParams(
-            ApiImplicitParam(name = API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "integer"),
-            ApiImplicitParam(name = API.EMPLOYEE_ID, value = "Employee Id", paramType = "path", dataType = "integer")
+        ApiImplicitParam(name = API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "integer"),
+        ApiImplicitParam(name = API.EMPLOYEE_ID, value = "Employee Id", paramType = "path", dataType = "integer")
     )
-    override fun updateEmployee(@ApiIgnore @PathVariable(PanelEmployeeController.API.RESTAURANT_ID) restaurantId: Restaurant,
-                                @ApiIgnore @PathVariable(PanelEmployeeController.API.EMPLOYEE_ID) employeeId: User,
-                                @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO): EmployeeDTO =
-            panelEmployeeService.updateEmployee(createEmployeeDTO, restaurantId, employeeId)
+    override fun updateEmployee(
+        @ApiIgnore @PathVariable(PanelEmployeeController.API.RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(PanelEmployeeController.API.EMPLOYEE_ID) employeeId: User,
+        @RequestBody @Valid createEmployeeDTO: CreateEmployeeDTO
+    ): EmployeeDTO =
+        panelEmployeeService.updateEmployee(createEmployeeDTO, restaurantId, employeeId)
 
 
     @ApiImplicitParams(
-            ApiImplicitParam(name = API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "int", required = true),
-            ApiImplicitParam(name = API.EMPLOYEE_ID, value = "Employee Id", paramType = "path", dataType = "integer"),
-            ApiImplicitParam(name = API.IMAGE, value = "Image", paramType = "query", dataType = "object", required = true)
+        ApiImplicitParam(
+            name = API.RESTAURANT_ID,
+            value = "Restaurant Id",
+            paramType = "path",
+            dataType = "int",
+            required = true
+        ),
+        ApiImplicitParam(name = API.EMPLOYEE_ID, value = "Employee Id", paramType = "path", dataType = "integer"),
+        ApiImplicitParam(name = API.IMAGE, value = "Image", paramType = "query", dataType = "object", required = true)
     )
-    override fun uploadAvatar(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
-                              @ApiIgnore @PathVariable(PanelEmployeeApi.EMPLOYEE_ID) employeeId: User,
-                              @RequestParam(value = API.IMAGE, required = true) avatar: MultipartFile): AvatarDTO =
-            panelEmployeeService.uploadAvatar(restaurantId, employeeId, avatar)
+    override fun uploadAvatar(
+        @ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(PanelEmployeeApi.EMPLOYEE_ID) employeeId: User,
+        @RequestParam(value = API.IMAGE, required = true) avatar: MultipartFile
+    ): AvatarDTO =
+        panelEmployeeService.uploadAvatar(restaurantId, employeeId, avatar)
 }

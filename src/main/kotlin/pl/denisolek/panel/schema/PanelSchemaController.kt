@@ -18,24 +18,34 @@ class PanelSchemaController(val panelSchemaService: PanelSchemaService) : PanelS
         val API = PanelSchemaApi.Companion
     }
 
-    override fun updateSchema(@ApiIgnore @PathVariable(PanelSchemaApi.RESTAURANT_ID) restaurantId: Restaurant,
-                              @RequestBody schemaDTO: SchemaDTO): SchemaDTO =
-            panelSchemaService.updateSchema(restaurantId, schemaDTO)
+    override fun updateSchema(
+        @ApiIgnore @PathVariable(PanelSchemaApi.RESTAURANT_ID) restaurantId: Restaurant,
+        @RequestBody schemaDTO: SchemaDTO
+    ): SchemaDTO =
+        panelSchemaService.updateSchema(restaurantId, schemaDTO)
 
-    override fun addFloor(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
-                          @RequestBody @Valid floorDTO: FloorDTO): FloorDTO =
-            panelSchemaService.addFloor(restaurantId, floorDTO)
+    override fun addFloor(
+        @ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
+        @RequestBody @Valid floorDTO: FloorDTO
+    ): FloorDTO =
+        panelSchemaService.addFloor(restaurantId, floorDTO)
 
-    override fun deleteFloor(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
-                             @ApiIgnore @PathVariable(API.FLOOR_ID) floorId: Floor) =
-            panelSchemaService.deleteFloor(restaurantId, floorId)
+    override fun deleteFloor(
+        @ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(API.FLOOR_ID) floorId: Floor
+    ) =
+        panelSchemaService.deleteFloor(restaurantId, floorId)
 
-    override fun updateSpot(@ApiIgnore @PathVariable(PanelSchemaApi.RESTAURANT_ID) restaurantId: Restaurant,
-                            @ApiIgnore @PathVariable(PanelSchemaApi.SPOT_ID) spotId: Spot,
-                            @RequestBody @Valid spotInfoDTO: SchemaSpotInfoDTO): SchemaSpotInfoDTO =
-            panelSchemaService.updateSpot(restaurantId, spotId, spotInfoDTO)
+    override fun updateSpot(
+        @ApiIgnore @PathVariable(PanelSchemaApi.RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(PanelSchemaApi.SPOT_ID) spotId: Spot,
+        @RequestBody @Valid spotInfoDTO: SchemaSpotInfoDTO
+    ): SchemaSpotInfoDTO =
+        panelSchemaService.updateSpot(restaurantId, spotId, spotInfoDTO)
 
-    override fun deleteSpot(@ApiIgnore @PathVariable(PanelSchemaApi.RESTAURANT_ID) restaurantId: Restaurant,
-                            @ApiIgnore @PathVariable(PanelSchemaApi.SPOT_ID) spotId: Spot) =
-            panelSchemaService.deleteSpot(restaurantId, spotId)
+    override fun deleteSpot(
+        @ApiIgnore @PathVariable(PanelSchemaApi.RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(PanelSchemaApi.SPOT_ID) spotId: Spot
+    ) =
+        panelSchemaService.deleteSpot(restaurantId, spotId)
 }

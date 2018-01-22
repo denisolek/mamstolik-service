@@ -58,9 +58,9 @@ class PanelEmployeeControllerTests {
     @Before
     fun setup() {
         this.mvc = MockMvcBuilders
-                .webAppContextSetup(applicationContext)
-                .apply<DefaultMockMvcBuilder>(SecurityMockMvcConfigurers.springSecurity())
-                .build()
+            .webAppContextSetup(applicationContext)
+            .apply<DefaultMockMvcBuilder>(SecurityMockMvcConfigurers.springSecurity())
+            .build()
     }
 
     @Test
@@ -70,9 +70,11 @@ class PanelEmployeeControllerTests {
 
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -84,9 +86,11 @@ class PanelEmployeeControllerTests {
 
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -98,9 +102,11 @@ class PanelEmployeeControllerTests {
 
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -112,9 +118,11 @@ class PanelEmployeeControllerTests {
 
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -126,9 +134,11 @@ class PanelEmployeeControllerTests {
 
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -140,9 +150,11 @@ class PanelEmployeeControllerTests {
 
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -154,9 +166,11 @@ class PanelEmployeeControllerTests {
 
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -168,9 +182,11 @@ class PanelEmployeeControllerTests {
 
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -182,9 +198,11 @@ class PanelEmployeeControllerTests {
 
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -196,9 +214,11 @@ class PanelEmployeeControllerTests {
 
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -210,9 +230,11 @@ class PanelEmployeeControllerTests {
 
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -220,18 +242,20 @@ class PanelEmployeeControllerTests {
     @Test
     fun `addEmployee_ pin is null`() {
         var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO().copy(
-                pin = null
+            pin = null
         )
 
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(ServiceException::class.java))
     }
@@ -239,18 +263,20 @@ class PanelEmployeeControllerTests {
     @Test
     fun `addEmployee_ pin too short`() {
         var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO().copy(
-                pin = "111"
+            pin = "111"
         )
 
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -258,18 +284,20 @@ class PanelEmployeeControllerTests {
     @Test
     fun `addEmployee_ pin too long`() {
         var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO().copy(
-                pin = "11111111111"
+            pin = "11111111111"
         )
 
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -277,18 +305,20 @@ class PanelEmployeeControllerTests {
     @Test
     fun `addEmployee_ pin with a-z`() {
         var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO().copy(
-                pin = "1111a"
+            pin = "1111a"
         )
 
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -296,18 +326,20 @@ class PanelEmployeeControllerTests {
     @Test
     fun `addEmployee_ pin with A-Z`() {
         var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO().copy(
-                pin = "testA"
+            pin = "testA"
         )
 
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -315,18 +347,20 @@ class PanelEmployeeControllerTests {
     @Test
     fun `addEmployee_ pin with special characters`() {
         var employeeDTO = CreateEmployeeDTOStub.getCreateEmployeeDTO().copy(
-                pin = "11:($"
+            pin = "11:($"
         )
 
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -334,17 +368,19 @@ class PanelEmployeeControllerTests {
     @Test
     fun `addEmployee_ correctData employee`() {
         val employeeDTO = CreateEmployeeDTO(
-                firstName = "TestName",
-                lastName = "TestSurname",
-                email = "testemail@test.pl",
-                phoneNumber = "111222333",
-                pin = "1111"
+            firstName = "TestName",
+            lastName = "TestSurname",
+            email = "testemail@test.pl",
+            phoneNumber = "111222333",
+            pin = "1111"
         )
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(MockMvcResultMatchers.status().isCreated)
 
@@ -363,18 +399,20 @@ class PanelEmployeeControllerTests {
     @Test
     fun `addEmployee_ correctData manager`() {
         val employeeDTO = CreateEmployeeDTO(
-                firstName = "TestNameMan",
-                lastName = "TestSurnameMan",
-                email = "testemailMan@test.pl",
-                phoneNumber = "111222444",
-                pin = "2222",
-                isManager = true
+            firstName = "TestNameMan",
+            lastName = "TestSurnameMan",
+            email = "testemailMan@test.pl",
+            phoneNumber = "111222444",
+            pin = "2222",
+            isManager = true
         )
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(post(EMPLOYEES_PATH, 1)
+        val result = mvc.perform(
+            post(EMPLOYEES_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(MockMvcResultMatchers.status().isCreated)
 
@@ -393,18 +431,20 @@ class PanelEmployeeControllerTests {
     @Test
     fun `updateEmployee_ correctData`() {
         val employeeDTO = CreateEmployeeDTO(
-                firstName = "TestNameMan",
-                lastName = "TestSurnameMan",
-                email = "testemailMan@test.pl",
-                phoneNumber = "111222444",
-                pin = "2222",
-                isManager = true
+            firstName = "TestNameMan",
+            lastName = "TestSurnameMan",
+            email = "testemailMan@test.pl",
+            phoneNumber = "111222444",
+            pin = "2222",
+            isManager = true
         )
         val body = convertObjectToJsonBytes(employeeDTO)
 
-        val result = mvc.perform(put(EMPLOYEES_ID_PATH, 1, 12)
+        val result = mvc.perform(
+            put(EMPLOYEES_ID_PATH, 1, 12)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(MockMvcResultMatchers.status().isOk)
 

@@ -20,22 +20,50 @@ class PanelCustomerController(val panelCustomerService: PanelCustomerService) : 
 
     @ApiImplicitParam(name = API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "integer")
     override fun getCustomers(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant): List<BaseCustomerInfoDTO> =
-            panelCustomerService.getCustomers(restaurantId)
+        panelCustomerService.getCustomers(restaurantId)
 
     @ApiImplicitParams(
-            ApiImplicitParam(name = API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "int", required = true),
-            ApiImplicitParam(name = API.CUSTOMER_ID, value = "Customer Id", paramType = "path", dataType = "int", required = true)
+        ApiImplicitParam(
+            name = API.RESTAURANT_ID,
+            value = "Restaurant Id",
+            paramType = "path",
+            dataType = "int",
+            required = true
+        ),
+        ApiImplicitParam(
+            name = API.CUSTOMER_ID,
+            value = "Customer Id",
+            paramType = "path",
+            dataType = "int",
+            required = true
+        )
     )
-    override fun getCustomer(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
-                             @ApiIgnore @PathVariable(API.CUSTOMER_ID) customerId: Customer): CustomerInfoDTO =
-            panelCustomerService.getCustomer(restaurantId, customerId)
+    override fun getCustomer(
+        @ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(API.CUSTOMER_ID) customerId: Customer
+    ): CustomerInfoDTO =
+        panelCustomerService.getCustomer(restaurantId, customerId)
 
     @ApiImplicitParams(
-            ApiImplicitParam(name = API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "int", required = true),
-            ApiImplicitParam(name = API.CUSTOMER_ID, value = "Customer Id", paramType = "path", dataType = "int", required = true)
+        ApiImplicitParam(
+            name = API.RESTAURANT_ID,
+            value = "Restaurant Id",
+            paramType = "path",
+            dataType = "int",
+            required = true
+        ),
+        ApiImplicitParam(
+            name = API.CUSTOMER_ID,
+            value = "Customer Id",
+            paramType = "path",
+            dataType = "int",
+            required = true
+        )
     )
-    override fun changeVipStatus(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
-                                 @ApiIgnore @PathVariable(API.CUSTOMER_ID) customerId: Customer,
-                                 @RequestBody vipDTO: VipDTO): VipDTO =
-            panelCustomerService.changeVipStatus(restaurantId, customerId, vipDTO)
+    override fun changeVipStatus(
+        @ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(API.CUSTOMER_ID) customerId: Customer,
+        @RequestBody vipDTO: VipDTO
+    ): VipDTO =
+        panelCustomerService.changeVipStatus(restaurantId, customerId, vipDTO)
 }

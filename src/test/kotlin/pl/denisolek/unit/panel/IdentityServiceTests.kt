@@ -14,6 +14,7 @@ import org.mockito.Mockito
 import org.mockito.runners.MockitoJUnitRunner
 import org.springframework.security.crypto.password.PasswordEncoder
 import pl.denisolek.Exception.ServiceException
+import pl.denisolek.core.address.CityService
 import pl.denisolek.core.email.EmailService
 import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.core.security.Authority
@@ -48,6 +49,9 @@ class IdentityServiceTests {
     @Mock
     private val restaurantService = mock<RestaurantService>()
 
+    @Mock
+    private val cityService = mock<CityService>()
+
     @Test
     fun `resendActivationKey_ wrong email`() {
         Mockito.`when`(userServiceMock.findByEmail("test@test.pl")).thenReturn(null)
@@ -58,7 +62,7 @@ class IdentityServiceTests {
     @Test
     fun `setPassword_ correct data`() {
         val setPasswordDTO = SetPasswordDTOStub.getSetPasswordDTO().copy(
-                activationKey = "activationKeyStub"
+            activationKey = "activationKeyStub"
         )
         val expectedUser = UserStub.getSetPasswordUser()
         Mockito.`when`(userServiceMock.findByUsername(setPasswordDTO.username)).thenReturn(expectedUser)
@@ -74,7 +78,10 @@ class IdentityServiceTests {
         Mockito.`when`(authorizationService.getCurrentUser()).thenReturn(expectedUser)
         Mockito.`when`(passwordEncoderMock.matches(any(), any())).thenReturn(true)
         identityService.changePassword(changePasswordDTO)
-        verify(passwordEncoderMock, times(1)).matches(changePasswordDTO.oldPassword, "\$2a\$10\$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG")
+        verify(passwordEncoderMock, times(1)).matches(
+            changePasswordDTO.oldPassword,
+            "\$2a\$10\$IlfSzDHKiu5oOmuXVLmrXO.wAeWdK2dpmcbGHZZ1mOSKkzP/QF3uG"
+        )
         verify(passwordEncoderMock, times(1)).encode(changePasswordDTO.newPassword)
         verify(userServiceMock, times(1)).save(any())
     }

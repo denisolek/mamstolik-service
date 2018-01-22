@@ -24,20 +24,30 @@ interface PanelCustomerApi {
     }
 
     @GetMapping(CUSTOMERS_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
     fun getCustomers(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant): List<BaseCustomerInfoDTO>
 
     @GetMapping(CUSTOMERS_ID_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun getCustomer(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                    @ApiIgnore @PathVariable(CUSTOMER_ID) customerId: Customer): CustomerInfoDTO
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun getCustomer(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(CUSTOMER_ID) customerId: Customer
+    ): CustomerInfoDTO
 
     @PutMapping(CUSTOMERS_ID_CHANGE_VIP_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun changeVipStatus(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                        @ApiIgnore @PathVariable(CUSTOMER_ID) customerId: Customer,
-                        @RequestBody vipDTO: VipDTO): VipDTO
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun changeVipStatus(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(CUSTOMER_ID) customerId: Customer,
+        @RequestBody vipDTO: VipDTO
+    ): VipDTO
 }

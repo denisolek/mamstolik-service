@@ -54,7 +54,9 @@ class ExceptionHandlerAdvice {
                 is AccessException -> ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied")
                 is SpelEvaluationException -> {
                     when ((ex.cause as SpelEvaluationException).messageCode) {
-                        SpelMessage.PROPERTY_OR_FIELD_NOT_READABLE_ON_NULL -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("")
+                        SpelMessage.PROPERTY_OR_FIELD_NOT_READABLE_ON_NULL -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                            ""
+                        )
                         else -> {
                             log.info((ex.cause as SpelEvaluationException).messageCode.name)
                             log.info((ex.cause as SpelEvaluationException).message)

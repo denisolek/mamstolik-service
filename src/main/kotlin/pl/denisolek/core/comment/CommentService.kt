@@ -7,5 +7,5 @@ import pl.denisolek.core.restaurant.Restaurant
 @Service
 class CommentService(private val commentRepository: CommentRepository) {
     fun getRestaurantCustomerComments(restaurant: Restaurant, customer: Customer): List<Comment> =
-            commentRepository.findByRestaurantAndCustomer(restaurant, customer)
+        commentRepository.findByRestaurantAndCustomer(restaurant, customer)
 }

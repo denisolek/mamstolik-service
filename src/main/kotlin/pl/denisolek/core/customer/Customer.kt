@@ -5,14 +5,14 @@ import javax.persistence.*
 
 @Entity
 data class Customer(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Int? = null,
-        var email: String,
-        var phoneNumber: String,
-        var firstName: String,
-        var lastName: String,
-        var isVip: Boolean,
-        @OneToMany(mappedBy = "customer", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var comments: MutableList<Comment> = mutableListOf()
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Int? = null,
+    var email: String,
+    var phoneNumber: String,
+    var firstName: String,
+    var lastName: String,
+    var isVip: Boolean,
+    @OneToMany(mappedBy = "customer", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    var comments: MutableList<Comment> = mutableListOf()
 )

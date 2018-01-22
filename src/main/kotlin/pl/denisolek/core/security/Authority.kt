@@ -6,9 +6,11 @@ import javax.persistence.Enumerated
 import javax.persistence.Id
 
 @Entity
-class Authority(@Id
-                @Enumerated(EnumType.STRING)
-                val role: Role) {
+class Authority(
+    @Id
+    @Enumerated(EnumType.STRING)
+    val role: Role
+) {
 
     enum class Role {
         ROLE_ADMIN,

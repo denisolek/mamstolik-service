@@ -70,9 +70,9 @@ class PanelSchemaControllerTests {
     @Before
     fun setup() {
         this.mvc = MockMvcBuilders
-                .webAppContextSetup(applicationContext)
-                .apply<DefaultMockMvcBuilder>(SecurityMockMvcConfigurers.springSecurity())
-                .build()
+            .webAppContextSetup(applicationContext)
+            .apply<DefaultMockMvcBuilder>(SecurityMockMvcConfigurers.springSecurity())
+            .build()
     }
 
     @Test
@@ -80,8 +80,8 @@ class PanelSchemaControllerTests {
         val user = userRepository.findOne(1)
         doReturn(user).whenever(authorizationService).getCurrentUser()
         val result = mvc.perform(get(API_SCHEMA_PATH, 1))
-                .andExpect(status().isOk)
-                .andReturn()
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
 
@@ -96,13 +96,15 @@ class PanelSchemaControllerTests {
     fun `addFloor_ correct data`() {
         val floorDTOStub = FloorDTO(name = "Stubbed name")
         val body = convertObjectToJsonBytes(floorDTOStub)
-        mvc.perform(post(FLOORS_PATH, 1)
+        mvc.perform(
+            post(FLOORS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isCreated)
+                .content(body)
+        )
+            .andExpect(status().isCreated)
 
         val restaurant = restaurantRepository.findOne(1)
-        val expectedFloor = Floor(id = 4, name = "Stubbed name", restaurant = restaurant)
+        val expectedFloor = Floor(id = 5, name = "Stubbed name", restaurant = restaurant)
         assertTrue(restaurant.floors.contains(expectedFloor))
     }
 
@@ -113,8 +115,8 @@ class PanelSchemaControllerTests {
         val result = mvc.perform(delete(FLOORS_ID_PATH, 1, 1))
 
         result
-                .andExpect(status().isConflict)
-                .andReturn()
+            .andExpect(status().isConflict)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, Matchers.instanceOf(ServiceException::class.java))
     }
@@ -124,8 +126,8 @@ class PanelSchemaControllerTests {
         val user = userRepository.findOne(1)
         doReturn(user).whenever(authorizationService).getCurrentUser()
         mvc.perform(delete(FLOORS_ID_PATH, 1, 2))
-                .andExpect(status().isNoContent)
-                .andReturn()
+            .andExpect(status().isNoContent)
+            .andReturn()
 
         val restaurant = restaurantRepository.findOne(1)
         restaurant.floors.forEach {
@@ -140,11 +142,13 @@ class PanelSchemaControllerTests {
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+        val result = mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         assertEquals(1, actual.tables.last().id)
@@ -158,10 +162,12 @@ class PanelSchemaControllerTests {
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        mvc.perform(put(SCHEMAS_PATH, 1)
+        mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isBadRequest)
+                .content(body)
+        )
+            .andExpect(status().isBadRequest)
     }
 
     @Test
@@ -171,11 +177,13 @@ class PanelSchemaControllerTests {
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+        val result = mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         assertEquals(EIGHT_ROUND, actual.tables[0].subType)
@@ -188,11 +196,13 @@ class PanelSchemaControllerTests {
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+        val result = mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         assertEquals(SchemaPositionDTO(10000f, 10000f), actual.tables[0].position)
@@ -205,11 +215,13 @@ class PanelSchemaControllerTests {
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+        val result = mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         assertEquals(SchemaDetailsDTO(10000f, 10000f, 10000f), actual.tables[0].details)
@@ -222,11 +234,13 @@ class PanelSchemaControllerTests {
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+        val result = mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         assertEquals(SchemaSpotInfoDTO(1, 1, 4, 1), actual.tables[0].spotInfo)
@@ -240,11 +254,13 @@ class PanelSchemaControllerTests {
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        mvc.perform(put(SCHEMAS_PATH, 1)
+        mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isBadRequest)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isBadRequest)
+            .andReturn()
     }
 
     @Test
@@ -253,25 +269,28 @@ class PanelSchemaControllerTests {
         schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
 
         val newTable = TypeTableDTO(
-                floorId = 1,
-                subType = EIGHT_ROUND,
-                position = SchemaPositionDTO(15000f, 15000f),
-                details = SchemaDetailsDTO(15000f, 15000f, 15000f),
-                spotInfo = SchemaSpotInfoDTO(
-                        number = 15000,
-                        capacity = 10,
-                        minPeopleNumber = 5
-                ))
+            floorId = 1,
+            subType = EIGHT_ROUND,
+            position = SchemaPositionDTO(15000f, 15000f),
+            details = SchemaDetailsDTO(15000f, 15000f, 15000f),
+            spotInfo = SchemaSpotInfoDTO(
+                number = 15000,
+                capacity = 10,
+                minPeopleNumber = 5
+            )
+        )
 
         schemaDTO.tables.add(newTable)
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+        val result = mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         Assert.assertNotNull(actual.tables.last().spotInfo.id)
@@ -286,27 +305,30 @@ class PanelSchemaControllerTests {
         schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
 
         val newTable = TypeTableDTO(
+            id = 123456,
+            floorId = 1,
+            subType = EIGHT_ROUND,
+            position = SchemaPositionDTO(16000f, 16000f),
+            details = SchemaDetailsDTO(16000f, 16000f, 16000f),
+            spotInfo = SchemaSpotInfoDTO(
                 id = 123456,
-                floorId = 1,
-                subType = EIGHT_ROUND,
-                position = SchemaPositionDTO(16000f, 16000f),
-                details = SchemaDetailsDTO(16000f, 16000f, 16000f),
-                spotInfo = SchemaSpotInfoDTO(
-                        id = 123456,
-                        number = 16000,
-                        capacity = 11,
-                        minPeopleNumber = 6
-                ))
+                number = 16000,
+                capacity = 11,
+                minPeopleNumber = 6
+            )
+        )
 
         schemaDTO.tables.add(newTable)
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+        val result = mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         Assert.assertNotNull(actual.tables.last().spotInfo.id)
@@ -321,27 +343,30 @@ class PanelSchemaControllerTests {
         schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
 
         val newTable = TypeTableDTO(
-                id = null,
-                floorId = 1,
-                subType = EIGHT_ROUND,
-                position = SchemaPositionDTO(17000f, 17000f),
-                details = SchemaDetailsDTO(17000f, 17000f, 17000f),
-                spotInfo = SchemaSpotInfoDTO(
-                        id = 123456,
-                        number = 17000,
-                        capacity = 12,
-                        minPeopleNumber = 7
-                ))
+            id = null,
+            floorId = 1,
+            subType = EIGHT_ROUND,
+            position = SchemaPositionDTO(17000f, 17000f),
+            details = SchemaDetailsDTO(17000f, 17000f, 17000f),
+            spotInfo = SchemaSpotInfoDTO(
+                id = 123456,
+                number = 17000,
+                capacity = 12,
+                minPeopleNumber = 7
+            )
+        )
 
         schemaDTO.tables.add(newTable)
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+        val result = mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         Assert.assertNotNull(actual.tables.last().spotInfo.id)
@@ -356,27 +381,30 @@ class PanelSchemaControllerTests {
         schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
 
         val newTable = TypeTableDTO(
-                id = 123456,
-                floorId = 1,
-                subType = EIGHT_ROUND,
-                position = SchemaPositionDTO(18000f, 18000f),
-                details = SchemaDetailsDTO(18000f, 18000f, 18000f),
-                spotInfo = SchemaSpotInfoDTO(
-                        id = null,
-                        number = 18000,
-                        capacity = 13,
-                        minPeopleNumber = 8
-                ))
+            id = 123456,
+            floorId = 1,
+            subType = EIGHT_ROUND,
+            position = SchemaPositionDTO(18000f, 18000f),
+            details = SchemaDetailsDTO(18000f, 18000f, 18000f),
+            spotInfo = SchemaSpotInfoDTO(
+                id = null,
+                number = 18000,
+                capacity = 13,
+                minPeopleNumber = 8
+            )
+        )
 
         schemaDTO.tables.add(newTable)
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+        val result = mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         Assert.assertNotNull(actual.tables.last().spotInfo.id)
@@ -391,22 +419,25 @@ class PanelSchemaControllerTests {
         schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
 
         val newTable = TypeTableDTO(
-                floorId = 1,
-                spotInfo = SchemaSpotInfoDTO(
-                        number = 19000,
-                        capacity = 1,
-                        minPeopleNumber = 1
-                ))
+            floorId = 1,
+            spotInfo = SchemaSpotInfoDTO(
+                number = 19000,
+                capacity = 1,
+                minPeopleNumber = 1
+            )
+        )
 
         schemaDTO.tables.add(newTable)
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+        val result = mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         val actualTable = actual.tables.last()
@@ -428,22 +459,25 @@ class PanelSchemaControllerTests {
         schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
 
         val newTable = TypeTableDTO(
-                floorId = 1,
-                spotInfo = SchemaSpotInfoDTO(
-                        number = 20000,
-                        capacity = 10,
-                        minPeopleNumber = 1
-                ))
+            floorId = 1,
+            spotInfo = SchemaSpotInfoDTO(
+                number = 20000,
+                capacity = 10,
+                minPeopleNumber = 1
+            )
+        )
 
         schemaDTO.tables.add(newTable)
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+        val result = mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         val actualTable = actual.tables.last()
@@ -465,21 +499,24 @@ class PanelSchemaControllerTests {
         schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
 
         val newTable = TypeTableDTO(
-                floorId = 1,
-                spotInfo = SchemaSpotInfoDTO(
-                        number = 19000,
-                        capacity = -10,
-                        minPeopleNumber = 1
-                ))
+            floorId = 1,
+            spotInfo = SchemaSpotInfoDTO(
+                number = 19000,
+                capacity = -10,
+                minPeopleNumber = 1
+            )
+        )
 
         schemaDTO.tables.add(newTable)
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        mvc.perform(put(SCHEMAS_PATH, 1)
+        mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isBadRequest)
+                .content(body)
+        )
+            .andExpect(status().isBadRequest)
     }
 
     @Test
@@ -488,21 +525,24 @@ class PanelSchemaControllerTests {
         schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
 
         val newTable = TypeTableDTO(
-                floorId = 1,
-                spotInfo = SchemaSpotInfoDTO(
-                        number = 19000,
-                        capacity = 200,
-                        minPeopleNumber = 1
-                ))
+            floorId = 1,
+            spotInfo = SchemaSpotInfoDTO(
+                number = 19000,
+                capacity = 200,
+                minPeopleNumber = 1
+            )
+        )
 
         schemaDTO.tables.add(newTable)
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        mvc.perform(put(SCHEMAS_PATH, 1)
+        mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isBadRequest)
+                .content(body)
+        )
+            .andExpect(status().isBadRequest)
     }
 
     @Test
@@ -511,21 +551,24 @@ class PanelSchemaControllerTests {
         schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
 
         val newTable = TypeTableDTO(
-                floorId = 1,
-                spotInfo = SchemaSpotInfoDTO(
-                        number = 19000,
-                        capacity = 5,
-                        minPeopleNumber = -10
-                ))
+            floorId = 1,
+            spotInfo = SchemaSpotInfoDTO(
+                number = 19000,
+                capacity = 5,
+                minPeopleNumber = -10
+            )
+        )
 
         schemaDTO.tables.add(newTable)
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        mvc.perform(put(SCHEMAS_PATH, 1)
+        mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isBadRequest)
+                .content(body)
+        )
+            .andExpect(status().isBadRequest)
     }
 
     @Test
@@ -534,21 +577,24 @@ class PanelSchemaControllerTests {
         schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
 
         val newTable = TypeTableDTO(
-                floorId = 1,
-                spotInfo = SchemaSpotInfoDTO(
-                        number = 19000,
-                        capacity = 5,
-                        minPeopleNumber = 200
-                ))
+            floorId = 1,
+            spotInfo = SchemaSpotInfoDTO(
+                number = 19000,
+                capacity = 5,
+                minPeopleNumber = 200
+            )
+        )
 
         schemaDTO.tables.add(newTable)
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        mvc.perform(put(SCHEMAS_PATH, 1)
+        mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isBadRequest)
+                .content(body)
+        )
+            .andExpect(status().isBadRequest)
     }
 
     @Test
@@ -557,24 +603,27 @@ class PanelSchemaControllerTests {
         schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
 
         val newTable = TypeTableDTO(
-                floorId = 1,
-                subType = EIGHT_ROUND,
-                position = SchemaPositionDTO(15000f, 15000f),
-                details = SchemaDetailsDTO(15000f, 15000f, 15000f),
-                spotInfo = SchemaSpotInfoDTO(
-                        number = 21000,
-                        capacity = 5
-                ))
+            floorId = 1,
+            subType = EIGHT_ROUND,
+            position = SchemaPositionDTO(15000f, 15000f),
+            details = SchemaDetailsDTO(15000f, 15000f, 15000f),
+            spotInfo = SchemaSpotInfoDTO(
+                number = 21000,
+                capacity = 5
+            )
+        )
 
         schemaDTO.tables.add(newTable)
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+        val result = mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         Assert.assertNotNull(actual.tables.last().spotInfo.id)
@@ -589,11 +638,13 @@ class PanelSchemaControllerTests {
         schemaDTO.isGridEnabled = true
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+        val result = mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         assertTrue(actual.isGridEnabled)
@@ -605,11 +656,13 @@ class PanelSchemaControllerTests {
         schemaDTO.isGridEnabled = false
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+        val result = mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         assertFalse(actual.isGridEnabled)
@@ -619,8 +672,8 @@ class PanelSchemaControllerTests {
         val user = userRepository.findOne(1)
         doReturn(user).whenever(authorizationService).getCurrentUser()
         val schemas = mvc.perform(get(API_SCHEMA_PATH, 1))
-                .andExpect(status().isOk)
-                .andReturn()
+            .andExpect(status().isOk)
+            .andReturn()
 
         val schemaDTO = convertJsonBytesToObject(schemas.response.contentAsString, SchemaDTO::class.java)
         schemaDTO.floors = null
@@ -633,19 +686,22 @@ class PanelSchemaControllerTests {
         schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
 
         val newWall = TypeWallDTO(
-                floorId = 1,
-                position = SchemaPositionDTO(19000f, 19000f),
-                details = SchemaDetailsDTO(19000f, 19000f, 19000f))
+            floorId = 1,
+            position = SchemaPositionDTO(19000f, 19000f),
+            details = SchemaDetailsDTO(19000f, 19000f, 19000f)
+        )
 
         schemaDTO.walls.add(newWall)
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+        val result = mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         Assert.assertNotNull(actual.walls[15].id)
@@ -660,20 +716,23 @@ class PanelSchemaControllerTests {
         schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
 
         val newWallItem = TypeWallItemDTO(
-                floorId = 1,
-                subType = WINDOW,
-                position = SchemaPositionDTO(20000f, 20000f),
-                details = SchemaDetailsDTO(20000f, 20000f, 20000f))
+            floorId = 1,
+            subType = WINDOW,
+            position = SchemaPositionDTO(20000f, 20000f),
+            details = SchemaDetailsDTO(20000f, 20000f, 20000f)
+        )
 
         schemaDTO.wallItems.add(newWallItem)
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+        val result = mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         Assert.assertNotNull(actual.wallItems[12].id)
@@ -689,20 +748,23 @@ class PanelSchemaControllerTests {
         schemaDTO.tables[0].spotInfo = SchemaSpotInfoDTO(1, 100, 4, 1)
 
         val item = TypeItemDTO(
-                floorId = 1,
-                subType = TOILET,
-                position = SchemaPositionDTO(21000f, 21000f),
-                details = SchemaDetailsDTO(21000f, 21000f, 21000f))
+            floorId = 1,
+            subType = TOILET,
+            position = SchemaPositionDTO(21000f, 21000f),
+            details = SchemaDetailsDTO(21000f, 21000f, 21000f)
+        )
 
         schemaDTO.items.add(item)
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+        val result = mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         Assert.assertNotNull(actual.items[1].id)
@@ -722,11 +784,13 @@ class PanelSchemaControllerTests {
 
         val body = convertObjectToJsonBytes(schemaDTO)
 
-        val result = mvc.perform(put(SCHEMAS_PATH, 1)
+        val result = mvc.perform(
+            put(SCHEMAS_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaDTO::class.java)
         assertTrue(actual.tables.isNotEmpty())
@@ -740,11 +804,13 @@ class PanelSchemaControllerTests {
         val schemaSpotInfoDTO = SchemaSpotInfoDTOStub.getSchemaSpotInfoDTOStub()
         val body = convertObjectToJsonBytes(schemaSpotInfoDTO)
 
-        mvc.perform(put(SPOTS_ID_PATH, 1, 900)
+        mvc.perform(
+            put(SPOTS_ID_PATH, 1, 900)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isNotFound)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isNotFound)
+            .andReturn()
     }
 
     @Test
@@ -753,11 +819,13 @@ class PanelSchemaControllerTests {
         schemaSpotInfoDTO.capacity = -10
         val body = convertObjectToJsonBytes(schemaSpotInfoDTO)
 
-        mvc.perform(put(SPOTS_ID_PATH, 1, 1)
+        mvc.perform(
+            put(SPOTS_ID_PATH, 1, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isBadRequest)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isBadRequest)
+            .andReturn()
     }
 
     @Test
@@ -766,11 +834,13 @@ class PanelSchemaControllerTests {
         schemaSpotInfoDTO.capacity = 200
         val body = convertObjectToJsonBytes(schemaSpotInfoDTO)
 
-        mvc.perform(put(SPOTS_ID_PATH, 1, 1)
+        mvc.perform(
+            put(SPOTS_ID_PATH, 1, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isBadRequest)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isBadRequest)
+            .andReturn()
     }
 
     @Test
@@ -779,11 +849,13 @@ class PanelSchemaControllerTests {
         schemaSpotInfoDTO.minPeopleNumber = -10
         val body = convertObjectToJsonBytes(schemaSpotInfoDTO)
 
-        mvc.perform(put(SPOTS_ID_PATH, 1, 1)
+        mvc.perform(
+            put(SPOTS_ID_PATH, 1, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isBadRequest)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isBadRequest)
+            .andReturn()
     }
 
     @Test
@@ -792,11 +864,13 @@ class PanelSchemaControllerTests {
         schemaSpotInfoDTO.minPeopleNumber = 200
         val body = convertObjectToJsonBytes(schemaSpotInfoDTO)
 
-        mvc.perform(put(SPOTS_ID_PATH, 1, 1)
+        mvc.perform(
+            put(SPOTS_ID_PATH, 1, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isBadRequest)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isBadRequest)
+            .andReturn()
     }
 
     @Test
@@ -804,11 +878,13 @@ class PanelSchemaControllerTests {
         val schemaSpotInfoDTO = SchemaSpotInfoDTOStub.getSchemaSpotInfoDTOStub()
         val body = convertObjectToJsonBytes(schemaSpotInfoDTO)
 
-        mvc.perform(put(SPOTS_ID_PATH, 1, 3)
+        mvc.perform(
+            put(SPOTS_ID_PATH, 1, 3)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isConflict)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isConflict)
+            .andReturn()
     }
 
     @Test
@@ -816,27 +892,31 @@ class PanelSchemaControllerTests {
         val schemaSpotInfoDTO = SchemaSpotInfoDTOStub.getSchemaSpotInfoDTOStub()
         val body = convertObjectToJsonBytes(schemaSpotInfoDTO)
 
-        mvc.perform(put(SPOTS_ID_PATH, 1, 24)
+        mvc.perform(
+            put(SPOTS_ID_PATH, 1, 24)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isNotFound)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isNotFound)
+            .andReturn()
     }
 
     @Test
     fun `updateSpot_ correct data`() {
         val schemaSpotInfoDTO = SchemaSpotInfoDTO(
-                number = 10000,
-                capacity = 50,
-                minPeopleNumber = 25
+            number = 10000,
+            capacity = 50,
+            minPeopleNumber = 25
         )
         val body = convertObjectToJsonBytes(schemaSpotInfoDTO)
 
-        val result = mvc.perform(put(SPOTS_ID_PATH, 1, 1)
+        val result = mvc.perform(
+            put(SPOTS_ID_PATH, 1, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, SchemaSpotInfoDTO::class.java)
         assertEquals(10000, actual.number)
@@ -846,34 +926,42 @@ class PanelSchemaControllerTests {
 
     @Test
     fun `deleteSpot_ not existing spot`() {
-        mvc.perform(delete(SPOTS_ID_PATH, 1, 500)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound)
-                .andReturn()
+        mvc.perform(
+            delete(SPOTS_ID_PATH, 1, 500)
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isNotFound)
+            .andReturn()
     }
 
     @Test
     fun `deleteSpot_ spot from different restaurant`() {
-        mvc.perform(delete(SPOTS_ID_PATH, 1, 24)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound)
-                .andReturn()
+        mvc.perform(
+            delete(SPOTS_ID_PATH, 1, 24)
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isNotFound)
+            .andReturn()
     }
 
     @Test
     fun `deleteSpot_ spot with reservations in the future`() {
-        mvc.perform(delete(SPOTS_ID_PATH, 1, 3)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isConflict)
-                .andReturn()
+        mvc.perform(
+            delete(SPOTS_ID_PATH, 1, 3)
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isConflict)
+            .andReturn()
     }
 
     @Test
     fun `deleteSpot_ correct data`() {
-        mvc.perform(delete(SPOTS_ID_PATH, 1, 2)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNoContent)
-                .andReturn()
+        mvc.perform(
+            delete(SPOTS_ID_PATH, 1, 2)
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isNoContent)
+            .andReturn()
 
         val restaurant = restaurantRepository.findOne(1)
         restaurant.spots.forEach {

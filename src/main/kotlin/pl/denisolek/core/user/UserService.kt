@@ -7,16 +7,16 @@ import pl.denisolek.infrastructure.util.generateUsernameString
 @Service
 class UserService(val userRepository: UserRepository) {
     fun save(user: User) =
-            userRepository.save(user)
+        userRepository.save(user)
 
     fun findByEmail(email: String): User? =
-            userRepository.findByEmail(email)
+        userRepository.findByEmail(email)
 
     fun findByUsername(username: String): User? =
-            userRepository.findByUsername(username)
+        userRepository.findByUsername(username)
 
     fun findByRestaurant(restaurant: Restaurant): User? =
-            userRepository.findByRestaurant(restaurant)
+        userRepository.findByRestaurant(restaurant)
 
     fun generateUsername(): String {
         var exists: Boolean = true

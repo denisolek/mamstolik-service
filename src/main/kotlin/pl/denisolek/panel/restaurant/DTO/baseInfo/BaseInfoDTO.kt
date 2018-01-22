@@ -14,29 +14,29 @@ import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
 
 data class BaseInfoDTO(
-        var settings: BaseInfoSettingsDTO,
+    var settings: BaseInfoSettingsDTO,
 
-        @field:NotBlank
-        var name: String,
+    @field:NotBlank
+    var name: String,
 
-        @field:Size(max = 100, message = "Email too long.")
-        @field:NotBlank
-        @field:Email
-        var email: String,
+    @field:Size(max = 100, message = "Email too long.")
+    @field:NotBlank
+    @field:Email
+    var email: String,
 
-        @field:NotBlank
-        @field:Size(min = 5)
-        @field:Pattern(regexp = PHONE_MATCHER)
-        var phoneNumber: String,
+    @field:NotBlank
+    @field:Size(min = 5)
+    @field:Pattern(regexp = PHONE_MATCHER)
+    var phoneNumber: String,
 
-        var type: Restaurant.RestaurantType,
+    var type: Restaurant.RestaurantType,
 
-        @field:Valid
-        var address: AddressDTO,
+    @field:Valid
+    var address: AddressDTO,
 
-        var businessHours: MutableMap<DayOfWeek, BusinessHour>,
+    var businessHours: MutableMap<DayOfWeek, BusinessHour>,
 
-        var specialDates: MutableList<SpecialDateDTO>
+    var specialDates: MutableList<SpecialDateDTO>
 ) {
     companion object {
         internal const val PHONE_MATCHER = "(\\(?\\+[\\d]{2}\\(?)?([ .-]?)([0-9]{3})([ .-]?)([0-9]{3})\\4([0-9]{3})"
@@ -78,8 +78,14 @@ data class BaseInfoDTO(
 
                 restaurant.specialDates.map {
                     when {
-                        (id == it.id && date != it.date) -> throw ServiceException(HttpStatus.BAD_REQUEST, "You can't edit date ($date) of existing special day (id ${it.id}).")
-                        (id != it.id && date == it.date) -> throw ServiceException(HttpStatus.CONFLICT, "Special date for that day already exists (id ${it.id})")
+                        (id == it.id && date != it.date) -> throw ServiceException(
+                            HttpStatus.BAD_REQUEST,
+                            "You can't edit date ($date) of existing special day (id ${it.id})."
+                        )
+                        (id != it.id && date == it.date) -> throw ServiceException(
+                            HttpStatus.CONFLICT,
+                            "Special date for that day already exists (id ${it.id})"
+                        )
                         (id == it.id && date == it.date) -> {
                             it.businessHour.openTime = businessHour.openTime
                             it.businessHour.closeTime = businessHour.closeTime
@@ -91,14 +97,16 @@ data class BaseInfoDTO(
                 }
 
                 if (!existing) {
-                    restaurant.specialDates.add(SpecialDate(
+                    restaurant.specialDates.add(
+                        SpecialDate(
                             date = date,
                             restaurant = restaurant,
                             businessHour = BusinessHour(
-                                    openTime = businessHour.openTime,
-                                    closeTime = businessHour.closeTime,
-                                    isClosed = businessHour.isClosed
-                            ))
+                                openTime = businessHour.openTime,
+                                closeTime = businessHour.closeTime,
+                                isClosed = businessHour.isClosed
+                            )
+                        )
                     )
                 }
             }
@@ -106,9 +114,15 @@ data class BaseInfoDTO(
 
         private fun updateBusinessHours(restaurant: Restaurant, baseInfoDTO: BaseInfoDTO) {
             restaurant.businessHours.forEach {
-                val dtoBusinessHour = baseInfoDTO.businessHours[it.key] ?: throw ServiceException(HttpStatus.BAD_REQUEST, "Invalid businessHours for ${it.key}")
+                val dtoBusinessHour = baseInfoDTO.businessHours[it.key] ?: throw ServiceException(
+                    HttpStatus.BAD_REQUEST,
+                    "Invalid businessHours for ${it.key}"
+                )
                 if (dtoBusinessHour.closeTime.isBefore(dtoBusinessHour.openTime))
-                    throw ServiceException(HttpStatus.BAD_REQUEST, "Close time for ${it.key} must be greater than open time.")
+                    throw ServiceException(
+                        HttpStatus.BAD_REQUEST,
+                        "Close time for ${it.key} must be greater than open time."
+                    )
                 it.value.openTime = dtoBusinessHour.openTime
                 it.value.closeTime = dtoBusinessHour.closeTime
                 it.value.isClosed = dtoBusinessHour.isClosed

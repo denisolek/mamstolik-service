@@ -25,33 +25,63 @@ class GuestRestaurantController(val guestRestaurantService: GuestRestaurantServi
         val API = GuestRestaurantApi.Companion
     }
 
-    override fun searchRestaurants(@RequestParam city: City,
-                                   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam date: LocalDateTime,
-                                   @RequestParam peopleNumber: Int): SearchDTO =
-            guestRestaurantService.searchRestaurants(city, date, peopleNumber)
+    override fun searchRestaurants(
+        @RequestParam city: City,
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam date: LocalDateTime,
+        @RequestParam peopleNumber: Int
+    ): SearchDTO =
+        guestRestaurantService.searchRestaurants(city, date, peopleNumber)
 
     override fun getRestaurant(@ApiIgnore @PathVariable(API.URL_NAME) urlName: String): RestaurantDetailsDTO =
-            guestRestaurantService.getRestaurant(urlName)
+        guestRestaurantService.getRestaurant(urlName)
 
     @ApiImplicitParams(
-            ApiImplicitParam(name = "restaurantId", value = "Restaurant Id", paramType = "path", dataType = "int", required = true),
-            ApiImplicitParam(name = "peopleNumber", value = "People number", paramType = "query", dataType = "int", required = true)
+        ApiImplicitParam(
+            name = "restaurantId",
+            value = "Restaurant Id",
+            paramType = "path",
+            dataType = "int",
+            required = true
+        ),
+        ApiImplicitParam(
+            name = "peopleNumber",
+            value = "People number",
+            paramType = "query",
+            dataType = "int",
+            required = true
+        )
     )
-    override fun getRestaurantAvailableDates(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
-                                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam date: LocalDateTime,
-                                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam currentDate: LocalDateTime,
-                                             @RequestParam peopleNumber: Int): Map<LocalDate, List<LocalTime>> =
-            guestRestaurantService.getRestaurantAvailableDates(restaurantId, date, currentDate, peopleNumber)
+    override fun getRestaurantAvailableDates(
+        @ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam date: LocalDateTime,
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam currentDate: LocalDateTime,
+        @RequestParam peopleNumber: Int
+    ): Map<LocalDate, List<LocalTime>> =
+        guestRestaurantService.getRestaurantAvailableDates(restaurantId, date, currentDate, peopleNumber)
 
     @ApiImplicitParams(
-            ApiImplicitParam(name = "restaurantId", value = "Restaurant Id", paramType = "path", dataType = "int", required = true),
-            ApiImplicitParam(name = "peopleNumber", value = "People number", paramType = "query", dataType = "int", required = true)
+        ApiImplicitParam(
+            name = "restaurantId",
+            value = "Restaurant Id",
+            paramType = "path",
+            dataType = "int",
+            required = true
+        ),
+        ApiImplicitParam(
+            name = "peopleNumber",
+            value = "People number",
+            paramType = "query",
+            dataType = "int",
+            required = true
+        )
     )
-    override fun getRestaurantAvailableSpots(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
-                                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam date: LocalDateTime,
-                                             @RequestParam(required = false, defaultValue = "0") peopleNumber: Int): List<SpotInfoDTO> =
-            guestRestaurantService.getRestaurantAvailableSpots(restaurantId, date, peopleNumber)
+    override fun getRestaurantAvailableSpots(
+        @ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam date: LocalDateTime,
+        @RequestParam(required = false, defaultValue = "0") peopleNumber: Int
+    ): List<SpotInfoDTO> =
+        guestRestaurantService.getRestaurantAvailableSpots(restaurantId, date, peopleNumber)
 
     override fun getSchema(@ApiIgnore @PathVariable(PanelSchemaController.API.RESTAURANT_ID) restaurantId: Restaurant): SchemaDTO =
-            guestRestaurantService.getSchema(restaurantId)
+        guestRestaurantService.getSchema(restaurantId)
 }

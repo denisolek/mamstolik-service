@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service
 class CustomerService(private val customerRepository: CustomerRepository) {
 
     fun findOrCreate(customer: Customer): Customer =
-            customerRepository.findByPhoneNumber(customer.phoneNumber) ?: customer
+        customerRepository.findByPhoneNumber(customer.phoneNumber) ?: customer
 
     fun save(customer: Customer): Customer =
-            customerRepository.save(customer)
+        customerRepository.save(customer)
 }

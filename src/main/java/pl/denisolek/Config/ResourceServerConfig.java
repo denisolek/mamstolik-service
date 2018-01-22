@@ -12,27 +12,27 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-	@Override
-	public void configure(HttpSecurity http) throws Exception {
-		http.headers().frameOptions().disable().and()
-				.authorizeRequests()
-				.antMatchers("/users").authenticated()
-				.antMatchers("/api/restaurants/*/queue").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER", "ROLE_EMPLOYEE")
-				.antMatchers("/api").permitAll()
-				.antMatchers(HttpMethod.PUT, "/panel/users/password").hasAuthority("ROLE_OWNER")
-				.antMatchers("/panel/restaurants").hasAuthority("ROLE_OWNER")
-				.antMatchers("/panel/restaurants/**").permitAll()
-				.antMatchers("/panel/employees").hasAuthority("ROLE_RESTAURANT")
-				.antMatchers("/panel/users", "/panel/users/**").permitAll()
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http.headers().frameOptions().disable().and()
+                .authorizeRequests()
+                .antMatchers("/users").authenticated()
+                .antMatchers("/api/restaurants/*/queue").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER", "ROLE_EMPLOYEE")
+                .antMatchers("/api").permitAll()
+                .antMatchers(HttpMethod.PUT, "/panel/users/password").hasAuthority("ROLE_OWNER")
+                .antMatchers("/panel/restaurants").hasAuthority("ROLE_OWNER")
+                .antMatchers("/panel/restaurants/**").permitAll()
+                .antMatchers("/panel/employees").hasAuthority("ROLE_RESTAURANT")
+                .antMatchers("/panel/users", "/panel/users/**").permitAll()
 //                .antMatchers("/panel/*/employees").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER")
-				.antMatchers("/panel/*/schemas").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER", "ROLE_EMPLOYEE")
-				.antMatchers("/panel/*/schemas/**").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER")
-				.antMatchers("/panel/*/baseInfo").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER")
-				.antMatchers("/panel/*/password").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER")
-				.antMatchers("/panel/*/profile").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER")
-				.antMatchers("/panel/*/images/**").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER")
-				.antMatchers("/panel/*/employees").hasAuthority("ROLE_OWNER")
-				.antMatchers("/panel/**").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER", "ROLE_EMPLOYEE")
-				.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN");
-	}
+                .antMatchers("/panel/*/schemas").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER", "ROLE_EMPLOYEE")
+                .antMatchers("/panel/*/schemas/**").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER")
+                .antMatchers("/panel/*/baseInfo").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER")
+                .antMatchers("/panel/*/password").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER")
+                .antMatchers("/panel/*/profile").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER")
+                .antMatchers("/panel/*/images/**").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER")
+                .antMatchers("/panel/*/employees").hasAuthority("ROLE_OWNER")
+                .antMatchers("/panel/**").hasAnyAuthority("ROLE_OWNER", "ROLE_MANAGER", "ROLE_EMPLOYEE")
+                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN");
+    }
 }
