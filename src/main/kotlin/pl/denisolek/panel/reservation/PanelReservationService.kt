@@ -78,7 +78,7 @@ class PanelReservationService(
                 HttpStatus.BAD_REQUEST,
                 "Some of provided spots at taken at ${createReservationDTO.dateTime}."
             )
-        val reservation = reservationService.save(
+        val updatedReservation = reservationService.save(
             Reservation(
                 id = reservation.id,
                 panelCreateReservationDTO = createReservationDTO,
@@ -88,8 +88,8 @@ class PanelReservationService(
                 spots = reservationSpots
             )
         )
-        restaurant.reservations.removeIf { it.id == reservation.id }
-        restaurant.reservations.add(reservation)
+        restaurant.reservations.removeIf { it.id == updatedReservation.id }
+        restaurant.reservations.add(updatedReservation)
         return PanelReservationsDTO.createPanelReservationDTO(restaurant, createReservationDTO.dateTime.toLocalDate())
     }
 

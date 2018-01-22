@@ -92,8 +92,7 @@ data class RestaurantDetailsDTO(
 
         private fun setMenu(restaurant: Restaurant): List<MenuCategoryDTO>? {
             return if (restaurant.settings.menu)
-                restaurant.menu?.categories?.map { MenuCategoryDTO.fromMenuCategory(it) }?.sortedBy { it.position }
-                        ?: listOf()
+                restaurant.menu.categories.map { MenuCategoryDTO.fromMenuCategory(it) }.sortedBy { it.position }
             else
                 null
         }

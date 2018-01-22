@@ -9,6 +9,8 @@ import pl.denisolek.core.image.Image
 import pl.denisolek.core.menu.Menu
 import pl.denisolek.core.reservation.Reservation
 import pl.denisolek.core.reservation.Reservation.ReservationState.CANCELED
+import pl.denisolek.core.restaurant.Restaurant.AvailabilityType.AVAILABLE
+import pl.denisolek.core.restaurant.Restaurant.AvailabilityType.POSSIBLE
 import pl.denisolek.core.spot.Spot
 import pl.denisolek.core.user.User
 import pl.denisolek.guest.restaurant.DTO.MenuCategoryDTO
@@ -130,7 +132,7 @@ data class Restaurant(
         val result = mutableListOf<LocalTime>()
         while (searchTime.isBefore(businessHours.closeTime)) {
             when (getAvailability(LocalDateTime.of(date.toLocalDate(), searchTime), peopleNumber)) {
-                AvailabilityType.AVAILABLE, AvailabilityType.POSSIBLE ->
+                AVAILABLE, POSSIBLE ->
                     result.add(searchTime)
             }
             searchTime = searchTime.plus(Duration.ofMinutes(15))
@@ -145,8 +147,8 @@ data class Restaurant(
         val spots = getAvailableSpotsAt(date)
         spots.forEach {
             when {
-                it.capacity >= peopleNumber && it.minPeopleNumber <= peopleNumber -> return AvailabilityType.AVAILABLE
-                it.capacity >= peopleNumber && it.minPeopleNumber > peopleNumber -> return AvailabilityType.POSSIBLE
+                it.capacity >= peopleNumber && it.minPeopleNumber <= peopleNumber -> return AVAILABLE
+                it.capacity >= peopleNumber && it.minPeopleNumber > peopleNumber -> return POSSIBLE
             }
         }
         return AvailabilityType.NOT_AVAILABLE
@@ -184,13 +186,6 @@ data class Restaurant(
         } catch (e: NoSuchElementException) {
             throw ServiceException(HttpStatus.BAD_REQUEST, "Trying to assign item to not existing floor.")
         }
-
-    fun getMenu(): List<MenuCategoryDTO>? {
-        return if (this.settings.menu)
-            this.menu?.categories?.map { MenuCategoryDTO.fromMenuCategory(it) }?.sortedBy { it.position } ?: listOf()
-        else
-            null
-    }
 
     enum class AvailabilityType {
         AVAILABLE,
