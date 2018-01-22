@@ -14,6 +14,7 @@ import org.mockito.Mockito
 import org.mockito.runners.MockitoJUnitRunner
 import org.springframework.security.crypto.password.PasswordEncoder
 import pl.denisolek.Exception.ServiceException
+import pl.denisolek.core.address.CityService
 import pl.denisolek.core.email.EmailService
 import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.core.security.Authority
@@ -47,6 +48,9 @@ class IdentityServiceTests {
 
     @Mock
     private val restaurantService = mock<RestaurantService>()
+
+    @Mock
+    private val cityService = mock<CityService>()
 
     @Test
     fun `resendActivationKey_ wrong email`() {

@@ -102,7 +102,7 @@ class PanelSchemaControllerTests {
                 .andExpect(status().isCreated)
 
         val restaurant = restaurantRepository.findOne(1)
-        val expectedFloor = Floor(id = 4, name = "Stubbed name", restaurant = restaurant)
+        val expectedFloor = Floor(id = 5, name = "Stubbed name", restaurant = restaurant)
         assertTrue(restaurant.floors.contains(expectedFloor))
     }
 
