@@ -33,39 +33,50 @@ class PanelEmployeeServiceTests {
         val restaurant = UserStub.getUserRestaurant().restaurant
         val employees = panelEmployeeService.getEmployees(restaurant!!)
         assertEmployeeDTO(
-                createEmployee = employees[0],
-                id = 10,
-                email = "emailStub@test.pl",
-                firstName = "Stub",
-                lastName = "One",
-                phoneNumber = "111000000")
+            createEmployee = employees[0],
+            id = 10,
+            email = "emailStub@test.pl",
+            firstName = "Stub",
+            lastName = "One",
+            phoneNumber = "111000000"
+        )
 
         assertEmployeeDTO(
-                createEmployee = employees[1],
-                id = 20,
-                email = "emailStub@test.pl",
-                firstName = "Stub",
-                lastName = "Two",
-                phoneNumber = "222000000")
+            createEmployee = employees[1],
+            id = 20,
+            email = "emailStub@test.pl",
+            firstName = "Stub",
+            lastName = "Two",
+            phoneNumber = "222000000"
+        )
 
         assertEmployeeDTO(
-                createEmployee = employees[2],
-                id = 30,
-                email = "emailStub@test.pl",
-                firstName = "Stub",
-                lastName = "Three",
-                phoneNumber = "333000000")
+            createEmployee = employees[2],
+            id = 30,
+            email = "emailStub@test.pl",
+            firstName = "Stub",
+            lastName = "Three",
+            phoneNumber = "333000000"
+        )
 
         assertEmployeeDTO(
-                createEmployee = employees[3],
-                id = 40,
-                email = "emailStub@test.pl",
-                firstName = "Stub",
-                lastName = "Four",
-                phoneNumber = "444000000")
+            createEmployee = employees[3],
+            id = 40,
+            email = "emailStub@test.pl",
+            firstName = "Stub",
+            lastName = "Four",
+            phoneNumber = "444000000"
+        )
     }
 
-    private fun assertEmployeeDTO(createEmployee: EmployeeDTO, id: Int, email: String, firstName: String, lastName: String, phoneNumber: String) {
+    private fun assertEmployeeDTO(
+        createEmployee: EmployeeDTO,
+        id: Int,
+        email: String,
+        firstName: String,
+        lastName: String,
+        phoneNumber: String
+    ) {
         Assert.assertEquals(id, createEmployee.id)
         Assert.assertEquals(email, createEmployee.email)
         Assert.assertEquals(firstName, createEmployee.firstName)

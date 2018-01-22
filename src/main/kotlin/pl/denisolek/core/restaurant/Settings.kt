@@ -7,15 +7,15 @@ import javax.persistence.Id
 
 @Entity
 class Settings(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Int? = null,
-        var localization: Boolean = false,
-        var specialDates: Boolean = false,
-        var description: Boolean = false,
-        var photos: Boolean = false,
-        var menu: Boolean = false,
-        var schema: Boolean = false
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Int? = null,
+    var localization: Boolean = false,
+    var specialDates: Boolean = false,
+    var description: Boolean = false,
+    var photos: Boolean = false,
+    var menu: Boolean = false,
+    var schema: Boolean = false
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

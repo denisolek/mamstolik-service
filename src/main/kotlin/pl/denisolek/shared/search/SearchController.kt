@@ -7,5 +7,5 @@ import pl.denisolek.shared.search.dto.CitiesRestaurantsDTO
 @RestController
 class SearchController(val searchService: SearchService) : SearchApi {
     override fun findCitiesAndRestaurants(@RequestParam name: String): CitiesRestaurantsDTO =
-            searchService.findCitiesAndRestaurants(name)
+        searchService.findCitiesAndRestaurants(name)
 }

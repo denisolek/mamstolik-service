@@ -31,48 +31,76 @@ interface PanelReservationApi {
 
     @PostMapping(RESERVATIONS_PATH)
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun addReservation(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                       @RequestBody @Valid createReservationDTO: PanelCreateReservationDTO): PanelReservationsDTO
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun addReservation(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @RequestBody @Valid createReservationDTO: PanelCreateReservationDTO
+    ): PanelReservationsDTO
 
     @GetMapping(RESERVATIONS_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun getReservations(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                        @RequestParam(required = true, value = DATE) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate): PanelReservationsDTO
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun getReservations(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @RequestParam(required = true, value = DATE) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate
+    ): PanelReservationsDTO
 
     @GetMapping(SPOT_ID_RESERVATIONS)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun getSpotReservations(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                            @ApiIgnore @PathVariable(SPOT_ID) spotId: Spot,
-                            @RequestParam(required = true, value = DATE) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate): SpotReservationsDTO
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun getSpotReservations(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(SPOT_ID) spotId: Spot,
+        @RequestParam(required = true, value = DATE) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate
+    ): SpotReservationsDTO
 
     @GetMapping(RESERVATIONS_ID_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun getReservation(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                       @ApiIgnore @PathVariable(RESERVATION_ID) reservationId: Reservation): PanelReservationDTO
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun getReservation(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(RESERVATION_ID) reservationId: Reservation
+    ): PanelReservationDTO
 
 
     @PutMapping(RESERVATIONS_ID_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun editReservation(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                        @ApiIgnore @PathVariable(RESERVATION_ID) reservationId: Reservation,
-                        @RequestBody @Valid createReservationDTO: PanelCreateReservationDTO): PanelReservationsDTO
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun editReservation(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(RESERVATION_ID) reservationId: Reservation,
+        @RequestBody @Valid createReservationDTO: PanelCreateReservationDTO
+    ): PanelReservationsDTO
 
     @DeleteMapping(RESERVATIONS_ID_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun cancelReservation(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                          @ApiIgnore @PathVariable(RESERVATION_ID) reservationId: Reservation): PanelReservationsDTO
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun cancelReservation(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(RESERVATION_ID) reservationId: Reservation
+    ): PanelReservationsDTO
 
     @PutMapping(RESERVATIONS_ID_CHANGE_STATE_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun changeReservationState(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                               @ApiIgnore @PathVariable(RESERVATION_ID) reservationId: Reservation,
-                               @RequestBody @Valid stateDTO: ReservationStateDTO): PanelReservationDTO
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun changeReservationState(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(RESERVATION_ID) reservationId: Reservation,
+        @RequestBody @Valid stateDTO: ReservationStateDTO
+    ): PanelReservationDTO
 }

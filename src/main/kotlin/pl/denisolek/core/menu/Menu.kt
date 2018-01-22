@@ -5,10 +5,10 @@ import javax.persistence.*
 
 @Entity
 data class Menu(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Int? = null,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Int? = null,
 
-        @OneToMany(mappedBy = "menu", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var categories: MutableList<MenuCategory> = mutableListOf()
+    @OneToMany(mappedBy = "menu", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    var categories: MutableList<MenuCategory> = mutableListOf()
 )

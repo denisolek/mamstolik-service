@@ -8,9 +8,9 @@ import javax.persistence.MappedSuperclass
 
 @MappedSuperclass
 open class BaseEntity(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Int? = null
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Int? = null
 ) : Serializable {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

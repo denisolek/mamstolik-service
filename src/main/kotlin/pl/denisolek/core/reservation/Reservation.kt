@@ -19,67 +19,87 @@ import javax.persistence.*
 
 @Entity
 data class Reservation(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Int? = null,
-        override var startDateTime: LocalDateTime,
-        override var endDateTime: LocalDateTime,
-        var peopleNumber: Int,
-        var verificationCode: String? = null,
-        var duration: Duration,
-        var isVerified: Boolean = false,
-        var note: String? = "",
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Int? = null,
+    override var startDateTime: LocalDateTime,
+    override var endDateTime: LocalDateTime,
+    var peopleNumber: Int,
+    var verificationCode: String? = null,
+    var duration: Duration,
+    var isVerified: Boolean = false,
+    var note: String? = "",
 
-        @Enumerated(EnumType.STRING)
-        var state: ReservationState,
+    @Enumerated(EnumType.STRING)
+    var state: ReservationState,
 
-        @ManyToOne
-        var restaurant: Restaurant,
+    @ManyToOne
+    var restaurant: Restaurant,
 
-        @ManyToOne(cascade = arrayOf(CascadeType.ALL))
-        @JoinColumn
-        var customer: Customer,
+    @ManyToOne(cascade = arrayOf(CascadeType.ALL))
+    @JoinColumn
+    var customer: Customer,
 
-        @ManyToOne
-        @JoinColumn
-        var approvedBy: User? = null,
+    @ManyToOne
+    @JoinColumn
+    var approvedBy: User? = null,
 
-        @ManyToMany(fetch = FetchType.EAGER)
-        @JoinTable(name = "reservation_spots", joinColumns = arrayOf(JoinColumn(name = "reservation_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "spot_id")))
-        var spots: MutableList<Spot> = mutableListOf(),
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "reservation_spots",
+        joinColumns = arrayOf(JoinColumn(name = "reservation_id")),
+        inverseJoinColumns = arrayOf(JoinColumn(name = "spot_id"))
+    )
+    var spots: MutableList<Spot> = mutableListOf(),
 
-        @OneToMany(mappedBy = "customer", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var comments: MutableList<Comment> = mutableListOf()
+    @OneToMany(mappedBy = "customer", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    var comments: MutableList<Comment> = mutableListOf()
 ) : DateTimeInterval {
-    constructor(id: Int? = null, panelCreateReservationDTO: PanelCreateReservationDTO, restaurant: Restaurant, customer: Customer, approvedBy: User, spots: MutableList<Spot>) : this(
-            id = id,
-            startDateTime = panelCreateReservationDTO.dateTime.withSecond(0).withNano(0),
-            endDateTime = panelCreateReservationDTO.dateTime.plus(restaurant.avgReservationTime).withSecond(0).withNano(0),
-            peopleNumber = panelCreateReservationDTO.peopleNumber,
-            state = ReservationState.ACCEPTED,
-            verificationCode = null,
-            duration = restaurant.avgReservationTime,
-            isVerified = true,
-            note = panelCreateReservationDTO.note,
-            restaurant = restaurant,
-            customer = customer,
-            approvedBy = approvedBy,
-            spots = spots
+    constructor(
+        id: Int? = null,
+        panelCreateReservationDTO: PanelCreateReservationDTO,
+        restaurant: Restaurant,
+        customer: Customer,
+        approvedBy: User,
+        spots: MutableList<Spot>
+    ) : this(
+        id = id,
+        startDateTime = panelCreateReservationDTO.dateTime.withSecond(0).withNano(0),
+        endDateTime = panelCreateReservationDTO.dateTime.plus(restaurant.avgReservationTime).withSecond(0).withNano(0),
+        peopleNumber = panelCreateReservationDTO.peopleNumber,
+        state = ReservationState.ACCEPTED,
+        verificationCode = null,
+        duration = restaurant.avgReservationTime,
+        isVerified = true,
+        note = panelCreateReservationDTO.note,
+        restaurant = restaurant,
+        customer = customer,
+        approvedBy = approvedBy,
+        spots = spots
     )
 
-    constructor(id: Int? = null, panelCreateReservationGuestDTO: CreateReservationGuestDTO, restaurant: Restaurant, customer: Customer, spots: MutableList<Spot>, verificationCode: String) : this(
-            id = id,
-            startDateTime = panelCreateReservationGuestDTO.dateTime.withSecond(0).withNano(0),
-            endDateTime = panelCreateReservationGuestDTO.dateTime.plus(restaurant.avgReservationTime).withSecond(0).withNano(0),
-            peopleNumber = panelCreateReservationGuestDTO.peopleNumber,
-            state = ReservationState.PENDING,
-            verificationCode = verificationCode,
-            duration = restaurant.avgReservationTime,
-            isVerified = false,
-            note = panelCreateReservationGuestDTO.note,
-            restaurant = restaurant,
-            customer = customer,
-            spots = spots
+    constructor(
+        id: Int? = null,
+        panelCreateReservationGuestDTO: CreateReservationGuestDTO,
+        restaurant: Restaurant,
+        customer: Customer,
+        spots: MutableList<Spot>,
+        verificationCode: String
+    ) : this(
+        id = id,
+        startDateTime = panelCreateReservationGuestDTO.dateTime.withSecond(0).withNano(0),
+        endDateTime = panelCreateReservationGuestDTO.dateTime.plus(restaurant.avgReservationTime).withSecond(0).withNano(
+            0
+        ),
+        peopleNumber = panelCreateReservationGuestDTO.peopleNumber,
+        state = ReservationState.PENDING,
+        verificationCode = verificationCode,
+        duration = restaurant.avgReservationTime,
+        isVerified = false,
+        note = panelCreateReservationGuestDTO.note,
+        restaurant = restaurant,
+        customer = customer,
+        spots = spots
     )
 
     enum class ReservationState {
@@ -103,9 +123,15 @@ data class Reservation(
 
         when {
             haveSpecialDates && !validSpecialDates ->
-                throw ServiceException(HttpStatus.BAD_REQUEST, "Reservation (id ${this.id}, date ${this.startDateTime.toLocalDate()}, day ${this.startDateTime.toLocalDate().dayOfWeek}) doesn't fit any special dates.")
+                throw ServiceException(
+                    HttpStatus.BAD_REQUEST,
+                    "Reservation (id ${this.id}, date ${this.startDateTime.toLocalDate()}, day ${this.startDateTime.toLocalDate().dayOfWeek}) doesn't fit any special dates."
+                )
             !haveSpecialDates && !validBusinessHours ->
-                throw ServiceException(HttpStatus.BAD_REQUEST, "Reservation (id ${this.id}, date ${this.startDateTime.toLocalDate()}, day ${this.startDateTime.toLocalDate().dayOfWeek}) doesn't fit any business hour.")
+                throw ServiceException(
+                    HttpStatus.BAD_REQUEST,
+                    "Reservation (id ${this.id}, date ${this.startDateTime.toLocalDate()}, day ${this.startDateTime.toLocalDate().dayOfWeek}) doesn't fit any business hour."
+                )
         }
     }
 

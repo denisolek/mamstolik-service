@@ -18,17 +18,20 @@ import pl.denisolek.panel.restaurant.DTO.profile.ProfileDTO
 import java.time.LocalDateTime
 
 @Service
-class PanelRestaurantService(private val restaurantService: RestaurantService,
-                             private val cityService: CityService,
-                             private val userService: UserService,
-                             private val passwordEncoder: PasswordEncoder) {
+class PanelRestaurantService(
+    private val restaurantService: RestaurantService,
+    private val cityService: CityService,
+    private val userService: UserService,
+    private val passwordEncoder: PasswordEncoder
+) {
     fun getRestaurantDetails(restaurant: Restaurant): PanelRestaurantDetailsDTO =
-            PanelRestaurantDetailsDTO.fromRestaurant(restaurant)
+        PanelRestaurantDetailsDTO.fromRestaurant(restaurant)
 
     fun updateBaseInfo(restaurant: Restaurant, baseInfoDTO: BaseInfoDTO): PanelRestaurantDetailsDTO {
         BaseInfoDTO.mapToExistingRestaurant(restaurant, baseInfoDTO)
         restaurant.urlName = restaurantService.generateUrlName(baseInfoDTO.name)
-        restaurant.address.city = cityService.findByNameIgnoreCase(baseInfoDTO.address.city) ?: City(name = baseInfoDTO.address.city)
+        restaurant.address.city = cityService.findByNameIgnoreCase(baseInfoDTO.address.city) ?:
+                City(name = baseInfoDTO.address.city)
         return PanelRestaurantDetailsDTO.fromRestaurant(restaurantService.save(restaurant))
     }
 
@@ -38,7 +41,10 @@ class PanelRestaurantService(private val restaurantService: RestaurantService,
     }
 
     fun changeRestaurantPassword(restaurant: Restaurant, changePasswordDTO: ChangePasswordDTO) {
-        val user = userService.findByRestaurant(restaurant) ?: throw ServiceException(HttpStatus.NOT_FOUND, "Restaurant user not found")
+        val user = userService.findByRestaurant(restaurant) ?: throw ServiceException(
+            HttpStatus.NOT_FOUND,
+            "Restaurant user not found"
+        )
         if (passwordEncoder.matches(changePasswordDTO.oldPassword, user.password))
             user.password = passwordEncoder.encode(changePasswordDTO.newPassword)
         else
@@ -47,10 +53,10 @@ class PanelRestaurantService(private val restaurantService: RestaurantService,
     }
 
     fun getRestaurantQueue(restaurant: Restaurant): List<PanelReservationDTO> =
-            restaurant.reservations.filter {
-                it.startDateTime.isAfter(LocalDateTime.now()) &&
-                        it.state == Reservation.ReservationState.PENDING
-            }.map {
+        restaurant.reservations.filter {
+            it.startDateTime.isAfter(LocalDateTime.now()) &&
+                    it.state == Reservation.ReservationState.PENDING
+        }.map {
                 PanelReservationDTO.fromReservation(it)
             }.sortedBy { it.dateTime }
 }

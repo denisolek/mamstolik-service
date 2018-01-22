@@ -7,34 +7,34 @@ import javax.persistence.*
 
 @Entity
 data class SchemaItem(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Int? = null,
-        var uuid: String? = "",
-        var x: Float = 0.0f,
-        var y: Float = 0.0f,
-        var width: Float = 0.0f,
-        var height: Float = 0.0f,
-        var rotation: Float = 0.0f,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Int? = null,
+    var uuid: String? = "",
+    var x: Float = 0.0f,
+    var y: Float = 0.0f,
+    var width: Float = 0.0f,
+    var height: Float = 0.0f,
+    var rotation: Float = 0.0f,
 
-        @Enumerated(EnumType.STRING)
-        var type: Type,
+    @Enumerated(EnumType.STRING)
+    var type: Type,
 
-        @Enumerated(EnumType.STRING)
-        var tableType: TableType? = null,
+    @Enumerated(EnumType.STRING)
+    var tableType: TableType? = null,
 
-        @Enumerated(EnumType.STRING)
-        var itemType: ItemType? = null,
+    @Enumerated(EnumType.STRING)
+    var itemType: ItemType? = null,
 
-        @Enumerated(EnumType.STRING)
-        var wallItemType: WallItemType? = null,
+    @Enumerated(EnumType.STRING)
+    var wallItemType: WallItemType? = null,
 
-        @OneToOne(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var spot: Spot? = null,
+    @OneToOne(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    var spot: Spot? = null,
 
-        @ManyToOne
-        @JsonIgnore
-        var floor: Floor
+    @ManyToOne
+    @JsonIgnore
+    var floor: Floor
 ) {
     enum class Type {
         WALL, // 1

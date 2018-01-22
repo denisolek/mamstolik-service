@@ -13,14 +13,16 @@ import pl.denisolek.panel.customer.DTO.CustomerInfoDTO
 import pl.denisolek.panel.customer.DTO.VipDTO
 
 @Service
-class PanelCustomerService(private val commentService: CommentService,
-                           private val reservationService: ReservationService,
-                           private val customerService: CustomerService) {
+class PanelCustomerService(
+    private val commentService: CommentService,
+    private val reservationService: ReservationService,
+    private val customerService: CustomerService
+) {
     fun getCustomers(restaurant: Restaurant): List<BaseCustomerInfoDTO> =
-            restaurant.reservations
-                    .map { BaseCustomerInfoDTO.fromCustomer(it.customer) }
-                    .distinct()
-                    .sortedBy { it.lastName }
+        restaurant.reservations
+            .map { BaseCustomerInfoDTO.fromCustomer(it.customer) }
+            .distinct()
+            .sortedBy { it.lastName }
 
     fun getCustomer(restaurant: Restaurant, customer: Customer): CustomerInfoDTO {
         val customerComments = commentService.getRestaurantCustomerComments(restaurant, customer)

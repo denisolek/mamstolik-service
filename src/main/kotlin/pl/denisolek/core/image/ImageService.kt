@@ -20,8 +20,10 @@ import java.nio.file.Paths
 import java.util.*
 
 @Service
-class ImageService(private val imageRepository: ImageRepository,
-                   storageProperties: StorageProperties) {
+class ImageService(
+    private val imageRepository: ImageRepository,
+    storageProperties: StorageProperties
+) {
 
 
     private val fullSizeLocation: Path = Paths.get(storageProperties.fullSizeLocation)
@@ -29,7 +31,7 @@ class ImageService(private val imageRepository: ImageRepository,
     private val avatarLocation: Path = Paths.get(storageProperties.avatarLocation)
 
     fun save(image: Image) =
-            imageRepository.save(image)
+        imageRepository.save(image)
 
     fun generateUUID(): String {
         var exists: Boolean = true
@@ -45,14 +47,14 @@ class ImageService(private val imageRepository: ImageRepository,
 
     fun resize(image: MultipartFile, resizedImage: File, width: Int, height: Int) {
         Thumbnails.of(image.inputStream)
-                .size(width, height)
-                .toFile(resizedImage)
+            .size(width, height)
+            .toFile(resizedImage)
     }
 
     fun toFile(image: MultipartFile, fullSize: File) {
         Thumbnails.of(image.inputStream)
-                .scale(1.0, 1.0)
-                .toFile(fullSize)
+            .scale(1.0, 1.0)
+            .toFile(fullSize)
     }
 
     fun saveFullSize(uuidName: String, image: MultipartFile) {
@@ -107,10 +109,12 @@ class ImageService(private val imageRepository: ImageRepository,
     }
 
     fun saveImage(image: MultipartFile, uuidName: String, restaurant: Restaurant? = null): Image {
-        return imageRepository.save(Image(
+        return imageRepository.save(
+            Image(
                 fileName = image.originalFilename,
                 uuid = uuidName,
                 restaurant = restaurant
-        ))
+            )
+        )
     }
 }

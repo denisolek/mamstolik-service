@@ -6,13 +6,20 @@ import java.time.LocalTime
 
 class BusinessHourStub {
     companion object {
-        fun createBusinessHours(daysOfWeek: List<DayOfWeek>, openTime: LocalTime, closeTime: LocalTime): MutableMap<DayOfWeek, BusinessHour> =
-                daysOfWeek.map {
-                    Pair(it, BusinessHour(
-                            id = null,
-                            openTime = openTime,
-                            closeTime = closeTime,
-                            isClosed = false))
-                }.toMap().toMutableMap()
+        fun createBusinessHours(
+            daysOfWeek: List<DayOfWeek>,
+            openTime: LocalTime,
+            closeTime: LocalTime
+        ): MutableMap<DayOfWeek, BusinessHour> =
+            daysOfWeek.map {
+                Pair(
+                    it, BusinessHour(
+                        id = null,
+                        openTime = openTime,
+                        closeTime = closeTime,
+                        isClosed = false
+                    )
+                )
+            }.toMap().toMutableMap()
     }
 }

@@ -11,7 +11,9 @@ interface UserRepository : JpaRepository<User, Int> {
     fun findByUsername(username: String): User
     fun findByRestaurant(restaurant: Restaurant): User?
 
-    @Query("select distinct u from User as u left join u.restaurant as r " +
-            "where (lower(r.urlName) like lower(:name))")
+    @Query(
+        "select distinct u from User as u left join u.restaurant as r " +
+                "where (lower(r.urlName) like lower(:name))"
+    )
     fun findByUrlName(@Param(value = "name") name: String): User?
 }

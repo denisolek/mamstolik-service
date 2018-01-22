@@ -70,9 +70,9 @@ class PanelRestaurantControllerTests {
     @Before
     fun setup() {
         this.mvc = MockMvcBuilders
-                .webAppContextSetup(applicationContext)
-                .apply<DefaultMockMvcBuilder>(SecurityMockMvcConfigurers.springSecurity())
-                .build()
+            .webAppContextSetup(applicationContext)
+            .apply<DefaultMockMvcBuilder>(SecurityMockMvcConfigurers.springSecurity())
+            .build()
     }
 
     @Test
@@ -80,28 +80,28 @@ class PanelRestaurantControllerTests {
         val user = userRepository.findOne(1)
         doReturn(user).whenever(authorizationService).getCurrentUser()
         val result = mvc.perform(MockMvcRequestBuilders.get(DETAILS_PATH, 1))
-                .andExpect(status().isOk)
-                .andReturn()
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
         val expectedAddress = AddressDTO(
-                streetName = "Półwiejska 42",
-                buildingNumber = "1A",
-                postalCode = "60-681",
-                latitude = 52.40764f,
-                longitude = 16.93201f,
-                city = "Poznań"
+            streetName = "Półwiejska 42",
+            buildingNumber = "1A",
+            postalCode = "60-681",
+            latitude = 52.40764f,
+            longitude = 16.93201f,
+            city = "Poznań"
         )
 
         val expectedSettings = Settings(
-                id = 1,
-                localization = true,
-                specialDates = true,
-                description = true,
-                photos = true,
-                menu = true,
-                schema = true
+            id = 1,
+            localization = true,
+            specialDates = true,
+            description = true,
+            photos = true,
+            menu = true,
+            schema = true
         )
 
         assertEquals("Piano Bar Restaurant & Cafe", actual.name)
@@ -125,11 +125,13 @@ class PanelRestaurantControllerTests {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         val body = convertObjectToJsonBytes(baseInfoStub)
 
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
@@ -150,9 +152,11 @@ class PanelRestaurantControllerTests {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.name = ""
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -161,9 +165,11 @@ class PanelRestaurantControllerTests {
     fun `updateBaseInfo_ type is empty`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         val body = convertObjectToJsonBytes(baseInfoStub).replace("\"type\":\"BAR\"", "\"type\":\"\"")
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -175,9 +181,11 @@ class PanelRestaurantControllerTests {
 
         val body = convertObjectToJsonBytes(baseInfoStub)
 
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -189,9 +197,11 @@ class PanelRestaurantControllerTests {
 
         val body = convertObjectToJsonBytes(baseInfoStub)
 
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -203,9 +213,11 @@ class PanelRestaurantControllerTests {
 
         val body = convertObjectToJsonBytes(baseInfoStub)
 
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -217,9 +229,11 @@ class PanelRestaurantControllerTests {
 
         val body = convertObjectToJsonBytes(baseInfoStub)
 
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -229,9 +243,11 @@ class PanelRestaurantControllerTests {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.address.city = ""
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -241,9 +257,11 @@ class PanelRestaurantControllerTests {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.address.city = "test--name"
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -253,9 +271,11 @@ class PanelRestaurantControllerTests {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.address.city = "-test-"
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -265,9 +285,11 @@ class PanelRestaurantControllerTests {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.address.city = "test%:"
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -278,11 +300,13 @@ class PanelRestaurantControllerTests {
         baseInfoStub.address.city = "WARSZAWA"
         val body = convertObjectToJsonBytes(baseInfoStub)
 
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
@@ -295,11 +319,13 @@ class PanelRestaurantControllerTests {
         baseInfoStub.address.city = "SuperCity"
         val body = convertObjectToJsonBytes(baseInfoStub)
 
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
@@ -310,16 +336,18 @@ class PanelRestaurantControllerTests {
     fun `updateBaseInfo_ businessHour no id`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.businessHours[DayOfWeek.MONDAY] = BusinessHour(
-                openTime = LocalTime.of(4, 0),
-                closeTime = LocalTime.of(5, 0),
-                isClosed = false
+            openTime = LocalTime.of(4, 0),
+            closeTime = LocalTime.of(5, 0),
+            isClosed = false
         )
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
@@ -333,17 +361,19 @@ class PanelRestaurantControllerTests {
     fun `updateBaseInfo_ businessHour not existing id`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.businessHours[DayOfWeek.MONDAY] = BusinessHour(
-                id = 5000,
-                openTime = LocalTime.of(4, 0),
-                closeTime = LocalTime.of(5, 0),
-                isClosed = false
+            id = 5000,
+            openTime = LocalTime.of(4, 0),
+            closeTime = LocalTime.of(5, 0),
+            isClosed = false
         )
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
@@ -357,14 +387,16 @@ class PanelRestaurantControllerTests {
     fun `updateBaseInfo_ businessHour with reservations in the future`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.businessHours[DayOfWeek.FRIDAY] = BusinessHour(
-                openTime = LocalTime.of(18, 0),
-                closeTime = LocalTime.of(20, 0),
-                isClosed = false
+            openTime = LocalTime.of(18, 0),
+            closeTime = LocalTime.of(20, 0),
+            isClosed = false
         )
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -374,9 +406,11 @@ class PanelRestaurantControllerTests {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.businessHours.remove(DayOfWeek.MONDAY)
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -385,15 +419,17 @@ class PanelRestaurantControllerTests {
     fun `updateBaseInfo_ businessHour closeTime before openTime`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.businessHours[DayOfWeek.MONDAY] = BusinessHour(
-                id = 5000,
-                openTime = LocalTime.of(5, 0),
-                closeTime = LocalTime.of(4, 0),
-                isClosed = false
+            id = 5000,
+            openTime = LocalTime.of(5, 0),
+            closeTime = LocalTime.of(4, 0),
+            isClosed = false
         )
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -402,16 +438,18 @@ class PanelRestaurantControllerTests {
     fun `updateBaseInfo_ businessHour no openTime`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.businessHours[DayOfWeek.MONDAY] = BusinessHour(
-                id = 5000,
-                closeTime = LocalTime.of(15, 0),
-                isClosed = false
+            id = 5000,
+            closeTime = LocalTime.of(15, 0),
+            isClosed = false
         )
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
@@ -425,16 +463,18 @@ class PanelRestaurantControllerTests {
     fun `updateBaseInfo_ businessHour no closeTime`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.businessHours[DayOfWeek.MONDAY] = BusinessHour(
-                id = 5000,
-                openTime = LocalTime.of(5, 0),
-                isClosed = false
+            id = 5000,
+            openTime = LocalTime.of(5, 0),
+            isClosed = false
         )
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
@@ -448,16 +488,18 @@ class PanelRestaurantControllerTests {
     fun `updateBaseInfo_ businessHour no isClosed`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.businessHours[DayOfWeek.MONDAY] = BusinessHour(
-                id = 5000,
-                openTime = LocalTime.of(4, 0),
-                closeTime = LocalTime.of(5, 0)
+            id = 5000,
+            openTime = LocalTime.of(4, 0),
+            closeTime = LocalTime.of(5, 0)
         )
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
@@ -476,11 +518,13 @@ class PanelRestaurantControllerTests {
             it.businessHour.isClosed = true
         }
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
@@ -501,9 +545,11 @@ class PanelRestaurantControllerTests {
             it.date = LocalDate.of(2017, 10, 11)
         }
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -512,21 +558,23 @@ class PanelRestaurantControllerTests {
     fun `updateBaseInfo_ specialDate add new for existing date`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.specialDates.add(
-                SpecialDateDTO(
-                        id = null,
-                        date = LocalDate.of(2017, 10, 10),
-                        businessHour = BusinessHour(
-                                id = 50,
-                                openTime = LocalTime.of(17, 20),
-                                closeTime = LocalTime.of(18, 20),
-                                isClosed = false
-                        )
+            SpecialDateDTO(
+                id = null,
+                date = LocalDate.of(2017, 10, 10),
+                businessHour = BusinessHour(
+                    id = 50,
+                    openTime = LocalTime.of(17, 20),
+                    closeTime = LocalTime.of(18, 20),
+                    isClosed = false
                 )
+            )
         )
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isConflict)
     }
@@ -535,21 +583,23 @@ class PanelRestaurantControllerTests {
     fun `updateBaseInfo_ specialDate add new for existing date and different day id`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.specialDates.add(
-                SpecialDateDTO(
-                        id = 2,
-                        date = LocalDate.of(2017, 10, 10),
-                        businessHour = BusinessHour(
-                                id = null,
-                                openTime = LocalTime.of(17, 20),
-                                closeTime = LocalTime.of(18, 20),
-                                isClosed = false
-                        )
+            SpecialDateDTO(
+                id = 2,
+                date = LocalDate.of(2017, 10, 10),
+                businessHour = BusinessHour(
+                    id = null,
+                    openTime = LocalTime.of(17, 20),
+                    closeTime = LocalTime.of(18, 20),
+                    isClosed = false
                 )
+            )
         )
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isConflict)
     }
@@ -557,23 +607,27 @@ class PanelRestaurantControllerTests {
     @Test
     fun `updateBaseInfo_ specialDate add new`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
-        baseInfoStub.specialDates.add(SpecialDateDTO(
+        baseInfoStub.specialDates.add(
+            SpecialDateDTO(
                 id = null,
                 date = LocalDate.of(2017, 10, 12),
                 businessHour = BusinessHour(
-                        id = null,
-                        openTime = LocalTime.of(10, 0),
-                        closeTime = LocalTime.of(11, 0),
-                        isClosed = false
+                    id = null,
+                    openTime = LocalTime.of(10, 0),
+                    closeTime = LocalTime.of(11, 0),
+                    isClosed = false
                 )
-        ))
+            )
+        )
 
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
@@ -589,11 +643,13 @@ class PanelRestaurantControllerTests {
         baseInfoStub.specialDates.removeIf { it.id == 2 }
 
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
@@ -605,21 +661,23 @@ class PanelRestaurantControllerTests {
     fun `updateBaseInfo_ specialDate add new close time before open time`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.specialDates.add(
-                SpecialDateDTO(
-                        id = null,
-                        date = LocalDate.of(2018, 10, 22),
-                        businessHour = BusinessHour(
-                                id = null,
-                                openTime = LocalTime.of(17, 20),
-                                closeTime = LocalTime.of(13, 20),
-                                isClosed = false
-                        )
+            SpecialDateDTO(
+                id = null,
+                date = LocalDate.of(2018, 10, 22),
+                businessHour = BusinessHour(
+                    id = null,
+                    openTime = LocalTime.of(17, 20),
+                    closeTime = LocalTime.of(13, 20),
+                    isClosed = false
                 )
+            )
         )
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -630,9 +688,11 @@ class PanelRestaurantControllerTests {
         baseInfoStub.specialDates.removeIf { it.id == 3 }
 
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -641,21 +701,23 @@ class PanelRestaurantControllerTests {
     fun `updateBaseInfo_ specialDate add new for day with reservations`() {
         val baseInfoStub = BaseInfoDTOStub.getBaseInfoDTO()
         baseInfoStub.specialDates.add(
-                SpecialDateDTO(
-                        id = null,
-                        date = LocalDate.of(2018, 10, 20),
-                        businessHour = BusinessHour(
-                                id = null,
-                                openTime = LocalTime.of(18, 20),
-                                closeTime = LocalTime.of(22, 20),
-                                isClosed = false
-                        )
+            SpecialDateDTO(
+                id = null,
+                date = LocalDate.of(2018, 10, 20),
+                businessHour = BusinessHour(
+                    id = null,
+                    openTime = LocalTime.of(18, 20),
+                    closeTime = LocalTime.of(22, 20),
+                    isClosed = false
                 )
+            )
         )
         val body = convertObjectToJsonBytes(baseInfoStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(BASE_INFO_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -664,11 +726,13 @@ class PanelRestaurantControllerTests {
     fun `updateProfile_ correct data`() {
         val profileDTOStub = ProfileDTOStub.getProfileDTO()
         val body = convertObjectToJsonBytes(profileDTOStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(PROFILE_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
@@ -691,9 +755,11 @@ class PanelRestaurantControllerTests {
         val profileDTOStub = ProfileDTOStub.getProfileDTO()
         profileDTOStub.description = RandomStringUtils.random(1001)
         val body = convertObjectToJsonBytes(profileDTOStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(PROFILE_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -702,19 +768,21 @@ class PanelRestaurantControllerTests {
     fun `updateProfile_ add menu category`() {
         val profileDTOStub = ProfileDTOStub.getProfileDTO()
         profileDTOStub.menu.add(
-                MenuCategoryDTO(
-                        name = "new category",
-                        description = "description",
-                        position = 1,
-                        items = mutableListOf()
-                )
+            MenuCategoryDTO(
+                name = "new category",
+                description = "description",
+                position = 1,
+                items = mutableListOf()
+            )
         )
         val body = convertObjectToJsonBytes(profileDTOStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(PROFILE_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
@@ -727,24 +795,28 @@ class PanelRestaurantControllerTests {
     fun `updateProfile_ add menu category with items`() {
         val profileDTOStub = ProfileDTOStub.getProfileDTO()
         profileDTOStub.menu.add(
-                MenuCategoryDTO(
-                        name = "new category",
-                        description = "description",
-                        position = 1,
-                        items = mutableListOf(MenuItemDTO(
-                                name = "new item",
-                                description = "new item description",
-                                price = 100f,
-                                position = 0
-                        ))
+            MenuCategoryDTO(
+                name = "new category",
+                description = "description",
+                position = 1,
+                items = mutableListOf(
+                    MenuItemDTO(
+                        name = "new item",
+                        description = "new item description",
+                        price = 100f,
+                        position = 0
+                    )
                 )
+            )
         )
         val body = convertObjectToJsonBytes(profileDTOStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(PROFILE_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
@@ -761,11 +833,13 @@ class PanelRestaurantControllerTests {
         profileDTOStub.menu[0].items.removeIf { it.id == 1 }
 
         val body = convertObjectToJsonBytes(profileDTOStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(PROFILE_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
@@ -780,11 +854,13 @@ class PanelRestaurantControllerTests {
         profileDTOStub.menu.clear()
 
         val body = convertObjectToJsonBytes(profileDTOStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(PROFILE_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
@@ -797,11 +873,13 @@ class PanelRestaurantControllerTests {
         profileDTOStub.menu[0].name = "Updated category name"
 
         val body = convertObjectToJsonBytes(profileDTOStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(PROFILE_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 
@@ -815,11 +893,13 @@ class PanelRestaurantControllerTests {
         profileDTOStub.menu[0].items[0].name = "Updated category item name"
 
         val body = convertObjectToJsonBytes(profileDTOStub)
-        val result = mvc.perform(MockMvcRequestBuilders.put(PROFILE_PATH, 1)
+        val result = mvc.perform(
+            MockMvcRequestBuilders.put(PROFILE_PATH, 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
-                .andExpect(status().isOk)
-                .andReturn()
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andReturn()
 
         val actual = convertJsonBytesToObject(result.response.contentAsString, PanelRestaurantDetailsDTO::class.java)
 

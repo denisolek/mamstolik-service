@@ -27,30 +27,46 @@ interface PanelRestaurantApi {
     }
 
     @GetMapping(DETAILS_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
     fun getRestaurantDetails(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant): PanelRestaurantDetailsDTO
 
     @PutMapping(BASE_INFO_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun updateBaseInfo(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                       @RequestBody @Valid baseInfoDTO: BaseInfoDTO): PanelRestaurantDetailsDTO
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun updateBaseInfo(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @RequestBody @Valid baseInfoDTO: BaseInfoDTO
+    ): PanelRestaurantDetailsDTO
 
     @PutMapping(PROFILE_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun updateProfile(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                      @RequestBody @Valid profileDTO: ProfileDTO): PanelRestaurantDetailsDTO
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun updateProfile(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @RequestBody @Valid profileDTO: ProfileDTO
+    ): PanelRestaurantDetailsDTO
 
     @PutMapping(RESTAURANT_PASSWORD_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
-    fun changeRestaurantPassword(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                                 @RequestBody @Valid changePasswordDTO: ChangePasswordDTO)
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
+    fun changeRestaurantPassword(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @RequestBody @Valid changePasswordDTO: ChangePasswordDTO
+    )
 
     @GetMapping(RESTAURANTS_QUEUE_PATH)
-    @PreAuthorize("@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
-            "@authorizationService.currentUser.workPlace == #restaurantId")
+    @PreAuthorize(
+        "@authorizationService.currentUser.ownedRestaurants.contains(#restaurantId) || " +
+                "@authorizationService.currentUser.workPlace == #restaurantId"
+    )
     fun getRestaurantQueue(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant): List<PanelReservationDTO>
 }

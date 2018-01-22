@@ -14,9 +14,9 @@ class SecurityTestConfig : ResourceServerConfigurerAdapter() {
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/**")
-                .permitAll()
+            .csrf().disable()
+            .authorizeRequests()
+            .antMatchers("/**")
+            .permitAll()
     }
 }

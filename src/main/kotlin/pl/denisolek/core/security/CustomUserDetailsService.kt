@@ -12,7 +12,8 @@ import pl.denisolek.core.user.UserRepository
 
 
 @Component("userDetailsService")
-class CustomUserDetailsService(private val userRepository: UserRepository) : org.springframework.security.core.userdetails.UserDetailsService {
+class CustomUserDetailsService(private val userRepository: UserRepository) :
+    org.springframework.security.core.userdetails.UserDetailsService {
 
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
@@ -22,12 +23,19 @@ class CustomUserDetailsService(private val userRepository: UserRepository) : org
         val userByUsername: User? = userRepository.findByUsername(lowercaseLogin)
         val userByUrlName: User? = userRepository.findByUrlName(lowercaseLogin)
 
-        val userFromDatabase: User = (userByEmail ?: userByUsername ?: userByUrlName) ?: throw ServiceException(HttpStatus.NOT_FOUND, "User not found")
+        val userFromDatabase: User = (userByEmail ?: userByUsername ?: userByUrlName) ?: throw ServiceException(
+            HttpStatus.NOT_FOUND,
+            "User not found"
+        )
 
         val grantedAuthorities = ArrayList<GrantedAuthority>()
 
         userFromDatabase.authorities.mapTo(grantedAuthorities) { SimpleGrantedAuthority(it.role.toString()) }
 
-        return org.springframework.security.core.userdetails.User(userFromDatabase.email, userFromDatabase.password, grantedAuthorities)
+        return org.springframework.security.core.userdetails.User(
+            userFromDatabase.email,
+            userFromDatabase.password,
+            grantedAuthorities
+        )
     }
 }

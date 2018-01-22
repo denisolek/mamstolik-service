@@ -1,8 +1,8 @@
 package pl.denisolek.guest.restaurant.DTO
 
 data class SpotInfoDTO(
-        var id: Int,
-        var state: SpotState
+    var id: Int,
+    var state: SpotState
 ) {
     enum class SpotState {
         TAKEN,

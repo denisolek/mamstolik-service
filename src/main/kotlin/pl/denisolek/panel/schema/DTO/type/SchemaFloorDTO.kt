@@ -4,13 +4,13 @@ import pl.denisolek.core.floor.Floor
 import pl.denisolek.core.schema.SchemaItem
 
 data class SchemaFloorDTO(
-        var id: Int? = null,
-        var name: String,
-        var tableCount: Int
+    var id: Int? = null,
+    var name: String,
+    var tableCount: Int
 ) {
     constructor(floor: Floor) : this(
-            id = floor.id,
-            name = floor.name,
-            tableCount = floor.schemaItems.filter { it.type == SchemaItem.Type.TABLE }.size
+        id = floor.id,
+        name = floor.name,
+        tableCount = floor.schemaItems.filter { it.type == SchemaItem.Type.TABLE }.size
     )
 }

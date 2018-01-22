@@ -14,41 +14,42 @@ class SwaggerConfig {
     @Bean
     fun panelApi(): Docket {
         return Docket(DocumentationType.SWAGGER_2)
-                .groupName("Panel")
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("pl.denisolek.panel"))
-                .build()
-                .apiInfo(createInfo("Panel API", "Panel API documentation"))
+            .groupName("Panel")
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("pl.denisolek.panel"))
+            .build()
+            .apiInfo(createInfo("Panel API", "Panel API documentation"))
     }
 
     @Bean
     fun guestApi(): Docket {
         return Docket(DocumentationType.SWAGGER_2)
-                .groupName("Guest")
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("pl.denisolek.guest"))
-                .build()
-                .apiInfo(createInfo("Guest API", "Guest API documentation"))
+            .groupName("Guest")
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("pl.denisolek.guest"))
+            .build()
+            .apiInfo(createInfo("Guest API", "Guest API documentation"))
     }
 
     @Bean
     fun sharedApi(): Docket {
         return Docket(DocumentationType.SWAGGER_2)
-                .groupName("Shared")
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("pl.denisolek.shared"))
-                .build()
-                .apiInfo(createInfo("Shared API", "Shared API documentation"))
+            .groupName("Shared")
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("pl.denisolek.shared"))
+            .build()
+            .apiInfo(createInfo("Shared API", "Shared API documentation"))
     }
 
     private fun createInfo(title: String, description: String): ApiInfo {
         return ApiInfo(
-                title,
-                description,
-                "1.0",
-                "",
-                "",
-                "",
-                "")
+            title,
+            description,
+            "1.0",
+            "",
+            "",
+            "",
+            ""
+        )
     }
 }

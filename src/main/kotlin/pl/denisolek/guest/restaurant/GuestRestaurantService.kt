@@ -21,19 +21,40 @@ class GuestRestaurantService(val restaurantService: RestaurantService) {
     fun searchRestaurants(city: City, date: LocalDateTime, peopleNumber: Int): SearchDTO {
         val output: SearchDTO = SearchDTO.initSearchDTO()
         restaurantService.getActiveRestaurantsByCity(city)
-                .map { restaurant ->
-                    when (restaurant.getAvailability(date, peopleNumber)) {
-                        Restaurant.AvailabilityType.AVAILABLE -> output.available.add(RestaurantSearchDTO.fromRestaurant(restaurant))
-                        Restaurant.AvailabilityType.POSSIBLE -> output.possible.add(RestaurantSearchDTO.fromRestaurant(restaurant))
-                        Restaurant.AvailabilityType.NOT_AVAILABLE -> output.notAvailable.add(RestaurantSearchDTO.fromRestaurant(restaurant))
-                        Restaurant.AvailabilityType.CLOSED -> output.closed.add(RestaurantSearchDTO.fromRestaurant(restaurant))
-                    }
+            .map { restaurant ->
+                when (restaurant.getAvailability(date, peopleNumber)) {
+                    Restaurant.AvailabilityType.AVAILABLE -> output.available.add(
+                        RestaurantSearchDTO.fromRestaurant(
+                            restaurant
+                        )
+                    )
+                    Restaurant.AvailabilityType.POSSIBLE -> output.possible.add(
+                        RestaurantSearchDTO.fromRestaurant(
+                            restaurant
+                        )
+                    )
+                    Restaurant.AvailabilityType.NOT_AVAILABLE -> output.notAvailable.add(
+                        RestaurantSearchDTO.fromRestaurant(
+                            restaurant
+                        )
+                    )
+                    Restaurant.AvailabilityType.CLOSED -> output.closed.add(
+                        RestaurantSearchDTO.fromRestaurant(
+                            restaurant
+                        )
+                    )
                 }
+            }
         return output
     }
 
-    fun getRestaurantAvailableDates(restaurant: Restaurant, date: LocalDateTime, currentDate: LocalDateTime, peopleNumber: Int): Map<LocalDate, List<LocalTime>> =
-            restaurant.getAvailableDates(date, currentDate, peopleNumber)
+    fun getRestaurantAvailableDates(
+        restaurant: Restaurant,
+        date: LocalDateTime,
+        currentDate: LocalDateTime,
+        peopleNumber: Int
+    ): Map<LocalDate, List<LocalTime>> =
+        restaurant.getAvailableDates(date, currentDate, peopleNumber)
 
     fun getRestaurantAvailableSpots(restaurant: Restaurant, date: LocalDateTime, peopleNumber: Int): List<SpotInfoDTO> {
         if (!restaurant.isOpenAt(date))
@@ -51,8 +72,14 @@ class GuestRestaurantService(val restaurantService: RestaurantService) {
                 else -> {
                     when {
                         takenSpots.contains(it) -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.TAKEN)
-                        it.capacity >= peopleNumber && it.minPeopleNumber <= peopleNumber -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.AVAILABLE)
-                        it.capacity >= peopleNumber && it.minPeopleNumber > peopleNumber -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.POSSIBLE)
+                        it.capacity >= peopleNumber && it.minPeopleNumber <= peopleNumber -> SpotInfoDTO(
+                            it.id!!,
+                            SpotInfoDTO.SpotState.AVAILABLE
+                        )
+                        it.capacity >= peopleNumber && it.minPeopleNumber > peopleNumber -> SpotInfoDTO(
+                            it.id!!,
+                            SpotInfoDTO.SpotState.POSSIBLE
+                        )
                         else -> SpotInfoDTO(it.id!!, SpotInfoDTO.SpotState.NOT_AVAILABLE)
                     }
                 }
@@ -61,7 +88,10 @@ class GuestRestaurantService(val restaurantService: RestaurantService) {
     }
 
     fun getRestaurant(urlName: String): RestaurantDetailsDTO {
-        val restaurant = restaurantService.findByUrlName(urlName) ?: throw ServiceException(HttpStatus.NOT_FOUND, "Restaurant not found")
+        val restaurant = restaurantService.findByUrlName(urlName) ?: throw ServiceException(
+            HttpStatus.NOT_FOUND,
+            "Restaurant not found"
+        )
         return RestaurantDetailsDTO.fromRestaurant(restaurant)
     }
 

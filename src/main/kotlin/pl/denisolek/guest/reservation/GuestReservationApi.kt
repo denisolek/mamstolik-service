@@ -25,6 +25,8 @@ interface GuestReservationApi {
     fun addReservation(@RequestBody @Valid createReservationGuestDTO: CreateReservationGuestDTO): Int
 
     @PostMapping(RESERVATION_ID_CODE_APATH)
-    fun submitCode(@ApiIgnore @PathVariable(RESERVATION_ID) reservationId: Reservation,
-                   @RequestParam(value = CODE, required = true) code: String)
+    fun submitCode(
+        @ApiIgnore @PathVariable(RESERVATION_ID) reservationId: Reservation,
+        @RequestParam(value = CODE, required = true) code: String
+    )
 }

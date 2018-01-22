@@ -6,16 +6,16 @@ import javax.persistence.*
 
 @Entity
 data class MenuCategory(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Int? = null,
-        var name: String,
-        var description: String? = "",
-        var position: Int,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Int? = null,
+    var name: String,
+    var description: String? = "",
+    var position: Int,
 
-        @OneToMany(mappedBy = "category", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var items: MutableList<MenuItem> = mutableListOf(),
+    @OneToMany(mappedBy = "category", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    var items: MutableList<MenuItem> = mutableListOf(),
 
-        @ManyToOne
-        var menu: Menu
+    @ManyToOne
+    var menu: Menu
 )

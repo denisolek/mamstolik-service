@@ -8,9 +8,9 @@ import javax.persistence.OneToMany
 
 @Entity
 data class City(
-        var name: String,
+    var name: String,
 
-        @OneToMany(mappedBy = "city", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        @JsonIgnore
-        var aliases: MutableList<CityAlias>? = mutableListOf()
+    @OneToMany(mappedBy = "city", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    @JsonIgnore
+    var aliases: MutableList<CityAlias>? = mutableListOf()
 ) : BaseEntity()

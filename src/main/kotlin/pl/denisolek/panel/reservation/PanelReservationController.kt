@@ -22,55 +22,129 @@ class PanelReservationController(val panelReservationService: PanelReservationSe
     }
 
     @ApiImplicitParam(name = API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "integer")
-    override fun addReservation(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
-                                @RequestBody @Valid createReservationDTO: PanelCreateReservationDTO): PanelReservationsDTO =
-            panelReservationService.addReservation(restaurantId, createReservationDTO)
+    override fun addReservation(
+        @ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
+        @RequestBody @Valid createReservationDTO: PanelCreateReservationDTO
+    ): PanelReservationsDTO =
+        panelReservationService.addReservation(restaurantId, createReservationDTO)
 
     @ApiImplicitParam(name = API.RESTAURANT_ID, value = "Restaurant Id", paramType = "path", dataType = "integer")
-    override fun getReservations(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
-                                 @RequestParam(required = true, value = PanelReservationApi.DATE) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate): PanelReservationsDTO =
-            panelReservationService.getReservations(restaurantId, date)
+    override fun getReservations(
+        @ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
+        @RequestParam(
+            required = true,
+            value = PanelReservationApi.DATE
+        ) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate
+    ): PanelReservationsDTO =
+        panelReservationService.getReservations(restaurantId, date)
 
     @ApiImplicitParams(
-            ApiImplicitParam(name = "restaurantId", value = "Restaurant Id", paramType = "path", dataType = "int", required = true),
-            ApiImplicitParam(name = "spotId", value = "Spot Id", paramType = "path", dataType = "int", required = true)
+        ApiImplicitParam(
+            name = "restaurantId",
+            value = "Restaurant Id",
+            paramType = "path",
+            dataType = "int",
+            required = true
+        ),
+        ApiImplicitParam(name = "spotId", value = "Spot Id", paramType = "path", dataType = "int", required = true)
     )
-    override fun getSpotReservations(@ApiIgnore @PathVariable(PanelReservationApi.RESTAURANT_ID) restaurantId: Restaurant,
-                                     @ApiIgnore @PathVariable(PanelReservationApi.SPOT_ID) spotId: Spot,
-                                     @RequestParam(required = true, value = PanelReservationApi.DATE) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate): SpotReservationsDTO =
-            panelReservationService.getSpotReservations(restaurantId, spotId, date)
+    override fun getSpotReservations(
+        @ApiIgnore @PathVariable(PanelReservationApi.RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(PanelReservationApi.SPOT_ID) spotId: Spot,
+        @RequestParam(
+            required = true,
+            value = PanelReservationApi.DATE
+        ) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate
+    ): SpotReservationsDTO =
+        panelReservationService.getSpotReservations(restaurantId, spotId, date)
 
     @ApiImplicitParams(
-            ApiImplicitParam(name = "restaurantId", value = "Restaurant Id", paramType = "path", dataType = "int", required = true),
-            ApiImplicitParam(name = "reservationId", value = "Reservation Id", paramType = "path", dataType = "int", required = true)
+        ApiImplicitParam(
+            name = "restaurantId",
+            value = "Restaurant Id",
+            paramType = "path",
+            dataType = "int",
+            required = true
+        ),
+        ApiImplicitParam(
+            name = "reservationId",
+            value = "Reservation Id",
+            paramType = "path",
+            dataType = "int",
+            required = true
+        )
     )
-    override fun editReservation(@ApiIgnore @PathVariable(PanelReservationApi.RESTAURANT_ID) restaurantId: Restaurant,
-                                 @ApiIgnore @PathVariable(PanelReservationApi.RESERVATION_ID) reservationId: Reservation,
-                                 @RequestBody @Valid createReservationDTO: PanelCreateReservationDTO): PanelReservationsDTO =
-            panelReservationService.editReservation(restaurantId, reservationId, createReservationDTO)
+    override fun editReservation(
+        @ApiIgnore @PathVariable(PanelReservationApi.RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(PanelReservationApi.RESERVATION_ID) reservationId: Reservation,
+        @RequestBody @Valid createReservationDTO: PanelCreateReservationDTO
+    ): PanelReservationsDTO =
+        panelReservationService.editReservation(restaurantId, reservationId, createReservationDTO)
 
     @ApiImplicitParams(
-            ApiImplicitParam(name = "restaurantId", value = "Restaurant Id", paramType = "path", dataType = "int", required = true),
-            ApiImplicitParam(name = "reservationId", value = "Reservation Id", paramType = "path", dataType = "int", required = true)
+        ApiImplicitParam(
+            name = "restaurantId",
+            value = "Restaurant Id",
+            paramType = "path",
+            dataType = "int",
+            required = true
+        ),
+        ApiImplicitParam(
+            name = "reservationId",
+            value = "Reservation Id",
+            paramType = "path",
+            dataType = "int",
+            required = true
+        )
     )
-    override fun cancelReservation(@ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
-                                   @ApiIgnore @PathVariable(API.RESERVATION_ID) reservationId: Reservation): PanelReservationsDTO =
-            panelReservationService.cancelReservation(restaurantId, reservationId)
+    override fun cancelReservation(
+        @ApiIgnore @PathVariable(API.RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(API.RESERVATION_ID) reservationId: Reservation
+    ): PanelReservationsDTO =
+        panelReservationService.cancelReservation(restaurantId, reservationId)
 
     @ApiImplicitParams(
-            ApiImplicitParam(name = "restaurantId", value = "Restaurant Id", paramType = "path", dataType = "int", required = true),
-            ApiImplicitParam(name = "reservationId", value = "Reservation Id", paramType = "path", dataType = "int", required = true)
+        ApiImplicitParam(
+            name = "restaurantId",
+            value = "Restaurant Id",
+            paramType = "path",
+            dataType = "int",
+            required = true
+        ),
+        ApiImplicitParam(
+            name = "reservationId",
+            value = "Reservation Id",
+            paramType = "path",
+            dataType = "int",
+            required = true
+        )
     )
-    override fun getReservation(@ApiIgnore @PathVariable(PanelReservationApi.RESTAURANT_ID) restaurantId: Restaurant,
-                                @ApiIgnore @PathVariable(PanelReservationApi.RESERVATION_ID) reservationId: Reservation): PanelReservationDTO =
-            panelReservationService.getReservation(restaurantId, reservationId)
+    override fun getReservation(
+        @ApiIgnore @PathVariable(PanelReservationApi.RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(PanelReservationApi.RESERVATION_ID) reservationId: Reservation
+    ): PanelReservationDTO =
+        panelReservationService.getReservation(restaurantId, reservationId)
 
     @ApiImplicitParams(
-            ApiImplicitParam(name = "restaurantId", value = "Restaurant Id", paramType = "path", dataType = "int", required = true),
-            ApiImplicitParam(name = "reservationId", value = "Reservation Id", paramType = "path", dataType = "int", required = true)
+        ApiImplicitParam(
+            name = "restaurantId",
+            value = "Restaurant Id",
+            paramType = "path",
+            dataType = "int",
+            required = true
+        ),
+        ApiImplicitParam(
+            name = "reservationId",
+            value = "Reservation Id",
+            paramType = "path",
+            dataType = "int",
+            required = true
+        )
     )
-    override fun changeReservationState(@ApiIgnore @PathVariable(PanelReservationApi.RESTAURANT_ID) restaurantId: Restaurant,
-                                        @ApiIgnore @PathVariable(PanelReservationApi.RESERVATION_ID) reservationId: Reservation,
-                                        @RequestBody @Valid stateDTO: ReservationStateDTO): PanelReservationDTO =
-            panelReservationService.changeReservationState(restaurantId, reservationId, stateDTO)
+    override fun changeReservationState(
+        @ApiIgnore @PathVariable(PanelReservationApi.RESTAURANT_ID) restaurantId: Restaurant,
+        @ApiIgnore @PathVariable(PanelReservationApi.RESERVATION_ID) reservationId: Reservation,
+        @RequestBody @Valid stateDTO: ReservationStateDTO
+    ): PanelReservationDTO =
+        panelReservationService.changeReservationState(restaurantId, reservationId, stateDTO)
 }

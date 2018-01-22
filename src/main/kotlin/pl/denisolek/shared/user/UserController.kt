@@ -7,5 +7,5 @@ import pl.denisolek.shared.user.dto.UserDTO
 @RestController
 class UserController(private val authorizationService: AuthorizationService) : UserApi {
     override fun getUser(): UserDTO =
-            UserDTO.fromUser(authorizationService.getCurrentUser())
+        UserDTO.fromUser(authorizationService.getCurrentUser())
 }

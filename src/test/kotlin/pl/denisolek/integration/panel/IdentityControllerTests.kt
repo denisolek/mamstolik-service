@@ -74,9 +74,9 @@ class IdentityControllerTests {
     @Before
     fun setup() {
         this.mvc = MockMvcBuilders
-                .webAppContextSetup(applicationContext)
-                .apply<DefaultMockMvcBuilder>(springSecurity())
-                .build()
+            .webAppContextSetup(applicationContext)
+            .apply<DefaultMockMvcBuilder>(springSecurity())
+            .build()
     }
 
     @Test
@@ -86,9 +86,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(registerDTO)
 
-        val result = mvc.perform(post(USERS_BASE_PATH)
+        val result = mvc.perform(
+            post(USERS_BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isConflict)
     }
@@ -100,9 +102,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(registerDTO)
 
-        val result = mvc.perform(post(USERS_BASE_PATH)
+        val result = mvc.perform(
+            post(USERS_BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -114,9 +118,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(registerDTO)
 
-        val result = mvc.perform(post(USERS_BASE_PATH)
+        val result = mvc.perform(
+            post(USERS_BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -128,9 +134,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(registerDTO)
 
-        val result = mvc.perform(post(USERS_BASE_PATH)
+        val result = mvc.perform(
+            post(USERS_BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -142,9 +150,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(registerDTO)
 
-        val result = mvc.perform(post(USERS_BASE_PATH)
+        val result = mvc.perform(
+            post(USERS_BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -156,9 +166,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(registerDTO)
 
-        val result = mvc.perform(post(USERS_BASE_PATH)
+        val result = mvc.perform(
+            post(USERS_BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -170,9 +182,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(registerDTO)
 
-        val result = mvc.perform(post(USERS_BASE_PATH)
+        val result = mvc.perform(
+            post(USERS_BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -184,9 +198,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(registerDTO)
 
-        val result = mvc.perform(post(USERS_BASE_PATH)
+        val result = mvc.perform(
+            post(USERS_BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -198,9 +214,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(registerDTO)
 
-        val result = mvc.perform(post(USERS_BASE_PATH)
+        val result = mvc.perform(
+            post(USERS_BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -212,9 +230,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(registerDTO)
 
-        val result = mvc.perform(post(USERS_BASE_PATH)
+        val result = mvc.perform(
+            post(USERS_BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -226,9 +246,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(registerDTO)
 
-        val result = mvc.perform(post(USERS_BASE_PATH)
+        val result = mvc.perform(
+            post(USERS_BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -240,9 +262,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(registerDTO)
 
-        val result = mvc.perform(post(USERS_BASE_PATH)
+        val result = mvc.perform(
+            post(USERS_BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -254,9 +278,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(registerDTO)
 
-        val result = mvc.perform(post(USERS_BASE_PATH)
+        val result = mvc.perform(
+            post(USERS_BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -268,9 +294,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(registerDTO)
 
-        val result = mvc.perform(post(USERS_BASE_PATH)
+        val result = mvc.perform(
+            post(USERS_BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -278,19 +306,21 @@ class IdentityControllerTests {
     @Test
     fun `registerOwner_ correct data`() {
         var registerDTO = RegisterDTO(
-                email = "test2@test.pl",
-                firstName = "Test",
-                lastName = "Testowy",
-                companyName = "TestowyCompanyName",
-                nip = "5756226338",
-                phoneNumber = "111222333"
+            email = "test2@test.pl",
+            firstName = "Test",
+            lastName = "Testowy",
+            companyName = "TestowyCompanyName",
+            nip = "5756226338",
+            phoneNumber = "111222333"
         )
 
         val body = convertObjectToJsonBytes(registerDTO)
 
-        val result = mvc.perform(post(USERS_BASE_PATH)
+        val result = mvc.perform(
+            post(USERS_BASE_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isCreated)
 
@@ -311,52 +341,58 @@ class IdentityControllerTests {
     @Test
     fun `setPassword_ wrong username`() {
         var setPasswordDTO = SetPasswordDTOStub.getSetPasswordDTO().copy(
-                username = "wrongUsername"
+            username = "wrongUsername"
         )
 
         val body = convertObjectToJsonBytes(setPasswordDTO)
 
-        val result = mvc.perform(post(USERS_PASSWORD_PATH)
+        val result = mvc.perform(
+            post(USERS_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isNotFound)
-                .andExpect(jsonPath("$.message", `is`("User not found.")))
+            .andExpect(status().isNotFound)
+            .andExpect(jsonPath("$.message", `is`("User not found.")))
     }
 
     @Test
     fun `setPassword_ wrong activationKey`() {
         var setPasswordDTO = SetPasswordDTOStub.getSetPasswordDTO().copy(
-                activationKey = "wrongActivationKey"
+            activationKey = "wrongActivationKey"
         )
 
         val body = convertObjectToJsonBytes(setPasswordDTO)
 
-        val result = mvc.perform(post(USERS_PASSWORD_PATH)
+        val result = mvc.perform(
+            post(USERS_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andExpect(jsonPath("$.message", `is`("Activation key doesn't match or password is already set.")))
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.message", `is`("Activation key doesn't match or password is already set.")))
     }
 
     @Test
     fun `setPassword_ password too short`() {
         var setPasswordDTO = SetPasswordDTOStub.getSetPasswordDTO().copy(
-                password = "aA1"
+            password = "aA1"
         )
 
         val body = convertObjectToJsonBytes(setPasswordDTO)
 
-        val result = mvc.perform(post(USERS_PASSWORD_PATH)
+        val result = mvc.perform(
+            post(USERS_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -364,18 +400,20 @@ class IdentityControllerTests {
     @Test
     fun `setPassword_ password too long`() {
         var setPasswordDTO = SetPasswordDTOStub.getSetPasswordDTO().copy(
-                password = "aA1${randomAlphanumeric(78)}"
+            password = "aA1${randomAlphanumeric(78)}"
         )
 
         val body = convertObjectToJsonBytes(setPasswordDTO)
 
-        val result = mvc.perform(post(USERS_PASSWORD_PATH)
+        val result = mvc.perform(
+            post(USERS_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -383,18 +421,20 @@ class IdentityControllerTests {
     @Test
     fun `setPassword_ password without any a-z`() {
         var setPasswordDTO = SetPasswordDTOStub.getSetPasswordDTO().copy(
-                password = "TEST123456"
+            password = "TEST123456"
         )
 
         val body = convertObjectToJsonBytes(setPasswordDTO)
 
-        val result = mvc.perform(post(USERS_PASSWORD_PATH)
+        val result = mvc.perform(
+            post(USERS_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -402,18 +442,20 @@ class IdentityControllerTests {
     @Test
     fun `setPassword_ password without any A-Z`() {
         var setPasswordDTO = SetPasswordDTOStub.getSetPasswordDTO().copy(
-                password = "test123456"
+            password = "test123456"
         )
 
         val body = convertObjectToJsonBytes(setPasswordDTO)
 
-        val result = mvc.perform(post(USERS_PASSWORD_PATH)
+        val result = mvc.perform(
+            post(USERS_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -421,18 +463,20 @@ class IdentityControllerTests {
     @Test
     fun `setPassword_ password without any 1-9`() {
         var setPasswordDTO = SetPasswordDTOStub.getSetPasswordDTO().copy(
-                password = "testTESTOWY"
+            password = "testTESTOWY"
         )
 
         val body = convertObjectToJsonBytes(setPasswordDTO)
 
-        val result = mvc.perform(post(USERS_PASSWORD_PATH)
+        val result = mvc.perform(
+            post(USERS_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -443,12 +487,14 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(setPasswordDTO)
 
-        val result = mvc.perform(post(USERS_PASSWORD_PATH)
+        val result = mvc.perform(
+            post(USERS_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isOk)
+            .andExpect(status().isOk)
 
         val updatedUser = userRepository.findByUsername("ms800000")
 
@@ -464,20 +510,22 @@ class IdentityControllerTests {
     fun `changePassword_ password too short`() {
         val user = UserStub.getUserOwner()
         var changePasswordDTO = ChangePasswordDTOStub.getChangePasswordDTO().copy(
-                newPassword = "aA1"
+            newPassword = "aA1"
         )
 
         val body = convertObjectToJsonBytes(changePasswordDTO)
 
         doReturn(user).whenever(authorizationService).getCurrentUser()
 
-        val result = mvc.perform(put(USERS_PASSWORD_PATH)
+        val result = mvc.perform(
+            put(USERS_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -486,20 +534,22 @@ class IdentityControllerTests {
     fun `changePassword_ password too long`() {
         val user = UserStub.getUserOwner()
         var changePasswordDTO = ChangePasswordDTOStub.getChangePasswordDTO().copy(
-                newPassword = "aA1${randomAlphanumeric(78)}"
+            newPassword = "aA1${randomAlphanumeric(78)}"
         )
 
         val body = convertObjectToJsonBytes(changePasswordDTO)
 
         doReturn(user).whenever(authorizationService).getCurrentUser()
 
-        val result = mvc.perform(put(USERS_PASSWORD_PATH)
+        val result = mvc.perform(
+            put(USERS_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -508,20 +558,22 @@ class IdentityControllerTests {
     fun `changePassword_ password without any a-z`() {
         val user = UserStub.getUserOwner()
         var changePasswordDTO = ChangePasswordDTOStub.getChangePasswordDTO().copy(
-                newPassword = "TEST123456"
+            newPassword = "TEST123456"
         )
 
         val body = convertObjectToJsonBytes(changePasswordDTO)
 
         doReturn(user).whenever(authorizationService).getCurrentUser()
 
-        val result = mvc.perform(put(USERS_PASSWORD_PATH)
+        val result = mvc.perform(
+            put(USERS_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -530,20 +582,22 @@ class IdentityControllerTests {
     fun `changePassword_ password without any A-Z`() {
         val user = UserStub.getUserOwner()
         var changePasswordDTO = ChangePasswordDTOStub.getChangePasswordDTO().copy(
-                newPassword = "test123456"
+            newPassword = "test123456"
         )
 
         val body = convertObjectToJsonBytes(changePasswordDTO)
 
         doReturn(user).whenever(authorizationService).getCurrentUser()
 
-        val result = mvc.perform(put(USERS_PASSWORD_PATH)
+        val result = mvc.perform(
+            put(USERS_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -552,20 +606,22 @@ class IdentityControllerTests {
     fun `changePassword_ password without any 1-9`() {
         val user = UserStub.getUserOwner()
         var changePasswordDTO = ChangePasswordDTOStub.getChangePasswordDTO().copy(
-                newPassword = "testTESTOWY"
+            newPassword = "testTESTOWY"
         )
 
         val body = convertObjectToJsonBytes(changePasswordDTO)
 
         doReturn(user).whenever(authorizationService).getCurrentUser()
 
-        val result = mvc.perform(put(USERS_PASSWORD_PATH)
+        val result = mvc.perform(
+            put(USERS_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -580,12 +636,14 @@ class IdentityControllerTests {
 
         doReturn(user).whenever(authorizationService).getCurrentUser()
 
-        val result = mvc.perform(put(USERS_PASSWORD_PATH)
+        val result = mvc.perform(
+            put(USERS_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isOk)
+            .andExpect(status().isOk)
 
         val updatedUser = userRepository.findByEmail("test@test.pl")
 
@@ -600,9 +658,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(lostPasswordDTO)
 
-        val result = mvc.perform(post(USERS_LOST_PASSWORD_PATH)
+        val result = mvc.perform(
+            post(USERS_LOST_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isOk)
 
@@ -619,9 +679,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(lostPasswordDTO)
 
-        val result = mvc.perform(post(USERS_LOST_PASSWORD_PATH)
+        val result = mvc.perform(
+            post(USERS_LOST_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isOk)
 
@@ -638,9 +700,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(lostPasswordDTO)
 
-        val result = mvc.perform(post(USERS_LOST_PASSWORD_PATH)
+        val result = mvc.perform(
+            post(USERS_LOST_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isOk)
 
@@ -652,18 +716,20 @@ class IdentityControllerTests {
     @Test
     fun `resetPassword_ username is empty`() {
         val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO().copy(
-                username = ""
+            username = ""
         )
 
         val body = convertObjectToJsonBytes(resetPasswordDTO)
 
-        val result = mvc.perform(put(USERS_RESET_PASSWORD_PATH)
+        val result = mvc.perform(
+            put(USERS_RESET_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -671,18 +737,20 @@ class IdentityControllerTests {
     @Test
     fun `resetPassword_ password is empty`() {
         val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO().copy(
-                password = ""
+            password = ""
         )
 
         val body = convertObjectToJsonBytes(resetPasswordDTO)
 
-        val result = mvc.perform(put(USERS_RESET_PASSWORD_PATH)
+        val result = mvc.perform(
+            put(USERS_RESET_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -690,18 +758,20 @@ class IdentityControllerTests {
     @Test
     fun `resetPassword_ password too short`() {
         val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO().copy(
-                password = "aA1"
+            password = "aA1"
         )
 
         val body = convertObjectToJsonBytes(resetPasswordDTO)
 
-        val result = mvc.perform(put(USERS_RESET_PASSWORD_PATH)
+        val result = mvc.perform(
+            put(USERS_RESET_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -709,18 +779,20 @@ class IdentityControllerTests {
     @Test
     fun `resetPassword_ password too long`() {
         val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO().copy(
-                password = "aA1${randomAlphanumeric(78)}"
+            password = "aA1${randomAlphanumeric(78)}"
         )
 
         val body = convertObjectToJsonBytes(resetPasswordDTO)
 
-        val result = mvc.perform(put(USERS_RESET_PASSWORD_PATH)
+        val result = mvc.perform(
+            put(USERS_RESET_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -728,18 +800,20 @@ class IdentityControllerTests {
     @Test
     fun `resetPassword_ password without any a-z`() {
         val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO().copy(
-                password = "TEST123456"
+            password = "TEST123456"
         )
 
         val body = convertObjectToJsonBytes(resetPasswordDTO)
 
-        val result = mvc.perform(put(USERS_RESET_PASSWORD_PATH)
+        val result = mvc.perform(
+            put(USERS_RESET_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -747,18 +821,20 @@ class IdentityControllerTests {
     @Test
     fun `resetPassword_ password without any A-Z`() {
         val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO().copy(
-                password = "test123456"
+            password = "test123456"
         )
 
         val body = convertObjectToJsonBytes(resetPasswordDTO)
 
-        val result = mvc.perform(put(USERS_RESET_PASSWORD_PATH)
+        val result = mvc.perform(
+            put(USERS_RESET_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -766,18 +842,20 @@ class IdentityControllerTests {
     @Test
     fun `resetPassword_ password without any 1-9`() {
         val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO().copy(
-                password = "testTESTOWY"
+            password = "testTESTOWY"
         )
 
         val body = convertObjectToJsonBytes(resetPasswordDTO)
 
-        val result = mvc.perform(put(USERS_RESET_PASSWORD_PATH)
+        val result = mvc.perform(
+            put(USERS_RESET_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -785,18 +863,20 @@ class IdentityControllerTests {
     @Test
     fun `resetPassword_ resetKey is empty`() {
         val resetPasswordDTO = ResetPasswordDTOStub.getResetPasswordDTO().copy(
-                resetKey = ""
+            resetKey = ""
         )
 
         val body = convertObjectToJsonBytes(resetPasswordDTO)
 
-        val result = mvc.perform(put(USERS_RESET_PASSWORD_PATH)
+        val result = mvc.perform(
+            put(USERS_RESET_PASSWORD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -806,27 +886,27 @@ class IdentityControllerTests {
         val user = userRepository.findOne(1)
         doReturn(user).whenever(authorizationService).getCurrentUser()
         mvc.perform(get(RESTAURANTS_PATH))
-                .andExpect(status().isOk)
-                .andExpect(jsonPath("$[0].id", `is`(1)))
-                .andExpect(jsonPath("$[0].name", `is`("Piano Bar Restaurant & Cafe")))
-                .andExpect(jsonPath("$[0].streetName", `is`("Półwiejska 42")))
-                .andExpect(jsonPath("$[0].buildingNumber", `is`("1A")))
-                .andExpect(jsonPath("$[0].city", `is`("Poznań")))
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$[0].id", `is`(1)))
+            .andExpect(jsonPath("$[0].name", `is`("Piano Bar Restaurant & Cafe")))
+            .andExpect(jsonPath("$[0].streetName", `is`("Półwiejska 42")))
+            .andExpect(jsonPath("$[0].buildingNumber", `is`("1A")))
+            .andExpect(jsonPath("$[0].city", `is`("Poznań")))
     }
 
     @Test
     fun `getRestaurant_ existing`() {
         mvc.perform(get(RESTAURANTS_URL_NAME_PATH, "piano.bar.restaurant.&.cafe"))
-                .andExpect(status().isOk)
-                .andExpect(jsonPath("$.name", `is`("Piano Bar Restaurant & Cafe")))
-                .andExpect(jsonPath("$.username", `is`("ms100001")))
-                .andExpect(jsonPath("$.avatar", isEmptyOrNullString()))
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.name", `is`("Piano Bar Restaurant & Cafe")))
+            .andExpect(jsonPath("$.username", `is`("ms100001")))
+            .andExpect(jsonPath("$.avatar", isEmptyOrNullString()))
     }
 
     @Test
     fun `getRestaurant_ not existing`() {
         mvc.perform(get(RESTAURANTS_URL_NAME_PATH, "not.existing"))
-                .andExpect(status().isNotFound)
+            .andExpect(status().isNotFound)
     }
 
     @Test
@@ -834,19 +914,19 @@ class IdentityControllerTests {
         val user = userRepository.findOne(10)
         doReturn(user).whenever(authorizationService).getCurrentUser()
         mvc.perform(get(EMPLOYEES_PATH))
-                .andExpect(status().isOk)
-                .andExpect(jsonPath("$[0].id", `is`(11)))
-                .andExpect(jsonPath("$[0].username", `is`("ms100002")))
-                .andExpect(jsonPath("$[0].firstName", `is`("Krystian")))
-                .andExpect(jsonPath("$[0].lastName", `is`("Nowicki")))
-                .andExpect(jsonPath("$[0].role", `is`("ROLE_MANAGER")))
-                .andExpect(jsonPath("$[0].avatar", isEmptyOrNullString()))
-                .andExpect(jsonPath("$[1].id", `is`(12)))
-                .andExpect(jsonPath("$[1].username", `is`("ms100003")))
-                .andExpect(jsonPath("$[1].firstName", `is`("Magdalena")))
-                .andExpect(jsonPath("$[1].lastName", `is`("Karpińska")))
-                .andExpect(jsonPath("$[1].role", `is`("ROLE_EMPLOYEE")))
-                .andExpect(jsonPath("$[1].avatar", isEmptyOrNullString()))
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$[0].id", `is`(11)))
+            .andExpect(jsonPath("$[0].username", `is`("ms100002")))
+            .andExpect(jsonPath("$[0].firstName", `is`("Krystian")))
+            .andExpect(jsonPath("$[0].lastName", `is`("Nowicki")))
+            .andExpect(jsonPath("$[0].role", `is`("ROLE_MANAGER")))
+            .andExpect(jsonPath("$[0].avatar", isEmptyOrNullString()))
+            .andExpect(jsonPath("$[1].id", `is`(12)))
+            .andExpect(jsonPath("$[1].username", `is`("ms100003")))
+            .andExpect(jsonPath("$[1].firstName", `is`("Magdalena")))
+            .andExpect(jsonPath("$[1].lastName", `is`("Karpińska")))
+            .andExpect(jsonPath("$[1].role", `is`("ROLE_EMPLOYEE")))
+            .andExpect(jsonPath("$[1].avatar", isEmptyOrNullString()))
     }
 
     @Test
@@ -856,9 +936,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(createRestaurantDTO)
 
-        val result = mvc.perform(post(RESTAURANTS_PATH)
+        val result = mvc.perform(
+            post(RESTAURANTS_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -870,9 +952,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(createRestaurantDTO)
 
-        val result = mvc.perform(post(RESTAURANTS_PATH)
+        val result = mvc.perform(
+            post(RESTAURANTS_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -884,9 +968,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(createRestaurantDTO)
 
-        val result = mvc.perform(post(RESTAURANTS_PATH)
+        val result = mvc.perform(
+            post(RESTAURANTS_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -898,9 +984,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(createRestaurantDTO)
 
-        val result = mvc.perform(post(RESTAURANTS_PATH)
+        val result = mvc.perform(
+            post(RESTAURANTS_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -910,9 +998,11 @@ class IdentityControllerTests {
         var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
         val body = convertObjectToJsonBytes(createRestaurantDTO).replace("\"type\":\"RESTAURANT\"", "\"type\":\"\"")
 
-        val result = mvc.perform(post(RESTAURANTS_PATH)
+        val result = mvc.perform(
+            post(RESTAURANTS_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -920,11 +1010,16 @@ class IdentityControllerTests {
     @Test
     fun `createRestaurant_ type is invalid`() {
         var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub()
-        val body = convertObjectToJsonBytes(createRestaurantDTO).replace("\"type\":\"RESTAURANT\"", "\"type\":\"INVALID_TYPE\"")
+        val body = convertObjectToJsonBytes(createRestaurantDTO).replace(
+            "\"type\":\"RESTAURANT\"",
+            "\"type\":\"INVALID_TYPE\""
+        )
 
-        val result = mvc.perform(post(RESTAURANTS_PATH)
+        val result = mvc.perform(
+            post(RESTAURANTS_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -936,9 +1031,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(createRestaurantDTO)
 
-        val result = mvc.perform(post(RESTAURANTS_PATH)
+        val result = mvc.perform(
+            post(RESTAURANTS_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -950,9 +1047,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(createRestaurantDTO)
 
-        val result = mvc.perform(post(RESTAURANTS_PATH)
+        val result = mvc.perform(
+            post(RESTAURANTS_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -964,9 +1063,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(createRestaurantDTO)
 
-        val result = mvc.perform(post(RESTAURANTS_PATH)
+        val result = mvc.perform(
+            post(RESTAURANTS_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -978,9 +1079,11 @@ class IdentityControllerTests {
 
         val body = convertObjectToJsonBytes(createRestaurantDTO)
 
-        val result = mvc.perform(post(RESTAURANTS_PATH)
+        val result = mvc.perform(
+            post(RESTAURANTS_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result.andExpect(status().isBadRequest)
     }
@@ -988,18 +1091,20 @@ class IdentityControllerTests {
     @Test
     fun `createRestaurant_ password too short`() {
         var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub().copy(
-                password = "aA1"
+            password = "aA1"
         )
 
         val body = convertObjectToJsonBytes(createRestaurantDTO)
 
-        val result = mvc.perform(post(RESTAURANTS_PATH)
+        val result = mvc.perform(
+            post(RESTAURANTS_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -1007,18 +1112,20 @@ class IdentityControllerTests {
     @Test
     fun `createRestaurant_ password too long`() {
         var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub().copy(
-                password = "aA1${randomAlphanumeric(78)}"
+            password = "aA1${randomAlphanumeric(78)}"
         )
 
         val body = convertObjectToJsonBytes(createRestaurantDTO)
 
-        val result = mvc.perform(post(RESTAURANTS_PATH)
+        val result = mvc.perform(
+            post(RESTAURANTS_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -1026,18 +1133,20 @@ class IdentityControllerTests {
     @Test
     fun `createRestaurant_ password without any a-z`() {
         var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub().copy(
-                password = "TEST123456"
+            password = "TEST123456"
         )
 
         val body = convertObjectToJsonBytes(createRestaurantDTO)
 
-        val result = mvc.perform(post(RESTAURANTS_PATH)
+        val result = mvc.perform(
+            post(RESTAURANTS_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -1045,18 +1154,20 @@ class IdentityControllerTests {
     @Test
     fun `createRestaurant_ password without any A-Z`() {
         var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub().copy(
-                password = "test123456"
+            password = "test123456"
         )
 
         val body = convertObjectToJsonBytes(createRestaurantDTO)
 
-        val result = mvc.perform(post(RESTAURANTS_PATH)
+        val result = mvc.perform(
+            post(RESTAURANTS_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -1064,18 +1175,20 @@ class IdentityControllerTests {
     @Test
     fun `createRestaurant_ password without any 1-9`() {
         var createRestaurantDTO = CreateRestaurantDTOStub.getCreateRestaurantDTOStub().copy(
-                password = "testTESTOWY"
+            password = "testTESTOWY"
         )
 
         val body = convertObjectToJsonBytes(createRestaurantDTO)
 
-        val result = mvc.perform(post(RESTAURANTS_PATH)
+        val result = mvc.perform(
+            post(RESTAURANTS_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isBadRequest)
-                .andReturn()
+            .andExpect(status().isBadRequest)
+            .andReturn()
 
         assertThat(result.andReturn().resolvedException, instanceOf(MethodArgumentNotValidException::class.java))
     }
@@ -1083,22 +1196,24 @@ class IdentityControllerTests {
     @Test
     fun `createRestaurant_ correct data`() {
         var createRestaurantDTO = CreateRestaurantDTO(
-                name = "New Restaurant",
-                email = "newrestaurant@test.pl",
-                type = RESTAURANT,
-                password = "Test12345",
-                phoneNumber = "111222333"
+            name = "New Restaurant",
+            email = "newrestaurant@test.pl",
+            type = RESTAURANT,
+            password = "Test12345",
+            phoneNumber = "111222333"
         )
 
         val body = convertObjectToJsonBytes(createRestaurantDTO)
 
-        val result = mvc.perform(post(RESTAURANTS_PATH)
+        val result = mvc.perform(
+            post(RESTAURANTS_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(body))
+                .content(body)
+        )
 
         result
-                .andExpect(status().isCreated)
-                .andReturn()
+            .andExpect(status().isCreated)
+            .andReturn()
 
         val createdUser = userRepository.findByEmail("newrestaurant@test.pl")
         val createdRestaurant = restaurantRepository.findPartlyByName("New Restaurant")[0]

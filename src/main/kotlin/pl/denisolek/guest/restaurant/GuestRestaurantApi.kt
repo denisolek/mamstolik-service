@@ -34,23 +34,29 @@ interface GuestRestaurantApi {
     }
 
     @GetMapping(RESTAURANTS_BASE_PATH)
-    fun searchRestaurants(@RequestParam city: City,
-                          @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam date: LocalDateTime,
-                          @RequestParam peopleNumber: Int): SearchDTO
+    fun searchRestaurants(
+        @RequestParam city: City,
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam date: LocalDateTime,
+        @RequestParam peopleNumber: Int
+    ): SearchDTO
 
     @GetMapping(RESTAURANTS_URL_NAME_PATH)
     fun getRestaurant(@ApiIgnore @PathVariable(URL_NAME) urlName: String): RestaurantDetailsDTO
 
     @GetMapping(RESTAURANTS_ID_DATES_PATH)
-    fun getRestaurantAvailableDates(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam date: LocalDateTime,
-                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam currentDate: LocalDateTime,
-                                    @RequestParam peopleNumber: Int): Map<LocalDate, List<LocalTime>>
+    fun getRestaurantAvailableDates(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam date: LocalDateTime,
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam currentDate: LocalDateTime,
+        @RequestParam peopleNumber: Int
+    ): Map<LocalDate, List<LocalTime>>
 
     @GetMapping(RESTAURANTS_ID_SPOTS_PATH)
-    fun getRestaurantAvailableSpots(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
-                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam date: LocalDateTime,
-                                    @RequestParam(required = false, defaultValue = "0") peopleNumber: Int): List<SpotInfoDTO>
+    fun getRestaurantAvailableSpots(
+        @ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant,
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam date: LocalDateTime,
+        @RequestParam(required = false, defaultValue = "0") peopleNumber: Int
+    ): List<SpotInfoDTO>
 
     @GetMapping(RESTAURANTS_ID_PATH_SCHEMAS)
     fun getSchema(@ApiIgnore @PathVariable(RESTAURANT_ID) restaurantId: Restaurant): SchemaDTO

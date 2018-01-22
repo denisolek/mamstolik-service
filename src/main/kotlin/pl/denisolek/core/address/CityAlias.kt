@@ -7,9 +7,9 @@ import javax.persistence.ManyToOne
 
 @Entity
 data class CityAlias(
-        var name: String,
+    var name: String,
 
-        @ManyToOne
-        @JsonIgnore
-        var city: City
+    @ManyToOne
+    @JsonIgnore
+    var city: City
 ) : BaseEntity()

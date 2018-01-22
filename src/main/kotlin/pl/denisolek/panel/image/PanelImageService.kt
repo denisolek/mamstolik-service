@@ -9,8 +9,10 @@ import pl.denisolek.core.restaurant.RestaurantService
 import pl.denisolek.panel.image.DTO.ImageDTO
 
 @Service
-class PanelImageService(private val imageService: ImageService,
-                        private val restaurantService: RestaurantService) {
+class PanelImageService(
+    private val imageService: ImageService,
+    private val restaurantService: RestaurantService
+) {
 
     fun uploadImage(restaurant: Restaurant, imageType: String, image: MultipartFile): ImageDTO {
         imageService.validateImage(image)

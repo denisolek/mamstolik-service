@@ -15,23 +15,30 @@ import pl.denisolek.panel.schema.DTO.SchemaDTO
 import pl.denisolek.panel.schema.DTO.type.SchemaSpotInfoDTO
 
 @Service
-class PanelSchemaService(val restaurantService: RestaurantService,
-                         val floorService: FloorService,
-                         val spotService: SpotService) {
+class PanelSchemaService(
+    val restaurantService: RestaurantService,
+    val floorService: FloorService,
+    val spotService: SpotService
+) {
 
     fun addFloor(restaurant: Restaurant, floorDTO: FloorDTO): FloorDTO {
-        val floor = floorService.save(Floor(
+        val floor = floorService.save(
+            Floor(
                 name = floorDTO.name,
                 restaurant = restaurant
-        ))
+            )
+        )
         return FloorDTO(
-                id = floor.id,
-                name = floor.name
+            id = floor.id,
+            name = floor.name
         )
     }
 
     fun deleteFloor(restaurant: Restaurant, floor: Floor) {
-        if (floor.haveReservationsInFuture()) throw ServiceException(HttpStatus.CONFLICT, "There are some reservations including spots on that floor")
+        if (floor.haveReservationsInFuture()) throw ServiceException(
+            HttpStatus.CONFLICT,
+            "There are some reservations including spots on that floor"
+        )
         restaurant.floors.remove(floor)
         restaurantService.save(restaurant)
     }
@@ -39,9 +46,9 @@ class PanelSchemaService(val restaurantService: RestaurantService,
     fun updateSchema(restaurant: Restaurant, schemaDTO: SchemaDTO): SchemaDTO {
         val items = SchemaDTO.toSchemaItems(schemaDTO, restaurant)
         val restaurantTables = restaurant.floors
-                .flatMap { it.schemaItems }
-                .filter { it.type == SchemaItem.Type.TABLE }
-                .toMutableList()
+            .flatMap { it.schemaItems }
+            .filter { it.type == SchemaItem.Type.TABLE }
+            .toMutableList()
         val updatedItems = getUpdatedItems(items, restaurantTables)
         assignItemsToRestaurant(restaurant, updatedItems)
         restaurant.settings.schema = schemaDTO.isGridEnabled
@@ -52,7 +59,10 @@ class PanelSchemaService(val restaurantService: RestaurantService,
         if (spot.haveReservationsInFuture())
             throw ServiceException(HttpStatus.CONFLICT, "This spot have reservations in future")
 
-        val updatedSpot = restaurant.spots.find { it.id == spot.id } ?: throw ServiceException(HttpStatus.NOT_FOUND, "Spot not found in this restaurant")
+        val updatedSpot = restaurant.spots.find { it.id == spot.id } ?: throw ServiceException(
+            HttpStatus.NOT_FOUND,
+            "Spot not found in this restaurant"
+        )
         updatedSpot.number = spotInfoDTO.number
         updatedSpot.capacity = spotInfoDTO.capacity
         updatedSpot.minPeopleNumber = spotInfoDTO.minPeopleNumber
@@ -74,7 +84,10 @@ class PanelSchemaService(val restaurantService: RestaurantService,
         restaurantService.save(restaurant)
     }
 
-    private fun getUpdatedItems(items: List<SchemaItem>, restaurantTables: MutableList<SchemaItem>): Map<Int?, List<SchemaItem?>> {
+    private fun getUpdatedItems(
+        items: List<SchemaItem>,
+        restaurantTables: MutableList<SchemaItem>
+    ): Map<Int?, List<SchemaItem?>> {
         return items.map { item ->
             when {
                 (isExistingTable(item, restaurantTables)) -> restaurantTables.find { it.id == item.id }?.let {
@@ -109,5 +122,5 @@ class PanelSchemaService(val restaurantService: RestaurantService,
     }
 
     private fun isExistingTable(item: SchemaItem, restaurantTables: MutableList<SchemaItem>) =
-            item.type == SchemaItem.Type.TABLE && restaurantTables.any { it.id == item.id }
+        item.type == SchemaItem.Type.TABLE && restaurantTables.any { it.id == item.id }
 }

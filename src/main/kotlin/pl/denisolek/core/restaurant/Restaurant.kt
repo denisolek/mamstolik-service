@@ -20,81 +20,82 @@ import javax.persistence.*
 
 @Entity
 data class Restaurant(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Int? = null,
-        var name: String,
-        var urlName: String,
-        var description: String = "",
-        var phoneNumber: String,
-        var email: String,
-        var avgReservationTime: Duration = Duration.ofHours(1),
-        var rate: Float = 0f,
-        var service_rate: Float = 0f,
-        var food_rate: Float = 0f,
-        var price_quality_rate: Float = 0f,
-        var isActive: Boolean = false,
-        @Enumerated(EnumType.STRING)
-        var type: RestaurantType,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Int? = null,
+    var name: String,
+    var urlName: String,
+    var description: String = "",
+    var phoneNumber: String,
+    var email: String,
+    var avgReservationTime: Duration = Duration.ofHours(1),
+    var rate: Float = 0f,
+    var service_rate: Float = 0f,
+    var food_rate: Float = 0f,
+    var price_quality_rate: Float = 0f,
+    var isActive: Boolean = false,
+    @Enumerated(EnumType.STRING)
+    var type: RestaurantType,
 
-        @ManyToOne
-        var owner: User? = null,
+    @ManyToOne
+    var owner: User? = null,
 
-        @OneToMany(mappedBy = "workPlace", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var employees: MutableList<User> = mutableListOf(),
+    @OneToMany(mappedBy = "workPlace", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    var employees: MutableList<User> = mutableListOf(),
 
-        @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        var address: Address = Address(),
+    @OneToOne(cascade = arrayOf(CascadeType.ALL))
+    var address: Address = Address(),
 
-        @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var reservations: MutableList<Reservation> = mutableListOf(),
+    @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    var reservations: MutableList<Reservation> = mutableListOf(),
 
-        @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var comments: MutableList<Comment> = mutableListOf(),
+    @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    var comments: MutableList<Comment> = mutableListOf(),
 
-        @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var images: MutableList<Image> = mutableListOf(),
+    @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    var images: MutableList<Image> = mutableListOf(),
 
-        @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        var mainImage: Image? = null,
+    @OneToOne(cascade = arrayOf(CascadeType.ALL))
+    var mainImage: Image? = null,
 
-        @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var spots: MutableList<Spot> = mutableListOf(),
+    @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    var spots: MutableList<Spot> = mutableListOf(),
 
-        @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var floors: MutableList<Floor> = mutableListOf(),
+    @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    var floors: MutableList<Floor> = mutableListOf(),
 
-        @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        var menu: Menu = Menu(),
+    @OneToOne(cascade = arrayOf(CascadeType.ALL))
+    var menu: Menu = Menu(),
 
-        @OneToOne(cascade = arrayOf(CascadeType.ALL))
-        var settings: Settings = Settings(),
+    @OneToOne(cascade = arrayOf(CascadeType.ALL))
+    var settings: Settings = Settings(),
 
-        @ElementCollection(fetch = FetchType.EAGER)
-        @Enumerated(EnumType.STRING)
-        @CollectionTable(name = "restaurant_kitchen", joinColumns = arrayOf(JoinColumn(name = "restaurantId")))
-        @Column(name = "kitchen_type", nullable = false)
-        var cuisineTypes: MutableSet<CuisineType> = mutableSetOf(),
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "restaurant_kitchen", joinColumns = arrayOf(JoinColumn(name = "restaurantId")))
+    @Column(name = "kitchen_type", nullable = false)
+    var cuisineTypes: MutableSet<CuisineType> = mutableSetOf(),
 
-        @ElementCollection(fetch = FetchType.EAGER)
-        @Enumerated(EnumType.STRING)
-        @CollectionTable(name = "restaurant_facility", joinColumns = arrayOf(JoinColumn(name = "restaurantId")))
-        @Column(name = "facility", nullable = false)
-        var facilities: MutableSet<Facilities> = mutableSetOf(),
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "restaurant_facility", joinColumns = arrayOf(JoinColumn(name = "restaurantId")))
+    @Column(name = "facility", nullable = false)
+    var facilities: MutableSet<Facilities> = mutableSetOf(),
 
-        @OneToMany(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        @MapKeyEnumerated(EnumType.STRING)
-        @MapKeyColumn(name = "day_of_week")
-        var businessHours: Map<DayOfWeek, BusinessHour> = DayOfWeek.values().map { dayOfWeek ->
-            Pair(dayOfWeek, BusinessHour())
-        }.toMap(),
+    @OneToMany(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    @MapKeyEnumerated(EnumType.STRING)
+    @MapKeyColumn(name = "day_of_week")
+    var businessHours: Map<DayOfWeek, BusinessHour> = DayOfWeek.values().map { dayOfWeek ->
+        Pair(dayOfWeek, BusinessHour())
+    }.toMap(),
 
-        @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-        var specialDates: MutableList<SpecialDate> = mutableListOf()
+    @OneToMany(mappedBy = "restaurant", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    var specialDates: MutableList<SpecialDate> = mutableListOf()
 ) {
 
     fun isOpenAt(date: LocalDateTime): Boolean {
-        val businessHour = this.specialDates.find { it.date == date.toLocalDate() }?.businessHour ?: getBusinessHoursForDate(date.toLocalDate()) ?: return false
+        val businessHour = this.specialDates.find { it.date == date.toLocalDate() }?.businessHour
+                ?: getBusinessHoursForDate(date.toLocalDate()) ?: return false
 
         return !businessHour.isClosed &&
                 date.toLocalTime().isAfterOrEqual(businessHour.openTime) &&
@@ -103,7 +104,11 @@ data class Restaurant(
 
     fun getBusinessHoursForDate(date: LocalDate) = this.businessHours[date.dayOfWeek]
 
-    fun getAvailableDates(date: LocalDateTime, currentDate: LocalDateTime, peopleNumber: Int): Map<LocalDate, List<LocalTime>> {
+    fun getAvailableDates(
+        date: LocalDateTime,
+        currentDate: LocalDateTime,
+        peopleNumber: Int
+    ): Map<LocalDate, List<LocalTime>> {
         var searchDate = date
         val result = mutableMapOf<LocalDate, List<LocalTime>>()
         while (date.month == searchDate.month) {
@@ -111,7 +116,8 @@ data class Restaurant(
             if (!searchDate.toLocalDate().isBefore(currentDate.toLocalDate())) {
                 hours = getAvailableHours(searchDate, peopleNumber)
             }
-            if (currentDate.toLocalDate() == searchDate.toLocalDate()) hours = hours.filter { it.isAfter(currentDate.toLocalTime()) }
+            if (currentDate.toLocalDate() == searchDate.toLocalDate()) hours =
+                    hours.filter { it.isAfter(currentDate.toLocalTime()) }
             result.put(searchDate.toLocalDate(), hours)
             searchDate = searchDate.plusDays(1)
         }
@@ -154,8 +160,8 @@ data class Restaurant(
         }
 
         val takenSpots = this.reservations
-                .filter { searchDateInterval.overlaps(it) && it.state != CANCELED }
-                .flatMap { it.spots }
+            .filter { searchDateInterval.overlaps(it) && it.state != CANCELED }
+            .flatMap { it.spots }
 
         return this.spots.filterNot { takenSpots.contains(it) }
     }
@@ -168,16 +174,16 @@ data class Restaurant(
         }
 
         return this.reservations
-                .filter { searchDateInterval.overlaps(it) && it.state != CANCELED }
-                .flatMap { it.spots }
+            .filter { searchDateInterval.overlaps(it) && it.state != CANCELED }
+            .flatMap { it.spots }
     }
 
     fun getFloor(floorId: Int): Floor =
-            try {
-                this.floors.first { it.id == floorId }
-            } catch (e: NoSuchElementException) {
-                throw ServiceException(HttpStatus.BAD_REQUEST, "Trying to assign item to not existing floor.")
-            }
+        try {
+            this.floors.first { it.id == floorId }
+        } catch (e: NoSuchElementException) {
+            throw ServiceException(HttpStatus.BAD_REQUEST, "Trying to assign item to not existing floor.")
+        }
 
     fun getMenu(): List<MenuCategoryDTO>? {
         return if (this.settings.menu)
